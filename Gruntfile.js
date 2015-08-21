@@ -77,7 +77,8 @@ module.exports = function(grunt) {
           hostname: '0.0.0.0',
           bases: [
             '<%= app.src %>',
-            '<%= app.temp %>'
+            '<%= app.temp %>',
+            '<%= app.lib %>'
           ],
           //server: '<%= app.test %>/server/serverMock.js', -- setting up server mock responses later
           livereload: true
