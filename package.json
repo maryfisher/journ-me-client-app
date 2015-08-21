@@ -1,0 +1,34 @@
+{
+  "name": "journ-me-client-app",
+  "version": "0.0.1",
+  "description": "AngularJS single-page application to allow members to connect with each other on the global JournMe community via a responsive, interactive UI.",
+  "contributors": [{
+    "name": "Ulrike Meyer",
+    "email": "die_ulli@hotmail.com"
+  }, {
+    "name": "Hao Tri Pham",
+    "email": "phamhaotri@googlemail.com"
+  }],
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/journ-me/journ-me-client-app.git"
+  },
+  "engines": {
+    "node": "0.12.x",
+    "npm": "2.13.x"
+  },
+  "private": true,
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "load-grunt-tasks": "~3.2.0",
+    "bower": "~1.4.1",
+    "grunt-bower-task": "~0.4.0",
+    "express": "~4.13.3",
+    "grunt-express": "~1.4.1",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-jshint": "~0.11.2",
+    "grunt-angular-templates": "~0.5.7",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-uglify": "~0.9.1"
+  }
+}
