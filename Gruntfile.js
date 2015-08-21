@@ -13,8 +13,7 @@ module.exports = function(grunt) {
     pkg: pkg,
     app: {
       src: 'src',
-      third: 'thirdparty',
-      bower: 'thirdparty/bower_components',
+      lib: 'lib',
       test: 'test',
       temp: '.temp',
       dist: 'dist'
@@ -23,7 +22,7 @@ module.exports = function(grunt) {
       install: {
         options: {
           install: true,
-          //targetDir: '<%= app.bower %>/', -- not necessary, since 'bower install' is executed and will read from .bowerrc config file
+          //targetDir: '<%= app.lib %>/bower_components', -- not necessary, since 'bower install' is executed and will read from .bowerrc config file
           verbose: true,
           copy: false
         }
@@ -51,11 +50,20 @@ module.exports = function(grunt) {
       ]
     },
     ngtemplates: {
-      dev: {
-        src: '<%= app.src %>/ui/**/*.html',
+      JournMeClientMoment: {
+        src: '<%= app.src %>/ui/moment/**/*.html',
         dest: '<%= app.temp %>/scripts/templates.js',
         options: {
-          module: 'journ-me-client',
+          url: function(url) {
+            return url.replace(/(src\/ui\/([\s\S]*?)\/)/, '').replace(/.html/, '');
+          }
+        }
+      },
+      JournMeClientJourney: {
+        src: '<%= app.src %>/ui/journey/**/*.html',
+        dest: '<%= app.temp %>/scripts/templates.js',
+        options: {
+          append: true,
           url: function(url) {
             return url.replace(/(src\/ui\/([\s\S]*?)\/)/, '').replace(/.html/, '');
           }
@@ -88,7 +96,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean',
     'jshint',
-    'ngtemplates:dev'
+    'ngtemplates'
   ]);
 
   grunt.registerTask('run', [
