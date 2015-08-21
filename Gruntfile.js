@@ -11,6 +11,24 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
     pkg: pkg,
+    app: {
+      src: 'src',
+      thirdparty: 'thirdparty',
+      bower_components: 'thirdparty/bower_components',
+      test: 'test',
+      temp: '.temp',
+      dist: 'dist'
+    },
+    bower: {
+      install: {
+        options: {
+          install: true,
+          //targetDir: '<%= app.bower_components %>', -- not necessary, since 'bower install' is executed and will read from .bowerrc config file
+          verbose: true,
+          copy: false
+        }
+      }
+    },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -24,6 +42,7 @@ module.exports = function(grunt) {
 
   // GruntJS task registration
   grunt.registerTask('default', [
+    'bower',
     'uglify'
   ]);
 };

@@ -30,3 +30,5 @@ thirdparty/bower_components/
 node_modules/
 dist/
 target/
+out/
+.temp/
