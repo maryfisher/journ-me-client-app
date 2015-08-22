@@ -50,22 +50,13 @@ module.exports = function(grunt) {
       ]
     },
     ngtemplates: {
-      JournMeClientMoment: {
-        src: '<%= app.src %>/ui/moment/**/*.html',
+      templates1: {
+        src: '<%= app.src %>/ui/**/*.tpl.html',
         dest: '<%= app.temp %>/scripts/templates.js',
         options: {
+          module: 'JournMeClient',
           url: function(url) {
-            return url.replace(/(src\/ui\/([\s\S]*?)\/)/, '').replace(/.html/, '');
-          }
-        }
-      },
-      JournMeClientJourney: {
-        src: '<%= app.src %>/ui/journey/**/*.html',
-        dest: '<%= app.temp %>/scripts/templates.js',
-        options: {
-          append: true,
-          url: function(url) {
-            return url.replace(/(src\/ui\/([\s\S]*?)\/)/, '').replace(/.html/, '');
+            return url.replace(/(src\/)/, '');
           }
         }
       }
@@ -77,7 +68,6 @@ module.exports = function(grunt) {
           hostname: '0.0.0.0',
           bases: [
             '<%= app.src %>',
-            '<%= app.temp %>',
             '<%= app.lib %>'
           ],
           //server: '<%= app.test %>/server/serverMock.js', -- setting up server mock responses later
