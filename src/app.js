@@ -13,9 +13,4 @@
         $routeProvider.otherwise({redirectTo:'/home'});
     });
 
-    app.run(function ($rootScope) {
-        $rootScope.user = 'Tri';
-    });
-
-
 } (window.angular));

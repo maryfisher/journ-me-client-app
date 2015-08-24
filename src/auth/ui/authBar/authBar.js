@@ -10,7 +10,6 @@
             replace: true,
             controller: 'jmAuthBarController',
             scope: {
-                desiredUser: '='
             }
         };
     });

@@ -2,8 +2,8 @@
     <a href="/#/home">Home</a>
     <label>Search</label>
     <input type="text"/>
-    <span class="pull-right" data-ng-switch="loggedIn">
-        <div data-ng-switch-when="true"><span data-ng-bind="desiredUser"></span> <button data-ng-click="toggleLoggedIn()">LOGOUT</button></div>
-        <button data-ng-switch-default data-ng-click="toggleLoggedIn()">LOGIN</button>
+    <span class="pull-right" data-ng-switch="isLoggedIn()">
+        <div data-ng-switch-when="true"><span data-ng-bind="getEmail()"></span> <button data-ng-click="logout()">LOGOUT</button></div>
+        <div data-ng-switch-default><input type="text" data-ng-model="email"/> <button data-ng-click="login(email)">LOGIN</button></div>
     </span>
 </nav>

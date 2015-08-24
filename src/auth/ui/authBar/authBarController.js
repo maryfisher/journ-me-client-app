@@ -3,11 +3,21 @@
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmAuthBarController', function($scope) {
-        $scope.loggedIn = false;
+    app.controller('jmAuthBarController', function($scope, jmUserAuthService) {
+        $scope.isLoggedIn = function() {
+            return jmUserAuthService.isLoggedIn();
+        };
 
-        $scope.toggleLoggedIn = function() {
-            $scope.loggedIn = !$scope.loggedIn;
+        $scope.getEmail = function() {
+            return  jmUserAuthService.getLoggedInUserEmail();
+        };
+
+        $scope.login = function(email) {
+            jmUserAuthService.login(email, 'TEDDY');
+        };
+
+        $scope.logout = function() {
+            jmUserAuthService.logout();
         };
     });
 
