@@ -1,0 +1,9 @@
+<nav class="navbar navbar-default">
+    <a href="/#/home">Home</a>
+    <label>Search</label>
+    <input type="text"/>
+    <span class="pull-right" data-ng-switch="loggedIn">
+        <div data-ng-switch-when="true"><span data-ng-bind="desiredUser"></span> <button data-ng-click="toggleLoggedIn()">LOGOUT</button></div>
+        <button data-ng-switch-default data-ng-click="toggleLoggedIn()">LOGIN</button>
+    </span>
+</nav>

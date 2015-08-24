@@ -47,10 +47,10 @@ module.exports = function(grunt) {
     ngtemplates: {
       all: {
         cwd: '<%= app.src %>',
-        src: 'ui/**/*.tpl.html',
+        src: '**/*.tpl.html',
         dest: '<%= app.temp %>/scripts/templates.js',
         options: {
-          module: 'JournMeClient',
+          module: 'jmClient',
           htmlmin: {
             collapseBooleanAttributes:      true,
             collapseWhitespace:             true,

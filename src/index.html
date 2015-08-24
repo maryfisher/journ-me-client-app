@@ -3,13 +3,18 @@
 <html>
 <head>
     <title>JournMe client app</title>
+
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css"/>
 </head>
-<body data-ng-app="JournMeClient">
+<body data-ng-app="jmClient">
 
     <div>
+        <data-jm-auth-bar data-desired-user="user" x-bootstrap-size="100"/>
+    </div>
+    <div>
         <ul>
-            <li><a href="#/home">HOME LINK</a></li>
-            <li><a href="#/browse">BROWSE LINK</a></li>
+            <li><a href="/#/home">HOME</a></li>
+            <li><a href="/#/browse">BROWSE</a></li>
         </ul>
     </div>
 
