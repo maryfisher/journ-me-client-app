@@ -29,15 +29,10 @@ module.exports = function(grunt) {
       }
     },
     clean: {
-      all: {
-        files: [{
-          dot: true,
-          src: [
-            '<%= app.temp %>',
-            '<%= app.dist %>'
-          ]
-        }]
-      }
+      all: [
+        '<%= app.temp %>',
+        '<%= app.dist %>'
+      ]
     },
     jshint: {
       options: {
@@ -50,24 +45,50 @@ module.exports = function(grunt) {
       ]
     },
     ngtemplates: {
-      JournMeClientMoment: {
-        src: '<%= app.src %>/ui/moment/**/*.html',
+      all: {
+        cwd: '<%= app.src %>',
+        src: '**/*.tpl.html',
         dest: '<%= app.temp %>/scripts/templates.js',
         options: {
-          url: function(url) {
-            return url.replace(/(src\/ui\/([\s\S]*?)\/)/, '').replace(/.html/, '');
+          module: 'jmClient',
+          htmlmin: {
+            collapseBooleanAttributes:      true,
+            collapseWhitespace:             true,
+            removeAttributeQuotes:          true,
+            removeComments:                 true, // Only if you don't use comment directives!
+            removeEmptyAttributes:          true,
+            removeRedundantAttributes:      true,
+            removeScriptTypeAttributes:     true,
+            removeStyleLinkTypeAttributes:  true
           }
         }
+      }
+    },
+    ngAnnotate: {
+      all: {
+        expand: true,
+        src: [
+          '<%= app.src %>/**/*.js'
+        ],
+        dest: '<%= app.temp %>/ngAnnotate'
+      }
+    },
+    concat: {
+      options: {
+        separator: ';' + grunt.util.linefeed,
+        sourceMap: true
       },
-      JournMeClientJourney: {
-        src: '<%= app.src %>/ui/journey/**/*.html',
-        dest: '<%= app.temp %>/scripts/templates.js',
-        options: {
-          append: true,
-          url: function(url) {
-            return url.replace(/(src\/ui\/([\s\S]*?)\/)/, '').replace(/.html/, '');
-          }
-        }
+      all: {
+        src: ['<%= app.temp %>/ngAnnotate/**/*.js'],
+        dest: '<%= app.temp %>/scripts/build.js'
+      }
+    },
+    copy: {
+      dev: {
+        expand: true,
+        cwd: '<%= app.src %>/',
+        src: ['index.html'],
+        dest: '<%= app.temp %>/'
       }
     },
     express: {
@@ -76,19 +97,22 @@ module.exports = function(grunt) {
           port: 9000,
           hostname: '0.0.0.0',
           bases: [
-            '<%= app.src %>',
             '<%= app.temp %>',
             '<%= app.lib %>'
           ],
-          //server: '<%= app.test %>/server/serverMock.js', -- setting up server mock responses later
-          livereload: true
+          server: '<%= app.test %>/server/serverMock.js', // -- don't forget to restart Express via Grunt when changing this file
+          livereload: true //watches the bases folders for any changes
         }
       }
     },
     watch: {
       ngTemplates: {
-        files: ['<%= app.src %>/ui/**/*.html'],
-        tasks: ['ngtemplates']
+        files: ['<%= app.src %>/**/*.html'],
+        tasks: ['ngtemplates', 'copy:dev']
+      },
+      dev: {
+        files: ['<%= app.src %>/**/*.js'],
+        tasks: ['ngAnnotate', 'concat']
       }
     }
   });
@@ -97,12 +121,16 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean',
     'jshint',
-    'ngtemplates'
+    'ngtemplates',
+    'ngAnnotate',
+    'concat',
+    'copy:dev'
   ]);
 
   grunt.registerTask('run', [
     'build',
     'express',
+    // Express usually stops after Grunt task execution completes. Keep execution alive via subsequent task 'express-keepalive' or another alive task such as 'watch'
     'watch'
   ]);
 
