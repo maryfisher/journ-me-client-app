@@ -100,7 +100,7 @@ module.exports = function(grunt) {
             '<%= app.temp %>',
             '<%= app.lib %>'
           ],
-          //server: '<%= app.test %>/server/serverMock.js', -- setting up server mock responses later
+          server: '<%= app.test %>/server/serverMock.js', // -- don't forget to restart Express via Grunt when changing this file
           livereload: true //watches the bases folders for any changes
         }
       }
