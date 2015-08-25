@@ -3,6 +3,7 @@
 
     var app = angular.module('jmClient', [
         'ngRoute',
+        'ui.bootstrap',
         'jmAuth'
     ]);
 

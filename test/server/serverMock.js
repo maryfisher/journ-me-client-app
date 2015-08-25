@@ -51,7 +51,7 @@
         .sendFile('/server/pages/' + req.params.userId + '.png', {
           root: './test', //this is computer drive file path, not Express server URL path
           headers: {
-            'Content-Type': 'image/jpeg'
+            'Content-Type': 'image/png'
           }
         });
     } catch (e) {

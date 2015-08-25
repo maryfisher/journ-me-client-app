@@ -12,10 +12,6 @@
             return  jmUserAuthService.getLoggedInUserEmail();
         };
 
-        $scope.login = function(email) {
-            jmUserAuthService.login(email, 'TEDDY');
-        };
-
         $scope.logout = function() {
             jmUserAuthService.logout();
         };
