@@ -8,12 +8,26 @@
             timeout: 60000
         };
 
-        var loggedInUserEmail = '';
+        var loggedInUserEmail = 'Default';
 
         return {
             login: function(email, password) {
                 return $http.post(
                     '/api/user/authentication/login',
+                    {email: email, password: password},
+                    DEFAULT_CONFIG
+                ).then(
+                    function() {
+                        loggedInUserEmail = email;
+                    },
+                    function() {
+                        loggedInUserEmail = '';
+                    }
+                );
+            },
+            register: function(email, password) {
+                return $http.post(
+                    '/api/user/authentication/register',
                     {email: email, password: password},
                     DEFAULT_CONFIG
                 ).then(
