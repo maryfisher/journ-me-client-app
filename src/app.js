@@ -11,6 +11,7 @@
         //$locationProvider.html5Mode(true); -- hashbang mode seems easier to understand
         $routeProvider.when('/home', {templateUrl: 'public/ui/home/home.tpl.html'});
         $routeProvider.when('/browse', {templateUrl: 'public/ui/browse/browse.tpl.html'});
+        $routeProvider.when('/user/:id', {templateUrl: 'user/ui/dashboard/dashboard.tpl.html'});
         $routeProvider.otherwise({redirectTo:'/home'});
     });
 

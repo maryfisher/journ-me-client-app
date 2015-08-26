@@ -3,25 +3,26 @@
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmUserAuthService', function($http) {
+    app.factory('jmUserAuthService', function($http, jmUserAuthVO) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
 
-        var loggedInUserEmail = 'Default';
-
-        return {
+        var service = {
             login: function(email, password) {
                 return $http.post(
                     '/api/user/authentication/login',
                     {email: email, password: password},
                     DEFAULT_CONFIG
                 ).then(
-                    function() {
-                        loggedInUserEmail = email;
+                    function(response) {
+                        jmUserAuthVO.email = response.data.email;
+                        jmUserAuthVO.id = response.data.userId;
+                        jmUserAuthVO.role = response.data.role;
+                        jmUserAuthVO.permissions = response.data.permissions;
                     },
                     function() {
-                        loggedInUserEmail = '';
+                        jmUserAuthVO.email = '';
                     }
                 );
             },
@@ -32,23 +33,20 @@
                     DEFAULT_CONFIG
                 ).then(
                     function() {
-                        loggedInUserEmail = email;
+                        jmUserAuthVO.email = email;
+
                     },
                     function() {
-                        loggedInUserEmail = '';
+                        jmUserAuthVO.email = '';
                     }
                 );
             },
             logout: function() {
-                loggedInUserEmail = '';
-            },
-            isLoggedIn: function() {
-                return loggedInUserEmail !== '';
-            },
-            getLoggedInUserEmail: function() {
-                return loggedInUserEmail;
+                jmUserAuthVO.email = '';
             }
         };
+
+        return service;
     });
 
 } (window.angular));

@@ -8,9 +8,9 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
-    <div class="navbar-form navbar-right" data-ng-switch="isLoggedIn()" data-is-open="status.isopen">
+    <div class="navbar-form navbar-right" data-ng-switch="user.isLoggedIn()" data-is-open="status.isopen">
         <div data-ng-switch-when="true" class="btn-group" dropdown>
-            <button type="button" class="btn" data-dropdown-toggle data-ng-bind="getEmail()">
+            <button type="button" class="btn" data-dropdown-toggle data-ng-bind="user.email">
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" data-aria-labelledby="split-button">

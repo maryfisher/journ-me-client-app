@@ -3,27 +3,11 @@
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmAuthBarController', function($scope, jmUserAuthService) {
-        $scope.isLoggedIn = function() {
-            return jmUserAuthService.isLoggedIn();
-        };
-
-        $scope.getEmail = function() {
-            return  jmUserAuthService.getLoggedInUserEmail();
-        };
+    app.controller('jmAuthBarController', function($scope, jmUserAuthService, jmUserAuthVO) {
+        $scope.user = jmUserAuthVO;
 
         $scope.logout = function() {
             jmUserAuthService.logout();
-        };
-
-        $scope.status = {
-            isopen: false
-        };
-
-        $scope.toggleDropdown = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.isopen = !$scope.status.isopen;
         };
     });
 
