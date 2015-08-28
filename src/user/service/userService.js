@@ -1,3 +1,4 @@
+// @require user.user
 (function(angular, undefined) {
     'use strict';
 

@@ -1,3 +1,4 @@
+// @require auth.auth
 (function(angular, undefined) {
     'use strict';
 

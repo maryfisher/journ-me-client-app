@@ -2,7 +2,6 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('jmUser', []);
-
+    angular.module('jmCommon', []);
 
 } (window.angular));

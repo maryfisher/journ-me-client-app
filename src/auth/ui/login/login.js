@@ -1,3 +1,4 @@
+// @require auth.auth
 (function(angular, undefined) {
     'use strict';
 
@@ -6,7 +7,6 @@
     app.directive('jmLogin', function($modal) {
         return {
             restrict: 'A',
-            scope: {},
             link: function(scope, element) {
                 element.on('click', function() {
                     $modal.open({

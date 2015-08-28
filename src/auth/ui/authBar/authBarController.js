@@ -1,3 +1,5 @@
+// @require auth.auth
+// @require auth.service.userAuthService
 (function(angular, undefined) {
     'use strict';
 
