@@ -39,7 +39,7 @@
                     });
                 });
             } else {
-                res.status(401).body('Unauthorized').end();
+                res.status(401).body('{errorCode: "E210"}').end();
             }
         } catch (e) {
             console.error(e);

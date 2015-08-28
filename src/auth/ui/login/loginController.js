@@ -12,8 +12,10 @@
                 if(jmUserAuthVO.isLoggedIn()){
                     $modalInstance.close();
                 }
-            }, function () {
-
+            }, function (response) {
+                if(response.data.errorCode){
+                    $scope.loginForm.password.$setValidity('pw', false);
+                }
             });
 
         };
