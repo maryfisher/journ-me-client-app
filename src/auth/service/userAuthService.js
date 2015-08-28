@@ -27,6 +27,7 @@
                         jmUserAuthVO.id = response.data.userId;
                         jmUserAuthVO.role = response.data.role;
                         jmUserAuthVO.permissions = response.data.permissions;
+                        jmUserAuthVO.pic = response.data.pic;
                         if(jmUserAuthVO.isLoggedIn()){
                             redirect('/user/' + jmUserAuthVO.id);
                         }

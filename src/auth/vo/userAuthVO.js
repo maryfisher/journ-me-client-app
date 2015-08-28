@@ -9,6 +9,7 @@
         email: '',
         role: '',
         permissions: [],
+        pic: '',
         isLoggedIn: function() {
             return this.email !== '';
         }

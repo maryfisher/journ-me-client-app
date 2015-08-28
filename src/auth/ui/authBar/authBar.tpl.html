@@ -11,10 +11,12 @@
     </form>
     <div class="navbar-form navbar-right" data-ng-switch="user.isLoggedIn()" data-is-open="status.isopen">
         <div data-ng-switch-when="true" class="btn-group" dropdown>
-            <button type="button" class="btn" data-dropdown-toggle data-ng-bind="user.email">
+            <button type="button" class="btn" data-dropdown-toggle >
+                <img data-ng-src="data:image/png;base64, {{user.pic}}" width="40" height="40"  />
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" data-aria-labelledby="split-button">
+                <li role="menuitem" data-ng-bind="user.email"></li>
                 <li role="menuitem">
                     <a href="/#/user/{{user.id}}">View Profile</a>
                 </li>

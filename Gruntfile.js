@@ -117,7 +117,7 @@ module.exports = function (grunt) {
             },
             dev: {
                 files: ['<%= app.src %>/**/*.js'],
-                tasks: ['ngAnnotate', 'preConcat', 'concat']
+                tasks: ['jshint', 'ngAnnotate', 'preConcat', 'concat']
             }
         }
     });

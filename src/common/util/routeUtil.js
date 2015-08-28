@@ -10,7 +10,7 @@
             getUser: function () {
                 return jmRouteConst.USER + '/' + jmUserAuthVO.id;
             }
-        }
+        };
     });
 
 } (window.angular));
