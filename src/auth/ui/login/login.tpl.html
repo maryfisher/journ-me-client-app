@@ -14,10 +14,10 @@
         <div class="form-group">
             <a data-ng-click="forgotPW()">Forgot Password?</a>
         </div>
+        <span data-ng-show="loginForm.password.$error['pw']">Bad luck!</span>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="submit">Login</button>
         <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        <span ng-show="loginForm.password.errors.pw == true">Bad luck!</span>
     </div>
 </form>

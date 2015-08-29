@@ -4,7 +4,7 @@
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmUserAuthService', function($http, jmUserAuthVO, $location) {
+    app.factory('jmUserAuthService', function($http, jmUserAuthVO, $location, $q) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
@@ -31,9 +31,13 @@
                         if(jmUserAuthVO.isLoggedIn()){
                             redirect('/user/' + jmUserAuthVO.id);
                         }
+
+                        return response;
                     },
-                    function() {
+                    function(response) {
                         jmUserAuthVO.email = '';
+
+                        return $q.reject(response);
                     }
                 );
             },
