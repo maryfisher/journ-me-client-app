@@ -11,17 +11,30 @@
     ]);
 
     app.config(function ($routeProvider, jmRouteConst) {
-        //$locationProvider.html5Mode(true); -- hashbang mode seems easier to understand
-        $routeProvider.when(jmRouteConst.HOME, {
+        $routeProvider.when(jmRouteConst.HOME_PATH, {
             templateUrl: 'public/ui/home/home.tpl.html',
-            redirect: true
+            redirectIfAuthenticated: true,
+            redirectUrl: jmRouteConst.DASHBOARD_PATH
         });
-        $routeProvider.when(jmRouteConst.BROWSE, {templateUrl: 'public/ui/browse/browse.tpl.html'});
-        $routeProvider.when(jmRouteConst.USER_PATH, {
+        $routeProvider.when(jmRouteConst.BROWSER_PATH, {
+            templateUrl: 'public/ui/browse/browse.tpl.html'
+        });
+        $routeProvider.when(jmRouteConst.DASHBOARD_PATH, {
             templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
-            requiresLogin: true
+            redirectIfUnauthenticated: true,
+            redirectUrl: jmRouteConst.HOME_PATH
         });
-        $routeProvider.otherwise({redirectTo:'/home'});
+        $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_URL});
+    });
+
+    app.run(function ($rootScope, $location, jmUserAuthVO) {
+        $rootScope.$on('$routeChangeStart', function (event, next) {
+            if (!jmUserAuthVO.isLoggedIn() && next.redirectIfUnauthenticated) {
+                $location.path(next.redirectUrl);
+            } else if (jmUserAuthVO.isLoggedIn() && next.redirectIfAuthenticated) {
+                $location.path(next.redirectUrl);
+            }
+        });
     });
 
 } (window.angular));

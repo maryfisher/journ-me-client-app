@@ -5,13 +5,13 @@
     var auth = angular.module('jmAuth');
 
     auth.value('jmUserAuthVO', {
-        id: 0,
-        email: '',
-        role: '',
-        permissions: [],
-        pic: '',
+        id: undefined,
+        email: undefined,
+        role: undefined,
+        permissions: undefined,
+        pic: undefined,
         isLoggedIn: function() {
-            return this.email !== '';
+            return (!!this.id);
         }
     });
 

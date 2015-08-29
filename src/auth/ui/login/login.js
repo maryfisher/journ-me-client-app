@@ -11,8 +11,8 @@
                 element.on('click', function() {
                     $modal.open({
                         animation: true,
-                        templateUrl: 'auth/ui/login/login.tpl.html',
-                        controller: 'jmLoginController'
+                        templateUrl: 'auth/ui/login/loginForm.tpl.html',
+                        controller: 'jmLoginFormController'
                     });
                 });
             }

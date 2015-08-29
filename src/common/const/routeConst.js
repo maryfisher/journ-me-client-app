@@ -4,13 +4,13 @@
 
     var auth = angular.module('jmCommon');
 
-    var home = '/home';
+    var userPath = '/user';
 
     auth.constant('jmRouteConst', {
-        HOME: home,
-        USER: '/user',
-        BROWSE: '/browse',
-        USER_PATH: home + '/:id'
+        HOME_PATH: '/home',
+        BROWSER_PATH: '/browse',
+        USER_PATH: userPath,
+        DASHBOARD_PATH: userPath + '/dashboard'
     });
 
 

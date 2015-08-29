@@ -4,68 +4,82 @@
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmUserAuthService', function($http, jmUserAuthVO, $location, $q) {
+    app.factory('jmUserAuthService', function($http, jmUserAuthVO, $q) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
 
-        // Redirect to the given url (defaults to '/')
-        function redirect(url) {
-            url = url || '/';
-            $location.path(url);
+        function invalidateUser() {
+            jmUserAuthVO.email = undefined;
+            jmUserAuthVO.id = undefined;
+            jmUserAuthVO.role = undefined;
+            jmUserAuthVO.permissions = undefined;
+            jmUserAuthVO.pic = undefined;
         }
 
-        var service = {
-            login: function(email, password) {
+        function populateUserDetails(responseUser) {
+            jmUserAuthVO.email = responseUser.email;
+            jmUserAuthVO.id = responseUser.userId;
+            jmUserAuthVO.role = responseUser.role;
+            jmUserAuthVO.permissions = responseUser.permissions;
+            jmUserAuthVO.pic = responseUser.pic;
+        }
+
+        return {
+            login: function (email, password) {
                 return $http.post(
                     '/api/user/authentication/login',
-                    {email: email, password: password},
+                    {
+                        email: email,
+                        password: password
+                    },
                     DEFAULT_CONFIG
                 ).then(
-                    function(response) {
-                        jmUserAuthVO.email = response.data.email;
-                        jmUserAuthVO.id = response.data.userId;
-                        jmUserAuthVO.role = response.data.role;
-                        jmUserAuthVO.permissions = response.data.permissions;
-                        jmUserAuthVO.pic = response.data.pic;
-                        if(jmUserAuthVO.isLoggedIn()){
-                            redirect('/user/' + jmUserAuthVO.id);
-                        }
-
+                    function (response) {
+                        populateUserDetails(response.data);
                         return response;
                     },
-                    function(response) {
-                        jmUserAuthVO.email = '';
-
+                    function (response) {
+                        invalidateUser();
                         return $q.reject(response);
                     }
                 );
             },
-            register: function(email, password) {
+            register: function (email, password) {
                 return $http.post(
                     '/api/user/authentication/register',
-                    {email: email, password: password},
+                    {
+                        email: email,
+                        password: password
+                    },
                     DEFAULT_CONFIG
                 ).then(
-                    function() {
-                        jmUserAuthVO.email = email;
-
+                    function (response) {
+                        populateUserDetails(response.data);
+                        return response;
                     },
-                    function() {
-                        jmUserAuthVO.email = '';
+                    function (response) {
+                        invalidateUser();
+                        return $q.reject(response);
                     }
                 );
             },
-            logout: function(redirectTo) {
-                //$http.post('api/user/authentication/logout').then(function() {
-                    jmUserAuthVO.email = '';
-                    redirect(redirectTo);
-                //});
-
+            logout: function () {
+                if (jmUserAuthVO.isLoggedIn()) {
+                    return $http.post(
+                        'api/user/authentication/logout',
+                        {userId: jmUserAuthVO.id},
+                        DEFAULT_CONFIG
+                    ).finally(
+                        function () {
+                            invalidateUser();
+                        }
+                    );
+                } else {
+                    return $q.reject('Cannot log out if not logged in.');
+                }
             }
         };
-
-        return service;
     });
 
 } (window.angular));

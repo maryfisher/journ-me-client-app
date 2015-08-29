@@ -7,8 +7,9 @@
     app.factory('jmRouteUtil', function(jmRouteConst, jmUserAuthVO) {
         return {
             routeConst: jmRouteConst,
-            getUser: function () {
-                return jmRouteConst.USER + '/' + jmUserAuthVO.id;
+            getUserPath: function (userId) {
+                userId = userId || jmUserAuthVO.id;
+                return jmRouteConst.USER_PATH + '/' + userId;
             }
         };
     });

@@ -21,12 +21,21 @@
 <body data-ng-app="jmApp">
 
     <div>
-        <data-jm-auth-bar />
+        <data-jm-auth-bar ></data-jm-auth-bar>
     </div>
+
     <div>
         <ul>
-            <li><a href="/#/home">HOME</a></li>
-            <li><a href="/#/browse">BROWSE</a></li>
+            <!--TODO: new jmHref directive that understands constant values from jmRouteConst, e.g. data-jm-href="HOME_PATH" -->
+            <li>
+                <a href="#/home">HOME</a>
+            </li>
+            <li>
+                <a href="#/browse">BROWSE</a>
+            </li>
+            <li>
+                <a href="#/user/dashboard">DASHBOARD</a>
+            </li>
         </ul>
     </div>
 
