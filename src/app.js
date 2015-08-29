@@ -24,7 +24,7 @@
             redirectIfUnauthenticated: true,
             redirectUrl: jmRouteConst.HOME_PATH
         });
-        $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_URL});
+        $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_PATH});
     });
 
     app.run(function ($rootScope, $location, jmUserAuthVO) {
