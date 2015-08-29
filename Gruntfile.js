@@ -50,7 +50,7 @@ module.exports = function (grunt) {
                 src: '**/*.tpl.html',
                 dest: '<%= app.temp %>/scripts/templates.js',
                 options: {
-                    module: 'jmClient',
+                    module: 'jmApp',
                     htmlmin: {
                         collapseBooleanAttributes: true,
                         collapseWhitespace: true,
@@ -67,18 +67,17 @@ module.exports = function (grunt) {
         ngAnnotate: {
             all: {
                 expand: true,
-                src: [
-                    '<%= app.src %>/**/*.js'
-                ],
+                cwd: '<%= app.src %>',
+                src: ['**/*.js'],
                 dest: '<%= app.temp %>/ngAnnotate'
             }
         },
         preConcat: {
             correct: {
                 options: {
-                    cwd: '<%= app.temp %>/ngAnnotate/src'
+                    cwd: '<%= app.temp %>/ngAnnotate'
                 },
-                src: 'src/**/*.js',
+                src: '<%= app.temp %>/ngAnnotate/**/*.js',
                 dest: '<%= app.temp %>/scripts/build.js'
             }
         },
@@ -141,7 +140,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'bower',
+        //'bower',
         'run'
     ]);
 };

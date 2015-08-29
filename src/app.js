@@ -2,7 +2,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    var app = angular.module('jmClient', [
+    var app = angular.module('jmApp', [
         'ngRoute',
         'ui.bootstrap',
         'jmAuth',
