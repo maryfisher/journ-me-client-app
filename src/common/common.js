@@ -2,6 +2,6 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('jmAuth', []);
+    angular.module('jmCommon', []);
 
 } (window.angular));

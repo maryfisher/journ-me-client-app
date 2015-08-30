@@ -2,6 +2,7 @@
 (function(angular, undefined) {
     'use strict';
 
-    angular.module('jmAuth', []);
+    angular.module('jmUser', []);
+
 
 } (window.angular));

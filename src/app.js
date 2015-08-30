@@ -1,16 +1,40 @@
+
 (function(angular, undefined) {
     'use strict';
 
-    var app = angular.module('jmClient', [
+    var app = angular.module('jmApp', [
         'ngRoute',
-        'jmAuth'
+        'ui.bootstrap',
+        'jmAuth',
+        'jmUser',
+        'jmCommon'
     ]);
 
-    app.config(function ($routeProvider) {
-        //$locationProvider.html5Mode(true); -- hashbang mode seems easier to understand
-        $routeProvider.when('/home', {templateUrl: 'public/ui/home/home.tpl.html'});
-        $routeProvider.when('/browse', {templateUrl: 'public/ui/browse/browse.tpl.html'});
-        $routeProvider.otherwise({redirectTo:'/home'});
+    app.config(function ($routeProvider, jmRouteConst) {
+        $routeProvider.when(jmRouteConst.HOME_PATH, {
+            templateUrl: 'public/ui/home/home.tpl.html',
+            redirectIfAuthenticated: true,
+            redirectUrl: jmRouteConst.DASHBOARD_PATH
+        });
+        $routeProvider.when(jmRouteConst.BROWSE_PATH, {
+            templateUrl: 'public/ui/browse/browse.tpl.html'
+        });
+        $routeProvider.when(jmRouteConst.DASHBOARD_PATH, {
+            templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
+            redirectIfUnauthenticated: true,
+            redirectUrl: jmRouteConst.HOME_PATH
+        });
+        $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_PATH});
+    });
+
+    app.run(function ($rootScope, $location, jmUserAuthVO) {
+        $rootScope.$on('$routeChangeStart', function (event, next) {
+            if (!jmUserAuthVO.isLoggedIn() && next.redirectIfUnauthenticated) {
+                $location.path(next.redirectUrl);
+            } else if (jmUserAuthVO.isLoggedIn() && next.redirectIfAuthenticated) {
+                $location.path(next.redirectUrl);
+            }
+        });
     });
 
 } (window.angular));

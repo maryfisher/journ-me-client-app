@@ -1,9 +1,44 @@
 <nav class="navbar navbar-default">
-    <a href="/#/home">Home</a>
-    <label>Search</label>
-    <input type="text"/>
-    <span class="pull-right" data-ng-switch="isLoggedIn()">
-        <div data-ng-switch-when="true"><span data-ng-bind="getEmail()"></span> <button data-ng-click="logout()">LOGOUT</button></div>
-        <div data-ng-switch-default><input type="text" data-ng-model="email"/> <button data-ng-click="login(email)">LOGIN</button></div>
-    </span>
+    <!--TODO: replace ngSwitch here with new jmAuthorize directive that takes user permissions into consideration" -->
+    <div data-ng-switch="user.isLoggedIn()" class="nav navbar-nav">
+        <div data-ng-switch-when="true">
+            <a data-jm-href="DASHBOARD_PATH">Dashboard</a>
+        </div>
+        <div data-ng-switch-default>
+            <a data-jm-href="HOME_PATH">Home</a>
+        </div>
+    </div>
+
+    <form role="search" class="navbar-form navbar-left">
+        <div class="form-group">
+            <input type="text" placeholder="Search" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+    <!--TODO: replace ngSwitch here with new jmAuthorize directive that takes user permissions into consideration" -->
+    <div data-ng-switch="user.isLoggedIn()" data-is-open="status.isopen" class="navbar-form navbar-right">
+        <div data-ng-switch-when="true" data-dropdown class="btn-group">
+            <button type="button" data-dropdown-toggle class="btn">
+                <img data-ng-src="data:image/png;base64, {{user.pic}}" width="40" height="40"/>
+                <span class="caret"></span>
+            </button>
+            <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
+                <li role="menuitem" data-ng-bind="user.email"></li>
+                <li role="menuitem">
+                    <a data-jm-href="PROFILE_PATH">View Profile</a>
+                </li>
+                <li role="menuitem">
+                    <a href="#" data-ng-click="logout()">Logout</a>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-primary">
+                + New Journey
+            </button>
+        </div>
+        <div data-ng-switch-default>
+            <button class="btn btn-primary" data-jm-login>LOGIN</button>
+            <button class="btn" data-jm-register>Register</button>
+        </div>
+    </div>
 </nav>
