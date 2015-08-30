@@ -8,9 +8,10 @@
 
     auth.constant('jmRouteConst', {
         HOME_PATH: '/home',
-        BROWSER_PATH: '/browse',
+        BROWSE_PATH: '/browse',
         USER_PATH: userPath,
-        DASHBOARD_PATH: userPath + '/dashboard'
+        DASHBOARD_PATH: userPath + '/dashboard',
+        PROFILE_PATH:  userPath + '/profile'
     });
 
 

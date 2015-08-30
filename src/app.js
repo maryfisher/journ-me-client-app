@@ -16,7 +16,7 @@
             redirectIfAuthenticated: true,
             redirectUrl: jmRouteConst.DASHBOARD_PATH
         });
-        $routeProvider.when(jmRouteConst.BROWSER_PATH, {
+        $routeProvider.when(jmRouteConst.BROWSE_PATH, {
             templateUrl: 'public/ui/browse/browse.tpl.html'
         });
         $routeProvider.when(jmRouteConst.DASHBOARD_PATH, {

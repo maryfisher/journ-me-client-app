@@ -11,6 +11,10 @@
                 userId = userId || jmUserAuthVO.id;
                 return jmRouteConst.USER_PATH + '/' + userId;
             },
+            getHrefPath: function (pathConstName) {
+                var path = pathConstName ? jmRouteConst[pathConstName] : '';
+                return path ? '#' + path : '#';
+            },
             redirectTo: function(path) {
                 $location.path(path);
             }
