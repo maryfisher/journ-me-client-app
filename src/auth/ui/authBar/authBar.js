@@ -4,7 +4,7 @@
 
     var app = angular.module('jmAuth');
 
-    app.directive('jmAuthBar', function(jmUserAuthService, jmUserAuthVO, jmRouteUtil) {
+    app.directive('jmAuthBar', function(jmUserAuthService, jmUserAuthVO, jmRouteUtil){//, $location){
         return {
             templateUrl: 'auth/ui/authBar/authBar.tpl.html',
             restrict: 'E',
@@ -17,7 +17,7 @@
                 scope.logout = function () {
                     jmUserAuthService.logout().finally(
                         function () {
-                            if (!jmUserAuthVO.isLoggedIn()) {
+                            if (!jmUserAuthVO.isLoggedIn()){// && $location.path() === jmRouteUtil.routeConst.DASHBOARD_PATH) {
                                 jmRouteUtil.redirectTo(jmRouteUtil.routeConst.HOME_PATH);
                             }
                         }

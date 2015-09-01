@@ -39,8 +39,19 @@
                     });
                 });
             } else {
-                res.status(401).body('{errorCode: "E210"}').end();
+                res.status(401).end();
             }
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('{errorCode: "E210"}').end();
+        }
+    });
+
+    mock.post('/api/user/authentication/logout/', function postPage(req, res) {
+        try {
+            res.status(200).set('Content-Type', 'text/json').send({
+
+            });
         } catch (e) {
             console.error(e);
             res.status(401).body('Unauthorized').end();
@@ -72,6 +83,7 @@
             res.status(200).send({
                 id: req.params.userId,
                 journeys: [
+                    {id: 1, name: 'Journey 1', descript: 'Description of Journey 1'},
                     {id: 2, name: 'Journey 2', descript: 'Description of Journey 2'}
                 ]
             });
@@ -101,9 +113,10 @@
     mock.get('/api/journey/:journeyId', function(req, res) {
         try {
             res.status(200).send({
-                id: req.params.journeyId,
+                id: req.params.journeyId[0],
                 name: 'Journey ' + req.params.journeyId,
-                descript: 'Description of Journey ' + req.params.journeyId
+                descript: 'Description of Journey ' + req.params.journeyId,
+                isUser: true
             });
 
         } catch (e) {
