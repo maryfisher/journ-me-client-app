@@ -4,7 +4,7 @@
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmUserAuthService', function($http, jmUserAuthVO, $q) {
+    app.factory('jmUserAuthService', function($http, jmUserAuthVO, jmServerConst, $q) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
@@ -28,7 +28,7 @@
         return {
             login: function (email, password) {
                 return $http.post(
-                    '/api/user/authentication/login',
+                    jmServerConst.LOGIN_PATH,
                     {
                         email: email,
                         password: password
@@ -47,7 +47,7 @@
             },
             register: function (email, password) {
                 return $http.post(
-                    '/api/user/authentication/register',
+                    jmServerConst.REGISTER_PATH,
                     {
                         email: email,
                         password: password
@@ -67,7 +67,7 @@
             logout: function () {
                 if (jmUserAuthVO.isLoggedIn()) {
                     return $http.post(
-                        'api/user/authentication/logout',
+                        jmServerConst.LOGOUT_PATH,
                         {userId: jmUserAuthVO.id},
                         DEFAULT_CONFIG
                     ).finally(

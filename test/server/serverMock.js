@@ -17,7 +17,7 @@
     });
 
     mock.use(bodyParser.json());
-    mock.param('userId', /^\d+$/);
+    mock.param('userId', /.*/);
     mock.param('journeyId', /.*/);
     mock.param('momentId', /.*/);
 
@@ -52,7 +52,6 @@
         try {
             var email = req.body.email;
 
-
             res.status(200).set('Content-Type', 'text/json').send({
                 email: email,
                 userId: 2,
@@ -68,6 +67,21 @@
         }
     });
 
+    mock.get('/api/user/:userId', function(req, res) {
+        try {
+            res.status(200).send({
+                id: req.params.userId,
+                journeys: [
+                    {id: 2, name: 'Journey 2', descript: 'Description of Journey 2'}
+                ]
+            });
+
+        } catch (e) {
+            console.error(e);
+            res.status(404).body('Not Found').end();
+        }
+    });
+
     // Mock for getting user details - A binary image is returned for user 1, 2, 3 or 4 - seems to not work with files larger than 170KB!!!
     mock.get('/api/user/:userId/profile-pic', function findCard(req, res) {
         try {
@@ -78,6 +92,20 @@
                         'Content-Type': 'image/png'
                     }
                 });
+        } catch (e) {
+            console.error(e);
+            res.status(404).body('Not Found').end();
+        }
+    });
+
+    mock.get('/api/journey/:journeyId', function(req, res) {
+        try {
+            res.status(200).send({
+                id: req.params.journeyId,
+                name: 'Journey ' + req.params.journeyId,
+                descript: 'Description of Journey ' + req.params.journeyId
+            });
+
         } catch (e) {
             console.error(e);
             res.status(404).body('Not Found').end();

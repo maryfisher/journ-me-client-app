@@ -4,35 +4,23 @@
 
     var app = angular.module('jmUser');
 
-    app.factory('jmUserService', function($http, jmRouteUtil) {
+    app.factory('jmUserService', function($http, $q, jmServerConst, jmUserDashboardVO) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
 
         return {
-            getLoggedInUser: function () {
+            getUser: function (userId) {
                 return $http.get(
-                    jmRouteUtil.getUserPath(),
+                    jmServerConst.USER_PATH + userId,
                     DEFAULT_CONFIG
                 ).then(
-                    function () {
-
+                    function (response) {
+                        jmUserDashboardVO.setUser(response.data);
+                        return response;
                     },
-                    function () {
-                        // don't forget to use $q.reject here!
-                    }
-                );
-            },
-            getOtherUser: function (userId) {
-                return $http.get(
-                    jmRouteUtil.getUserPath(userId),
-                    DEFAULT_CONFIG
-                ).then(
-                    function () {
-
-                    },
-                    function () {
-                        // don't forget to use $q.reject here!
+                    function (response) {
+                        return $q.reject(response);
                     }
                 );
             }

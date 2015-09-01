@@ -4,8 +4,15 @@
 
     var app = angular.module('jmJourney');
 
-    app.controller('jmJourneyDetailController', function ($scope, jmUserDashboardVO, $routeParams) {
-        $scope.journey = jmUserDashboardVO.journeys[$routeParams.id - 1];
+    app.controller('jmJourneyDetailController', function ($scope, jmJourneyService, jmJourneyVO, $routeParams) {
+        $scope.journey = jmJourneyVO;
+
+        var init = function () {
+            jmJourneyService.getJourney($routeParams.id);
+        };
+
+        init();
     });
+
 
 }(window.angular));

@@ -4,9 +4,15 @@
 
     var app = angular.module('jmUser');
 
-    app.controller('jmDashboardController', function ($scope, jmUserDashboardVO) {
+    app.controller('jmDashboardController', function ($scope, jmUserService, jmUserDashboardVO, jmUserAuthVO) {
 
-        $scope.journeys = jmUserDashboardVO.journeys;
+        $scope.user = jmUserDashboardVO;
+
+        var init = function () {
+            jmUserService.getUser(jmUserAuthVO.id);
+        };
+
+        init();
     });
 
 }(window.angular));
