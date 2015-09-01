@@ -7,6 +7,7 @@
         'ui.bootstrap',
         'jmAuth',
         'jmUser',
+        'jmJourney',
         'jmCommon'
     ]);
 
@@ -22,7 +23,12 @@
         $routeProvider.when(jmRouteConst.DASHBOARD_PATH, {
             templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
             redirectIfUnauthenticated: true,
-            redirectUrl: jmRouteConst.HOME_PATH
+            redirectUrl: jmRouteConst.HOME_PATH,
+            controller: 'jmDashboardController'
+        });
+        $routeProvider.when(jmRouteConst.JOURNEY_DETAIL_PATH, {
+            templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
+            controller: 'jmJourneyDetailController'
         });
         $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_PATH});
     });
