@@ -26,10 +26,11 @@
         try {
             var email = req.body.email;
 
-            if (email === 'Ulrike') {
+            if (email === 'die_ulli@hotmail.com') {
                 fs.readFile('./test/server/pages/' + 1 + '.png', 'base64', function (error, data) {
                     res.status(200).set('Content-Type', 'text/json').send({
                         email: email,
+                        name: 'Ulrike',
                         userId: 1,
                         pic: data,
                         role: 'JOURN_ME_STANDARD_USER2',
@@ -62,14 +63,19 @@
     mock.post('/api/user/authentication/register', function postPage(req, res) {
         try {
             var email = req.body.email;
+            var name = req.body.name;
 
-            res.status(200).set('Content-Type', 'text/json').send({
-                email: email,
-                userId: 2,
-                role: 'JOURN_ME_STANDARD_USER',
-                permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
-                    'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
-                    'VIEW_OWNED_JOURNEY_MOMENTS', 'CREATE_OWN_JOURNEY_MOMENT']
+            fs.readFile('./test/server/pages/' + 2 + '.png', 'base64', function (error, data) {
+                res.status(200).set('Content-Type', 'text/json').send({
+                    email: email,
+                    name: name,
+                    userId: 2,
+                    pic: data,
+                    role: 'JOURN_ME_STANDARD_USER',
+                    permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
+                        'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
+                        'VIEW_OWNED_JOURNEY_MOMENTS', 'CREATE_OWN_JOURNEY_MOMENT']
+                });
             });
 
         } catch (e) {

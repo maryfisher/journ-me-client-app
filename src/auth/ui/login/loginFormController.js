@@ -5,14 +5,20 @@
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, jmRouteUtil) {
+    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, jmRouteUtil, $location) {
 
-        $scope.login = function (email, password) {
-            jmUserAuthService.login(email, password).then(
+        $scope.hasValidEmail = function () {
+            return $scope.loginForm.email.$invalid && $scope.loginForm.email.$touched;
+        };
+
+        $scope.login = function () {
+            jmUserAuthService.login($scope.email, $scope.password).then(
                 function () {
                     if (jmUserAuthVO.isLoggedIn()) {
                         $scope.loginForm.password.$setValidity('pw', true);
-                        jmRouteUtil.redirectTo(jmRouteUtil.routeConst.DASHBOARD_PATH);
+                        if ($location.path() === jmRouteUtil.routeConst.HOME_PATH) {
+                            jmRouteUtil.redirectTo(jmRouteUtil.routeConst.DASHBOARD_PATH);
+                        }
                         $modalInstance.close();
                     }
                 }, function () {
