@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title">Register</h3>
+</div>
+<form name="registerForm" ng-submit="register()" novalidate>
+    <div class="modal-body">
+        <div class="form-group" ng-class="{'has-error': hasValidName()}">
+            <label>User Name</label>
+            <input data-ng-model="name" required name="name" type="name" class="form-control" placeholder="User Name" />
+            <p data-ng-show="hasValidName()" class="alert alert-danger">Please select a user name.</p>
+        </div>
+        <div class="form-group" ng-class="{'has-error': hasValidEmail()}">
+            <label>Email</label>
+            <input data-ng-model="email" required name="email" type="email" class="form-control" placeholder="Email" />
+            <p data-ng-show="hasValidEmail()" class="alert alert-danger">Please provide a valid email adress.</p>
+        </div>
+        <div class="form-group" ng-class="{'has-error': hasDiffPasswords()}">
+            <label>Password</label>
+            <input data-ng-model="password" required type="password" class="form-control" placeholder="Password" />
+        </div>
+        <div class="form-group" ng-class="{'has-error': hasDiffPasswords()}">
+            <label>Repeat Password</label>
+            <input data-ng-model="password2" required type="password" class="form-control" placeholder="Repeat Password" />
+        </div>
+        <span data-ng-show="hasDiffPasswords()" class="alert alert-danger">Your passwords do not match!</span>
+
+        <span data-ng-show="registerForm.$error['emailTaken']" class="alert alert-danger">There is already an account linked to this email adress!</span>
+    </div>
+    <div class="modal-footer">
+        <button ng-disabled="registerForm.$invalid" type="submit" class="btn btn-primary">Register</button>
+        <button ng-click="cancel()" class="btn btn-warning" type="button">Cancel</button>
+    </div>
+</form>
