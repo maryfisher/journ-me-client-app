@@ -9,22 +9,6 @@
             timeout: 60000
         };
 
-        function invalidateUser() {
-            jmUserAuthVO.email = undefined;
-            jmUserAuthVO.id = undefined;
-            jmUserAuthVO.role = undefined;
-            jmUserAuthVO.permissions = undefined;
-            jmUserAuthVO.pic = undefined;
-        }
-
-        function populateUserDetails(responseUser) {
-            jmUserAuthVO.email = responseUser.email;
-            jmUserAuthVO.id = responseUser.userId;
-            jmUserAuthVO.role = responseUser.role;
-            jmUserAuthVO.permissions = responseUser.permissions;
-            jmUserAuthVO.pic = responseUser.pic;
-        }
-
         return {
             login: function (email, password) {
                 return $http.post(
@@ -36,30 +20,31 @@
                     DEFAULT_CONFIG
                 ).then(
                     function (response) {
-                        populateUserDetails(response.data);
+                        jmUserAuthVO.populateUserDetails(response.data);
                         return response;
                     },
                     function (response) {
-                        invalidateUser();
+                        jmUserAuthVO.invalidateUser();
                         return $q.reject(response);
                     }
                 );
             },
-            register: function (email, password) {
+            register: function (email, password, name) {
                 return $http.post(
                     jmServerConst.REGISTER_PATH,
                     {
                         email: email,
-                        password: password
+                        password: password,
+                        name: name
                     },
                     DEFAULT_CONFIG
                 ).then(
                     function (response) {
-                        populateUserDetails(response.data);
+                        jmUserAuthVO.populateUserDetails(response.data);
                         return response;
                     },
                     function (response) {
-                        invalidateUser();
+                        jmUserAuthVO.invalidateUser();
                         return $q.reject(response);
                     }
                 );
@@ -72,7 +57,7 @@
                         DEFAULT_CONFIG
                     ).finally(
                         function () {
-                            invalidateUser();
+                            jmUserAuthVO.invalidateUser();
                         }
                     );
                 } else {
