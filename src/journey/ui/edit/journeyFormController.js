@@ -4,7 +4,7 @@
 
     var app = angular.module('jmJourney');
 
-    app.controller('jmJourneyFormController', function ($log, $scope, $modalInstance, journeyId, jmJourneyVO, jmJourneyService, jmRouteUtil) {
+    app.controller('jmJourneyFormController', function ($scope, $modalInstance, journeyId, jmJourneyVO, jmJourneyService, jmRouteUtil) {
 
         $scope.hasJourney = (!!journeyId);
         if(journeyId){
@@ -18,8 +18,7 @@
                 if(!$scope.hasJourney) {
                     jmJourneyService.createJourney($scope.journey).then(
                         function () {
-                            $log.log(jmRouteUtil.getJourneyPath(jmJourneyVO.id));
-                            jmRouteUtil.redirectTo(jmRouteUtil.getJourneyPath(jmJourneyVO.id), false);
+                            jmRouteUtil.redirectTo(jmRouteUtil.getJourneyPath(jmJourneyVO.id, false));
                             $modalInstance.close();
                         },
                         function () {
