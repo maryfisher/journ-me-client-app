@@ -9,18 +9,23 @@
             routeConst: jmRouteConst,
             getUserPath: function (userId) {
                 userId = userId || jmUserAuthVO.id;
-                return util.addHash(jmRouteConst.USER_PATH + '/' + userId);
+                return util.addHashbang(jmRouteConst.USER_PATH + '/' + userId);
             },
-            getJourneyPath: function (journeyId) {
-                return util.addHash(jmRouteConst.JOURNEY_PATH + '/' + journeyId);
+            getJourneyPath: function (journeyId, useHashbang) {
+                useHashbang = typeof useHashbang === 'undefined' ? true : useHashbang;
+                var path = jmRouteConst.JOURNEY_PATH + '/' + journeyId;
+                if(useHashbang){
+                    return util.addHashbang(path);
+                }
+                return path;
             },
             getHrefPath: function (pathConstName) {
-                return util.addHash(pathConstName ? jmRouteConst[pathConstName] : '');
+                return util.addHashbang(pathConstName ? jmRouteConst[pathConstName] : '');
             },
             redirectTo: function(path) {
                 $location.path(path);
             },
-            addHash: function (path) {
+            addHashbang: function (path) {
                 return path ? '#' + path : '#';
             }
         };

@@ -32,6 +32,18 @@
             this.isPublic = response.isPublic || true;
             this.join = response.join || 'all';
             this.isUser = response.isUser;
+        },
+        getEmptyJourney: function(){
+            return {
+                id: undefined,
+                name: undefined,
+                descript: undefined,
+                hasLocation: false,
+                location: undefined,
+                isPublic: true,
+                join: 'all',
+                isUser: true
+            };
         }
     });
 

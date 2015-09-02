@@ -8,8 +8,10 @@
         return {
             restrict: 'A',
             multiElement: true,
-            link: function(scope, element, attr) {
-                scope.$watch(attr.jmLoggedIn, function () {
+            link: function(scope, element) {
+                scope.$watch(function () {
+                    return jmUserAuthVO.isLoggedIn();
+                }, function () {
                     $animate[jmUserAuthVO.isLoggedIn() ? 'removeClass' : 'addClass'](element, 'ng-hide', {
                         tempClasses: 'ng-hide-animate'
                     });

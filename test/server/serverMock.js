@@ -81,7 +81,7 @@
     mock.get('/api/user/:userId', function(req, res) {
         try {
             res.status(200).send({
-                id: req.params.userId,
+                id: req.params.userId[0],
                 journeys: [
                     {id: 1, name: 'Journey 1', descript: 'Description of Journey 1'},
                     {id: 2, name: 'Journey 2', descript: 'Description of Journey 2'}
@@ -122,6 +122,21 @@
         } catch (e) {
             console.error(e);
             res.status(404).body('Not Found').end();
+        }
+    });
+
+    mock.post('/api/journey/create', function(req, res){
+        try {
+            var journey = req.body;
+            journey.id = 3;
+
+            res.status(200).set('Content-Type', 'text/json').send(
+                journey
+            );
+
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('Unauthorized').end();
         }
     });
 

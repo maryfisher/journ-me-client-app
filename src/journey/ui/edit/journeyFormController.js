@@ -4,22 +4,22 @@
 
     var app = angular.module('jmJourney');
 
-    app.controller('jmJourneyFormController', function ($scope, $modalInstance, journeyId, jmUserDashboardVO, jmJourneyVO, jmJourneyService) {
+    app.controller('jmJourneyFormController', function ($log, $scope, $modalInstance, journeyId, jmJourneyVO, jmJourneyService, jmRouteUtil) {
 
-        var journey = jmUserDashboardVO.getJourney(parseInt(journeyId));
-        $scope.hasJourney = (!!journey);
-        if(!journey){
-            jmJourneyVO.invalidateJourney();
+        $scope.hasJourney = (!!journeyId);
+        if(journeyId){
+            $scope.journey = angular.copy(jmJourneyVO);
         }else{
-            jmJourneyVO.setJourney(journey);
+            $scope.journey = jmJourneyVO.getEmptyJourney();
         }
-        $scope.journey = jmJourneyVO;
 
         $scope.save = function () {
             if($scope.journeyForm.$valid){
                 if(!$scope.hasJourney) {
                     jmJourneyService.createJourney($scope.journey).then(
                         function () {
+                            $log.log(jmRouteUtil.getJourneyPath(jmJourneyVO.id));
+                            jmRouteUtil.redirectTo(jmRouteUtil.getJourneyPath(jmJourneyVO.id), false);
                             $modalInstance.close();
                         },
                         function () {
