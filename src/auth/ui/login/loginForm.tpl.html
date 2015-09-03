@@ -1,17 +1,18 @@
 <div class="modal-header">
     <h3 class="modal-title">Login</h3>
 </div>
-<form name="loginForm" data-ng-submit="login(email, password)" novalidate>
+<form name="loginForm" data-ng-submit="login()" novalidate>
     <div class="modal-body">
 
-        <div class="form-group">
+        <div class="form-group" data-ng-class="{'has-error': hasValidEmail()}">
             <label>Email</label>
-            <input type="text" name="email" data-ng-model="email" placeholder="Email" class="form-control"/>
+            <input data-ng-model="email" required name="email" type="email" class="form-control" placeholder="Email" />
+            <p data-ng-show="hasValidEmail()" class="alert alert-danger">Please provide a valid email adress.</p>
         </div>
 
         <div class="form-group">
             <label>Password</label>
-            <input type="password" name="password" data-ng-model="password" placeholder="Password" class="form-control"/>
+            <input data-ng-model="password" required type="password" name="password" class="form-control" placeholder="Password"/>
         </div>
 
         <div class="form-group">
@@ -22,7 +23,7 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-primary" type="submit">Login</button>
+        <button class="btn btn-primary" data-ng-disabled="loginForm.$invalid" type="submit">Login</button>
         <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
     </div>
 </form>

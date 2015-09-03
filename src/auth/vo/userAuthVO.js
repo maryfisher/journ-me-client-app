@@ -12,6 +12,22 @@
         pic: undefined,
         isLoggedIn: function() {
             return (!!this.id);
+        },
+        invalidateUser: function () {
+            this.email = undefined;
+            this.id = undefined;
+            this.role = undefined;
+            this.name = undefined;
+            this.permissions = undefined;
+            this.pic = undefined;
+        },
+        populateUserDetails: function (responseUser) {
+            this.email = responseUser.email;
+            this.id = responseUser.userId;
+            this.name = responseUser.name;
+            this.role = responseUser.role;
+            this.permissions = responseUser.permissions;
+            this.pic = responseUser.pic;
         }
     });
 

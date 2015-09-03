@@ -4,31 +4,15 @@
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmUserAuthService', function($http, jmUserAuthVO, $q) {
+    app.factory('jmUserAuthService', function($http, jmUserAuthVO, jmServerConst, $q) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
 
-        function invalidateUser() {
-            jmUserAuthVO.email = undefined;
-            jmUserAuthVO.id = undefined;
-            jmUserAuthVO.role = undefined;
-            jmUserAuthVO.permissions = undefined;
-            jmUserAuthVO.pic = undefined;
-        }
-
-        function populateUserDetails(responseUser) {
-            jmUserAuthVO.email = responseUser.email;
-            jmUserAuthVO.id = responseUser.userId;
-            jmUserAuthVO.role = responseUser.role;
-            jmUserAuthVO.permissions = responseUser.permissions;
-            jmUserAuthVO.pic = responseUser.pic;
-        }
-
         return {
             login: function (email, password) {
                 return $http.post(
-                    '/api/user/authentication/login',
+                    jmServerConst.LOGIN_PATH,
                     {
                         email: email,
                         password: password
@@ -36,30 +20,31 @@
                     DEFAULT_CONFIG
                 ).then(
                     function (response) {
-                        populateUserDetails(response.data);
+                        jmUserAuthVO.populateUserDetails(response.data);
                         return response;
                     },
                     function (response) {
-                        invalidateUser();
+                        jmUserAuthVO.invalidateUser();
                         return $q.reject(response);
                     }
                 );
             },
-            register: function (email, password) {
+            register: function (email, password, name) {
                 return $http.post(
-                    '/api/user/authentication/register',
+                    jmServerConst.REGISTER_PATH,
                     {
                         email: email,
-                        password: password
+                        password: password,
+                        name: name
                     },
                     DEFAULT_CONFIG
                 ).then(
                     function (response) {
-                        populateUserDetails(response.data);
+                        jmUserAuthVO.populateUserDetails(response.data);
                         return response;
                     },
                     function (response) {
-                        invalidateUser();
+                        jmUserAuthVO.invalidateUser();
                         return $q.reject(response);
                     }
                 );
@@ -67,12 +52,12 @@
             logout: function () {
                 if (jmUserAuthVO.isLoggedIn()) {
                     return $http.post(
-                        'api/user/authentication/logout',
+                        jmServerConst.LOGOUT_PATH,
                         {userId: jmUserAuthVO.id},
                         DEFAULT_CONFIG
                     ).finally(
                         function () {
-                            invalidateUser();
+                            jmUserAuthVO.invalidateUser();
                         }
                     );
                 } else {

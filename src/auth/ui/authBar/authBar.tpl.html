@@ -24,7 +24,7 @@
                 <span class="caret"></span>
             </button>
             <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
-                <li role="menuitem" data-ng-bind="user.email"></li>
+                <li role="menuitem" data-ng-bind="user.name"></li>
                 <li role="menuitem">
                     <a data-jm-href="PROFILE_PATH">View Profile</a>
                 </li>
@@ -32,9 +32,7 @@
                     <a href="#" data-ng-click="logout()">Logout</a>
                 </li>
             </ul>
-            <button type="button" class="btn btn-primary">
-                + New Journey
-            </button>
+            <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
         </div>
         <div data-ng-switch-default>
             <button class="btn btn-primary" data-jm-login>LOGIN</button>

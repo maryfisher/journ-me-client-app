@@ -17,7 +17,7 @@
     });
 
     mock.use(bodyParser.json());
-    mock.param('userId', /^\d+$/);
+    mock.param('userId', /.*/);
     mock.param('journeyId', /.*/);
     mock.param('momentId', /.*/);
 
@@ -26,10 +26,11 @@
         try {
             var email = req.body.email;
 
-            if (email === 'Ulrike') {
+            if (email === 'die_ulli@hotmail.com') {
                 fs.readFile('./test/server/pages/' + 1 + '.png', 'base64', function (error, data) {
                     res.status(200).set('Content-Type', 'text/json').send({
                         email: email,
+                        name: 'Ulrike',
                         userId: 1,
                         pic: data,
                         role: 'JOURN_ME_STANDARD_USER2',
@@ -39,8 +40,19 @@
                     });
                 });
             } else {
-                res.status(401).body('{errorCode: "E210"}').end();
+                res.status(401).end();
             }
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('{errorCode: "E210"}').end();
+        }
+    });
+
+    mock.post('/api/user/authentication/logout/', function postPage(req, res) {
+        try {
+            res.status(200).set('Content-Type', 'text/json').send({
+
+            });
         } catch (e) {
             console.error(e);
             res.status(401).body('Unauthorized').end();
@@ -51,20 +63,40 @@
     mock.post('/api/user/authentication/register', function postPage(req, res) {
         try {
             var email = req.body.email;
+            var name = req.body.name;
 
-
-            res.status(200).set('Content-Type', 'text/json').send({
-                email: email,
-                userId: 2,
-                role: 'JOURN_ME_STANDARD_USER',
-                permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
-                    'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
-                    'VIEW_OWNED_JOURNEY_MOMENTS', 'CREATE_OWN_JOURNEY_MOMENT']
+            fs.readFile('./test/server/pages/' + 2 + '.png', 'base64', function (error, data) {
+                res.status(200).set('Content-Type', 'text/json').send({
+                    email: email,
+                    name: name,
+                    userId: 2,
+                    pic: data,
+                    role: 'JOURN_ME_STANDARD_USER',
+                    permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
+                        'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
+                        'VIEW_OWNED_JOURNEY_MOMENTS', 'CREATE_OWN_JOURNEY_MOMENT']
+                });
             });
 
         } catch (e) {
             console.error(e);
             res.status(401).body('Unauthorized').end();
+        }
+    });
+
+    mock.get('/api/user/:userId', function(req, res) {
+        try {
+            res.status(200).send({
+                id: req.params.userId[0],
+                journeys: [
+                    {id: 1, name: 'Journey 1', descript: 'Description of Journey 1'},
+                    {id: 2, name: 'Journey 2', descript: 'Description of Journey 2'}
+                ]
+            });
+
+        } catch (e) {
+            console.error(e);
+            res.status(404).body('Not Found').end();
         }
     });
 
@@ -81,6 +113,44 @@
         } catch (e) {
             console.error(e);
             res.status(404).body('Not Found').end();
+        }
+    });
+
+    mock.get('/api/journey/:journeyId', function(req, res) {
+        try {
+            res.status(200).send({
+                id: req.params.journeyId[0],
+                name: 'Journey ' + req.params.journeyId,
+                descript: 'Description of Journey ' + req.params.journeyId,
+                isUser: true
+            });
+
+        } catch (e) {
+            console.error(e);
+            res.status(404).body('Not Found').end();
+        }
+    });
+
+    mock.post('/api/journey', function(req, res){
+        try {
+            res.status(200).set('Content-Type', 'text/json').send(
+                {id: 3}
+            );
+
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('Unauthorized').end();
+        }
+    });
+
+    mock.post('/api/journey/:journeyId', function(req, res) {
+        try {
+            res.status(200).set('Content-Type', 'text/json').send(
+                {id: req.body.id}
+            );
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('Unauthorized').end();
         }
     });
 
