@@ -26,7 +26,7 @@
         <span data-ng-show="registerForm.$error['emailTaken']" class="alert alert-danger">There is already an account linked to this email adress!</span>
     </div>
     <div class="modal-footer">
-        <button ng-disabled="registerForm.$invalid" type="submit" class="btn btn-primary">Register</button>
-        <button ng-click="cancel()" class="btn btn-warning" type="button">Cancel</button>
+        <button data-ng-disabled="registerForm.$invalid" type="submit" class="btn btn-primary">Register</button>
+        <button data-ng-click="cancel()" class="btn btn-warning" type="button">Cancel</button>
     </div>
 </form>

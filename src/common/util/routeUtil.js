@@ -12,7 +12,7 @@
                 return util.addHashbang(jmRouteConst.USER_PATH + '/' + userId);
             },
             getJourneyPath: function (journeyId, useHashbang) {
-                useHashbang = typeof useHashbang === 'undefined' ? true : useHashbang;
+                useHashbang = useHashbang || true;
                 var path = jmRouteConst.JOURNEY_PATH + '/' + journeyId;
                 if(useHashbang){
                     return util.addHashbang(path);

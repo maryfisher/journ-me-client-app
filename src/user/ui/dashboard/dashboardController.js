@@ -8,11 +8,8 @@
 
         $scope.user = jmUserDashboardVO;
 
-        var init = function () {
-            jmUserService.getUser(jmUserAuthVO.id);
-        };
+        jmUserService.getUser(jmUserAuthVO.id);
 
-        init();
     });
 
 }(window.angular));

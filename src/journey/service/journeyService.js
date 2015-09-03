@@ -16,9 +16,6 @@
                     {id: id},
                     function (data) {
                         jmJourneyVO.setJourney(data);
-                        if (jmJourneyVO.isUser) {
-                            jmUserDashboardVO.addJourney(jmJourneyVO);
-                        }
                         return data;
                     },
                     function (response) {

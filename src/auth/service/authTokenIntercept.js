@@ -15,8 +15,4 @@
         };
     });
 
-    app.config(function ($httpProvider) {
-        $httpProvider.interceptors.push('jmAuthTokenIntercept');
-    });
-
 } (window.angular));

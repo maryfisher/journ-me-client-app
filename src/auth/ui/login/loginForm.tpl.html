@@ -4,7 +4,7 @@
 <form name="loginForm" data-ng-submit="login()" novalidate>
     <div class="modal-body">
 
-        <div class="form-group" ng-class="{'has-error': hasValidEmail()}">
+        <div class="form-group" data-ng-class="{'has-error': hasValidEmail()}">
             <label>Email</label>
             <input data-ng-model="email" required name="email" type="email" class="form-control" placeholder="Email" />
             <p data-ng-show="hasValidEmail()" class="alert alert-danger">Please provide a valid email adress.</p>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-disabled="loginForm.$invalid" type="submit">Login</button>
+        <button class="btn btn-primary" data-ng-disabled="loginForm.$invalid" type="submit">Login</button>
         <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
     </div>
 </form>

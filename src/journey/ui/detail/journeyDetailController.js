@@ -7,11 +7,8 @@
     app.controller('jmJourneyDetailController', function ($scope, jmJourneyService, jmJourneyVO, $routeParams) {
         $scope.journey = jmJourneyVO;
 
-        var init = function () {
-            jmJourneyService.getJourney($routeParams.id);
-        };
+        jmJourneyService.getJourney($routeParams.id);
 
-        init();
     });
 
 

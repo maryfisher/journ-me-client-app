@@ -5,7 +5,7 @@
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, $route){//jmRouteUtil, $location) {
+    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, $route){
 
         $scope.hasValidEmail = function () {
             return $scope.loginForm.email.$invalid && $scope.loginForm.email.$touched;
@@ -16,9 +16,6 @@
                 function () {
                     if (jmUserAuthVO.isLoggedIn()) {
                         $scope.loginForm.password.$setValidity('pw', true);
-                        /*if ($location.path() === jmRouteUtil.routeConst.HOME_PATH) {
-                            jmRouteUtil.redirectTo(jmRouteUtil.routeConst.DASHBOARD_PATH);
-                        }*/
                         $route.reload();
                         $modalInstance.close();
                     }
