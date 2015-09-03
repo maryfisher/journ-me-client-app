@@ -35,6 +35,10 @@
         $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_PATH});
     });
 
+    app.config(function ($httpProvider) {
+        $httpProvider.interceptors.push('jmAuthTokenIntercept');
+    });
+
     app.run(function ($rootScope, $location, jmUserAuthVO) {
         $rootScope.$on('$routeChangeStart', function (event, next) {
             if (!jmUserAuthVO.isLoggedIn() && next.redirectIfUnauthenticated) {
