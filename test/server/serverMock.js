@@ -125,15 +125,23 @@
         }
     });
 
-    mock.post('/api/journey/create', function(req, res){
+    mock.post('/api/journey', function(req, res){
         try {
-            var journey = req.body;
-            journey.id = 3;
-
             res.status(200).set('Content-Type', 'text/json').send(
-                journey
+                {id: 3}
             );
 
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('Unauthorized').end();
+        }
+    });
+
+    mock.post('/api/journey/:journeyId', function(req, res) {
+        try {
+            res.status(200).set('Content-Type', 'text/json').send(
+                {id: req.body.id}
+            );
         } catch (e) {
             console.error(e);
             res.status(401).body('Unauthorized').end();

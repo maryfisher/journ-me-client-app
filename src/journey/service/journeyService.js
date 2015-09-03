@@ -1,66 +1,58 @@
 // @require auth.auth
-(function(angular, undefined) {
+(function (angular, undefined) {
     'use strict';
 
     var app = angular.module('jmJourney');
 
-    app.factory('jmJourneyService', function($http, $q, jmServerConst, jmJourneyVO, jmUserDashboardVO) {
+    app.factory('jmJourneyService', function (jmServerConst, $q, jmJourneyVO, jmUserDashboardVO, $resource) {
 
-        var service = {
+        var journeyDAO = $resource(
+            jmServerConst.JOURNEY_PATH + '/:id'
+        );
+
+        return {
             getJourney: function (id) {
-                return $http.get(
-                    jmServerConst.JOURNEY_PATH + id
-                ).then(
-                    function (response) {
-                        jmJourneyVO.setJourney(response.data);
-                        if(jmJourneyVO.isUser){
+                return journeyDAO.get(
+                    {id: id},
+                    function (data) {
+                        jmJourneyVO.setJourney(data);
+                        if (jmJourneyVO.isUser) {
                             jmUserDashboardVO.addJourney(jmJourneyVO);
                         }
-                        return response;
+                        return data;
                     },
                     function (response) {
-                        jmJourneyVO.invalidateJourney();
                         return $q.reject(response);
                     }
-                );
+                ).$promise;
             },
             createJourney: function (journey) {
-                var json = journey;
-                return $http.post(
-                    jmServerConst.JOURNEY_PATH_CREATE,
-                    json,
-                    jmServerConst.HTTP_CONFIG
-                ).then(
-                    function (response) {
-                        jmJourneyVO.setJourney(response.data);
-                        return response;
+                return journeyDAO.save(
+                    {},
+                    journey,
+                    function (data) {
+                        journey.id = data.id;
+                        jmJourneyVO.setJourney(journey);
+                        return data;
                     },
                     function (response) {
-                        jmJourneyVO.invalidateJourney();
                         return $q.reject(response);
                     }
-                );
+                ).$promise;
             },
             updateJourney: function (journey) {
-                var json = journey;
-                return $http.post(
-                    jmServerConst.JOURNEY_PATH_UPDATE,
-                    json,
-                    jmServerConst.HTTP_CONFIG
-                ).then(
-                    function (response) {
-                        jmJourneyVO.setJourney(response.data);
-                        return response;
+                return journeyDAO.save(
+                    {id: journey.id},
+                    journey,
+                    function (data) {
+                        return data;
                     },
                     function (response) {
-                        jmJourneyVO.invalidateJourney();
                         return $q.reject(response);
                     }
-                );
+                ).$promise;
             }
         };
-
-        return service;
     });
 
-} (window.angular));
+}(window.angular));

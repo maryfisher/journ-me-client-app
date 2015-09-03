@@ -7,12 +7,9 @@
     var api = '/api/';
     var user = api + 'user/';
     var auth = user + 'authentication/';
-    var journey = api + 'journey/';
 
     common.constant('jmServerConst', {
-        JOURNEY_PATH: journey,
-        JOURNEY_PATH_CREATE: journey + 'create/',
-        JOURNEY_PATH_UPDATE: journey + 'update/',
+        JOURNEY_PATH: api + 'journey',
         USER_PATH: user,
         AUTH_PATH: auth,
         LOGIN_PATH: auth + 'login/',

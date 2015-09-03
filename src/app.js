@@ -5,6 +5,8 @@
     var app = angular.module('jmApp', [
         'ngRoute',
         'ui.bootstrap',
+        'ngCookies',
+        'ngResource',
         'jmAuth',
         'jmUser',
         'jmJourney',
