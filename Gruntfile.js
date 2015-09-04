@@ -16,7 +16,8 @@ module.exports = function (grunt) {
             lib: 'lib',
             test: 'test',
             temp: '.temp',
-            dist: 'dist'
+            dist: 'dist',
+            server: 'server'
         },
         bower: {
             install: {
@@ -104,7 +105,7 @@ module.exports = function (grunt) {
                         '<%= app.temp %>',
                         '<%= app.lib %>'
                     ],
-                    server: '<%= app.test %>/server/serverMock.js', // -- don't forget to restart Express via Grunt when changing this file
+                    server: '<%= app.server %>/server.js', // -- don't forget to restart Express via Grunt when changing this file
                     livereload: true //watches the bases folders for any changes
                 }
             }

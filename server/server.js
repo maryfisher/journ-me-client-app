@@ -1,7 +1,9 @@
-(function serverMockScope(express, bodyParser, fs, mongoose) {
+(function (express, bodyParser, fs) {
     'use strict';
 
-    mongoose.connect('mongodb://localhost:9000/journmedb');
+    var mongoose = require('mongoose'),
+        db = require('./model/db'),
+        user = require('./model/user');
 
     var mock = express();
     mock.param(function (name, fn) {
@@ -23,19 +25,18 @@
     mock.param('journeyId', /.*/);
     mock.param('momentId', /.*/);
 
-    function returnUser(req, res) {
+    // Mock for login - Only one person can currently log in :)
+    mock.post('/api/user/authentication/login', function postPage(req, res) {
         try {
             var email = req.body.email;
-            var authToken = req.body.authToken;
 
-            if (email === 'die_ulli@hotmail.com' || authToken) {
+            if (email === 'die_ulli@hotmail.com') {
                 fs.readFile('./test/server/pages/' + 1 + '.png', 'base64', function (error, data) {
                     res.status(200).set('Content-Type', 'text/json').send({
                         email: email,
                         name: 'Ulrike',
                         userId: 1,
                         pic: data,
-                        authToken: 1,
                         role: 'JOURN_ME_STANDARD_USER2',
                         permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
                             'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
@@ -49,13 +50,7 @@
             console.error(e);
             res.status(401).body('{errorCode: "E210"}').end();
         }
-    }
-
-    // Mock for login - Only one person can currently log in :)
-    mock.post('/api/user/authentication/login', returnUser);
-
-    // Mock for login - Only one person can currently log in :)
-    mock.post('/api/user/authentication/tokenlogin', returnUser);
+    });
 
     mock.post('/api/user/authentication/logout/', function postPage(req, res) {
         try {
@@ -69,7 +64,35 @@
     });
 
     // Mock for registering
-    mock.post('/api/user/authentication/register', function postPage(req, res) {
+    mock.post('/api/user/authentication/register', function (req, res) {
+        try {
+            var email = req.body.email;
+            var name = req.body.name;
+            var pw = req.body.password;
+
+            mongoose.model('User').create({
+                name: name,
+                email: email,
+                password: pw
+            }, function (err, user) {
+                if (err) {
+                    res.send("There was a problem adding the information to the database.");
+                } else {
+                    //user has been created
+                    console.log('POST creating new user: ' + user);
+                    fs.readFile('./test/server/pages/' + 2 + '.png', 'base64', function (error, data) {
+                        user.pic = data;
+                        user.id = 2;
+                        res.status(200).set('Content-Type', 'text/json').send(user);
+                    });
+                }
+            });
+        } catch (e) {
+            console.error(e);
+            res.status(401).body('Unauthorized').end();
+        }
+    });
+    /*mock.post('/api/user/authentication/register', function postPage(req, res) {
         try {
             var email = req.body.email;
             var name = req.body.name;
@@ -80,7 +103,6 @@
                     name: name,
                     userId: 2,
                     pic: data,
-                    authToken: 2,
                     role: 'JOURN_ME_STANDARD_USER',
                     permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
                         'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
@@ -92,7 +114,7 @@
             console.error(e);
             res.status(401).body('Unauthorized').end();
         }
-    });
+    });*/
 
     mock.get('/api/user/:userId', function(req, res) {
         try {
@@ -166,4 +188,4 @@
 
     module.exports = mock;
 
-}(require('express'), require('body-parser'), require('fs'), require('mongoose')));
+}(require('express'), require('body-parser'), require('fs')));

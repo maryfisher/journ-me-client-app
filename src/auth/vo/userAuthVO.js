@@ -25,7 +25,7 @@
         },
         populateUserDetails: function (responseUser) {
             this.email = responseUser.email;
-            this.id = responseUser.userId;
+            this.id = responseUser.id;
             this.name = responseUser.name;
             this.role = responseUser.role;
             this.permissions = responseUser.permissions;

@@ -7,6 +7,7 @@
         'ui.bootstrap',
         'ngCookies',
         'ngResource',
+        'ngMessages',
         'jmAuth',
         'jmUser',
         'jmJourney',
