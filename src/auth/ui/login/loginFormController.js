@@ -7,7 +7,7 @@
 
     app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, $route){
 
-        $scope.hasValidEmail = function () {
+        $scope.hasInvalidEmail = function () {
             return $scope.loginForm.email.$invalid && $scope.loginForm.email.$touched;
         };
 
@@ -15,12 +15,12 @@
             jmUserAuthService.login($scope.email, $scope.password).then(
                 function () {
                     if (jmUserAuthVO.isLoggedIn()) {
-                        $scope.loginForm.password.$setValidity('pw', true);
+                        $scope.loginForm.$setValidity('pw', true);
                         $route.reload();
                         $modalInstance.close();
                     }
                 }, function () {
-                    $scope.loginForm.password.$setValidity('pw', false);
+                    $scope.loginForm.$setValidity('pw', false);
                 }
             );
 
