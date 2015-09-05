@@ -13,11 +13,13 @@
         USER_PATH: user,
         AUTH_PATH: auth,
         LOGIN_PATH: auth + 'login/',
+        LOGIN_TOKEN_PATH: auth + 'tokenlogin/',
         LOGOUT_PATH: auth + 'logout/',
         REGISTER_PATH: auth + 'register/',
         HTTP_CONFIG: {
             timeout: 60000
-        }
+        },
+        COOKIE_TOKEN_KEY: 'jmAuthToken'
     });
 
 
