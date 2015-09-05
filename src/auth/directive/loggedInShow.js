@@ -7,12 +7,13 @@
     module.directive('jmLoggedInShow', function(jmUserAuthVO, $animate) {
         return {
             restrict: 'A',
-            multiElement: true,
-            link: function(scope, element) {
+            link: function(scope, element, attr) {
+                var show = attr.jmLoggedInShow === 'true';
                 scope.$watch(function () {
                     return jmUserAuthVO.isLoggedIn();
                 }, function () {
-                    $animate[jmUserAuthVO.isLoggedIn() ? 'removeClass' : 'addClass'](element, 'ng-hide', {
+                    var remove = (jmUserAuthVO.isLoggedIn() && !show) || (!jmUserAuthVO.isLoggedIn() && show);
+                    $animate[remove ? 'addClass': 'removeClass'](element, 'ng-hide', {
                         tempClasses: 'ng-hide-animate'
                     });
                 });

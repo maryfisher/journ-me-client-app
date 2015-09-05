@@ -1,10 +1,10 @@
 <nav class="navbar navbar-default">
     <!--TODO: replace ngSwitch here with new jmAuthorize directive that takes user permissions into consideration" -->
-    <div data-ng-switch="user.isLoggedIn()" class="nav navbar-nav">
-        <div data-ng-switch-when="true">
+    <div class="nav navbar-nav">
+        <div data-jm-logged-in-show="true">
             <a data-jm-href="DASHBOARD_PATH">Dashboard</a>
         </div>
-        <div data-ng-switch-default>
+        <div data-jm-logged-in-show="false">
             <a data-jm-href="HOME_PATH">Home</a>
         </div>
     </div>
@@ -17,8 +17,8 @@
     </form>
 
     <!--TODO: replace ngSwitch here with new jmAuthorize directive that takes user permissions into consideration" -->
-    <div data-ng-switch="user.isLoggedIn()" data-is-open="status.isopen" class="navbar-form navbar-right">
-        <div data-ng-switch-when="true" data-dropdown class="btn-group">
+    <div data-is-open="status.isopen" class="navbar-form navbar-right">
+        <div data-jm-logged-in-show="true" data-dropdown class="btn-group">
             <button type="button" data-dropdown-toggle class="btn">
                 <img data-ng-src="data:image/png;base64, {{user.pic}}" width="40" height="40"/>
                 <span class="caret"></span>
@@ -34,7 +34,7 @@
             </ul>
             <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
         </div>
-        <div data-ng-switch-default>
+        <div data-jm-logged-in-show="false">
             <button class="btn btn-primary" data-jm-login>LOGIN</button>
             <button class="btn" data-jm-register>Register</button>
         </div>
