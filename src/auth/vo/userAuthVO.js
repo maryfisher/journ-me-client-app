@@ -10,6 +10,7 @@
         role: undefined,
         permissions: undefined,
         pic: undefined,
+        authToken: undefined,
         isLoggedIn: function() {
             return (!!this.id);
         },
@@ -20,6 +21,7 @@
             this.name = undefined;
             this.permissions = undefined;
             this.pic = undefined;
+            this.authToken = undefined;
         },
         populateUserDetails: function (responseUser) {
             this.email = responseUser.email;
@@ -28,6 +30,7 @@
             this.role = responseUser.role;
             this.permissions = responseUser.permissions;
             this.pic = responseUser.pic;
+            this.authToken = responseUser.authToken;
         }
     });
 

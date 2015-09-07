@@ -49,4 +49,8 @@
         });
     });
 
+    app.run(function (jmUserAuthService) {
+        jmUserAuthService.tokenLogin();
+    });
+
 } (window.angular));

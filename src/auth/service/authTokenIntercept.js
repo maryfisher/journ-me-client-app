@@ -8,7 +8,7 @@
         return {
             request: function(config) {
                 if (jmUserAuthVO.isLoggedIn()) {
-                    config.headers['x-jm-auth-token'] = jmUserAuthVO.role;
+                    config.headers['x-jm-auth-token'] = jmUserAuthVO.authToken;
                 }
                 return config;
             }

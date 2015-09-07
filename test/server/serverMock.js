@@ -21,18 +21,19 @@
     mock.param('journeyId', /.*/);
     mock.param('momentId', /.*/);
 
-    // Mock for login - Only one person can currently log in :)
-    mock.post('/api/user/authentication/login', function postPage(req, res) {
+    function returnUser(req, res) {
         try {
             var email = req.body.email;
+            var authToken = req.body.authToken;
 
-            if (email === 'die_ulli@hotmail.com') {
+            if (email === 'die_ulli@hotmail.com' || authToken) {
                 fs.readFile('./test/server/pages/' + 1 + '.png', 'base64', function (error, data) {
                     res.status(200).set('Content-Type', 'text/json').send({
                         email: email,
                         name: 'Ulrike',
                         userId: 1,
                         pic: data,
+                        authToken: 1,
                         role: 'JOURN_ME_STANDARD_USER2',
                         permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
                             'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
@@ -46,7 +47,13 @@
             console.error(e);
             res.status(401).body('{errorCode: "E210"}').end();
         }
-    });
+    }
+
+    // Mock for login - Only one person can currently log in :)
+    mock.post('/api/user/authentication/login', returnUser);
+
+    // Mock for login - Only one person can currently log in :)
+    mock.post('/api/user/authentication/tokenlogin', returnUser);
 
     mock.post('/api/user/authentication/logout/', function postPage(req, res) {
         try {
@@ -71,6 +78,7 @@
                     name: name,
                     userId: 2,
                     pic: data,
+                    authToken: 2,
                     role: 'JOURN_ME_STANDARD_USER',
                     permissions: ['VIEW_OWNED_ALIASES', 'CREATE_OWN_ALIAS',
                         'VIEW_OWNED_JOURNEYS', 'CREATE_OWN_JOURNEY',
