@@ -93,7 +93,7 @@ exports.signout = function(req, res){
         });
     } catch (e) {
         console.error(e);
-        //res.status(401).body('Unauthorized').end();
+        res.status(401).body('Unauthorized').end();
     }
 };
 

@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var JourneySchema = new Schema({
     id: {
-        type: Number
+        type: String
     },
     name: {
         type: String
