@@ -50,8 +50,14 @@
         });
     });
 
-    app.run(function (jmUserAuthService) {
-        jmUserAuthService.tokenLogin();
+    app.run(function (jmUserAuthService, jmUserAuthVO, $route) {
+        jmUserAuthService.tokenLogin().then(function(){
+            if (jmUserAuthVO.isLoggedIn()) {
+                $route.reload();
+            }
+        }, function(){
+            
+        });
     });
 
 } (window.angular));
