@@ -5,7 +5,7 @@
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, $route){
+    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, jmRouteUtil){
 
         $scope.rememberMe = true;
 
@@ -18,7 +18,7 @@
                 function () {
                     if (jmUserAuthVO.isLoggedIn()) {
                         $scope.loginForm.$setValidity('pw', true);
-                        $route.reload();
+                        jmRouteUtil.reload();
                         $modalInstance.close();
                     }
                 }, function () {

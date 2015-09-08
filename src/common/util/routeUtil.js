@@ -4,7 +4,7 @@
 
     var app = angular.module('jmCommon');
 
-    app.factory('jmRouteUtil', function(jmRouteConst, jmUserAuthVO, $location) {
+    app.factory('jmRouteUtil', function(jmRouteConst, jmUserAuthVO, $state) {
         var util = {
             routeConst: jmRouteConst,
             getUserPath: function (userId) {
@@ -23,7 +23,10 @@
                 return util.addHashbang(pathConstName ? jmRouteConst[pathConstName] : '');
             },
             redirectTo: function(path) {
-                $location.path(path);
+                $state.go(path);
+            },
+            reload: function(){
+                $state.go($state.$current, null, { reload: true });
             },
             addHashbang: function (path) {
                 return path ? '#' + path : '#';

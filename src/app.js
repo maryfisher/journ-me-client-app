@@ -1,59 +1,65 @@
-
 (function(angular, undefined) {
     'use strict';
 
     var app = angular.module('jmApp', [
-        'ngRoute',
         'ui.bootstrap',
         'ngCookies',
         'ngResource',
         'ngMessages',
+        'ui.router',
         'jmAuth',
         'jmUser',
         'jmJourney',
         'jmCommon'
     ]);
-
-    app.config(function ($routeProvider, jmRouteConst) {
-        $routeProvider.when(jmRouteConst.HOME_PATH, {
+    
+    app.config(function ($stateProvider, $urlRouterProvider, jmRouteConst) {
+        $urlRouterProvider.otherwise(jmRouteConst.HOME_PATH);
+        $stateProvider.state(jmRouteConst.HOME, {
+            url: jmRouteConst.HOME_PATH,
             templateUrl: 'public/ui/home/home.tpl.html',
             redirectIfAuthenticated: true,
-            redirectUrl: jmRouteConst.DASHBOARD_PATH
+            redirectState: jmRouteConst.DASHBOARD
         });
-        $routeProvider.when(jmRouteConst.BROWSE_PATH, {
+        $stateProvider.state(jmRouteConst.BROWSE, {
+            url: jmRouteConst.BROWSE_PATH,
             templateUrl: 'public/ui/browse/browse.tpl.html'
         });
-        $routeProvider.when(jmRouteConst.DASHBOARD_PATH, {
+        $stateProvider.state(jmRouteConst.DASHBOARD, {
+            url: jmRouteConst.DASHBOARD_PATH,
             templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
             redirectIfUnauthenticated: true,
-            redirectUrl: jmRouteConst.HOME_PATH,
+            redirectState: jmRouteConst.HOME,
             controller: 'jmDashboardController'
         });
-        $routeProvider.when(jmRouteConst.JOURNEY_DETAIL_PATH, {
+        $stateProvider.state(jmRouteConst.JOURNEY_DETAIL, {
+            url: jmRouteConst.JOURNEY_DETAIL_PATH,
             templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
             controller: 'jmJourneyDetailController'
         });
-        $routeProvider.otherwise({redirectTo: jmRouteConst.HOME_PATH});
     });
 
     app.config(function ($httpProvider) {
         $httpProvider.interceptors.push('jmAuthTokenIntercept');
     });
 
-    app.run(function ($rootScope, $location, jmUserAuthVO) {
-        $rootScope.$on('$routeChangeStart', function (event, next) {
+    app.run(function ($rootScope, $state, jmUserAuthVO) {
+        $rootScope.$on('$stateChangeStart', function (event, next) {
+            
             if (!jmUserAuthVO.isLoggedIn() && next.redirectIfUnauthenticated) {
-                $location.path(next.redirectUrl);
+                event.preventDefault();
+                $state.go(next.redirectState);
             } else if (jmUserAuthVO.isLoggedIn() && next.redirectIfAuthenticated) {
-                $location.path(next.redirectUrl);
+                event.preventDefault();
+                $state.go(next.redirectState);
             }
         });
     });
 
-    app.run(function (jmUserAuthService, jmUserAuthVO, $route) {
+    app.run(function (jmUserAuthService, jmUserAuthVO, jmRouteUtil) {
         jmUserAuthService.tokenLogin().then(function(){
             if (jmUserAuthVO.isLoggedIn()) {
-                $route.reload();
+                jmRouteUtil.reload();
             }
         }, function(){
             

@@ -4,10 +4,10 @@
 
     var app = angular.module('jmJourney');
 
-    app.controller('jmJourneyDetailController', function ($scope, jmJourneyService, jmJourneyVO, $routeParams) {
+    app.controller('jmJourneyDetailController', function ($scope, jmJourneyService, jmJourneyVO, $stateParams) {
         $scope.journey = jmJourneyVO;
 
-        jmJourneyService.getJourney($routeParams.id);
+        jmJourneyService.getJourney($stateParams.id);
 
     });
 
