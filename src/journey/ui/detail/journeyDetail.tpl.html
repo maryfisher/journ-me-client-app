@@ -1,14 +1,35 @@
-<h1>{{journey.name}}</h1>
-<p>{{journey.descript}}</p>
-<p>Is from User: {{journey.isUser}}</p>
-<p>Id: {{journey.id}}</p>
-<button data-jm-journey-edit="{{journey.id}}" data-ng-show="journey.isUser" data-jm-logged-in-show="true" class="btn">Edit Journey Details</button>
-<div data-ng-repeat="moment in journey.moments">
-  <h2>Timeline</h2>
-   <ul>
-       <li><a data-ui-sref="journeyDetail.moment({momentId: moment._id})">{{moment.created}}</a></li>
-   </ul>
+<div class="row panel">
+    <div class="col-xs-12 jm-journey-header">
+        <h1 class="text-center">{{journey.name}}</h1>
+        <p class="text-center">{{journey.descript}}</p>
+        <hr></hr>
+        <div class="row container">
+            <div class="col-xs-11"></div>
+            <div class="col-xs-1">
+                <button data-jm-journey-edit="{{journey.id}}" data-ng-show="journey.isUser" data-jm-logged-in-show="true" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <h3 class="text-center">Your Moments</h3>
+        <ul class="list-inline well">
+            <li data-ng-repeat="moment in journey.moments">
+                <a popover-placement="top" popover-trigger="mouseenter" popover="{{moment.created | date:'medium'}}" data-ui-sref="journeyDetail.moment({momentId: moment._id})">
+                    <img src="" width="40" height="40" class="img-rounded" />
+                </a>
+            </li>
+            <li>
+                <a data-ui-sref="momentCreate({journeyId: journey.id})" popover-placement="top" popover-trigger="mouseenter" popover="Add a new moment to your journey!" class="btn btn-primary">+</a>
+            </li>
+        </ul>
+    </div>
 </div>
-<!--<button onClick="createMoment()" class="btn btn-primary">Add Moment</button>-->
-<a data-ui-sref="momentCreate({journeyId: journey.id})" class="btn btn-primary">Add Moment</a>
-<div ui-view></div>
+<div class="row panel" style="">
+    <div ui-view class="col-sm-12"></div>
+</div>
+<div class="row panel" style="">
+    <h2 class="text-center">Linked Journeys</h2>
+    <div class="col-sm-12"></div>
+</div>

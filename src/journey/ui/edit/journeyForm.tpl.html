@@ -4,47 +4,56 @@
         <h3 data-ng-switch-default class="modal-title">Create a New Journey</h3>
     </div>
 </div>
-<form name="journeyForm" data-ng-submit="save()" novalidate>
+<form name="journeyForm" data-ng-submit="save()" novalidate class="form-horizontal" role="form">
     <div class="modal-body">
         <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" data-ng-model="journey.name" required placeholder="E.G 'Loose Weight' or 'Go Fishing'" class="form-control"/>
+            <label class="control-label col-sm-2">Name</label>
+            <div class="col-sm-10">
+                <input type="text" name="name" data-ng-model="journey.name" required placeholder="E.G 'Loose Weight' or 'Go Fishing'" class="form-control" />
+            </div>
         </div>
-
+        <hr></hr>
         <div class="form-group">
-            <label>Description</label>
-            <textarea name="descript" data-ng-model="journey.descript" class="form-control" placeholder="What is your journey about?"></textarea>
+            <label class="control-label col-sm-2">Description</label>
+            <div class="col-sm-10">
+                <textarea name="descript" data-ng-model="journey.descript" class="form-control" placeholder="What is your journey about?"></textarea>
+            </div>
         </div>
-
+        <hr></hr>
         <div class="form-group">
-            <label>Is your journey bound to a specific location?</label>
-            <div class="btn-group">
+            <label class="control-label col-sm-6">Is your journey bound to a specific location?</label>
+            <div class="btn-group col-sm-6">
                 <label class="btn btn-default" ng-model="journey.hasLocation" btn-radio="false" uncheckable>No</label>
                 <label class="btn btn-default" ng-model="journey.hasLocation" btn-radio="true" uncheckable>Yes</label>
             </div>
+        </div>
+        <div class="form-group">
             <div collapse="!journey.hasLocation">
-                <label>Where is your journey taking place?</label>
-                <input type="text" name="name" data-ng-model="journey.location" placeholder="E.G 'Vienna' or 'Alaska'" class="form-control"/>
+                <label class="control-label col-sm-6">Where is your journey taking place?</label>
+                <div class="col-sm-6">
+                    <input type="text" name="name" data-ng-model="journey.location" placeholder="E.G 'Vienna' or 'Alaska'" class="form-control" />
+                </div>
             </div>
         </div>
-
+        <hr></hr>
         <div class="form-group">
-            <label>Who can join your journey?</label>
-            <div class="btn-group">
+            <label class="control-label col-sm-6">Who can join your journey?</label>
+            <div class="btn-group col-sm-6">
                 <label class="btn btn-default" ng-model="journey.join" btn-radio="'all'" uncheckable>Everyone</label>
                 <label class="btn btn-default" ng-model="journey.join" btn-radio="'invite'" uncheckable>Only With Invite</label>
             </div>
         </div>
+        <hr></hr>
         <div class="form-group">
-            <label>Your journey is</label>
-            <div class="btn-group">
+            <label class="control-label col-sm-6">Your journey is</label>
+            <div class="btn-group col-sm-6">
                 <label class="btn btn-default" ng-model="journey.isPublic" btn-radio="true" uncheckable>Public</label>
                 <label class="btn btn-default" ng-model="journey.isPublic" btn-radio="false" uncheckable>Private</label>
             </div>
         </div>
     </div>
 
-    <div class="modal-footer" >
+    <div class="modal-footer">
         <span data-ng-switch="hasJourney">
             <button data-ng-switch-when="true" ng-disabled="journeyForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
             <button data-ng-switch-default ng-disabled="journeyForm.$invalid" type="submit" class="btn btn-primary">Create Journey</button>
