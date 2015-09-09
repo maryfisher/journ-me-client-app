@@ -12,7 +12,7 @@
         location: undefined,
         isPublic: true,
         join: 'all',
-        isUser: true,
+        isUser: false,
         invalidateJourney: function() {
             this.name = undefined;
             this.id = undefined;
@@ -21,7 +21,7 @@
             this.location = undefined;
             this.isPublic = true;
             this.join = 'all';
-            this.isUser = true;
+            this.isUser = false;
         },
         setJourney: function (response) {
             this.name = response.name;
@@ -31,7 +31,7 @@
             this.location = response.location;
             this.isPublic = response.isPublic || true;
             this.join = response.join || 'all';
-            this.isUser = response.isUser;
+            this.isUser = (!!response.user);
         },
         getEmptyJourney: function(){
             return {
@@ -42,7 +42,7 @@
                 location: undefined,
                 isPublic: true,
                 join: 'all',
-                isUser: true
+                isUser: false
             };
         }
     });

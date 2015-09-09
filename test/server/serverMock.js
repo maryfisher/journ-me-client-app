@@ -1,5 +1,7 @@
-(function serverMockScope(express, bodyParser, fs) {
+(function serverMockScope(express, bodyParser, fs, mongoose) {
     'use strict';
+
+    mongoose.connect('mongodb://localhost:9000/journmedb');
 
     var mock = express();
     mock.param(function (name, fn) {
@@ -164,4 +166,4 @@
 
     module.exports = mock;
 
-}(require('express'), require('body-parser'), require('fs')));
+}(require('express'), require('body-parser'), require('fs'), require('mongoose')));

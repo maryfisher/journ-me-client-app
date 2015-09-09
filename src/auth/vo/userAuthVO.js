@@ -12,7 +12,7 @@
         pic: undefined,
         authToken: undefined,
         isLoggedIn: function() {
-            return (!!this.id);
+            return (!!this.email);
         },
         invalidateUser: function () {
             this.email = undefined;
@@ -25,11 +25,11 @@
         },
         populateUserDetails: function (responseUser) {
             this.email = responseUser.email;
-            this.id = responseUser.userId;
+            this.id = responseUser.id;
             this.name = responseUser.name;
             this.role = responseUser.role;
             this.permissions = responseUser.permissions;
-            this.pic = responseUser.pic;
+            this.pic = responseUser.pic.data;
             this.authToken = responseUser.authToken;
         }
     });

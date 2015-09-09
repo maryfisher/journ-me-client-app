@@ -4,7 +4,7 @@
 
     var app = angular.module('jmJourney');
 
-    app.factory('jmJourneyService', function (jmServerConst, $q, jmJourneyVO, jmUserDashboardVO, $resource) {
+    app.factory('jmJourneyService', function (jmServerConst, $q, jmJourneyVO, jmUserAuthVO, jmUserDashboardVO, $resource) {
 
         var journeyDAO = $resource(
             jmServerConst.JOURNEY_PATH + '/:id'
@@ -24,12 +24,12 @@
                 ).$promise;
             },
             createJourney: function (journey) {
+                journey.userId = jmUserAuthVO.id;
                 return journeyDAO.save(
                     {},
                     journey,
                     function (data) {
-                        journey.id = data.id;
-                        jmJourneyVO.setJourney(journey);
+                        jmJourneyVO.setJourney(data);
                         return data;
                     },
                     function (response) {
@@ -42,6 +42,7 @@
                     {id: journey.id},
                     journey,
                     function (data) {
+                        jmJourneyVO.setJourney(data);
                         return data;
                     },
                     function (response) {

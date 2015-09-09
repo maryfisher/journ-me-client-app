@@ -52,6 +52,8 @@
                             return $q.reject(response);
                         }
                     );
+                }else{
+                    return $q.reject();
                 }
             },
             register: function (email, password, name) {
