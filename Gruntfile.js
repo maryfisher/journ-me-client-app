@@ -88,6 +88,16 @@ module.exports = function (grunt) {
                 sourceMap: true
             }
         },
+        less: {
+            dev: {
+                files: {
+                    '.temp/style/main.css': 'src/compile.lesstpl'
+                },
+                options: {
+                    plugins: [ require('less-plugin-glob') ]
+                }
+            }
+        },
         copy: {
             dev: {
                 expand: true,
@@ -115,9 +125,13 @@ module.exports = function (grunt) {
                 files: ['<%= app.src %>/**/*.html'],
                 tasks: ['ngtemplates', 'copy:dev']
             },
-            dev: {
+            devSource: {
                 files: ['<%= app.src %>/**/*.js'],
                 tasks: ['jshint', 'ngAnnotate', 'preConcat', 'concat']
+            },
+            devStyle: {
+                files: ['<%= app.src %>/**/*.less'],
+                tasks: ['less']
             }
         }
     });
@@ -130,6 +144,7 @@ module.exports = function (grunt) {
         'ngAnnotate',
         'preConcat',
         'concat',
+        'less',
         'copy:dev'
     ]);
 
