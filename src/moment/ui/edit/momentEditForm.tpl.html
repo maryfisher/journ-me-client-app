@@ -1,0 +1,12 @@
+<form name="momentForm" data-ng-submit="save()" novalidate>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="descript" data-ng-model="moment.descript" class="form-control" placeholder="Tell us how your moment was!"></textarea>
+    </div>
+    
+    <span data-ng-switch="hasMoment">
+        <button data-ng-switch-when="true" ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
+        <button data-ng-switch-default ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Create Moment</button>
+    </span>
+    <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
+</form>

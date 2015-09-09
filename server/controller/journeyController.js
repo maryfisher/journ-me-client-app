@@ -7,7 +7,10 @@ var	mongoose = require('mongoose'),
 exports.read = function(req, res){
     try {
         req.journey.id = req.journey._id;
-        res.status(200).send(req.journey);
+        req.journey.populate('moments', function(err, journey) {
+            if (err) { return next(err); }
+            res.status(200).send(journey);
+        });
     } catch (e) {
         console.error(e);
         res.status(404).body('Not Found').end();

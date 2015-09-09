@@ -15,7 +15,10 @@ var JourneySchema = new Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId, ref: 'User'
-    }
+    },
+    moments: [{
+        type: mongoose.Schema.Types.ObjectId, ref: 'Moment' 
+    }]
 });
 
 mongoose.model('Journey', JourneySchema);

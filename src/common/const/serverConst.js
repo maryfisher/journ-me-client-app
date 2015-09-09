@@ -7,9 +7,16 @@
     var api = '/api/';
     var user = api + 'user/';
     var auth = user + 'authentication/';
+    var journey = api + 'journey/';
+    var journeyId = journey + ':journeyId/';
+    var moment = 'moment/';
+    var momentId = moment + ':momentId';
 
     common.constant('jmServerConst', {
-        JOURNEY_PATH: api + 'journey',
+        JOURNEY_PATH: journey,
+        JOURNEY_ID_PATH: journeyId,
+        MOMENT_PATH: journeyId + moment,
+        MOMENT_ID_PATH: journeyId + momentId,
         USER_PATH: user,
         AUTH_PATH: auth,
         LOGIN_PATH: auth + 'login/',

@@ -7,15 +7,16 @@
     app.factory('jmJourneyService', function (jmServerConst, $q, jmJourneyVO, jmUserAuthVO, jmUserDashboardVO, $resource) {
 
         var journeyDAO = $resource(
-            jmServerConst.JOURNEY_PATH + '/:id'
+            jmServerConst.JOURNEY_ID_PATH
         );
 
         return {
             getJourney: function (id) {
                 return journeyDAO.get(
-                    {id: id},
+                    {journeyId: id},
                     function (data) {
                         jmJourneyVO.setJourney(data);
+                        jmJourneyVO.isUser = (data.user === jmUserAuthVO.id);
                         return data;
                     },
                     function (response) {
@@ -39,7 +40,7 @@
             },
             updateJourney: function (journey) {
                 return journeyDAO.save(
-                    {id: journey.id},
+                    {journeyId: journey.id},
                     journey,
                     function (data) {
                         jmJourneyVO.setJourney(data);
