@@ -1,4 +1,4 @@
 <h1>DASHBOARD</h1>
-<div ng-repeat="journey in user.journeys">
-    <a data-jm-journey-href="{{journey._id}}">{{journey.name}} - {{journey.descript}}</a>
+<div data-ng-repeat="journey in user.journeys">
+    <a data-ui-sref="journeyDetail({journeyId: journey._id})">{{journey.name}} - {{journey.descript}}</a>
 </div>

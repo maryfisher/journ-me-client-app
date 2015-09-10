@@ -2,4 +2,13 @@
 <p>{{journey.descript}}</p>
 <p>Is from User: {{journey.isUser}}</p>
 <p>Id: {{journey.id}}</p>
-<button data-jm-journey-edit="{{journey.id}}" data-ng-show="journey.isUser" data-jm-logged-in-show="true" class="btn">Edit</button>
+<button data-jm-journey-edit="{{journey.id}}" data-ng-show="journey.isUser" data-jm-logged-in-show="true" class="btn">Edit Journey Details</button>
+<div data-ng-repeat="moment in journey.moments">
+  <h2>Timeline</h2>
+   <ul>
+       <li><a data-ui-sref="journeyDetail.moment({momentId: moment._id})">{{moment.created}}</a></li>
+   </ul>
+</div>
+<!--<button onClick="createMoment()" class="btn btn-primary">Add Moment</button>-->
+<a data-ui-sref="momentCreate({journeyId: journey.id})" class="btn btn-primary">Add Moment</a>
+<div ui-view></div>

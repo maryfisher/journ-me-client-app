@@ -4,10 +4,10 @@
 
     var app = angular.module('jmCommon');
 
-    app.factory('jmRouteUtil', function(jmRouteConst, jmUserAuthVO, $location) {
+    app.factory('jmRouteUtil', function(jmRouteConst, jmUserAuthVO, $state) {
         var util = {
             routeConst: jmRouteConst,
-            getUserPath: function (userId) {
+            /*getUserPath: function (userId) {
                 userId = userId || jmUserAuthVO.id;
                 return util.addHashbang(jmRouteConst.USER_PATH + '/' + userId);
             },
@@ -18,12 +18,18 @@
                     return util.addHashbang(path);
                 }
                 return path;
-            },
+            },*/
             getHrefPath: function (pathConstName) {
                 return util.addHashbang(pathConstName ? jmRouteConst[pathConstName] : '');
             },
-            redirectTo: function(path) {
-                $location.path(path);
+            redirectTo: function(path, params) {
+                $state.go(path, params);
+            },
+            redirectToJourney: function(params) {
+                $state.go(jmRouteConst.JOURNEY_DETAIL, params);
+            },
+            reload: function(){
+                $state.go($state.$current, null, { reload: true });
             },
             addHashbang: function (path) {
                 return path ? '#' + path : '#';

@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app) {
-	// User Routes
+	
     var journeyCtrl = require('../../controller/journeyController');
     
     var journey = '/api/journey/';

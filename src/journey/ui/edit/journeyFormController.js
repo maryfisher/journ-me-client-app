@@ -18,7 +18,7 @@
                 if(!$scope.hasJourney) {
                     jmJourneyService.createJourney($scope.journey).then(
                         function () {
-                            jmRouteUtil.redirectTo(jmRouteUtil.getJourneyPath(jmJourneyVO.id, false));
+                            jmRouteUtil.redirectToJourney(jmJourneyVO.id);
                             $modalInstance.close();
                         },
                         function () {
