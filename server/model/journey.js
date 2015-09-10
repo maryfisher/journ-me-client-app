@@ -20,6 +20,10 @@ var JourneySchema = new Schema({
     moments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Moment'
+    }],
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Alias'
     }]
 });
 

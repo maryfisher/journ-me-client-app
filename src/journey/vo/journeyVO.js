@@ -15,6 +15,7 @@
         isUser: false,
         moments: [],
         alias: undefined,
+        followers: [],
         invalidateJourney: function () {
             this.name = undefined;
             this.id = undefined;
@@ -26,6 +27,7 @@
             this.isUser = false;
             this.moments = [];
             this.alias = undefined;
+            this.followers = [];
         },
         setJourney: function (response) {
             this.name = response.name;
@@ -38,6 +40,7 @@
             this.isUser = true;
             this.moments = response.moments;
             this.alias = response.alias;
+            this.followers = response.followers;
         },
         getEmptyJourney: function () {
             return {
@@ -50,7 +53,8 @@
                 join: 'all',
                 isUser: false,
                 moments: [],
-                alias: undefined
+                alias: undefined,
+                followers: []
             };
         }
     });
