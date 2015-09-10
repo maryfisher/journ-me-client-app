@@ -18,7 +18,10 @@
 
         $scope.save = function () {
             if (!$scope.hasMoment) {
-                jmMomentService.createMoment($scope.moment, $stateParams.journeyId).then($scope.cancel, function () {
+                jmMomentService.createMoment($scope.moment, $stateParams.journeyId).then(function (data) {
+                    $scope.moment._id = data._id;
+                    $scope.cancel();
+                }, function () {
 
                 });
             } else {

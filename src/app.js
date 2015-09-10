@@ -33,20 +33,22 @@
             redirectState: jmRouteConst.HOME,
             controller: 'jmDashboardController'
         });
-        $stateProvider.state(jmRouteConst.JOURNEY_DETAIL, {
-            url: jmRouteConst.JOURNEY_DETAIL_PATH,
-            templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
-            controller: 'jmJourneyDetailController'
-        });
-        $stateProvider.state(jmRouteConst.JOURNEY_DETAIL_MOMENT, {
-            url: jmRouteConst.JOURNEY_DETAIL_MOMENT_PATH,
-            templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
-            controller: 'jmMomentDetailController'
-        });
+        $stateProvider
+            .state(jmRouteConst.JOURNEY_DETAIL, {
+                url: jmRouteConst.JOURNEY_DETAIL_PATH,
+                templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
+                controller: 'jmJourneyDetailController'
+            })
+            .state(jmRouteConst.JOURNEY_DETAIL_MOMENT, {
+                url: jmRouteConst.JOURNEY_DETAIL_MOMENT_PATH,
+                templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
+                controller: 'jmMomentDetailController'
+            });
         $stateProvider.state(jmRouteConst.MOMENT_UPDATE, {
             url: jmRouteConst.MOMENT_UPDATE_PATH,
             templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
             controller: 'jmMomentEditFormController',
+            //this becomes unnecessary as soon as we have a loading animation that prevents user interaction
             resolve: {
                 moment: function ($stateParams, jmMomentService) {
                     return jmMomentService.getMoment($stateParams.momentId, $stateParams.journeyId);
