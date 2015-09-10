@@ -1,4 +1,11 @@
-<h1>DASHBOARD</h1>
-<div data-ng-repeat="journey in user.journeys">
-    <a data-ui-sref="journeyDetail({journeyId: journey._id})">{{journey.name}} - {{journey.descript}}</a>
+<div class="row panel">
+    <h1 class="text-center">Welcome {{user.name}}</h1>
+</div>
+<div class="row panel">
+    <h2 class="text-center">Your Journeys</h2>
+    <ul class="list-group">
+        <li data-ng-repeat="journey in user.journeys" class="list-group-item">
+            <a data-ui-sref="journeyDetail({journeyId: journey._id})">{{journey.name}} - {{journey.descript}}</a>
+        </li>
+    </ul>
 </div>
