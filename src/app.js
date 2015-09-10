@@ -39,8 +39,9 @@
                 templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
                 controller: 'jmJourneyDetailController'
             })
-            .state(jmRouteConst.JOURNEY_DETAIL_MOMENT, {
-                url: jmRouteConst.JOURNEY_DETAIL_MOMENT_PATH,
+            .state(jmRouteConst.MOMENT_DETAIL, {
+                parent: jmRouteConst.JOURNEY_DETAIL,
+                url: jmRouteConst.MOMENT_DETAIL_PATH,
                 templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
                 controller: 'jmMomentDetailController'
             });

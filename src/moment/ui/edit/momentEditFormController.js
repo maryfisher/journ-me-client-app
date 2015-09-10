@@ -38,7 +38,7 @@
                 });
             } else {
                 var momentId = $scope.moment._id || $stateParams.momentId;
-                jmRouteUtil.redirectTo(jmRouteConst.JOURNEY_DETAIL_MOMENT, {
+                jmRouteUtil.redirectTo(jmRouteConst.MOMENT_DETAIL, {
                     journeyId: $stateParams.journeyId,
                     momentId: momentId
                 });

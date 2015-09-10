@@ -2,10 +2,10 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div data-jm-logged-in-show="true">
-                <a data-jm-href="DASHBOARD_PATH" class="navbar-brand">Dashboard</a>
+                <a data-ui-sref="DASHBOARD" class="navbar-brand">Dashboard</a>
             </div>
             <div data-jm-logged-in-show="false">
-                <a data-jm-href="HOME_PATH" class="navbar-brand">Home</a>
+                <a data-ui-sref="HOME" class="navbar-brand">Home</a>
             </div>
         </div>
 
@@ -21,7 +21,7 @@
                 <span>
                     <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
                 </span>
-                <a data-jm-href="DASHBOARD_PATH" class=""><img data-ng-src="data:image/png;base64, {{user.pic}}" width="40" height="40" class="img-circle" /></a>
+                <a data-ui-sref="DASHBOARD" class=""><img data-ng-src="data:image/png;base64, {{user.pic}}" width="40" height="40" class="img-circle" /></a>
 
                 <span data-dropdown>
                     <button type="button" data-dropdown-toggle class="btn btn-xs">
@@ -30,7 +30,7 @@
                 <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
                     <li role="menuitem" data-ng-bind="user.name"></li>
                     <li role="menuitem">
-                        <a data-jm-href="PROFILE_PATH">View Profile</a>
+                        <a data-ui-sref="DASHBOARD">View Profile</a>
                     </li>
                     <li role="menuitem">
                         <a href="" data-ng-click="logout()">Logout</a>
