@@ -1,11 +1,12 @@
 // @require common.common
-(function(angular, undefined) {
+(function (angular, undefined) {
     'use strict';
 
     var common = angular.module('jmCommon');
 
     var api = '/api/';
     var user = api + 'user/';
+    var alias = api + 'alias/';
     var auth = user + 'authentication/';
     var journey = api + 'journey/';
     var journeyId = journey + ':journeyId/';
@@ -18,6 +19,7 @@
         MOMENT_PATH: journeyId + moment,
         MOMENT_ID_PATH: journeyId + momentId,
         USER_PATH: user,
+        ALIAS_PATH: alias,
         AUTH_PATH: auth,
         LOGIN_PATH: auth + 'login/',
         LOGIN_TOKEN_PATH: auth + 'tokenlogin/',
@@ -30,4 +32,4 @@
     });
 
 
-} (window.angular));
+}(window.angular));

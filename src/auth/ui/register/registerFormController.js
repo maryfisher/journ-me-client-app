@@ -1,11 +1,11 @@
 // @require auth.auth
 // @require auth.service.userAuthService
-(function(angular, undefined) {
+(function (angular, undefined) {
     'use strict';
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmRegisterFormController', function($scope, jmUserAuthService, $modalInstance, jmRouteUtil, jmUserAuthVO) {
+    app.controller('jmRegisterFormController', function ($scope, jmUserAuthService, $modalInstance, jmRouteUtil, jmUserAuthVO) {
 
         $scope.hasValidName = function () {
             return $scope.registerForm.name.$invalid && $scope.registerForm.name.$touched;
@@ -16,24 +16,25 @@
         };
 
         $scope.hasDiffPasswords = function () {
-            if(!$scope.password || !$scope.password2 || !$scope.registerForm.$submitted){
+            if (!$scope.password || !$scope.password2 || !$scope.registerForm.$submitted) {
                 return false;
             }
             return $scope.password !== $scope.password2;
         };
 
-        $scope.register = function() {
-            if($scope.password !== $scope.password2) {
+        $scope.register = function () {
+            if ($scope.password !== $scope.password2) {
                 return;
             }
             jmUserAuthService.register($scope.email, $scope.password, $scope.name).then(
                 function () {
                     if (jmUserAuthVO.isLoggedIn()) {
                         $scope.registerForm.email.$setValidity('emailTaken', true);
-                        jmRouteUtil.redirectTo(jmRouteUtil.routeConst.DASHBOARD_PATH);
+                        jmRouteUtil.redirectTo(jmRouteUtil.routeConst.DASHBOARD);
                         $modalInstance.close();
                     }
-                }, function () {
+                },
+                function () {
                     $scope.loginForm.password.$setValidity('emailTaken', false);
                 }
             );
@@ -45,4 +46,4 @@
         };
     });
 
-} (window.angular));
+}(window.angular));

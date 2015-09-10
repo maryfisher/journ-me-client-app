@@ -6,9 +6,26 @@
 
     app.controller('jmMomentEditFormController', function ($scope, jmMomentService, jmRouteUtil, jmRouteConst, $stateParams, moment) {
 
+        $scope.cancel = function () {
+            if (!$scope.hasMoment && !$scope.moment._id) {
+                jmRouteUtil.redirectTo(jmRouteConst.JOURNEY_DETAIL, {
+                    journeyId: $stateParams.journeyId
+                });
+            } else {
+                var momentId = $scope.moment._id || $stateParams.momentId;
+                jmRouteUtil.redirectTo(jmRouteConst.MOMENT_DETAIL, {
+                    journeyId: $stateParams.journeyId,
+                    momentId: momentId
+                });
+            }
+        };
+
         $scope.hasMoment = (!!$stateParams.momentId);
         if ($scope.hasMoment) {
             $scope.moment = moment;
+            if (!$scope.moment.isUser) {
+                $scope.cancel();
+            }
         } else {
             $scope.moment = {
                 _id: undefined,
@@ -27,20 +44,6 @@
             } else {
                 jmMomentService.updateMoment($scope.moment, $stateParams.journeyId).then($scope.cancel, function () {
 
-                });
-            }
-        };
-
-        $scope.cancel = function () {
-            if (!$scope.hasMoment && !$scope.moment._id) {
-                jmRouteUtil.redirectTo(jmRouteConst.JOURNEY_DETAIL, {
-                    journeyId: $stateParams.journeyId
-                });
-            } else {
-                var momentId = $scope.moment._id || $stateParams.momentId;
-                jmRouteUtil.redirectTo(jmRouteConst.MOMENT_DETAIL, {
-                    journeyId: $stateParams.journeyId,
-                    momentId: momentId
                 });
             }
         };

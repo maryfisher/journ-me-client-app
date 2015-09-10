@@ -1,22 +1,22 @@
 // @require user.user
-(function(angular, undefined) {
+(function (angular, undefined) {
     'use strict';
 
     var app = angular.module('jmUser');
 
-    app.factory('jmUserService', function($http, $q, jmServerConst, jmUserDashboardVO) {
+    app.factory('jmAliasService', function ($http, $q, jmServerConst, jmAliasVO) {
         var DEFAULT_CONFIG = {
             timeout: 60000
         };
 
         return {
-            getUser: function (userId) {
+            getAlias: function (aliasId) {
                 return $http.get(
-                    jmServerConst.USER_PATH + userId,
+                    jmServerConst.ALIAS_PATH + aliasId,
                     DEFAULT_CONFIG
                 ).then(
                     function (response) {
-                        jmUserDashboardVO.setUser(response.data);
+                        jmAliasVO.setAlias(response.data);
                         return response;
                     },
                     function (response) {
@@ -27,4 +27,4 @@
         };
     });
 
-} (window.angular));
+}(window.angular));

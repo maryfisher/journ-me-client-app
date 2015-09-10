@@ -4,11 +4,11 @@
 
     var app = angular.module('jmUser');
 
-    app.controller('jmDashboardController', function ($scope, jmUserService, jmUserDashboardVO, jmUserAuthVO) {
+    app.controller('jmDashboardController', function ($scope, jmAliasService, jmAliasVO) {
 
-        $scope.user = jmUserDashboardVO;
+        $scope.alias = jmAliasVO;
 
-        jmUserService.getUser(jmUserAuthVO.id);
+        jmAliasService.getAlias(jmAliasVO.id);
 
     });
 
