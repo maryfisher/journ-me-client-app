@@ -14,8 +14,7 @@
         };*/
 
         var setResponse = function (response) {
-            jmAliasVO.followedJourneys = response.data.alias.followedJourneys;
-            jmJourneyVO.followers = response.data.journey.followers;
+            jmJourneyVO.followers = response.data.followers;
             return response;
         };
 

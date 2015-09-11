@@ -79,10 +79,7 @@ exports.follow = function (req, res) {
         } else {
             req.alias.followedJourneys.push(journey._id);
             req.alias.save(function (err) {
-                res.status(200).send({
-                    alias: req.alias,
-                    journey: journey
-                });
+                res.status(200).send(journey);
             });
         }
     });
@@ -102,10 +99,7 @@ exports.unfollow = function (req, res) {
         } else {
             alias.followedJourneys.splice(alias.followedJourneys.indexOf(journey._id, 1));
             alias.save(function (err) {
-                res.status(200).send({
-                    alias: alias,
-                    journey: journey
-                });
+                res.status(200).send(journey);
             });
         }
     });

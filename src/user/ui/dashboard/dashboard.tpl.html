@@ -12,3 +12,13 @@
         <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
     </div>
 </div>
+<div class="row panel">
+    <div class="container">
+        <h2 class="text-center">You're following</h2>
+        <ul class="list-group">
+            <li data-ng-repeat="journey in alias.followedJourneys" class="list-group-item">
+                <a data-ui-sref="JOURNEY_DETAIL({journeyId: journey._id})">{{journey.name}} - {{journey.descript}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
