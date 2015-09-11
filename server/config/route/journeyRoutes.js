@@ -8,6 +8,7 @@ module.exports = function (app) {
     app.route(journey).post(journeyCtrl.create);
     app.route(journey + ':journeyId').post(journeyCtrl.update);
     app.route(journey + ':journeyId/follow/:aliasId').post(journeyCtrl.follow);
+    app.route(journey + ':journeyId/unfollow/:aliasId').post(journeyCtrl.unfollow);
     app.route(journey + ':journeyId').get(journeyCtrl.read);
     app.param('journeyId', journeyCtrl.journeyByID);
 }

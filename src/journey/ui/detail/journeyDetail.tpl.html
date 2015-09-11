@@ -3,14 +3,26 @@
         <h1 class="text-center">{{journey.name}} by {{journey.alias.name}}</h1>
         <p class="text-center">{{journey.descript}}</p>
         <hr></hr>
-        <div class="row container">
-            <div class="col-xs-1">
-                <button data-ng-click="followJourney()" data-ng-show="!journey.isUser" class="btn btn-primary">
+        <div class="row container text-center text-muted">
+            <div class="col-xs-3"></div>
+
+            <div class="col-xs-6">
+                <a href="" class="jm-journey-a">
+                    <div>
+                        {{journey.followers.length}}
+                        <!--<span class="glyphicon glyphicon-user"></span>-->
+                    </div>
+                    Follower
+                </a>
+            </div>
+
+            <div class="col-xs-3">
+                <button data-ng-click="followJourney()" data-ng-show="!journey.isUser && !isFollowing" class="btn btn-primary">
                     Follow Journey
                 </button>
-            </div>
-            <div class="col-xs-10"></div>
-            <div class="col-xs-1">
+                <button data-ng-click="unfollowJourney()" data-ng-show="!journey.isUser && isFollowing" class="btn btn-danger">
+                    Unfollow Journey
+                </button>
                 <button data-jm-journey-edit="{{journey.id}}" data-ng-show="journey.isUser" class="btn btn-default">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>

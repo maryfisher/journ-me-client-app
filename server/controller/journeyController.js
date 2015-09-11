@@ -79,7 +79,33 @@ exports.follow = function (req, res) {
         } else {
             req.alias.followedJourneys.push(journey._id);
             req.alias.save(function (err) {
-                res.status(200).send(req.alias);
+                res.status(200).send({
+                    alias: req.alias,
+                    journey: journey
+                });
+            });
+        }
+    });
+};
+
+exports.unfollow = function (req, res) {
+    var journey = req.journey;
+    var alias = req.alias;
+    journey.followers.splice(journey.followers.indexOf(alias._id), 1);
+
+    journey.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            alias.followedJourneys.splice(alias.followedJourneys.indexOf(journey._id, 1));
+            alias.save(function (err) {
+                res.status(200).send({
+                    alias: alias,
+                    journey: journey
+                });
             });
         }
     });

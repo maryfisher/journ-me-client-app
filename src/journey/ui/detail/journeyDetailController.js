@@ -7,17 +7,20 @@
     app.controller('jmJourneyDetailController', function ($scope, jmJourneyService, jmJourneyActionService, jmJourneyVO, $stateParams, jmAliasVO) {
         $scope.journey = jmJourneyVO;
 
-        jmJourneyService.getJourney($stateParams.journeyId);
+        var updateFollowing = function () {
+            $scope.isFollowing = jmJourneyVO.followers.indexOf(jmAliasVO.id) !== -1;
+        };
+
+        jmJourneyService.getJourney($stateParams.journeyId).then(updateFollowing);
 
         $scope.followJourney = function () {
             jmJourneyActionService.followJourney($scope.journey.id, jmAliasVO.id)
-                .then(
-                    function () {
+                .then(updateFollowing);
+        };
 
-                    },
-                    function () {
-
-                    });
+        $scope.unfollowJourney = function () {
+            jmJourneyActionService.unfollowJourney($scope.journey.id, jmAliasVO.id)
+                .then(updateFollowing);
         };
     });
 
