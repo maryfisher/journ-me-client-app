@@ -12,8 +12,16 @@ exports.read = function (req, res) {
             req.journey.populate('moments', function (err, journey) {
                 if (err) {
                     return next(err);
+                } else {
+                    req.journey.populate('followers', function (err, journey) {
+                        if (err) {
+                            return next(err);
+                        } else {
+                            res.status(200).send(journey);
+                        }
+                    });
                 }
-                res.status(200).send(journey);
+
             });
         }, req.journey.alias);
 

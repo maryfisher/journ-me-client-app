@@ -8,7 +8,18 @@
         $scope.journey = jmJourneyVO;
 
         var updateFollowing = function () {
-            $scope.isFollowing = jmJourneyVO.followers.indexOf(jmAliasVO.id) !== -1;
+            /* the question is whether or not we populate the journey.followers or just keep the ids
+             *  -> see also journeyFollowers
+             */
+            $scope.isFollowing = false;
+            var index, len;
+            for (index = 0, len = jmJourneyVO.followers.length; index < len; ++index) {
+                if (jmJourneyVO.followers[index]._id === jmAliasVO.id) {
+                    $scope.isFollowing = true;
+                    break;
+                }
+            }
+            //$scope.isFollowing = jmJourneyVO.followers.indexOf(jmAliasVO.id) !== -1;
         };
 
         jmJourneyService.getJourney($stateParams.journeyId).then(updateFollowing);

@@ -12,7 +12,7 @@
 
         var setJourney = function (data) {
             jmJourneyVO.setJourney(data);
-            jmJourneyVO.isUser = jmJourneyVO.alias === jmAliasVO.id;
+            jmJourneyVO.isUser = jmJourneyVO.alias._id === jmAliasVO.id;
         };
 
         return {
