@@ -44,24 +44,21 @@
             </div>
         </div>
     </div>
+    <data-jm-journey-timeline data-journey-id="journey._id" data-is-selected="true"></data-jm-journey-timeline>
+</div>
+<div class="row panel">
+    <div ui-view class="col-sm-12"></div>
+</div>
+<div class="row panel">
     <div class="col-sm-12">
-        <h3 class="text-center">All Moments</h3>
-        <ul class="list-inline well">
-            <li data-ng-repeat="moment in journey.moments">
-                <a data-ui-sref="MOMENT_DETAIL({momentId: moment._id})" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.created | date:'medium'}}">
-                    <img src="" width="40" height="40" class="img-rounded" />
-                </a>
-            </li>
-            <li>
-                <a data-ui-sref="MOMENT_CREATE({journeyId: journey._id})" popover-placement="top" popover-trigger="mouseenter" popover="Add a new moment to your journey!" class="btn btn-primary">+</a>
+        <h2 class="text-center">Linked Journeys</h2>
+        <ul class="list-group">
+            <li data-ng-repeat="journey in journey.linkedJourneys" class="list-group-item">
+                <button data-ng-click="setSelected(journey)" class="btn btn-default">{{journey.name}} - {{journey.descript}}</button>
+                <div collapse="isNotSelected(journey_id)">
+                    <data-jm-journey-timeline data-journey-id="{{journey.moments}}" data-is-selected="false"></data-jm-journey-timeline>
+                </div>
             </li>
         </ul>
     </div>
-</div>
-<div class="row panel" style="">
-    <div ui-view class="col-sm-12"></div>
-</div>
-<div class="row panel" style="">
-    <h2 class="text-center">Linked Journeys</h2>
-    <div class="col-sm-12"></div>
 </div>
