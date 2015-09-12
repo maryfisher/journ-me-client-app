@@ -4,12 +4,8 @@
 
     var app = angular.module('jmUser');
 
-    app.controller('jmDashboardController', function ($scope, jmAliasService, jmAliasVO) {
-
-        $scope.alias = jmAliasVO;
-
-        jmAliasService.getAlias(jmAliasVO.id);
-
+    app.controller('jmDashboardController', function ($scope, jmAliasModel) {
+        $scope.alias = jmAliasModel.getCurrentAlias();
     });
 
 }(window.angular));

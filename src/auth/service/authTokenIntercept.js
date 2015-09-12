@@ -1,18 +1,18 @@
 // @require auth.auth
-(function(angular, undefined) {
+(function (angular, undefined) {
     'use strict';
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmAuthTokenIntercept', function(jmUserAuthVO) {
+    app.factory('jmAuthTokenIntercept', function (jmAuthVO) {
         return {
-            request: function(config) {
-                if (jmUserAuthVO.isLoggedIn()) {
-                    config.headers['x-jm-auth-token'] = jmUserAuthVO.authToken;
+            request: function (config) {
+                if (jmAuthVO.isLoggedIn) {
+                    config.headers['x-jm-auth-token'] = jmAuthVO.authToken;
                 }
                 return config;
             }
         };
     });
 
-} (window.angular));
+}(window.angular));

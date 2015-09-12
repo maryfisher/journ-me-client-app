@@ -4,9 +4,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var JourneySchema = new Schema({
-    id: {
-        type: String
-    },
     name: {
         type: String
     },

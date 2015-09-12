@@ -4,59 +4,45 @@
 
     var app = angular.module('jmMoment');
 
-    app.factory('jmMomentService', function (jmServerConst, $q, $resource, jmAliasVO) {
+    app.factory('jmMomentService', function (jmServerConst, $q, $resource) {
         var momentDAO = $resource(
             jmServerConst.MOMENT_ID_PATH
         );
 
-        var setMoment = function (data) {
-            data.id = data._id;
-            data.journey.id = data.journey._id;
-            data.isUser = data.journey.alias === jmAliasVO.id;
+        var accept = function (data) {
+            return data;
+        };
+
+        var reject = function (response) {
+            return $q.reject(response);
         };
 
         return {
-            createMoment: function (moment, journeyId) {
-                return momentDAO.save({
-                        journeyId: journeyId
-                    },
-                    moment,
-                    function (data) {
-                        setMoment(data);
-                        return data;
-                    },
-                    function (response) {
-                        return $q.reject(response);
-                    }
-                ).$promise;
-            },
-            getMoment: function (momentId, journeyId) {
+            getMoment: function (momentId) {
                 return momentDAO.get({
-                        momentId: momentId,
-                        journeyId: journeyId
+                        momentId: momentId
                     },
-                    function (data) {
-                        setMoment(data);
-                        return data;
-                    },
-                    function (response) {
-                        return $q.reject(response);
-                    }
+                    accept,
+                    reject
                 ).$promise;
             },
-            updateMoment: function (moment, journeyId) {
+            createMoment: function (moment, journeyId, aliasId) {
+                return momentDAO.save({}, {
+                        moment: moment,
+                        journeyId: journeyId,
+                        aliasId: aliasId
+                    },
+                    accept,
+                    reject
+                ).$promise;
+            },
+            updateMoment: function (moment) {
                 return momentDAO.save({
-                        momentId: moment._id,
-                        journeyId: journeyId
+                        momentId: moment._id
                     },
                     moment,
-                    function (data) {
-                        setMoment(data);
-                        return data;
-                    },
-                    function (response) {
-                        return $q.reject(response);
-                    }
+                    accept,
+                    reject
                 ).$promise;
             }
         };

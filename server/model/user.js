@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
     crypto = require('crypto');
 
 var UserSchema = new Schema({
-    id: String,
     email: {
         type: String,
         trim: true,

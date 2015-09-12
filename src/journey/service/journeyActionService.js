@@ -4,7 +4,7 @@
 
     var app = angular.module('jmJourney');
 
-    app.factory('jmJourneyActionService', function ($http, jmServerConst, $q, jmAliasVO, jmJourneyVO) {
+    app.factory('jmJourneyActionService', function ($http, jmServerConst, $q) {
 
         /*var getPath = function (path, aliasId, journeyId) {
             return jmServerUtil.buildPath(path, {
@@ -13,18 +13,15 @@
             })
         };*/
 
-        var setResponse = function (response) {
-            jmJourneyVO.followers = response.data.followers;
-            return response;
-        };
-
         return {
             followJourney: function (journeyId, aliasId) {
                 return $http.post(
                         //getPath(jmServerConst.FOLLOW_JOURNEY_PATH, aliasId, journeyId)
                         '/api/journey/' + journeyId + '/follow/' + aliasId, {})
                     .then(
-                        setResponse,
+                        function (data) {
+                            return data;
+                        },
                         function (response) {
                             return $q.reject(response);
                         }
@@ -35,7 +32,9 @@
                         //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
                         '/api/journey/' + journeyId + '/unfollow/' + aliasId, {})
                     .then(
-                        setResponse,
+                        function (data) {
+                            return data;
+                        },
                         function (response) {
                             return $q.reject(response);
                         }

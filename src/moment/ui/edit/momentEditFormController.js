@@ -4,7 +4,11 @@
 
     var app = angular.module('jmMoment');
 
-    app.controller('jmMomentEditFormController', function ($scope, jmMomentService, jmRouteUtil, jmRouteConst, $stateParams, moment) {
+    app.controller('jmMomentEditFormController', function ($scope, jmMomentModel, jmRouteUtil, jmRouteConst, $stateParams, jmAuthModel) {
+
+        if (!jmAuthModel.isLoggedIn()) {
+            jmRouteUtil.redirectTo(jmRouteConst.HOME);
+        }
 
         $scope.cancel = function () {
             if (!$scope.hasMoment && !$scope.moment._id) {
@@ -22,7 +26,7 @@
 
         $scope.hasMoment = (!!$stateParams.momentId);
         if ($scope.hasMoment) {
-            $scope.moment = moment;
+            $scope.moment = jmMomentModel.getCurrentMoment();
             if (!$scope.moment.isUser) {
                 $scope.cancel();
             }
@@ -35,16 +39,12 @@
 
         $scope.save = function () {
             if (!$scope.hasMoment) {
-                jmMomentService.createMoment($scope.moment, $stateParams.journeyId).then(function (data) {
-                    $scope.moment._id = data._id;
+                jmMomentModel.createMoment($scope.moment, $stateParams.journeyId).then(function () {
+                    $scope.moment = jmMomentModel.getCurrentMoment();
                     $scope.cancel();
-                }, function () {
-
                 });
             } else {
-                jmMomentService.updateMoment($scope.moment, $stateParams.journeyId).then($scope.cancel, function () {
-
-                });
+                jmMomentModel.updateMoment($scope.moment, $stateParams.journeyId).then($scope.cancel);
             }
         };
 

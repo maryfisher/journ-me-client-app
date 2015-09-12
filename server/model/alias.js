@@ -4,7 +4,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var AliasSchema = new Schema({
-    id: String,
     name: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,

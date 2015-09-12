@@ -2,12 +2,12 @@
 (function (angular, undefined) {
     'use strict';
 
-    var auth = angular.module('jmUser');
+    var user = angular.module('jmUser');
 
-    auth.value('jmAliasVO', {
-        id: String,
-        journeys: [],
-        followedJourneys: [],
+    user.value('jmAliasVO', {
+        _id: undefined,
+        journeys: undefined,
+        followedJourneys: undefined,
         name: undefined,
         thumb: undefined,
         setAlias: function (response) {
@@ -15,13 +15,13 @@
             this.followedJourneys = response.followedJourneys;
             this.name = response.name;
             this.thumb = response.pic ? response.pic.data : this.thumb;
-            this.id = response._id;
+            this._id = response._id;
         },
-        invalidate: function () {
-            this.journeys = [];
-            this.followedJourneys = [];
+        invalidateAlias: function () {
+            this.journeys = undefined;
+            this.followedJourneys = undefined;
             this.name = undefined;
-            this.id = undefined;
+            this._id = undefined;
             this.thumb = undefined;
 
         }
