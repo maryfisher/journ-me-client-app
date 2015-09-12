@@ -16,7 +16,13 @@ exports.read = function (req, res) {
                         if (err) {
                             return next(err);
                         } else {
-                            res.status(200).send(journey);
+                            req.journey.populate('linkedJourneys', function (err, journey) {
+                                if (err) {
+                                    return next(err);
+                                } else {
+                                    res.status(200).send(journey);
+                                }
+                            });
                         }
                     });
                 }

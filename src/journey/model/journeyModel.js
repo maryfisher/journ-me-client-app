@@ -46,6 +46,12 @@
                 return jmJourneyService.updateJourney(journey).then(setJourney);
             },
             getJourney: function (id) {
+                if (!id) {
+                    return {};
+                }
+                if (id === jmJourneyVO._id) {
+                    return jmJourneyVO;
+                }
                 return jmJourneyService.getJourney(id);
             },
             getEmptyJourney: function () {
@@ -83,6 +89,9 @@
                         journey.followers.splice(index, 1);
                         journey.isFollowing = false;
                     });
+            },
+            linkJourney: function () {
+
             }
         };
 

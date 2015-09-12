@@ -16,6 +16,7 @@
         moments: [],
         alias: undefined,
         followers: [],
+        linkedJourneys: [],
         invalidateJourney: function () {
             this.name = undefined;
             this._id = undefined;
@@ -28,6 +29,7 @@
             this.moments = undefined;
             this.alias = undefined;
             this.followers = undefined;
+            this.linkedJourneys = undefined;
         },
         setJourney: function (response) {
             this.name = response.name;
@@ -41,6 +43,7 @@
             this.moments = response.moments;
             this.alias = response.alias;
             this.followers = response.followers;
+            this.linkedJourneys = response.linkedJourneys;
         }
     });
 

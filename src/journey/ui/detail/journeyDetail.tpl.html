@@ -6,6 +6,13 @@
         <div class="row container text-center text-muted">
             <div class="col-xs-3"></div>
             <div class="col-xs-2">
+                <a href="" class="jm-journey-a">
+                    <div>
+                        {{journey.linkedJourneys.length}}
+                        <!--<span class="glyphicon glyphicon-user"></span>-->
+                    </div>
+                    Linked Journeys
+                </a>
             </div>
             <div class="col-xs-2">
                 <a href="" data-jm-journey-followers="{{journey}}" class="jm-journey-a">
@@ -16,14 +23,19 @@
                     Follower
                 </a>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-1">
 
             </div>
-            <div class="col-xs-3">
-                <button data-ng-click="followJourney()" data-ng-show="!journey.isUser && !journey.isFollowing" class="btn btn-primary">
+            <div class="col-xs-4">
+                <button data-jm-link-journey="{{alias.journeys}}" data-ng-show="!journey.isUser" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-link"></span>
+                </button>
+                <button data-ng-click="followJourney()" data-ng-show="!journey.isUser && !journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Follow Journey" class="btn btn-primary">
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
                     Follow Journey
                 </button>
-                <button data-ng-click="unfollowJourney()" data-ng-show="!journey.isUser && journey.isFollowing" class="btn btn-danger">
+                <button data-ng-click="unfollowJourney()" data-ng-show="!journey.isUser && journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Unfollow Journey" class="btn btn-danger">
+                    <!--<span class="glyphicon glyphicon-minus"></span>-->
                     Unfollow Journey
                 </button>
                 <button data-jm-journey-edit="{{journey._id}}" data-ng-show="journey.isUser" class="btn btn-default pull-right">
