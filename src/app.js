@@ -19,8 +19,10 @@
         $stateProvider.state(jmRouteConst.HOME, {
             url: jmRouteConst.HOME_PATH,
             templateUrl: 'public/ui/home/home.tpl.html',
-            redirectIfAuthenticated: true,
-            redirectState: jmRouteConst.DASHBOARD
+            data: {
+                redirectIfAuthenticated: true,
+                redirectState: jmRouteConst.DASHBOARD
+            }
         });
         $stateProvider.state(jmRouteConst.BROWSE, {
             url: jmRouteConst.BROWSE_PATH,
@@ -29,9 +31,11 @@
         $stateProvider.state(jmRouteConst.DASHBOARD, {
             url: jmRouteConst.DASHBOARD_PATH,
             templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
-            redirectIfUnauthenticated: true,
-            redirectState: jmRouteConst.HOME,
-            controller: 'jmDashboardController'
+            controller: 'jmDashboardController',
+            data: {
+                redirectIfUnauthenticated: true,
+                redirectState: jmRouteConst.HOME
+            }
         });
         $stateProvider
             .state(jmRouteConst.JOURNEY_DETAIL, {
@@ -64,12 +68,12 @@
     app.run(function ($rootScope, $state, jmAuthModel) {
         $rootScope.$on('$stateChangeStart', function (event, next) {
 
-            if (!jmAuthModel.isLoggedIn() && next.redirectIfUnauthenticated) {
+            if (!jmAuthModel.isLoggedIn() && next.data.redirectIfUnauthenticated) {
                 event.preventDefault();
-                $state.go(next.redirectState);
-            } else if (jmAuthModel.isLoggedIn() && next.redirectIfAuthenticated) {
+                $state.go(next.data.redirectState);
+            } else if (jmAuthModel.isLoggedIn() && next.data.redirectIfAuthenticated) {
                 event.preventDefault();
-                $state.go(next.redirectState);
+                $state.go(next.data.redirectState);
             }
         });
     });
