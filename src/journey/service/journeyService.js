@@ -4,19 +4,24 @@
 
     var app = angular.module('jmJourney');
 
-    app.factory('jmJourneyService', function (jmServerConst, $q, jmJourneyVO, jmUserAuthVO, jmUserDashboardVO, $resource) {
+    app.factory('jmJourneyService', function (jmServerConst, $q, jmJourneyVO, jmAliasVO, $resource) {
 
         var journeyDAO = $resource(
             jmServerConst.JOURNEY_ID_PATH
         );
 
+        var setJourney = function (data) {
+            jmJourneyVO.setJourney(data);
+            jmJourneyVO.isUser = jmJourneyVO.alias === jmAliasVO.id;
+        };
+
         return {
             getJourney: function (id) {
-                return journeyDAO.get(
-                    {journeyId: id},
+                return journeyDAO.get({
+                        journeyId: id
+                    },
                     function (data) {
-                        jmJourneyVO.setJourney(data);
-                        jmJourneyVO.isUser = (data.user === jmUserAuthVO.id);
+                        setJourney(data);
                         return data;
                     },
                     function (response) {
@@ -25,12 +30,11 @@
                 ).$promise;
             },
             createJourney: function (journey) {
-                journey.userId = jmUserAuthVO.id;
-                return journeyDAO.save(
-                    {},
+                journey.aliasId = jmAliasVO.id;
+                return journeyDAO.save({},
                     journey,
                     function (data) {
-                        jmJourneyVO.setJourney(data);
+                        setJourney(data);
                         return data;
                     },
                     function (response) {
@@ -39,11 +43,12 @@
                 ).$promise;
             },
             updateJourney: function (journey) {
-                return journeyDAO.save(
-                    {journeyId: journey.id},
+                return journeyDAO.save({
+                        journeyId: journey.id
+                    },
                     journey,
                     function (data) {
-                        jmJourneyVO.setJourney(data);
+                        setJourney(data);
                         return data;
                     },
                     function (response) {

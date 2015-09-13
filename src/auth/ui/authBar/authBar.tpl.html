@@ -21,14 +21,14 @@
                 <span>
                     <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
                 </span>
-                <a data-ui-sref="DASHBOARD" class=""><img data-ng-src="data:image/png;base64, {{user.pic}}" width="40" height="40" class="img-circle" /></a>
+                <a data-ui-sref="DASHBOARD" class=""><img data-ng-src="data:image/png;base64, {{alias.thumb}}" width="40" height="40" class="img-circle" /></a>
 
                 <span data-dropdown>
                     <button type="button" data-dropdown-toggle class="btn btn-xs">
                         <span class="caret"></span>
                 </button>
                 <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
-                    <li role="menuitem" data-ng-bind="user.name"></li>
+                    <li role="menuitem" data-ng-bind="alias.name"></li>
                     <li role="menuitem">
                         <a data-ui-sref="DASHBOARD">View Profile</a>
                     </li>

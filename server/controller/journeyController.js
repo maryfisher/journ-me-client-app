@@ -1,14 +1,16 @@
 'use strict';
 
-var	mongoose = require('mongoose'),
-	Journey = mongoose.model('Journey'),
-    userCtrl = require('./userController');
+var mongoose = require('mongoose'),
+    Journey = mongoose.model('Journey'),
+    aliasCtrl = require('./aliasController');
 
-exports.read = function(req, res){
+exports.read = function (req, res) {
     try {
         req.journey.id = req.journey._id;
-        req.journey.populate('moments', function(err, journey) {
-            if (err) { return next(err); }
+        req.journey.populate('moments', function (err, journey) {
+            if (err) {
+                return next(err);
+            }
             res.status(200).send(journey);
         });
     } catch (e) {
@@ -17,11 +19,10 @@ exports.read = function(req, res){
     }
 };
 
-exports.create = function(req, res){
+exports.create = function (req, res) {
     var journey = new Journey(req.body);
-    userCtrl.userByID(req, res, function(){
-        journey.user = req.user;
-        journey.save(function(err) {
+    aliasCtrl.aliasByID(req, res, function () {
+        journey.save(function (err) {
             if (err) {
                 console.log(err);
                 return res.status(400).send({
@@ -30,18 +31,20 @@ exports.create = function(req, res){
             } else {
                 journey.id = journey._id;
                 console.log('POST creating new journey: ' + journey);
-                req.user.journeys.push(journey);
-                req.user.save(function(err) {    
+                req.alias.journeys.push(journey);
+                req.alias.save(function (err) {
                     res.status(200).send(journey);
                 });
             }
         });
-    }, req.body.userId);
+    }, req.body.aliasId);
 };
 
-exports.update = function(req, res){
+exports.update = function (req, res) {
     console.log(req.body);
-    Journey.findByIdAndUpdate(req.body.id, req.body, {new: true}, function(err, journey) {
+    Journey.findByIdAndUpdate(req.body.id, req.body, {
+        new: true
+    }, function (err, journey) {
         if (err) {
             console.log(err);
             return res.status(400).send({
@@ -55,17 +58,17 @@ exports.update = function(req, res){
     });
 };
 
-exports.remove = function(req, res){
-    
+exports.remove = function (req, res) {
+
 };
 
-exports.journeyByID = function(req, res, next, id) {
+exports.journeyByID = function (req, res, next, id) {
     Journey.findOne({
-		_id: id
-	}).exec(function(err, journey) {
+        _id: id
+    }).exec(function (err, journey) {
         if (err) return next(err);
-		if (!journey) return next(new Error('Failed to load Journey ' + id));
-		req.journey = journey;
-		next();
-	});
+        if (!journey) return next(new Error('Failed to load Journey ' + id));
+        req.journey = journey;
+        next();
+    });
 };

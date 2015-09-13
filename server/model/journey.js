@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
 
 var JourneySchema = new Schema({
     id: {
@@ -13,11 +13,13 @@ var JourneySchema = new Schema({
     descript: {
         type: String
     },
-    user: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+    alias: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Alias'
     },
     moments: [{
-        type: mongoose.Schema.Types.ObjectId, ref: 'Moment' 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Moment'
     }]
 });
 
