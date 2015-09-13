@@ -1,12 +1,32 @@
 <div class="row panel">
     <div class="col-xs-12 jm-journey-header">
-        <h1 class="text-center">{{journey.name}}</h1>
+        <h1 class="text-center">{{journey.name}} by {{journey.alias.name}}</h1>
         <p class="text-center">{{journey.descript}}</p>
         <hr></hr>
-        <div class="row container">
-            <div class="col-xs-11"></div>
-            <div class="col-xs-1">
-                <button data-jm-journey-edit="{{journey.id}}" data-ng-show="journey.isUser" data-jm-logged-in-show="true" class="btn btn-default">
+        <div class="row container text-center text-muted">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-2">
+            </div>
+            <div class="col-xs-2">
+                <a href="" data-jm-journey-followers="{{journey}}" class="jm-journey-a">
+                    <div>
+                        {{journey.followers.length}}
+                        <!--<span class="glyphicon glyphicon-user"></span>-->
+                    </div>
+                    Follower
+                </a>
+            </div>
+            <div class="col-xs-2">
+
+            </div>
+            <div class="col-xs-3">
+                <button data-ng-click="followJourney()" data-ng-show="!journey.isUser && !isFollowing" class="btn btn-primary">
+                    Follow Journey
+                </button>
+                <button data-ng-click="unfollowJourney()" data-ng-show="!journey.isUser && isFollowing" class="btn btn-danger">
+                    Unfollow Journey
+                </button>
+                <button data-jm-journey-edit="{{journey}}" data-ng-show="journey.isUser" class="btn btn-default pull-right">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </button>
             </div>

@@ -9,9 +9,12 @@ exports.read = function (req, res) {
         req.alias.populate('journeys', function (err, alias) {
             if (err) {
                 return next(err);
+            } else {
+                req.alias.populate('followedJourneys', function (err, alias) {
+                    console.log('followedJourneys: ' + alias.followedJourneys);
+                    res.status(200).send(alias);
+                });
             }
-            console.log('journeys: ' + alias.journeys);
-            res.status(200).send(alias);
         });
     } catch (e) {
         console.error(e);

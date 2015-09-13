@@ -7,12 +7,24 @@ var mongoose = require('mongoose'),
 exports.read = function (req, res) {
     try {
         req.journey.id = req.journey._id;
-        req.journey.populate('moments', function (err, journey) {
-            if (err) {
-                return next(err);
-            }
-            res.status(200).send(journey);
-        });
+        aliasCtrl.aliasByID(req, res, function () {
+            req.journey.alias = req.alias;
+            req.journey.populate('moments', function (err, journey) {
+                if (err) {
+                    return next(err);
+                } else {
+                    req.journey.populate('followers', function (err, journey) {
+                        if (err) {
+                            return next(err);
+                        } else {
+                            res.status(200).send(journey);
+                        }
+                    });
+                }
+
+            });
+        }, req.journey.alias);
+
     } catch (e) {
         console.error(e);
         res.status(404).body('Not Found').end();
@@ -60,6 +72,45 @@ exports.update = function (req, res) {
 
 exports.remove = function (req, res) {
 
+};
+
+exports.follow = function (req, res) {
+    var journey = req.journey;
+    journey.followers.push(req.alias._id);
+
+    journey.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            req.alias.followedJourneys.push(journey._id);
+            req.alias.save(function (err) {
+                res.status(200).send(journey);
+            });
+        }
+    });
+};
+
+exports.unfollow = function (req, res) {
+    var journey = req.journey;
+    var alias = req.alias;
+    journey.followers.splice(journey.followers.indexOf(alias._id), 1);
+
+    journey.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            alias.followedJourneys.splice(alias.followedJourneys.indexOf(journey._id, 1));
+            alias.save(function (err) {
+                res.status(200).send(journey);
+            });
+        }
+    });
 };
 
 exports.journeyByID = function (req, res, next, id) {

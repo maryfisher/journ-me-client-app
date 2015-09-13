@@ -10,6 +10,7 @@
     var auth = user + 'authentication/';
     var journey = api + 'journey/';
     var journeyId = journey + ':journeyId/';
+    var aliasId = ':aliasId';
     var moment = 'moment/';
     var momentId = moment + ':momentId';
 
@@ -18,8 +19,10 @@
         JOURNEY_ID_PATH: journeyId,
         MOMENT_PATH: journeyId + moment,
         MOMENT_ID_PATH: journeyId + momentId,
+        FOLLOW_JOURNEY_PATH: journeyId + 'follow/' + aliasId,
         USER_PATH: user,
         ALIAS_PATH: alias,
+        ALIAS_ID_PATH: alias + aliasId,
         AUTH_PATH: auth,
         LOGIN_PATH: auth + 'login/',
         LOGIN_TOKEN_PATH: auth + 'tokenlogin/',
