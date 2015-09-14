@@ -21,6 +21,14 @@ var JourneySchema = new Schema({
     followers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
+    }],
+    linkedToJourneys: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journey'
+    }],
+    linkedFromJourneys: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journey'
     }]
 });
 

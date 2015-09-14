@@ -23,8 +23,8 @@
         <div class="form-group">
             <label class="control-label col-sm-6">Is your journey bound to a specific location?</label>
             <div class="btn-group col-sm-6">
-                <label class="btn btn-default" ng-model="journey.hasLocation" btn-radio="false" uncheckable>No</label>
-                <label class="btn btn-default" ng-model="journey.hasLocation" btn-radio="true" uncheckable>Yes</label>
+                <label class="btn btn-default" data-ng-model="journey.hasLocation" btn-radio="false" uncheckable>No</label>
+                <label class="btn btn-default" data-ng-model="journey.hasLocation" btn-radio="true" uncheckable>Yes</label>
             </div>
         </div>
         <div class="form-group">
@@ -39,24 +39,24 @@
         <div class="form-group">
             <label class="control-label col-sm-6">Who can join your journey?</label>
             <div class="btn-group col-sm-6">
-                <label class="btn btn-default" ng-model="journey.join" btn-radio="'all'" uncheckable>Everyone</label>
-                <label class="btn btn-default" ng-model="journey.join" btn-radio="'invite'" uncheckable>Only With Invite</label>
+                <label class="btn btn-default" data-ng-model="journey.join" btn-radio="'all'" uncheckable>Everyone</label>
+                <label class="btn btn-default" data-ng-model="journey.join" btn-radio="'invite'" uncheckable>Only With Invite</label>
             </div>
         </div>
         <hr></hr>
         <div class="form-group">
             <label class="control-label col-sm-6">Your journey is</label>
             <div class="btn-group col-sm-6">
-                <label class="btn btn-default" ng-model="journey.isPublic" btn-radio="true" uncheckable>Public</label>
-                <label class="btn btn-default" ng-model="journey.isPublic" btn-radio="false" uncheckable>Private</label>
+                <label class="btn btn-default" data-ng-model="journey.isPublic" btn-radio="true" uncheckable>Public</label>
+                <label class="btn btn-default" data-ng-model="journey.isPublic" btn-radio="false" uncheckable>Private</label>
             </div>
         </div>
     </div>
 
     <div class="modal-footer">
         <span data-ng-switch="hasJourney">
-            <button data-ng-switch-when="true" ng-disabled="journeyForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
-            <button data-ng-switch-default ng-disabled="journeyForm.$invalid" type="submit" class="btn btn-primary">Create Journey</button>
+            <button data-ng-switch-when="true" data-ng-disabled="journeyForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
+            <button data-ng-switch-default data-ng-disabled="journeyForm.$invalid" type="submit" class="btn btn-primary">Create Journey</button>
         </span>
         <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
     </div>

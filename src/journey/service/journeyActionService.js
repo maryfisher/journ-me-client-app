@@ -4,7 +4,7 @@
 
     var app = angular.module('jmJourney');
 
-    app.factory('jmJourneyActionService', function ($http, jmServerConst, $q) {
+    app.factory('jmJourneyActionService', function ($http) {
 
         /*var getPath = function (path, aliasId, journeyId) {
             return jmServerUtil.buildPath(path, {
@@ -16,29 +16,23 @@
         return {
             followJourney: function (journeyId, aliasId) {
                 return $http.post(
-                        //getPath(jmServerConst.FOLLOW_JOURNEY_PATH, aliasId, journeyId)
-                        '/api/journey/' + journeyId + '/follow/' + aliasId, {})
-                    .then(
-                        function (data) {
-                            return data;
-                        },
-                        function (response) {
-                            return $q.reject(response);
-                        }
-                    );
+                    //getPath(jmServerConst.FOLLOW_JOURNEY_PATH, aliasId, journeyId)
+                    '/api/journey/' + journeyId + '/follow/' + aliasId, {});
             },
             unfollowJourney: function (journeyId, aliasId) {
                 return $http.post(
-                        //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
-                        '/api/journey/' + journeyId + '/unfollow/' + aliasId, {})
-                    .then(
-                        function (data) {
-                            return data;
-                        },
-                        function (response) {
-                            return $q.reject(response);
-                        }
-                    );
+                    //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
+                    '/api/journey/' + journeyId + '/unfollow/' + aliasId, {});
+            },
+            linkJourney: function (linkedJourneyId, journeyId) {
+                return $http.post(
+                    //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
+                    '/api/journey/' + journeyId + '/link/' + linkedJourneyId);
+            },
+            unlinkJourney: function (linkedJourneyId, journeyId) {
+                return $http.post(
+                    //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
+                    '/api/journey/' + journeyId + '/unlink/' + linkedJourneyId);
             }
         };
     });

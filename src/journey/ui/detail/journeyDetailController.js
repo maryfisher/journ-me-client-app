@@ -14,6 +14,24 @@
         $scope.unfollowJourney = function () {
             jmJourneyModel.unfollowJourney();
         };
+
+        $scope.unlinkJourney = function () {
+            jmJourneyModel.unlinkJourney($scope.journey, $scope.journey.aliasJourneyLink);
+        };
+
+        $scope.selectedLinkedJourney = undefined;
+
+        $scope.setSelected = function (journey) {
+            if ($scope.selectedLinkedJourney === journey) {
+                $scope.selectedLinkedJourney = undefined;
+            } else {
+                $scope.selectedLinkedJourney = journey;
+            }
+        };
+
+        $scope.isNotSelected = function (id) {
+            return !($scope.selectedLinkedJourney && $scope.selectedLinkedJourney._id === id);
+        };
     });
 
 
