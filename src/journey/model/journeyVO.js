@@ -5,7 +5,7 @@
     var auth = angular.module('jmJourney');
 
     auth.value('jmJourneyVO', {
-        id: undefined,
+        _id: undefined,
         name: undefined,
         descript: undefined,
         hasLocation: false,
@@ -18,20 +18,20 @@
         followers: [],
         invalidateJourney: function () {
             this.name = undefined;
-            this.id = undefined;
+            this._id = undefined;
             this.descript = undefined;
             this.hasLocation = false;
             this.location = undefined;
             this.isPublic = true;
             this.join = 'all';
             this.isUser = false;
-            this.moments = [];
+            this.moments = undefined;
             this.alias = undefined;
-            this.followers = [];
+            this.followers = undefined;
         },
         setJourney: function (response) {
             this.name = response.name;
-            this.id = response._id;
+            this._id = response._id;
             this.descript = response.descript;
             this.hasLocation = response.hasLocation || false;
             this.location = response.location;
@@ -41,21 +41,6 @@
             this.moments = response.moments;
             this.alias = response.alias;
             this.followers = response.followers;
-        },
-        getEmptyJourney: function () {
-            return {
-                id: undefined,
-                name: undefined,
-                descript: undefined,
-                hasLocation: false,
-                location: undefined,
-                isPublic: true,
-                join: 'all',
-                isUser: false,
-                moments: [],
-                alias: undefined,
-                followers: []
-            };
         }
     });
 

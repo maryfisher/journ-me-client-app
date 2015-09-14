@@ -4,12 +4,8 @@
 
     var app = angular.module('jmMoment');
 
-    app.controller('jmMomentDetailController', function ($scope, jmMomentService, $stateParams) {
-        jmMomentService.getMoment($stateParams.momentId, $stateParams.journeyId).then(function (data) {
-            $scope.moment = data;
-        }, function () {
-
-        });
+    app.controller('jmMomentDetailController', function ($scope, jmMomentModel, $stateParams) {
+        $scope.moment = jmMomentModel.getCurrentMoment($stateParams.momentId, $stateParams.journeyId);
 
     });
 

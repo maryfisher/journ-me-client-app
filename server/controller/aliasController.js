@@ -5,7 +5,6 @@ var mongoose = require('mongoose'),
 
 exports.read = function (req, res) {
     try {
-        req.alias.id = req.alias._id;
         req.alias.populate('journeys', function (err, alias) {
             if (err) {
                 return next(err);
@@ -32,7 +31,6 @@ exports.create = function (req, res) {
                 message: ''
             });
         } else {
-            alias.id = alias._id;
             console.log('POST creating new alias: ' + alias);
             req.user.aliases.push(alias);
             req.user.save(function (err) {

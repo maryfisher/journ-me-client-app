@@ -75,7 +75,6 @@ exports.register = function (req, res) {
                         message: ''
                     });
                 } else {
-                    alias.id = alias._id;
                     exports.login(user, req, res);
                 }
             });
@@ -99,6 +98,7 @@ exports.signin = function (req, res) {
 
 exports.tokenlogin = function (req, res) {
     exports.userByEmail(req, res, "die_ulli@hotmail.com", function (err) {
+        //exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
         if (err) {
 
         } else {

@@ -1,11 +1,11 @@
 // @require auth.auth
-// @require auth.service.userAuthService
+// @require auth.service.authService
 (function (angular, undefined) {
     'use strict';
 
     var app = angular.module('jmAuth');
 
-    app.controller('jmLoginFormController', function ($scope, jmUserAuthService, $modalInstance, jmUserAuthVO, jmRouteUtil){
+    app.controller('jmLoginFormController', function ($scope, $modalInstance, jmAuthModel, jmRouteUtil) {
 
         $scope.rememberMe = true;
 
@@ -14,14 +14,15 @@
         };
 
         $scope.login = function () {
-            jmUserAuthService.login($scope.email, $scope.password, $scope.rememberMe).then(
+            jmAuthModel.login($scope.email, $scope.password, $scope.rememberMe).then(
                 function () {
-                    if (jmUserAuthVO.isLoggedIn()) {
+                    if (jmAuthModel.isLoggedIn()) {
                         $scope.loginForm.$setValidity('pw', true);
                         jmRouteUtil.reload();
                         $modalInstance.close();
                     }
-                }, function () {
+                },
+                function () {
                     $scope.loginForm.$setValidity('pw', false);
                 }
             );

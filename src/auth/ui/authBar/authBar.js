@@ -4,20 +4,20 @@
 
     var app = angular.module('jmAuth');
 
-    app.directive('jmAuthBar', function (jmUserAuthService, jmUserAuthVO, jmAliasVO, jmRouteUtil) {
+    app.directive('jmAuthBar', function (jmAuthModel, jmAliasModel, jmRouteUtil) {
         return {
             templateUrl: 'auth/ui/authBar/authBar.tpl.html',
             restrict: 'E',
             replace: true,
             scope: {},
             link: function (scope) {
-                scope.user = jmUserAuthVO;
-                scope.alias = jmAliasVO;
+                scope.user = jmAuthModel.currentUser;
+                scope.alias = jmAliasModel.getCurrentAlias();
 
                 scope.logout = function () {
-                    jmUserAuthService.logout().finally(
+                    jmAuthModel.logout().then(
                         function () {
-                            if (!jmUserAuthVO.isLoggedIn()) {
+                            if (!jmAuthModel.isLoggedIn()) {
                                 jmRouteUtil.reload();
                             }
                         }

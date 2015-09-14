@@ -6,7 +6,9 @@
 
     var userPath = '/user';
     var journeyPath = '/journey';
-    var journey = journeyPath + '/:journeyId';
+    var journeyId = journeyPath + '/:journeyId';
+    var momentPath = '/moment';
+    var momentId = momentPath + '/:momentId';
 
     auth.constant('jmRouteConst', {
         HOME: 'HOME',
@@ -15,13 +17,13 @@
         BROWSE_PATH: '/browse',
         JOURNEY_PATH: journeyPath,
         JOURNEY_DETAIL: 'JOURNEY_DETAIL',
-        JOURNEY_DETAIL_PATH: journey,
+        JOURNEY_DETAIL_PATH: journeyId,
         MOMENT_DETAIL: 'MOMENT_DETAIL',
-        MOMENT_DETAIL_PATH: '/moment/:momentId',
+        MOMENT_DETAIL_PATH: momentId,
         MOMENT_UPDATE: 'MOMENT_UPDATE',
-        MOMENT_UPDATE_PATH: '/moment/:momentId/update' + journey, //this is the wrong way round to match MOMENT_CREATE
+        MOMENT_UPDATE_PATH: momentId + '/update' + journeyId, //this is the wrong way round to match MOMENT_CREATE
         MOMENT_CREATE: 'MOMENT_CREATE',
-        MOMENT_CREATE_PATH: '/moment/create' + journey, //this is the wrong way round for now so ui.router does not get confused (bug??)
+        MOMENT_CREATE_PATH: momentPath + '/create' + journeyId, //this is the wrong way round for now so ui.router does not get confused (bug??)
         USER_PATH: userPath,
         DASHBOARD: 'DASHBOARD',
         DASHBOARD_PATH: userPath + '/dashboard',

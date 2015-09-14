@@ -19,8 +19,10 @@
         $stateProvider.state(jmRouteConst.HOME, {
             url: jmRouteConst.HOME_PATH,
             templateUrl: 'public/ui/home/home.tpl.html',
-            redirectIfAuthenticated: true,
-            redirectState: jmRouteConst.DASHBOARD
+            data: {
+                redirectIfAuthenticated: true,
+                redirectState: jmRouteConst.DASHBOARD
+            }
         });
         $stateProvider.state(jmRouteConst.BROWSE, {
             url: jmRouteConst.BROWSE_PATH,
@@ -29,9 +31,11 @@
         $stateProvider.state(jmRouteConst.DASHBOARD, {
             url: jmRouteConst.DASHBOARD_PATH,
             templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
-            redirectIfUnauthenticated: true,
-            redirectState: jmRouteConst.HOME,
-            controller: 'jmDashboardController'
+            controller: 'jmDashboardController',
+            data: {
+                redirectIfUnauthenticated: true,
+                redirectState: jmRouteConst.HOME
+            }
         });
         $stateProvider
             .state(jmRouteConst.JOURNEY_DETAIL, {
@@ -48,23 +52,12 @@
         $stateProvider.state(jmRouteConst.MOMENT_UPDATE, {
             url: jmRouteConst.MOMENT_UPDATE_PATH,
             templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
-            controller: 'jmMomentEditFormController',
-            //this becomes unnecessary as soon as we have a loading animation that prevents user interaction
-            resolve: {
-                moment: function ($stateParams, jmMomentService) {
-                    return jmMomentService.getMoment($stateParams.momentId, $stateParams.journeyId);
-                }
-            }
+            controller: 'jmMomentEditFormController'
         });
         $stateProvider.state(jmRouteConst.MOMENT_CREATE, {
             url: jmRouteConst.MOMENT_CREATE_PATH,
             templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
-            controller: 'jmMomentEditFormController',
-            resolve: {
-                moment: function () {
-                    return undefined;
-                }
-            }
+            controller: 'jmMomentEditFormController'
         });
     });
 
@@ -72,26 +65,24 @@
         $httpProvider.interceptors.push('jmAuthTokenIntercept');
     });
 
-    app.run(function ($rootScope, $state, jmUserAuthVO) {
+    app.run(function ($rootScope, $state, jmAuthModel) {
         $rootScope.$on('$stateChangeStart', function (event, next) {
 
-            if (!jmUserAuthVO.isLoggedIn() && next.redirectIfUnauthenticated) {
+            if (!jmAuthModel.isLoggedIn() && next.data.redirectIfUnauthenticated) {
                 event.preventDefault();
-                $state.go(next.redirectState);
-            } else if (jmUserAuthVO.isLoggedIn() && next.redirectIfAuthenticated) {
+                $state.go(next.data.redirectState);
+            } else if (jmAuthModel.isLoggedIn() && next.data.redirectIfAuthenticated) {
                 event.preventDefault();
-                $state.go(next.redirectState);
+                $state.go(next.data.redirectState);
             }
         });
     });
 
-    app.run(function (jmUserAuthService, jmUserAuthVO, jmRouteUtil) {
-        jmUserAuthService.tokenLogin().then(function () {
-            if (jmUserAuthVO.isLoggedIn()) {
+    app.run(function (jmAuthModel, jmRouteUtil) {
+        jmAuthModel.tokenLogin().then(function () {
+            if (jmAuthModel.isLoggedIn()) {
                 jmRouteUtil.reload();
             }
-        }, function () {
-
         });
     });
 

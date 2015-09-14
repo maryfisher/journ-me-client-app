@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
 
 exports.read = function (req, res) {
     try {
-        req.journey.id = req.journey._id;
         aliasCtrl.aliasByID(req, res, function () {
             req.journey.alias = req.alias;
             req.journey.populate('moments', function (err, journey) {
@@ -34,6 +33,7 @@ exports.read = function (req, res) {
 exports.create = function (req, res) {
     var journey = new Journey(req.body);
     aliasCtrl.aliasByID(req, res, function () {
+        journey.alias = req.alias;
         journey.save(function (err) {
             if (err) {
                 console.log(err);
@@ -41,7 +41,6 @@ exports.create = function (req, res) {
                     message: ''
                 });
             } else {
-                journey.id = journey._id;
                 console.log('POST creating new journey: ' + journey);
                 req.alias.journeys.push(journey);
                 req.alias.save(function (err) {
@@ -54,7 +53,7 @@ exports.create = function (req, res) {
 
 exports.update = function (req, res) {
     console.log(req.body);
-    Journey.findByIdAndUpdate(req.body.id, req.body, {
+    Journey.findByIdAndUpdate(req.body._id, req.body, {
         new: true
     }, function (err, journey) {
         if (err) {
@@ -63,9 +62,14 @@ exports.update = function (req, res) {
                 message: ''
             });
         } else {
-            journey.id = journey._id;
-            console.log('POST updating journey: ' + journey);
-            res.status(200).send(journey);
+            journey.populate('alias', function (err, journey) {
+                if (err) {
+                    return next(err);
+                } else {
+                    console.log('POST updating journey: ' + journey);
+                    res.status(200).send(journey);
+                }
+            });
         }
     });
 };
@@ -87,7 +91,7 @@ exports.follow = function (req, res) {
         } else {
             req.alias.followedJourneys.push(journey._id);
             req.alias.save(function (err) {
-                res.status(200).send(journey);
+                res.status(200).send();
             });
         }
     });
@@ -105,9 +109,10 @@ exports.unfollow = function (req, res) {
                 message: ''
             });
         } else {
-            alias.followedJourneys.splice(alias.followedJourneys.indexOf(journey._id, 1));
+            var index = alias.followedJourneys.indexOf(journey._id);
+            alias.followedJourneys.splice(index, 1);
             alias.save(function (err) {
-                res.status(200).send(journey);
+                res.status(200).send();
             });
         }
     });

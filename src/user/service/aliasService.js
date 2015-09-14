@@ -4,25 +4,16 @@
 
     var app = angular.module('jmUser');
 
-    app.factory('jmAliasService', function ($http, $q, jmServerConst, jmAliasVO) {
-        var DEFAULT_CONFIG = {
-            timeout: 60000
-        };
+    app.factory('jmAliasService', function ($resource, $q, jmServerConst) {
+        var aliasDAO = $resource(
+            jmServerConst.ALIAS_ID_PATH
+        );
 
         return {
             getAlias: function (aliasId) {
-                return $http.get(
-                    jmServerConst.ALIAS_PATH + aliasId,
-                    DEFAULT_CONFIG
-                ).then(
-                    function (response) {
-                        jmAliasVO.setAlias(response.data);
-                        return response;
-                    },
-                    function (response) {
-                        return $q.reject(response);
-                    }
-                );
+                return aliasDAO.get({
+                    aliasId: aliasId
+                }).$promise;
             }
         };
     });
