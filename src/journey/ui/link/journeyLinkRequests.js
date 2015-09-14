@@ -4,7 +4,7 @@
 
     var app = angular.module('jmJourney');
 
-    app.directive('jmJourneyLinkRequests', function ($modal) {
+    app.directive('jmJourneyLinkRequests', function ($modal, jmJourneyModel) {
         return {
             restrict: 'A',
             scope: {
@@ -22,6 +22,11 @@
                         controller: function ($scope, $modalInstance) {
                             $scope.journey = JSON.parse($scope.journey);
                             $scope.cancel = function () {
+                                $modalInstance.close();
+                            };
+
+                            $scope.linkJourney = function (linkingFromJourney) {
+                                jmJourneyModel.linkJourney($scope.journey, linkingFromJourney);
                                 $modalInstance.close();
                             };
                         }

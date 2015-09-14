@@ -15,6 +15,10 @@
             jmJourneyModel.unfollowJourney();
         };
 
+        $scope.unlinkJourney = function () {
+            jmJourneyModel.unlinkJourney($scope.journey, $scope.journey.aliasJourneyLink);
+        };
+
         $scope.selectedLinkedJourney = undefined;
 
         $scope.setSelected = function (journey) {

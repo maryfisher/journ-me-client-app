@@ -7,6 +7,7 @@
     app.directive('jmLinkJourney', function ($modal) {
         return {
             restrict: 'A',
+            scope: {},
             link: function (scope, element) {
                 element.on('click', function () {
                     element[0].blur();

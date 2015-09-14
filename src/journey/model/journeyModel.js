@@ -11,6 +11,7 @@
             updateUser(jmJourneyVO);
             updateFollowing(jmJourneyVO);
             updateLinks(jmJourneyVO);
+            updateAliasJourneyLink(jmJourneyVO);
         };
 
         var updateUser = function (journey) {
@@ -30,6 +31,7 @@
         };
 
         var updateLinks = function (journey) {
+            journey.joinedLinkedJourneys.length = 0;
             var i, j, len, len2;
             for (i = 0, len = journey.linkedFromJourneys.length; i < len; ++i) {
                 for (j = 0, len2 = journey.linkedToJourneys.length; j < len2; ++j) {
@@ -40,6 +42,21 @@
                     }
                 }
             }
+        };
+
+        var updateAliasJourneyLink = function (journey) {
+            var link, i, j, len, len2;
+            var allJourneys = journey.joinedLinkedJourneys.concat(journey.linkedFromJourneys);
+            for (i = 0, len = allJourneys.length; i < len; i++) {
+                for (j = 0, len2 = jmAliasVO.journeys.length; j < len2; j++) {
+                    if (allJourneys[i]._id === jmAliasVO.journeys[j]._id || allJourneys[i]._id === jmAliasVO.journeys[j]) {
+                        link = allJourneys[i];
+                        break;
+                    }
+                }
+            }
+            journey.aliasJourneyLink = link;
+            journey.canLink = !link;
         };
 
         var model = {
@@ -104,11 +121,36 @@
                         journey.isFollowing = false;
                     });
             },
-            linkJourney: function (journey) {
-                return jmJourneyActionService.linkJourney(journey._id, jmJourneyVO._id).then(
+            linkJourney: function (userLinkJourney, journey) {
+                if (!journey) {
+                    journey = jmJourneyVO;
+                } else if (userLinkJourney._id === jmJourneyVO._id) {
+                    userLinkJourney = jmJourneyVO;
+                }
+                return jmJourneyActionService.linkJourney(userLinkJourney._id, journey._id).then(
                     function () {
-                        jmJourneyVO.linkedFromJourneys.push(journey);
-                        updateLinks(jmJourneyVO);
+                        journey.linkedFromJourneys.push(userLinkJourney);
+                        if (!journey.joinedLinkedJourneys) {
+                            journey.joinedLinkedJourneys = [];
+                        }
+                        updateLinks(journey);
+                        journey.aliasJourneyLink = userLinkJourney;
+                        journey.canLink = false;
+
+                        userLinkJourney.linkedToJourneys.push(journey);
+                        updateLinks(userLinkJourney);
+                    }
+                );
+            },
+            unlinkJourney: function (journey, userLinkJourney) {
+                return jmJourneyActionService.unlinkJourney(userLinkJourney._id, journey._id).then(
+                    function (response) {
+                        journey.linkedToJourneys = response.data.linkedToJourneys;
+                        journey.linkedFromJourneys = response.data.linkedFromJourneys;
+                        updateLinks(journey);
+
+                        journey.aliasJourneyLink = undefined;
+                        journey.canLink = true;
                     }
                 );
             }

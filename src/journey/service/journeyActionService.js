@@ -28,6 +28,11 @@
                 return $http.post(
                     //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
                     '/api/journey/' + journeyId + '/link/' + linkedJourneyId);
+            },
+            unlinkJourney: function (linkedJourneyId, journeyId) {
+                return $http.post(
+                    //getPath(jmServerConst.UNFOLLOW_JOURNEY_PATH, aliasId, journeyId)
+                    '/api/journey/' + journeyId + '/unlink/' + linkedJourneyId);
             }
         };
     });

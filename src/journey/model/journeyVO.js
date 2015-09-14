@@ -19,6 +19,8 @@
         linkedToJourneys: undefined,
         linkedFromJourneys: undefined,
         joinedLinkedJourneys: undefined,
+        aliasJourneyLink: undefined,
+        canLink: true,
         invalidateJourney: function () {
             this.name = undefined;
             this._id = undefined;
@@ -34,6 +36,8 @@
             this.linkedToJourneys = undefined;
             this.linkedFromJourneys = undefined;
             this.joinedLinkedJourneys = undefined;
+            this.aliasJourneyLink = undefined;
+            this.canLink = true;
         },
         setJourney: function (response) {
             this.name = response.name;

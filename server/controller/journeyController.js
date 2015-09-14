@@ -158,6 +158,40 @@ exports.link = function (req, res) {
     });
 };
 
+exports.unlink = function (req, res) {
+    var journey = req.journey;
+    var linkedJourney = req.linkedJourney;
+    linkedJourney.linkedToJourneys.splice(linkedJourney.linkedToJourneys.indexOf(journey), 1);
+
+    linkedJourney.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            //TODO notification
+            journey.linkedFromJourneys.splice(journey.linkedFromJourneys.indexOf(linkedJourney), 1);
+            journey.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).send({
+                        message: ''
+                    });
+                } else {
+                    journey.populate('linkedToJourneys', function (err, journey) {
+                        if (err) {
+                            return next(err);
+                        } else {
+                            res.status(200).send(journey);
+                        }
+                    });
+                }
+            })
+        }
+    });
+};
+
 exports.journeyByID = function (req, res, next, id) {
     Journey.findOne({
         _id: id

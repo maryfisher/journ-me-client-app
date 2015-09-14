@@ -6,7 +6,7 @@
         <div class="row container text-center">
             <div class="col-xs-2"></div>
             <div class="col-xs-2">
-                <a href="" data-jm-journey-link-requests="{{journey}}" data-is-from="true" data-is-to="true" popover-placement="top" popover-trigger="mouseenter" popover="{{journey.linkedToJourneys.length + journey.linkedFromJourneys.length}} Open Link Requests" class="jm-journey-a">
+                <a href="" data-jm-journey-link-requests="{{journey}}" data-is-from="true" data-is-to="true" class="jm-journey-a">
                     <div>
                         {{journey.linkedToJourneys.length + journey.linkedFromJourneys.length}}
                         <!--<span class="glyphicon glyphicon-user"></span>-->
@@ -15,8 +15,7 @@
                 </a>
             </div>
             <div class="col-xs-2">
-                <a href="" popover-placement="top" popover-trigger="mouseenter" popover="{{journey.joinedLinkedJourneys.length}} Mutually Linked Journey" class="jm-journey-a">
-
+                <a href="" class="jm-journey-a">
                     <div>
                         {{journey.joinedLinkedJourneys.length}}
                         <!--<span class="glyphicon glyphicon-link"></span>-->
@@ -50,21 +49,22 @@
                 </div>
                 <div data-ng-show="!journey.isUser">
                     <!-- LINK -->
-                    <button data-jm-link-journey="{{alias.journeys}}" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-link"></span>
+                    <button data-jm-link-journey data-ng-show="journey.canLink" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
+                        <span class="fa fa-chain"></span>
                     </button>
-                    <div class="jm-journey-info" data-ng-show="journey.isUser">
-
-                    </div>
+                    <!-- UNLINK -->
+                    <button data-ng-click="unlinkJourney()" data-ng-show="!journey.canLink" popover-placement="top" popover-trigger="mouseenter" popover="Unlink your journey" class="btn btn-danger">
+                        <span class="fa fa-chain-broken"></span>
+                    </button>
                     <!-- FOLLOW -->
-                    <button data-ng-click="followJourney()" data-ng-show="!journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Follow Journey" class="btn btn-primary">
-                        <!--<span class="glyphicon glyphicon-plus"></span>-->
-                        Follow Journey
+                    <button data-ng-click="followJourney()" data-ng-show="!journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Follow this journey" class="btn btn-primary">
+                        <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                        <span class="fa fa-eye"></span>
                     </button>
                     <!-- UNFOLLOW -->
-                    <button data-ng-click="unfollowJourney()" data-ng-show="journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Unfollow Journey" class="btn btn-danger">
-                        <!--<span class="glyphicon glyphicon-minus"></span>-->
-                        Unfollow Journey
+                    <button data-ng-click="unfollowJourney()" data-ng-show="journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Unfollow this journey" class="btn btn-danger">
+                        <!--<span class="glyphicon glyphicon-eye-close"></span>-->
+                        <span class="fa fa-eye-slash"></span>
                     </button>
                 </div>
             </div>
@@ -75,11 +75,25 @@
 
 <div ui-view class="row"></div>
 
-<div data-ng-show="journey.joinedLinkedJourneys.length > 0" class="row panel">
+<div data-ng-show="journey.joinedLinkedJourneys.length > 0 || (journey.isUser && journey.linkedToJourneys.length > 0)" class="row panel">
     <div class="col-sm-12">
         <h2 class="text-center">Linked Journeys</h2>
         <ul class="list-group">
             <li data-ng-repeat="journey in journey.joinedLinkedJourneys" class="list-group-item clearfix">
+                <data-jm-journey-list-item data-jm-journey="{{journey}}"></data-jm-journey-list-item>
+                <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey._id)" class="btn btn-default pull-right">
+                    <span class="caret"></span>
+                </button>
+                <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey._id)" class="btn btn-default dropup pull-right">
+                    <span class="caret"></span>
+                </button>
+                <div data-collapse="isNotSelected(journey._id)">
+                    <data-jm-journey-timeline data-journey-id="journey._id" data-is-selected="false"></data-jm-journey-timeline>
+                </div>
+            </li>
+        </ul>
+        <ul data-ng-show="journey.isUser" class="list-group">
+            <li data-ng-repeat="journey in journey.linkedToJourneys" class="list-group-item clearfix">
                 <data-jm-journey-list-item data-jm-journey="{{journey}}"></data-jm-journey-list-item>
                 <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey._id)" class="btn btn-default pull-right">
                     <span class="caret"></span>
