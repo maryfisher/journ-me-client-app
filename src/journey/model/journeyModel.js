@@ -10,6 +10,7 @@
             jmJourneyVO.setJourney(data);
             updateUser(jmJourneyVO);
             updateFollowing(jmJourneyVO);
+            updateLinks(jmJourneyVO);
         };
 
         var updateUser = function (journey) {
@@ -24,6 +25,19 @@
                 if (journey.followers[index]._id === aliasId) {
                     journey.isFollowing = true;
                     break;
+                }
+            }
+        };
+
+        var updateLinks = function (journey) {
+            var i, j, len, len2;
+            for (i = 0, len = journey.linkedFromJourneys.length; i < len; ++i) {
+                for (j = 0, len2 = journey.linkedToJourneys.length; j < len2; ++j) {
+                    if (journey.linkedFromJourneys[i]._id === journey.linkedToJourneys[j]._id) {
+                        journey.joinedLinkedJourneys.push(journey.linkedFromJourneys[i]);
+                        journey.linkedFromJourneys.splice(i, 1);
+                        journey.linkedToJourneys.splice(j, 1);
+                    }
                 }
             }
         };
@@ -90,8 +104,13 @@
                         journey.isFollowing = false;
                     });
             },
-            linkJourney: function () {
-
+            linkJourney: function (journey) {
+                return jmJourneyActionService.linkJourney(journey._id, jmJourneyVO._id).then(
+                    function () {
+                        jmJourneyVO.linkedFromJourneys.push(journey);
+                        updateLinks(jmJourneyVO);
+                    }
+                );
             }
         };
 

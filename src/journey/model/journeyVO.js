@@ -13,10 +13,12 @@
         isPublic: true,
         join: 'all',
         isUser: false,
-        moments: [],
+        moments: undefined,
         alias: undefined,
-        followers: [],
-        linkedJourneys: [],
+        followers: undefined,
+        linkedToJourneys: undefined,
+        linkedFromJourneys: undefined,
+        joinedLinkedJourneys: undefined,
         invalidateJourney: function () {
             this.name = undefined;
             this._id = undefined;
@@ -29,7 +31,9 @@
             this.moments = undefined;
             this.alias = undefined;
             this.followers = undefined;
-            this.linkedJourneys = undefined;
+            this.linkedToJourneys = undefined;
+            this.linkedFromJourneys = undefined;
+            this.joinedLinkedJourneys = undefined;
         },
         setJourney: function (response) {
             this.name = response.name;
@@ -43,7 +47,9 @@
             this.moments = response.moments;
             this.alias = response.alias;
             this.followers = response.followers;
-            this.linkedJourneys = response.linkedJourneys;
+            this.linkedToJourneys = response.linkedToJourneys;
+            this.linkedFromJourneys = response.linkedFromJourneys;
+            this.joinedLinkedJourneys = [];
         }
     });
 

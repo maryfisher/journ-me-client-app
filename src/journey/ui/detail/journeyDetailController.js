@@ -18,11 +18,15 @@
         $scope.selectedLinkedJourney = undefined;
 
         $scope.setSelected = function (journey) {
-            $scope.selectedLinkedJourney = journey;
+            if ($scope.selectedLinkedJourney === journey) {
+                $scope.selectedLinkedJourney = undefined;
+            } else {
+                $scope.selectedLinkedJourney = journey;
+            }
         };
 
-        $scope.isSelected = function (id) {
-            return $scope.selectedLinkedJourney && $scope.selectedLinkedJourney._id === id;
+        $scope.isNotSelected = function (id) {
+            return !($scope.selectedLinkedJourney && $scope.selectedLinkedJourney._id === id);
         };
     });
 

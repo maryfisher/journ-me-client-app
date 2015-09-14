@@ -16,11 +16,17 @@ exports.read = function (req, res) {
                         if (err) {
                             return next(err);
                         } else {
-                            req.journey.populate('linkedJourneys', function (err, journey) {
+                            req.journey.populate('linkedToJourneys', function (err, journey) {
                                 if (err) {
                                     return next(err);
                                 } else {
-                                    res.status(200).send(journey);
+                                    req.journey.populate('linkedFromJourneys', function (err, journey) {
+                                        if (err) {
+                                            return next(err);
+                                        } else {
+                                            res.status(200).send(journey);
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -124,6 +130,34 @@ exports.unfollow = function (req, res) {
     });
 };
 
+exports.link = function (req, res) {
+    var journey = req.journey;
+    var linkedJourney = req.linkedJourney;
+    linkedJourney.linkedToJourneys.push(journey);
+
+    linkedJourney.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            //TODO notification
+            journey.linkedFromJourneys.push(linkedJourney);
+            journey.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).send({
+                        message: ''
+                    });
+                } else {
+                    res.status(200).send();
+                }
+            })
+        }
+    });
+};
+
 exports.journeyByID = function (req, res, next, id) {
     Journey.findOne({
         _id: id
@@ -131,6 +165,17 @@ exports.journeyByID = function (req, res, next, id) {
         if (err) return next(err);
         if (!journey) return next(new Error('Failed to load Journey ' + id));
         req.journey = journey;
+        next();
+    });
+};
+
+exports.linkedJourneyByID = function (req, res, next, id) {
+    Journey.findOne({
+        _id: id
+    }).exec(function (err, journey) {
+        if (err) return next(err);
+        if (!journey) return next(new Error('Failed to load Journey ' + id));
+        req.linkedJourney = journey;
         next();
     });
 };

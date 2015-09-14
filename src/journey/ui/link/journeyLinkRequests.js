@@ -4,11 +4,13 @@
 
     var app = angular.module('jmJourney');
 
-    app.directive('jmJourneyFollowers', function ($modal) {
+    app.directive('jmJourneyLinkRequests', function ($modal) {
         return {
             restrict: 'A',
             scope: {
-                journey: '@jmJourneyFollowers'
+                journey: '@jmJourneyLinkRequests',
+                isTo: '@',
+                isFrom: '@'
             },
             link: function (scope, element) {
                 element.on('click', function () {
@@ -16,9 +18,8 @@
                     $modal.open({
                         scope: scope,
                         animation: true,
-                        templateUrl: 'journey/ui/follow/journeyFollowers.tpl.html',
+                        templateUrl: 'journey/ui/link/journeyLinkRequests.tpl.html',
                         controller: function ($scope, $modalInstance) {
-                            //this works because the modal scope is actually a child scope of the directive scope
                             $scope.journey = JSON.parse($scope.journey);
                             $scope.cancel = function () {
                                 $modalInstance.close();

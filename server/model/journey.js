@@ -22,7 +22,11 @@ var JourneySchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
     }],
-    linkedJourneys: [{
+    linkedToJourneys: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journey'
+    }],
+    linkedFromJourneys: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Journey'
     }]

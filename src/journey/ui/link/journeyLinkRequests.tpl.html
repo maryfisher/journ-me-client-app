@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h2 class="text-center">Open Link Requests for {{journey.name}}</h2>
+</div>
+<div class="modal-body">
+    <div data-ng-show="isTo">
+        <h3>This journey wants to link to</h3>
+        <ul class="list-group">
+            <li data-ng-repeat="journey in journey.linkedToJourneys" class="list-group-item">
+                <a data-ui-sref="JOURNEY_DETAIL({journeyId: journey._id})">{{journey.name}} - {{journey.descript}}</a>
+            </li>
+        </ul>
+    </div>
+    <div data-ng-show="isFrom">
+        <h3>Link requests to {{journey.name}}</h3>
+        <ul class="list-group">
+            <li data-ng-repeat="lJourney in journey.linkedFromJourneys" class="list-group-item clearfix">
+                <data-jm-journey-list-item data-jm-journey="{{lJourney}}"></data-jm-journey-list-item>
+                <button data-ng-show="journey.isUser" class="btn btn-primary pull-right">
+                    <span class="glyphicon glyphicon-link"></span> Link back
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="modal-footer">
+    <button data-ng-click="cancel()" class="btn btn-default"> Close </button>
+</div>

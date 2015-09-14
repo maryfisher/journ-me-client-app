@@ -9,6 +9,8 @@ module.exports = function (app) {
     app.route(journey + ':journeyId').post(journeyCtrl.update);
     app.route(journey + ':journeyId/follow/:aliasId').post(journeyCtrl.follow);
     app.route(journey + ':journeyId/unfollow/:aliasId').post(journeyCtrl.unfollow);
+    app.route(journey + ':journeyId/link/:linkedJourneyId').post(journeyCtrl.link);
     app.route(journey + ':journeyId').get(journeyCtrl.read);
     app.param('journeyId', journeyCtrl.journeyByID);
+    app.param('linkedJourneyId', journeyCtrl.linkedJourneyByID);
 }
