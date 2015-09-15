@@ -7,6 +7,7 @@
         'ngResource',
         'ngMessages',
         'ui.router',
+        'ngFileUpload',
         'jmAuth',
         'jmUser',
         'jmJourney',
