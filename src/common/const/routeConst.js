@@ -28,7 +28,12 @@
         USER_PATH: userPath,
         DASHBOARD: 'DASHBOARD',
         DASHBOARD_PATH: userPath + '/dashboard',
-        PROFILE_PATH: userPath + '/profile'
+        PROFILE: 'PROFILE',
+        PROFILE_PATH: userPath + '/profile',
+        ALIAS_UPDATE: 'ALIAS_UPDATE',
+        ALIAS_UPDATE_PATH: '/alias',
+        SETTINGS: 'SETTINGS',
+        SETTINGS_PATH: '/settings'
     });
 
 

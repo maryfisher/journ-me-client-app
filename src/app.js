@@ -67,6 +67,18 @@
                 redirectState: jmRouteConst.HOME
             }
         });
+        $stateProvider
+            .state(jmRouteConst.PROFILE, {
+                url: jmRouteConst.PROFILE_PATH,
+                templateUrl: 'user/ui/profile/profile.tpl.html',
+                controller: 'jmProfileController'
+            })
+            .state(jmRouteConst.ALIAS_UPDATE, {
+                parent: jmRouteConst.PROFILE,
+                url: jmRouteConst.ALIAS_UPDATE_PATH,
+                templateUrl: 'user/ui/profile/editAlias.tpl.html',
+                controller: 'jmEditAliasController'
+            });
     });
 
     app.config(function ($httpProvider) {
