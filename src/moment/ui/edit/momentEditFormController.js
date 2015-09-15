@@ -4,11 +4,7 @@
 
     var app = angular.module('jmMoment');
 
-    app.controller('jmMomentEditFormController', function ($scope, jmMomentModel, jmRouteUtil, jmRouteConst, $stateParams, jmAuthModel) {
-
-        if (!jmAuthModel.isLoggedIn()) {
-            jmRouteUtil.redirectTo(jmRouteConst.HOME);
-        }
+    app.controller('jmMomentEditFormController', function ($scope, jmMomentModel, jmRouteUtil, jmRouteConst, $stateParams) {
 
         $scope.cancel = function () {
             if (!$scope.hasMoment && !$scope.moment._id) {
@@ -26,8 +22,8 @@
 
         $scope.hasMoment = (!!$stateParams.momentId);
         if ($scope.hasMoment) {
-            $scope.moment = jmMomentModel.getCurrentMoment();
-            if (!$scope.moment.isUser) {
+            $scope.moment = jmMomentModel.getCurrentMoment($stateParams.momentId);
+            if (!$scope.moment.isAlias) {
                 $scope.cancel();
             }
         } else {

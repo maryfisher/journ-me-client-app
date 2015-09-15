@@ -11,7 +11,7 @@
             replace: true,
             scope: {
                 journeyId: '=',
-                isSelected: '@'
+                hasEdit: '@'
             },
             controller: 'jmJourneyTimelineController'
         };

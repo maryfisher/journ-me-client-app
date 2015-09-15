@@ -5,47 +5,32 @@ var mongoose = require('mongoose'),
     aliasCtrl = require('./aliasController');
 
 exports.read = function (req, res) {
-    try {
-        aliasCtrl.aliasByID(req, res, function () {
-            req.journey.alias = req.alias;
-            req.journey.populate('moments', function (err, journey) {
+    req.journey
+        .populate('alias', '_id name')
+        .populate('moments')
+        .populate('followers', '_id name')
+        .populate('linkedToJourneys', '_id alias name descript')
+        .populate({
+                path: 'linkedFromJourneys',
+                select: '_id alias name descript'
+            },
+            function (err, journey) {
                 if (err) {
                     return next(err);
                 } else {
-                    req.journey.populate('followers', function (err, journey) {
-                        if (err) {
-                            return next(err);
-                        } else {
-                            req.journey.populate('linkedToJourneys', function (err, journey) {
-                                if (err) {
-                                    return next(err);
-                                } else {
-                                    req.journey.populate('linkedFromJourneys', function (err, journey) {
-                                        if (err) {
-                                            return next(err);
-                                        } else {
-                                            res.status(200).send(journey);
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
+                    res.status(200).send(journey);
                 }
-
             });
-        }, req.journey.alias);
 
-    } catch (e) {
-        console.error(e);
-        res.status(404).body('Not Found').end();
-    }
 };
 
 exports.create = function (req, res) {
     var journey = new Journey(req.body);
-    aliasCtrl.aliasByID(req, res, function () {
-        journey.alias = req.alias;
+    journey.alias = req.body.aliasId;
+    journey.populate({
+        path: 'alias',
+        select: '_id'
+    }, function () {
         journey.save(function (err) {
             if (err) {
                 console.log(err);
@@ -54,13 +39,13 @@ exports.create = function (req, res) {
                 });
             } else {
                 console.log('POST creating new journey: ' + journey);
-                req.alias.journeys.push(journey);
-                req.alias.save(function (err) {
+                journey.alias.journeys.push(journey);
+                journey.alias.save(function (err) {
                     res.status(200).send(journey);
                 });
             }
         });
-    }, req.body.aliasId);
+    });
 };
 
 exports.update = function (req, res) {
@@ -74,14 +59,20 @@ exports.update = function (req, res) {
                 message: ''
             });
         } else {
-            journey.populate('alias', function (err, journey) {
-                if (err) {
-                    return next(err);
-                } else {
-                    console.log('POST updating journey: ' + journey);
-                    res.status(200).send(journey);
-                }
-            });
+            journey
+                .populate('linkedToJourneys', '_id alias name descript')
+                .populate('linkedFromJourneys', '_id alias name descript')
+                .populate({
+                    path: 'alias',
+                    select: '_id'
+                }, function (err, journey) {
+                    if (err) {
+                        return next(err);
+                    } else {
+                        console.log('POST updating journey: ' + journey);
+                        res.status(200).send(journey);
+                    }
+                });
         }
     });
 };
@@ -179,13 +170,15 @@ exports.unlink = function (req, res) {
                         message: ''
                     });
                 } else {
-                    journey.populate('linkedToJourneys', function (err, journey) {
-                        if (err) {
-                            return next(err);
-                        } else {
-                            res.status(200).send(journey);
-                        }
-                    });
+                    journey
+                        .populate('linkedFromJourneys')
+                        .populate('linkedToJourneys', function (err, journey) {
+                            if (err) {
+                                return next(err);
+                            } else {
+                                res.status(200).send(journey);
+                            }
+                        });
                 }
             })
         }

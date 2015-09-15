@@ -26,7 +26,7 @@
                             };
 
                             $scope.linkJourney = function (linkingFromJourney) {
-                                jmJourneyModel.linkJourney($scope.journey, linkingFromJourney);
+                                jmJourneyModel.linkBackJourney($scope.journey, linkingFromJourney);
                                 $modalInstance.close();
                             };
                         }

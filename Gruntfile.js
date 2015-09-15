@@ -91,10 +91,10 @@ module.exports = function (grunt) {
         less: {
             dev: {
                 files: {
-                    '.temp/style/main.css': 'src/compile.lesstpl'
+                    '.temp/style/main.css': '<%= app.src %>/compile.lesstpl'
                 },
                 options: {
-                    plugins: [ require('less-plugin-glob') ]
+                    plugins: [require('less-plugin-glob')]
                 }
             }
         },

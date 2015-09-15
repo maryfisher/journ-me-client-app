@@ -16,7 +16,7 @@ var UserSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
     }],
-    favAlias: {
+    currentAlias: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
     },

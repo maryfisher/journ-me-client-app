@@ -7,10 +7,10 @@
     app.controller('jmJourneyFormController', function ($scope, $modalInstance, jmJourneyModel, jmRouteUtil) {
 
         $scope.hasJourney = (!!$scope.journey);
-        if ($scope.hasJourney) {
-            $scope.journey = jmJourneyModel.getCurrentJourney();
-        } else {
+        if (!$scope.hasJourney) {
             $scope.journey = jmJourneyModel.getEmptyJourney();
+        } else {
+            $scope.journey = JSON.parse($scope.journey);
         }
 
         $scope.save = function () {
@@ -18,7 +18,7 @@
                 if (!$scope.hasJourney) {
                     jmJourneyModel.createJourney($scope.journey).then(
                         function () {
-                            jmRouteUtil.redirectToJourney(jmJourneyModel.getCurrentJourney._id);
+                            jmRouteUtil.redirectToJourney(jmJourneyModel.getCurrentJourney()._id);
                             $modalInstance.close();
                         }
                     );

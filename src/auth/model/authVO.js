@@ -20,7 +20,7 @@
         setUser: function (data) {
             this._id = data._id;
             this.email = data.email;
-            this.currentAlias = data.favAlias._id;
+            this.currentAlias = data.currentAlias._id;
             this.authToken = data.authToken;
             this.isLoggedIn = true;
         }

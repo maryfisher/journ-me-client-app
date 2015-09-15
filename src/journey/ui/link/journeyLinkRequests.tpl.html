@@ -2,7 +2,7 @@
     <h2 class="text-center">Open Link Requests for {{journey.name}}</h2>
 </div>
 <div class="modal-body">
-    <div data-ng-show="isTo">
+    <div data-ng-if="isTo && journey.linkedToJourneys.length > 0">
         <h3>This journey wants to link to</h3>
         <ul class="list-group">
             <li data-ng-repeat="journeyTo in journey.linkedToJourneys" class="list-group-item">
@@ -10,12 +10,12 @@
             </li>
         </ul>
     </div>
-    <div data-ng-show="isFrom">
+    <div data-ng-if="isFrom && journey.linkedFromJourneys.length > 0">
         <h3>Link requests to {{journey.name}}</h3>
         <ul class="list-group">
             <li data-ng-repeat="lJourney in journey.linkedFromJourneys" class="list-group-item clearfix">
                 <data-jm-journey-list-item data-jm-journey="{{lJourney}}"></data-jm-journey-list-item>
-                <button data-ng-click="linkJourney(lJourney)" data-ng-show="journey.isUser" class="btn btn-primary pull-right">
+                <button data-ng-click="linkJourney(lJourney)" data-ng-show="journey.isAlias" class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-link"></span> Link back
                 </button>
             </li>

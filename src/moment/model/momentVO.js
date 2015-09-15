@@ -7,21 +7,24 @@
     moment.value('jmMomentVO', {
         _id: undefined,
         descript: undefined,
-        isUser: false,
+        isAlias: false,
         alias: undefined,
         journey: undefined,
+        created: undefined,
         setMoment: function (response) {
             this._id = response._id;
             this.descript = response.descript;
             this.alias = response.alias;
             this.journey = response.journey;
+            this.created = response.created;
         },
         invalidateMoment: function () {
             this._id = undefined;
             this.descript = undefined;
             this.alias = undefined;
             this.journey = undefined;
-            this.isUser = false;
+            this.isAlias = false;
+            this.created = undefined;
         }
     });
 

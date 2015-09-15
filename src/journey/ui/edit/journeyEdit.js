@@ -8,7 +8,7 @@
         return {
             restrict: 'A',
             scope: {
-                journey: '@jmJourneyEdit'
+                journey: '@?jmJourneyEdit'
             },
             link: function (scope, element) {
                 element.on('click', function () {

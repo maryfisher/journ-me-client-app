@@ -13,7 +13,7 @@
             getAlias: function (aliasId) {
                 return aliasDAO.get({
                     aliasId: aliasId
-                }).$promise;
+                });
             }
         };
     });

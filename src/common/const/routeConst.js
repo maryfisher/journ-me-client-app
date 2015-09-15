@@ -11,6 +11,7 @@
     var momentId = momentPath + '/:momentId';
 
     auth.constant('jmRouteConst', {
+        AUTH: 'AUTH',
         HOME: 'HOME',
         HOME_PATH: '/home',
         BROWSE: 'BROWSE',

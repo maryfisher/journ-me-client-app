@@ -4,7 +4,7 @@
 
     var app = angular.module('jmAuth');
 
-    app.factory('jmAuthModel', function (jmAuthService, jmAliasVO, jmAuthVO, $cookies, $q, jmServerConst) {
+    app.factory('jmAuthModel', function (jmAuthService, jmAliasVO, jmAliasModel, jmAuthVO, $cookies, $q, jmServerConst) {
 
         var clearAll = function (response) {
             jmAuthVO.invalidateUser();
@@ -12,9 +12,15 @@
             return response;
         };
 
+        var reject = function (response) {
+            clearAll(response);
+            return $q.reject(response);
+        };
+
         var setData = function (data) {
             jmAuthVO.setUser(data);
-            jmAliasVO.setAlias(data.favAlias);
+            jmAliasVO.setAlias(data.currentAlias);
+            jmAliasModel.getCurrentAlias();
             return data;
         };
 
@@ -26,16 +32,19 @@
                             $cookies.put(jmServerConst.COOKIE_TOKEN_KEY, data.authToken);
                         }
                         return setData(data);
-                    }, clearAll);
+                    }, reject);
             },
             tokenLogin: function () {
                 var token = $cookies.get(jmServerConst.COOKIE_TOKEN_KEY);
                 if (token) {
                     return jmAuthService.tokenLogin(jmAuthVO.authToken).then(
-                        setData,
+                        function (data) {
+                            $cookies.put(jmServerConst.COOKIE_TOKEN_KEY, data.authToken);
+                            return setData(data);
+                        },
                         function (response) {
                             $cookies.remove(jmServerConst.COOKIE_TOKEN_KEY);
-                            return clearAll(response);
+                            return reject(response);
                         }
                     );
                 } else {
@@ -63,15 +72,5 @@
 
         return model;
     });
-
-    /*app.run(function (jmRouteUtil) {
-        model.tokenLogin().then(function () {
-            if (model.isLoggedIn()) {
-                jmRouteUtil.reload();
-            }
-        }, function () {
-
-        });
-    }); */
 
 }(window.angular));

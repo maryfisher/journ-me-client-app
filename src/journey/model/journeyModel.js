@@ -11,14 +11,17 @@
             updateUser(jmJourneyVO);
             updateFollowing(jmJourneyVO);
             updateLinks(jmJourneyVO);
-            updateAliasJourneyLink(jmJourneyVO);
+            jmJourneyVO.aliasJourneyLink = updateAliasJourneyLink(jmJourneyVO);
         };
 
         var updateUser = function (journey) {
-            journey.isUser = journey.alias._id === jmAliasVO._id;
+            journey.isAlias = journey.alias._id === jmAliasVO._id;
         };
 
         var updateFollowing = function (journey) {
+            if (journey.alias._id === jmAliasVO._id || !jmAliasVO._id) {
+                return;
+            }
             journey.isFollowing = false;
             var index, len;
             var aliasId = jmAliasVO._id;
@@ -37,6 +40,7 @@
                 for (j = 0, len2 = journey.linkedToJourneys.length; j < len2; ++j) {
                     if (journey.linkedFromJourneys[i]._id === journey.linkedToJourneys[j]._id) {
                         journey.joinedLinkedJourneys.push(journey.linkedFromJourneys[i]);
+                        //NOTE probably gonna throw an error, have to keep an eye on this
                         journey.linkedFromJourneys.splice(i, 1);
                         journey.linkedToJourneys.splice(j, 1);
                     }
@@ -45,18 +49,18 @@
         };
 
         var updateAliasJourneyLink = function (journey) {
-            var link, i, j, len, len2;
+            if (journey.alias._id === jmAliasVO._id || !jmAliasVO._id || !jmAliasVO.journeys) {
+                return;
+            }
+            var i, j, len, len2;
             var allJourneys = journey.joinedLinkedJourneys.concat(journey.linkedFromJourneys);
             for (i = 0, len = allJourneys.length; i < len; i++) {
                 for (j = 0, len2 = jmAliasVO.journeys.length; j < len2; j++) {
                     if (allJourneys[i]._id === jmAliasVO.journeys[j]._id || allJourneys[i]._id === jmAliasVO.journeys[j]) {
-                        link = allJourneys[i];
-                        break;
+                        return allJourneys[i];
                     }
                 }
             }
-            journey.aliasJourneyLink = link;
-            journey.canLink = !link;
         };
 
         var model = {
@@ -92,6 +96,12 @@
                     join: 'all'
                 };
             },
+            refreshJourney: function () {
+                if (!jmJourneyVO._id) {
+                    return;
+                }
+                jmJourneyVO.aliasJourneyLink = updateAliasJourneyLink(jmJourneyVO);
+            },
             followJourney: function (journey) {
                 if (!journey) {
                     journey = jmJourneyVO;
@@ -124,8 +134,6 @@
             linkJourney: function (userLinkJourney, journey) {
                 if (!journey) {
                     journey = jmJourneyVO;
-                } else if (userLinkJourney._id === jmJourneyVO._id) {
-                    userLinkJourney = jmJourneyVO;
                 }
                 return jmJourneyActionService.linkJourney(userLinkJourney._id, journey._id).then(
                     function () {
@@ -135,8 +143,15 @@
                         }
                         updateLinks(journey);
                         journey.aliasJourneyLink = userLinkJourney;
-                        journey.canLink = false;
-
+                    }
+                );
+            },
+            linkBackJourney: function (userLinkJourney, journey) {
+                if (userLinkJourney._id === jmJourneyVO._id) {
+                    userLinkJourney = jmJourneyVO;
+                }
+                return jmJourneyActionService.linkJourney(userLinkJourney._id, journey._id).then(
+                    function () {
                         userLinkJourney.linkedToJourneys.push(journey);
                         updateLinks(userLinkJourney);
                     }
@@ -150,7 +165,6 @@
                         updateLinks(journey);
 
                         journey.aliasJourneyLink = undefined;
-                        journey.canLink = true;
                     }
                 );
             }

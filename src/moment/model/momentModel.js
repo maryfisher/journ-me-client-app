@@ -12,16 +12,16 @@
         };
 
         var updateUser = function (moment) {
-            moment.isUser = moment.alias === jmAliasVO._id;
+            moment.isAlias = moment.alias === jmAliasVO._id;
         };
 
         var model = {
-            getCurrentMoment: function (id, journeyId) {
+            getCurrentMoment: function (id) {
                 if (id) {
                     if (jmMomentVO._id !== id) {
                         jmMomentVO.invalidateMoment();
                     }
-                    jmMomentService.getMoment(id, journeyId, jmAliasVO._id).then(setMoment);
+                    jmMomentService.getMoment(id).then(setMoment);
                 }
                 return jmMomentVO;
             },
@@ -33,10 +33,13 @@
                         jmJourneyVO.moments.push(data);
                     });
             },
-            updateMoment: function (moment, journeyId) {
-                return jmMomentService.updateMoment(moment, journeyId, jmAliasVO._id).then(setMoment);
+            updateMoment: function (moment) {
+                return jmMomentService.updateMoment(moment).then(setMoment);
             },
             getMoment: function (id) {
+                if (id === jmMomentVO._id) {
+                    return jmMomentVO;
+                }
                 return jmMomentService.getMoment(id);
             }
         };

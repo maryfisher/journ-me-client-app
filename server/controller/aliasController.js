@@ -5,16 +5,14 @@ var mongoose = require('mongoose'),
 
 exports.read = function (req, res) {
     try {
-        req.alias.populate('journeys', function (err, alias) {
-            if (err) {
-                return next(err);
-            } else {
-                req.alias.populate('followedJourneys', function (err, alias) {
-                    console.log('followedJourneys: ' + alias.followedJourneys);
-                    res.status(200).send(alias);
-                });
-            }
-        });
+        req.alias
+            .populate('journeys', '_id name descript alias linkedToJourneys linkedFromJourneys')
+            .populate({
+                path: 'followedJourneys',
+                select: '_id alias descript name'
+            }, function (err, alias) {
+                res.status(200).send(alias);
+            });
     } catch (e) {
         console.error(e);
         res.status(404).body('Not Found').end();

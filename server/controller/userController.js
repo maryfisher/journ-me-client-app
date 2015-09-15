@@ -15,8 +15,8 @@ exports.login = function (user, req, res) {
 
     fs.readFile('./test/server/pages/' + 2 + '.png', 'base64', function (error, data) {
         user.id = user._id;
-        user.favAlias.pic.data = data;
-        user.favAlias.pic.contentType = 'image/png';
+        user.currentAlias.pic.data = data;
+        user.currentAlias.pic.contentType = 'image/png';
         user.authToken = "2";
         if (error) {
             console.log(error);
@@ -53,8 +53,7 @@ exports.register = function (req, res) {
     var user = new User(req.body);
     var alias = new Alias(req.body);
     user.aliases.push(alias);
-    user.favAlias = alias;
-
+    user.currentAlias = alias;
 
     // Then save the user 
     user.save(function (err) {
@@ -88,24 +87,29 @@ exports.signin = function (req, res) {
         if (err) {
 
         } else {
-            aliasCtrl.aliasByID(req, res, function () {
-                req.user.favAlias = req.alias;
+            req.user.populate({
+                path: 'currentAlias',
+                select: '_id name'
+            }, function () {
                 exports.login(req.user, req, res);
-            }, req.user.favAlias);
+            });
         }
     });
 };
 
 exports.tokenlogin = function (req, res) {
+    //exports.userByEmail(req, res, "eureka.mira@gmail.com", function (err) {
+    //exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
     exports.userByEmail(req, res, "die_ulli@hotmail.com", function (err) {
-        //exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
         if (err) {
 
         } else {
-            aliasCtrl.aliasByID(req, res, function () {
-                req.user.favAlias = req.alias;
+            req.user.populate({
+                path: 'currentAlias',
+                select: '_id name'
+            }, function () {
                 exports.login(req.user, req, res);
-            }, req.user.favAlias);
+            });
         }
     });
 };

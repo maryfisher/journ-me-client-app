@@ -52,12 +52,20 @@
         $stateProvider.state(jmRouteConst.MOMENT_UPDATE, {
             url: jmRouteConst.MOMENT_UPDATE_PATH,
             templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
-            controller: 'jmMomentEditFormController'
+            controller: 'jmMomentEditFormController',
+            data: {
+                redirectIfUnauthenticated: true,
+                redirectState: jmRouteConst.HOME
+            }
         });
         $stateProvider.state(jmRouteConst.MOMENT_CREATE, {
             url: jmRouteConst.MOMENT_CREATE_PATH,
             templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
-            controller: 'jmMomentEditFormController'
+            controller: 'jmMomentEditFormController',
+            data: {
+                redirectIfUnauthenticated: true,
+                redirectState: jmRouteConst.HOME
+            }
         });
     });
 
@@ -68,10 +76,10 @@
     app.run(function ($rootScope, $state, jmAuthModel) {
         $rootScope.$on('$stateChangeStart', function (event, next) {
 
-            if (!jmAuthModel.isLoggedIn() && next.data.redirectIfUnauthenticated) {
+            if (!jmAuthModel.isLoggedIn() && next.data && next.data.redirectIfUnauthenticated) {
                 event.preventDefault();
                 $state.go(next.data.redirectState);
-            } else if (jmAuthModel.isLoggedIn() && next.data.redirectIfAuthenticated) {
+            } else if (jmAuthModel.isLoggedIn() && next.data && next.data.redirectIfAuthenticated) {
                 event.preventDefault();
                 $state.go(next.data.redirectState);
             }

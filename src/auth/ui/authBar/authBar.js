@@ -11,7 +11,6 @@
             replace: true,
             scope: {},
             link: function (scope) {
-                scope.user = jmAuthModel.currentUser;
                 scope.alias = jmAliasModel.getCurrentAlias();
 
                 scope.logout = function () {
