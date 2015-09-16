@@ -1,45 +1,46 @@
 {
-  "name": "journ-me-client-app",
-  "version": "0.0.1",
-  "description": "AngularJS single-page application to allow members to connect with each other on the global JournMe community via a responsive, interactive UI.",
-  "contributors": [
-    {
-      "name": "Ulrike Meyer",
-      "email": "die_ulli@hotmail.com"
+    "name": "journ-me-client-app",
+    "version": "0.0.1",
+    "description": "AngularJS single-page application to allow members to connect with each other on the global JournMe community via a responsive, interactive UI.",
+    "contributors": [
+        {
+            "name": "Ulrike Meyer",
+            "email": "die_ulli@hotmail.com"
     },
-    {
-      "name": "Hao Tri Pham",
-      "email": "phamhaotri@googlemail.com"
+        {
+            "name": "Hao Tri Pham",
+            "email": "phamhaotri@googlemail.com"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://bitbucket.org/journ-me/journ-me-client-app.git"
-  },
-  "engines": {
-    "node": "0.12.x",
-    "npm": "2.13.x"
-  },
-  "private": true,
-  "devDependencies": {
-    "body-parser": "~1.13.3",
-    "express": "~4.13.3",
-    "grunt": "~0.4.5",
-    "mongodb": "~2.0.42",
-    "mongoose": "~4.1.5",
-    "grunt-angular-templates": "~0.5.7",
-    "grunt-bower-task": "~0.4.0",
-    "grunt-contrib-clean": "~0.6.0",
-    "grunt-contrib-concat": "~0.5.1",
-    "grunt-contrib-copy": "~0.8.1",
-    "grunt-contrib-jshint": "~0.11.2",
-    "grunt-contrib-uglify": "~0.9.1",
-    "grunt-contrib-less": "~1.0.1",
-    "less-plugin-glob": "~1.1.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-express": "~1.4.1",
-    "grunt-ng-annotate": "~1.0.1",
-    "grunt-pre-concat": "^1.0.0",
-    "load-grunt-tasks": "~3.2.0"
-  }
+    "repository": {
+        "type": "git",
+        "url": "https://bitbucket.org/journ-me/journ-me-client-app.git"
+    },
+    "engines": {
+        "node": "0.12.x",
+        "npm": "2.13.x"
+    },
+    "private": true,
+    "devDependencies": {
+        "body-parser": "~1.13.3",
+        "express": "~4.13.3",
+        "grunt": "~0.4.5",
+        "connect-multiparty": "~2.0.0",
+        "mongodb": "~2.0.42",
+        "mongoose": "~4.1.5",
+        "grunt-angular-templates": "~0.5.7",
+        "grunt-bower-task": "~0.4.0",
+        "grunt-contrib-clean": "~0.6.0",
+        "grunt-contrib-concat": "~0.5.1",
+        "grunt-contrib-copy": "~0.8.1",
+        "grunt-contrib-jshint": "~0.11.2",
+        "grunt-contrib-uglify": "~0.9.1",
+        "grunt-contrib-less": "~1.0.1",
+        "less-plugin-glob": "~1.1.0",
+        "grunt-contrib-watch": "~0.6.1",
+        "grunt-express": "~1.4.1",
+        "grunt-ng-annotate": "~1.0.1",
+        "grunt-pre-concat": "^1.0.0",
+        "load-grunt-tasks": "~3.2.0"
+    }
 }

@@ -21,9 +21,9 @@ var AliasSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    pic: {
-        data: String,
-        contentType: String
+    image: {
+        type: String,
+        default: ''
     }
 });
 

@@ -14,7 +14,7 @@
             this.journeys = response.journeys;
             this.followedJourneys = response.followedJourneys;
             this.name = response.name;
-            this.thumb = response.pic ? response.pic.data : this.thumb;
+            this.thumb = response.image ? response.image : this.thumb;
             this._id = response._id;
         },
         invalidateAlias: function () {

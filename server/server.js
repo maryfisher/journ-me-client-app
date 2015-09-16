@@ -1,4 +1,4 @@
-(function (express, bodyParser) {
+(function (express) {
     'use strict';
 
     var mongoose = require('mongoose');
@@ -10,6 +10,7 @@
     require('./model/alias');
 
     var app = express();
+    var bodyParser = require('body-parser');
     app.use(bodyParser.json());
 
     require('./config/route/userRoutes.js')(app);
@@ -19,4 +20,4 @@
 
     module.exports = app;
 
-}(require('express'), require('body-parser')));
+}(require('express')));

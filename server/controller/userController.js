@@ -13,16 +13,8 @@ exports.login = function (user, req, res) {
     user.password = undefined;
     //user.salt = undefined;
 
-    fs.readFile('./test/server/pages/' + 2 + '.png', 'base64', function (error, data) {
-        user.id = user._id;
-        user.currentAlias.pic.data = data;
-        user.currentAlias.pic.contentType = 'image/png';
-        user.authToken = "2";
-        if (error) {
-            console.log(error);
-        }
-        res.status(200).set('Content-Type', 'text/json').send(user);
-    });
+    user.authToken = "2";
+    res.status(200).set('Content-Type', 'text/json').send(user);
 }
 
 exports.userByEmail = function (req, res, email, next) {
