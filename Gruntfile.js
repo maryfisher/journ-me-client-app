@@ -19,7 +19,7 @@ module.exports = function (grunt) {
             dist: 'dist',
             server: 'server'
         },
-        bower: {
+        bowerInstall: {
             install: {
                 options: {
                     install: true,
@@ -30,9 +30,12 @@ module.exports = function (grunt) {
             }
         },
         clean: {
-            all: [
+            dev: [
                 '<%= app.temp %>',
                 '<%= app.dist %>'
+            ],
+            bower: [
+                '<%= app.lib %>/bower_components'
             ]
         },
         jshint: {
@@ -137,8 +140,15 @@ module.exports = function (grunt) {
     });
 
     // GruntJS task registration
+
+    grunt.renameTask('bower', 'bowerInstall');
+    grunt.registerTask('bower', [
+        'clean:bower',
+        'bowerInstall'
+    ]);
+
     grunt.registerTask('build', [
-        'clean',
+        'clean:dev',
         'jshint',
         'ngtemplates',
         'ngAnnotate',
@@ -156,7 +166,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        //'bower',
         'run'
     ]);
 };
