@@ -1,0 +1,33 @@
+{
+    "version": "v4",
+    "repo": "borisyankov/DefinitelyTyped",
+    "ref": "master",
+    "path": "typings",
+    "bundle": "lib/typings/tsd.d.ts",
+    "installed": {
+        "angular-file-upload/angular-file-upload.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "ng-file-upload/ng-file-upload.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "angularjs/angular.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "jquery/jquery.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "angularjs/angular-resource.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "angularjs/angular-cookies.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "angular-ui-router/angular-ui-router.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        },
+        "angular-ui-bootstrap/angular-ui-bootstrap.d.ts": {
+            "commit": "6f6e5c7dd9effe21fee14eb65fe340ecbbc8580a"
+        }
+    }
+}
