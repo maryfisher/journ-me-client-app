@@ -13,6 +13,8 @@ module.exports = function (grunt) {
         pkg: pkg,
         app: {
             src: 'src',
+            app: 'app',
+            common: 'common',
             lib: 'lib',
             test: 'test',
             temp: '.temp',
@@ -84,13 +86,15 @@ module.exports = function (grunt) {
         ts: {
             dev: {
                 src: [
-                    '<%= app.src %>/auth/**/*.ts',
-                    '<%= app.src %>/common/**/*.ts',
-                    '<%= app.src %>/config/**/*.ts',
-                    '<%= app.src %>/Main.ts',
-                    '<%= app.src %>/app.ts',
+                    '<%= app.common %>/**/*.ts',
+                    '<%= app.app %>/common/**/*.ts',
+                    '<%= app.app %>/user/**/*.ts',
+                    '<%= app.app %>/auth/**/*.ts',
+                    '<%= app.app %>/config/**/*.ts',
+                    '<%= app.app %>/Main.ts',
+                    '<%= app.app %>/app.ts',
                     '<%= app.lib %>/typings/**/*.ts'],
-                reference: '<%= app.src %>/reference.ts',
+                reference: '<%= app.app %>/reference.ts',
                 out: '.temp/scripts/build.js',
                 sourceMap: true
             }
@@ -100,7 +104,7 @@ module.exports = function (grunt) {
                 configuration: grunt.file.readJSON("tslint.json")
             },
             files: {
-                src: ['<%= app.src %>/**/*.ts']
+                src: ['<%= app.app %>/**/*.ts']
             }
         },
         //ngAnnotate: {
@@ -139,7 +143,7 @@ module.exports = function (grunt) {
         copy: {
             dev: {
                 expand: true,
-                cwd: '<%= app.src %>/',
+                cwd: '<%= app.app %>/',
                 src: ['index.html'],
                 dest: '<%= app.temp %>/'
             }
@@ -164,7 +168,7 @@ module.exports = function (grunt) {
                 tasks: ['ngtemplates', 'copy:dev']
             },
             devSource: {
-                files: ['<%= app.src %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
+                files: ['<%= app.app %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
                 //tasks: ['jshint', 'ngAnnotate', 'preConcat', 'concat']
                 tasks: ['tslint', 'ts']
             },

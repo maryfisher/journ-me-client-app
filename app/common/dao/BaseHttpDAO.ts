@@ -1,0 +1,20 @@
+/// <reference path="BaseDAO.ts" />
+module jm {
+    export module common {
+        'use strict';
+
+        import IPromise = ng.IPromise;
+        import IQService = ng.IQService;
+        import IHttpService = ng.IHttpService;
+
+        export class BaseHttpDAO extends jm.common.BaseDAO {
+
+            $http: IHttpService;
+
+            constructor($injector: ng.auto.IInjectorService) {
+                super($injector);
+                this.$http = $injector.get < IHttpService > ('$http');
+            }
+        }
+    }
+}
