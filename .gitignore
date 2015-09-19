@@ -34,3 +34,4 @@ target/
 out/
 .temp/
 .tscache/
+app/reference.ts

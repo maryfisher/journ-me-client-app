@@ -5,8 +5,10 @@ module jm {
     import AuthDAO = jm.auth.AuthDAO;
     import AuthBarDirect = jm.auth.AuthBarDirect;
     import LoggedInDirect = jm.auth.LoggedInDirect;
-    import AliasModel = jm.user.AliasModel;
+    import LoginDirect = jm.auth.LoginDirect;
     import AuthTokenIntercept = jm.auth.AuthTokenIntercept;
+
+    import AliasModel = jm.user.AliasModel;
     import RouterConfig = jm.RouterConfig;
     import RouteUtil = jm.common.RouteUtil;
     import FactoryUtil = jm.common.FactoryUtil;
@@ -49,34 +51,46 @@ module jm {
             this.common = angular.module('common', []);
             this.user = angular.module('user', []);
 
-            this.jm.factory(RouteUtil.NG_NAME, FactoryUtil.getFactory(RouteUtil));
+            this.addFactory(RouteUtil);
         }
 
         initController() {
-
+            this.auth.controller(jm.auth.ctrl);
         }
 
         initDAOs() {
-            this.jm.factory(AuthDAO.NG_NAME, FactoryUtil.getFactory(AuthDAO));
+            this.addFactory(AuthDAO);
         }
 
         initModels() {
-            this.jm.factory(AuthModel.NG_NAME, FactoryUtil.getFactory(AuthModel));
-            this.jm.factory(AliasModel.NG_NAME, FactoryUtil.getFactory(AliasModel));
+            this.addFactory(AuthModel);
+            this.addFactory(AliasModel);
         }
 
         initDirectives() {
-            this.jm.directive(AuthBarDirect.NG_NAME, FactoryUtil.getDirective(AuthBarDirect));
-            this.jm.directive(LoggedInDirect.NG_NAME, FactoryUtil.getDirective(LoggedInDirect));
+            this.addDirective(AuthBarDirect);
+            this.addDirective(LoggedInDirect);
+            this.addDirective(LoginDirect);
+            this.addDirective(jm.auth.RegisterDirect);
         }
 
         initInterceptor() {
-            this.jm.factory(AuthTokenIntercept.NG_NAME, FactoryUtil.getFactory(AuthTokenIntercept));
+            this.addFactory(AuthTokenIntercept);
         }
 
         initConfig() {
             this.jm.config(RouterConfig.init);
             this.jm.config(InterceptorConfig.init);
+            this.jm.run(jm.config.TokenLoginCommand.execute);
+            this.jm.run(jm.config.StateRedirectCommand.execute);
+        }
+
+        addFactory(classType: any) {
+            this.jm.factory(classType.NG_NAME, FactoryUtil.getFactory(classType));
+        }
+
+        addDirective(className: any) {
+            this.jm.directive(className.NG_NAME, FactoryUtil.getDirective(className));
         }
     }
 }

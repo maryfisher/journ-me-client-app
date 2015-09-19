@@ -14,7 +14,7 @@ module jm {
 
             }
 
-            getCurrentAlias(id ? : string) {
+            getCurrentAlias(id ? : string): AliasVO {
                 return this.currentAlias;
             }
         }

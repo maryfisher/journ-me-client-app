@@ -7,6 +7,11 @@ module jm {
         import AliasVO = jm.user.AliasVO;
         import RouteUtil = jm.common.RouteUtil;
 
+        export interface IAuthBarScope extends ng.IScope {
+            alias: AliasVO;
+            logout();
+        }
+
         export class AuthBarDirect implements ng.IDirective {
 
             static NG_NAME: string = 'jmAuthBar';
@@ -24,7 +29,7 @@ module jm {
 
                 scope.alias = this.aliasModel.getCurrentAlias();
 
-                //TODO probably not working!
+                _.bindAll(this, 'logout', 'logoutSuccess');
                 scope.logout = this.logout;
             };
 
@@ -35,7 +40,6 @@ module jm {
             }
 
             logout() {
-                console.log(this);
                 this.authModel.logout().then(this.logoutSuccess);
             }
 
@@ -44,17 +48,6 @@ module jm {
                     this.routeUtil.reload();
                 }
             }
-
-            /*static factory(): ng.IDirectiveFactory {
-                var directive = ($injector: IInjectorService) => new AuthBarDirect($injector);
-                directive.$inject = ['$injector'];
-                return directive;
-            }*/
-        }
-
-        export interface IAuthBarScope extends ng.IScope {
-            alias: AliasVO;
-            logout();
         }
     }
 }

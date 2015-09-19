@@ -21,7 +21,7 @@ module.exports = function (grunt) {
             dist: 'dist',
             server: 'server'
         },
-        bowerInstall: {
+        bower: {
             install: {
                 options: {
                     install: true,
@@ -181,9 +181,9 @@ module.exports = function (grunt) {
 
     // GruntJS task registration
 
-    grunt.registerTask('bower', [
+    grunt.registerTask('bowerInstall', [
         'clean:bower',
-        'bowerInstall'
+        'bower'
     ]);
 
     grunt.registerTask('build', [

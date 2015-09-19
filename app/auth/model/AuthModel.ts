@@ -19,6 +19,7 @@ module jm {
             private authDAO: AuthDAO;
             private $cookies: ICookiesService;
             private $q: IQService;
+            private rememberMe: boolean;
 
             constructor($injector: ng.auto.IInjectorService) {
                 this.$q = $injector.get < IQService > (NGConst.$Q);
@@ -26,6 +27,7 @@ module jm {
                 this.authDAO = $injector.get < AuthDAO > (AuthDAO.NG_NAME);
                 this.aliasModel = $injector.get < AliasModel > (AliasModel.NG_NAME);
                 this.authVO = new AuthVO();
+                _.bindAll(this, 'clearAll', 'clearAllResponse', 'reject', 'setData', 'setCookie', 'removeCookie');
             }
 
             private clearAll() {
@@ -49,28 +51,31 @@ module jm {
                 return data;
             }
 
+            private setCookie(data): IAuthVO {
+                if (this.rememberMe) {
+                    this.$cookies.put(ServerConst.COOKIE_TOKEN_KEY, data.authToken);
+                }
+                return this.setData(data);
+            }
+
+            private removeCookie(response): IPromise < any > {
+                this.$cookies.remove(ServerConst.COOKIE_TOKEN_KEY);
+                return this.reject(response);
+            }
+
             login(email, password, rememberMe): IPromise < any > {
+                this.rememberMe = rememberMe;
                 return this.authDAO.login(email, password).then(
-                    function (data) {
-                        if (rememberMe) {
-                            this.$cookies.put(ServerConst.COOKIE_TOKEN_KEY, data.authToken);
-                        }
-                        return this.setData(data);
-                    }, this.reject);
+                    this.setCookie, this.reject);
             }
 
             tokenLogin(): IPromise < any > {
                 var token = this.$cookies.get(ServerConst.COOKIE_TOKEN_KEY);
+                this.rememberMe = true;
                 if (token) {
                     return this.authDAO.tokenLogin(this.authVO.authToken).then(
-                        function (data) {
-                            this.$cookies.put(ServerConst.COOKIE_TOKEN_KEY, data.authToken);
-                            return this.setData(data);
-                        },
-                        function (response) {
-                            this.$cookies.remove(ServerConst.COOKIE_TOKEN_KEY);
-                            return this.reject(response);
-                        }
+                        this.setCookie,
+                        this.removeCookie
                     );
                 } else {
                     return this.$q.reject();

@@ -15,11 +15,11 @@ module jm {
                 this.$state = $injector.get < IStateService > ('$state');
             }
 
-            redirectTo(state, params) {
+            redirectTo(state: string, params ? ) {
                 this.$state.go(state, params);
             }
 
-            redirectToJourney(params) {
+            redirectToJourney(params ? ) {
                 this.$state.go(RouteConst.JOURNEY_DETAIL, params);
             }
 
