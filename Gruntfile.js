@@ -52,7 +52,7 @@ module.exports = function (grunt) {
         //},
         ngtemplates: {
             all: {
-                cwd: '<%= app.src %>',
+                cwd: '<%= app.app %>',
                 src: '**/*.tpl.html',
                 dest: '<%= app.temp %>/scripts/templates.js',
                 options: {
@@ -89,6 +89,7 @@ module.exports = function (grunt) {
                     '<%= app.common %>/**/*.ts',
                     '<%= app.app %>/common/**/*.ts',
                     '<%= app.app %>/user/**/*.ts',
+                    '<%= app.app %>/journey/**/*.ts',
                     '<%= app.app %>/auth/**/*.ts',
                     '<%= app.app %>/config/**/*.ts',
                     '<%= app.app %>/Main.ts',
@@ -164,7 +165,7 @@ module.exports = function (grunt) {
         },
         watch: {
             ngTemplates: {
-                files: ['<%= app.src %>/**/*.html'],
+                files: ['<%= app.app %>/**/*.html'],
                 tasks: ['ngtemplates', 'copy:dev']
             },
             devSource: {
@@ -173,7 +174,7 @@ module.exports = function (grunt) {
                 tasks: ['tslint', 'ts']
             },
             devStyle: {
-                files: ['<%= app.src %>/**/*.less'],
+                files: ['<%= app.app %>/**/*.less'],
                 tasks: ['less']
             }
         }

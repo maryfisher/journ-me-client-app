@@ -1,9 +1,7 @@
 module jm {
     export module user {
-        export interface IAliasVO {
+        export interface IAliasBaseVO {
             _id: string;
-            journeys: any[];
-            followedJourneys: any[];
             name: string;
             image: string;
         }

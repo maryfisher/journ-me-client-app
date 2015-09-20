@@ -45,7 +45,7 @@ exports.register = function (req, res) {
     var user = new User(req.body);
     var alias = new Alias(req.body);
     user.aliases.push(alias);
-    user.currentAlias = alias;
+    user.currentAlias = alias._id;
 
     // Then save the user 
     user.save(function (err) {
@@ -79,12 +79,12 @@ exports.signin = function (req, res) {
         if (err) {
 
         } else {
-            req.user.populate({
+            /*req.user.populate({
                 path: 'currentAlias',
                 select: '_id name'
-            }, function () {
-                exports.login(req.user, req, res);
-            });
+            }, function () {*/
+            exports.login(req.user, req, res);
+            //});
         }
     });
 };
@@ -96,12 +96,12 @@ exports.tokenlogin = function (req, res) {
         if (err) {
 
         } else {
-            req.user.populate({
+            /*req.user.populate({
                 path: 'currentAlias',
                 select: '_id name'
-            }, function () {
-                exports.login(req.user, req, res);
-            });
+            }, function () {*/
+            exports.login(req.user, req, res);
+            //});
         }
     });
 };

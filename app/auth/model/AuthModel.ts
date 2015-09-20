@@ -45,13 +45,13 @@ module jm {
                 return response;
             }
 
-            private setData(data): IAuthVO {
+            private setData(data: IAuthVO): IAuthVO {
                 this.authVO.parseData(data);
                 this.aliasModel.getCurrentAlias(data.currentAlias);
                 return data;
             }
 
-            private setCookie(data): IAuthVO {
+            private setCookie(data: IAuthVO): IAuthVO {
                 if (this.rememberMe) {
                     this.$cookies.put(ServerConst.COOKIE_TOKEN_KEY, data.authToken);
                 }

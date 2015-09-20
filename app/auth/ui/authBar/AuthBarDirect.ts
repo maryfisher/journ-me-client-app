@@ -4,11 +4,11 @@ module jm {
     export module auth {
 
         import AliasModel = jm.user.AliasModel;
-        import AliasVO = jm.user.AliasVO;
+        import AliasDetailVO = jm.user.AliasDetailVO;
         import RouteUtil = jm.common.RouteUtil;
 
         export interface IAuthBarScope extends ng.IScope {
-            alias: AliasVO;
+            alias: AliasDetailVO;
             logout();
         }
 

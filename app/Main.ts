@@ -1,18 +1,7 @@
 module jm {
     'use strict';
 
-    import AuthModel = jm.auth.AuthModel;
-    import AuthDAO = jm.auth.AuthDAO;
-    import AuthBarDirect = jm.auth.AuthBarDirect;
-    import LoggedInDirect = jm.auth.LoggedInDirect;
-    import LoginDirect = jm.auth.LoginDirect;
-    import AuthTokenIntercept = jm.auth.AuthTokenIntercept;
-
-    import AliasModel = jm.user.AliasModel;
-    import RouterConfig = jm.RouterConfig;
-    import RouteUtil = jm.common.RouteUtil;
     import FactoryUtil = jm.common.FactoryUtil;
-    import InterceptorConfig = jm.InterceptorConfig;
 
     export class Main {
 
@@ -51,36 +40,44 @@ module jm {
             this.common = angular.module('common', []);
             this.user = angular.module('user', []);
 
-            this.addFactory(RouteUtil);
+            this.addFactory(jm.common.RouteUtil);
         }
 
         initController() {
             this.auth.controller(jm.auth.ctrl);
+            this.user.controller(jm.user.ctrl);
+            this.journey.controller(jm.journey.ctrl);
         }
 
         initDAOs() {
-            this.addFactory(AuthDAO);
+            this.addFactory(jm.auth.AuthDAO);
+            this.addFactory(jm.user.AliasDAO);
+            this.addFactory(jm.journey.JourneyDAO);
         }
 
         initModels() {
-            this.addFactory(AuthModel);
-            this.addFactory(AliasModel);
+            this.addFactory(jm.auth.AuthModel);
+            this.addFactory(jm.user.AliasModel);
+            this.addFactory(jm.journey.JourneyModel);
         }
 
         initDirectives() {
-            this.addDirective(AuthBarDirect);
-            this.addDirective(LoggedInDirect);
-            this.addDirective(LoginDirect);
+            this.addDirective(jm.auth.AuthBarDirect);
+            this.addDirective(jm.auth.LoggedInDirect);
+            this.addDirective(jm.auth.LoginDirect);
             this.addDirective(jm.auth.RegisterDirect);
+            this.addDirective(jm.journey.JourneyListItemDirect);
+            this.addDirective(jm.journey.JourneyEditDirect);
+            this.addDirective(jm.journey.JourneyTimelineDirect);
         }
 
         initInterceptor() {
-            this.addFactory(AuthTokenIntercept);
+            this.addFactory(jm.auth.AuthTokenIntercept);
         }
 
         initConfig() {
-            this.jm.config(RouterConfig.init);
-            this.jm.config(InterceptorConfig.init);
+            this.jm.config(jm.RouterConfig.init);
+            this.jm.config(jm.InterceptorConfig.init);
             this.jm.run(jm.config.TokenLoginCommand.execute);
             this.jm.run(jm.config.StateRedirectCommand.execute);
         }

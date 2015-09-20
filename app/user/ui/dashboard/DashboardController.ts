@@ -1,15 +1,13 @@
-/// <reference path="../model/AliasModel.ts" />
+/// <reference path="../../model/AliasModel.ts" />
 module jm {
-    export module auth {
+    export module user {
         'use strict';
         export module ctrl {
 
-            import AliasModel = jm.user.AliasModel;
-            import AliasVO = jm.user.AliasVO;
             import NGConst = jm.common.NGConst;
 
             export interface IDashboardScope extends ng.IScope {
-                alias: AliasVO;
+                alias: AliasDetailVO;
             }
 
             export class DashboardController extends jm.common.BaseController {

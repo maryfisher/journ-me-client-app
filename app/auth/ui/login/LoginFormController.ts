@@ -3,14 +3,12 @@ module jm {
         'use strict';
         export module ctrl {
 
-            import AliasModel = jm.user.AliasModel;
             import RouteUtil = jm.common.RouteUtil;
             import NGConst = jm.common.NGConst;
             import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
-            export interface ILoginFormScope extends ng.IScope {
+            export interface ILoginFormScope extends jm.common.IBaseFormScope {
                 rememberMe: boolean;
-                cancel();
                 login();
                 forgotPW();
                 hasInvalidEmail(): boolean;
@@ -19,27 +17,22 @@ module jm {
                 password: string;
             }
 
-            export class LoginFormController extends jm.common.BaseController {
+            export class LoginFormController extends jm.common.BaseFormController {
 
                 static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, AuthModel.NG_NAME, RouteUtil.NG_NAME];
 
                 constructor(private $scope: ILoginFormScope,
-                    private $modalInstance: IModalServiceInstance,
+                    $modalInstance: IModalServiceInstance,
                     private authModel: AuthModel,
                     private routeUtil: RouteUtil) {
-                    super($scope);
+                    super($scope, $modalInstance);
 
-                    this.addScopeMethod('cancel');
                     this.addScopeMethod('hasInvalidEmail');
                     this.addScopeMethod('login');
                     this.addScopeMethod('forgotPW');
                     _.bindAll(this, 'loginSuccess', 'loginFailure');
 
                     $scope.rememberMe = true;
-                }
-
-                cancel() {
-                    this.$modalInstance.dismiss('cancel');
                 }
 
 
@@ -58,7 +51,7 @@ module jm {
                         //TO TEST have to test of passing null breaks functionality
                         this.$scope.loginForm.$setValidity('pw', true, null);
                         this.routeUtil.reload();
-                        this.$modalInstance.close();
+                        this.close();
                     }
                 }
 

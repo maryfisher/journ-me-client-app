@@ -1,0 +1,119 @@
+<div class="row panel">
+    <!-- JOURNEY DETAILS -->
+    <div class="col-xs-12 jm-journey-header">
+        <h1 class="text-center">{{journey.name}} by {{journey.alias.name}}</h1>
+        <p class="text-center">{{journey.descript}}</p>
+        <hr></hr>
+        <!-- STATS & COMPS -->
+        <div class="row container text-center">
+            <div class="col-xs-2"></div>
+            <!-- LINK REQUESTS -->
+            <div class="col-xs-2">
+                <a href="" data-jm-journey-link-requests="{{journey}}" data-is-from="true" data-is-to="true" class="jm-journey-a">
+                    <div>
+                        {{journey.linkedToJourneys.length + journey.linkedFromJourneys.length}}
+                        <!--<span class="glyphicon glyphicon-user"></span>-->
+                    </div>
+                    Link Requests
+                </a>
+            </div>
+            <!-- LINKS -->
+            <div class="col-xs-2">
+                <a href="" class="jm-journey-a">
+                    <div>
+                        {{journey.joinedLinkedJourneys.length}}
+                        <!--<span class="glyphicon glyphicon-link"></span>-->
+                    </div>
+                    Linked Journeys
+                </a>
+            </div>
+            <!-- FOLLOWER -->
+            <div class="col-xs-2">
+                <a href="" data-jm-journey-followers="{{journey}}" class="jm-journey-a">
+                    <div>
+                        {{journey.followers.length}}
+                        <!--<span class="glyphicon glyphicon-user"></span>-->
+                    </div>
+                    Follower
+                </a>
+            </div>
+            <!-- ALIAS & NOT ALIAS COMPS -->
+            <div class="col-xs-4">
+                <!-- IS ALIAS COMPS -->
+                <div data-ng-show="journey.isAlias">
+                    <!-- EDIT -->
+                    <button data-jm-journey-edit="{{journey}}" class="btn btn-default pull-right">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <div class="text-center">
+                        <!-- LINK REQUESTS -->
+                        <div class="jm-journey-info">Open Link Requests</div>
+                        <button data-jm-journey-link-requests="{{journey}}" data-is-from="true" popover-placement="top" popover-trigger="mouseenter" popover="Other Journeys Requesting" class="btn btn-danger">
+                            {{journey.linkedFromJourneys.length}}
+                        </button>
+                    </div>
+                </div>
+                <!-- IS NOT ALIAS COMPS -->
+                <div data-ng-show="!journey.isAlias">
+                    <!-- LINK -->
+                    <button data-jm-link-journey data-ng-show="!journey.aliasJourneyLink" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
+                        <span class="fa fa-chain"></span>
+                    </button>
+                    <!-- UNLINK -->
+                    <button data-ng-click="unlinkJourney()" data-ng-show="journey.aliasJourneyLink" popover-placement="top" popover-trigger="mouseenter" popover="Unlink your journey" class="btn btn-danger">
+                        <span class="fa fa-chain-broken"></span>
+                    </button>
+                    <!-- FOLLOW -->
+                    <button data-ng-click="followJourney()" data-ng-show="!journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Follow this journey" class="btn btn-primary">
+                        <!--<span class="glyphicon glyphicon-eye-open"></span>-->
+                        <span class="fa fa-eye"></span>
+                    </button>
+                    <!-- UNFOLLOW -->
+                    <button data-ng-click="unfollowJourney()" data-ng-show="journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Unfollow this journey" class="btn btn-danger">
+                        <!--<span class="glyphicon glyphicon-eye-close"></span>-->
+                        <span class="fa fa-eye-slash"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TIMELINE -->
+    <data-jm-journey-timeline data-journey-id="journey._id" data-has-edit="{{journey.isAlias || ''}}"></data-jm-journey-timeline>
+</div>
+
+<!-- MOMENT DETAIL -->
+<div ui-view class="row"></div>
+<!-- LINKED JOURNEYS -->
+<div data-ng-if="journey.joinedLinkedJourneys.length > 0 || (journey.isAlias && journey.linkedToJourneys.length > 0)" class="row panel">
+    <div class="col-sm-12">
+        <h2 class="text-center">Linked Journeys</h2>
+        <ul class="list-group">
+            <li data-ng-repeat="journey in journey.joinedLinkedJourneys" class="list-group-item clearfix">
+                <data-jm-journey-list-item data-jm-journey="{{journey}}"></data-jm-journey-list-item>
+                <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey._id)" class="btn btn-default pull-right">
+                    <span class="caret"></span>
+                </button>
+                <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey._id)" class="btn btn-default dropup pull-right">
+                    <span class="caret"></span>
+                </button>
+                <div data-collapse="isNotSelected(journey._id)">
+                    <data-jm-journey-timeline data-journey-id="journey._id"></data-jm-journey-timeline>
+                </div>
+            </li>
+        </ul>
+        <ul data-ng-if="journey.isAlias" class="list-group">
+            <li data-ng-repeat="journey in journey.linkedToJourneys" class="list-group-item clearfix">
+                <data-jm-journey-list-item data-jm-journey="{{journey}}"></data-jm-journey-list-item>
+                <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey._id)" class="btn btn-default pull-right">
+                    <span class="caret"></span>
+                </button>
+                <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey._id)" class="btn btn-default dropup pull-right">
+                    <span class="caret"></span>
+                </button>
+                <div data-collapse="isNotSelected(journey._id)">
+                    <data-jm-journey-timeline data-journey-id="journey._id"></data-jm-journey-timeline>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

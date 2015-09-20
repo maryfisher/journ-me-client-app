@@ -8,10 +8,13 @@ module jm {
             static $ANIMATE: string = '$animate';
             static $MODAL: string = '$modal';
             static $MODAL_INSTANCE: string = '$modalInstance';
+            static $RESOURCE: string = '$resource';
 
             static $STATE_CHANGE_START: string = '$stateChangeStart';
+            static $STATE_PARAMS: string = '$stateParams';
 
             static $SCOPE: string = '$scope';
+            static $ELEMENT: string = '$element';
         }
     }
 }
