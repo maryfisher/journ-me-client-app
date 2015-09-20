@@ -91,8 +91,8 @@ exports.signin = function (req, res) {
 
 exports.tokenlogin = function (req, res) {
     //exports.userByEmail(req, res, "eureka.mira@gmail.com", function (err) {
-    //exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
-    exports.userByEmail(req, res, "die_ulli@hotmail.com", function (err) {
+    exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
+        //exports.userByEmail(req, res, "die_ulli@hotmail.com", function (err) {
         if (err) {
 
         } else {

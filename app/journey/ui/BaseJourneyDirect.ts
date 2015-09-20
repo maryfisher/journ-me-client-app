@@ -3,6 +3,7 @@ module jm {
 
         export interface IBaseJourneyScope extends ng.IScope {
             journey: JourneyBaseVO;
+            journeyDetail: JourneyDetailVO;
             journeyStr: string;
             element: ng.IAugmentedJQuery;
         }

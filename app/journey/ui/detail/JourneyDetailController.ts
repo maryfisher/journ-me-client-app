@@ -38,15 +38,15 @@ module jm {
                 }
 
                 followJourney() {
-                    //this.journeyModel.followJourney();
+                    this.journeyModel.followJourney();
                 }
 
                 unfollowJourney() {
-                    //this.journeyModel.unfollowJourney();
+                    this.journeyModel.unfollowJourney();
                 }
 
                 unlinkJourney() {
-                    //this.journeyModel.unlinkJourney(this.$scope.journey, this.$scope.journey.aliasJourneyLink);
+                    this.journeyModel.unlinkJourney(this.$scope.journey, this.$scope.journey.aliasJourneyLink);
                 }
             }
         }

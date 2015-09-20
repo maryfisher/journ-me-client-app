@@ -54,6 +54,7 @@ module jm {
             this.addFactory(jm.auth.AuthDAO);
             this.addFactory(jm.user.AliasDAO);
             this.addFactory(jm.journey.JourneyDAO);
+            this.addFactory(jm.journey.JourneyActionDAO);
             this.addFactory(jm.moment.MomentDAO);
         }
 
@@ -72,6 +73,9 @@ module jm {
             this.addDirective(jm.journey.JourneyListItemDirect);
             this.addDirective(jm.journey.JourneyEditDirect);
             this.addDirective(jm.journey.JourneyTimelineDirect);
+            this.addDirective(jm.journey.JourneyFollowersDirect);
+            this.addDirective(jm.journey.LinkJourneyDirect);
+            this.addDirective(jm.journey.JourneyLinkRequestsDirect);
         }
 
         initInterceptor() {
