@@ -47,18 +47,21 @@ module jm {
             this.auth.controller(jm.auth.ctrl);
             this.user.controller(jm.user.ctrl);
             this.journey.controller(jm.journey.ctrl);
+            this.moment.controller(jm.moment.ctrl);
         }
 
         initDAOs() {
             this.addFactory(jm.auth.AuthDAO);
             this.addFactory(jm.user.AliasDAO);
             this.addFactory(jm.journey.JourneyDAO);
+            this.addFactory(jm.moment.MomentDAO);
         }
 
         initModels() {
             this.addFactory(jm.auth.AuthModel);
             this.addFactory(jm.user.AliasModel);
             this.addFactory(jm.journey.JourneyModel);
+            this.addFactory(jm.moment.MomentModel);
         }
 
         initDirectives() {

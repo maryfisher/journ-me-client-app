@@ -20,24 +20,26 @@ exports.create = function (req, res) {
 
     //aliasCtrl.aliasByID(req, res, function () {
     //moment.alias = req.alias._id;
-    moment.alias = req.body.aliasId;
-    journeyCtrl.journeyByID(req, res, function () {
-        moment.journey = req.journey;
-        moment.save(function (err) {
-            if (err) {
-                console.log(err);
-                return res.status(400).send({
-                    message: ''
-                });
-            } else {
+    //moment.alias = req.body.aliasId;
+    //journeyCtrl.journeyByID(req, res, function () {
+    //moment.journey = req.journey;
+    moment.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            journeyCtrl.journeyByID(req, res, function () {
                 console.log('POST creating new moment: ' + moment);
                 req.journey.moments.push(moment);
                 req.journey.save(function (err) {
                     res.status(200).send(moment);
                 });
-            }
-        });
-    }, req.body.journeyId);
+            }, moment.journey);
+        }
+    });
+    //}, req.body.journeyId);
 
     //}, req.body.aliasId);
 
