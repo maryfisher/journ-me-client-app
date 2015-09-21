@@ -33,9 +33,6 @@ module jm.journey {
             this.setCurrentJourneyBase(data);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
-                console.log('setCurrentJourney updateFromAlias');
-                //this.currentJourney.updateFollowing(this.currentAlias);
-                //this.currentJourney.updateAliasJourneyLink(this.currentAlias);
                 this.currentJourney.updateFromAlias(this.currentAlias);
             }
         }

@@ -15,6 +15,8 @@ module jm {
 
             static $SCOPE: string = '$scope';
             static $ELEMENT: string = '$element';
+
+            static UPLOAD: string = 'Upload';
         }
     }
 }

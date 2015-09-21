@@ -48,7 +48,6 @@ module jm {
 
                 loginSuccess() {
                     if (this.authModel.isLoggedIn()) {
-                        //TO TEST have to test of passing null breaks functionality
                         this.$scope.loginForm.$setValidity('pw', true, null);
                         this.routeUtil.reload();
                         this.close();
@@ -56,7 +55,6 @@ module jm {
                 }
 
                 loginFailure() {
-                    //TO TEST have to test of passing null breaks functionality
                     this.$scope.loginForm.$setValidity('pw', false, null);
                 }
 

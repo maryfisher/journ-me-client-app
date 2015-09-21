@@ -77,7 +77,10 @@ exports.register = function (req, res) {
 exports.signin = function (req, res) {
     exports.userByEmail(req, res, req.body.email, function (err) {
         if (err) {
-
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
         } else {
             /*req.user.populate({
                 path: 'currentAlias',

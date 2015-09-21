@@ -15,6 +15,14 @@ module jm {
                 super($injector);
                 this.$http = $injector.get < IHttpService > ('$http');
             }
+
+            returnData(response) {
+                return response.data;
+            }
+
+            reject(response) {
+                return this.$q.reject(response);
+            }
         }
     }
 }

@@ -10,18 +10,9 @@ module jm {
 
             static NG_NAME: string = 'authDAO';
 
-
             constructor($injector: IInjectorService) {
                 super($injector);
                 _.bindAll(this, 'reject');
-            }
-
-            returnData(response) {
-                return response.data;
-            }
-
-            reject(response) {
-                return this.$q.reject(response);
             }
 
             login(email, password): IPromise < any > {

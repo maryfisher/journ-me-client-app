@@ -42,7 +42,7 @@ module jm {
 
             private reject(response): IPromise < any > {
                 this.clearAll();
-                return response;
+                return this.$q.reject();
             }
 
             private setData(data: IAuthVO): IAuthVO {
