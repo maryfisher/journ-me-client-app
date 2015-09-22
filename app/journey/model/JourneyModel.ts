@@ -20,7 +20,7 @@ module jm.journey {
 
             this.currentJourney = new JourneyDetailVO();
 
-            _.bindAll(this, 'setCurrentJourney', 'setCurrentJourneyBase');
+            _.bindAll(this, 'setCurrentJourney', 'setCurrentJourneyBase', 'updateLeaveJourney');
         }
 
         private setCurrentJourneyBase(data: IJourneyDetailVO) {
@@ -81,7 +81,6 @@ module jm.journey {
             }
             var alias: AliasDetailVO = this.currentAlias;
             return this.journeyActionService.followJourney(journey._id, this.currentAlias._id)
-                //.then(this.followJourneySuccess);
                 .then(function () {
                     if (!journey.followers) {
                         journey.followers = [];
@@ -91,19 +90,12 @@ module jm.journey {
                 });
         }
 
-        /*followJourneySuccess() {
-            //TODO what if it's not this.currentJourney ?
-            this.currentJourney.followers.push(this.currentAlias);
-            this.currentJourney.isFollowing = true;
-        }*/
-
         unfollowJourney(journey ? : IJourneyDetailVO) {
             if (!journey) {
                 journey = this.currentJourney;
             }
             var alias: AliasDetailVO = this.currentAlias;
             return this.journeyActionService.unfollowJourney(journey._id, this.currentAlias._id)
-                //.then(this.unfollowJourneySuccess);
                 .then(function () {
                     var index, len;
                     for (index = 0, len = journey.followers.length; index < len; ++index) {
@@ -115,18 +107,6 @@ module jm.journey {
                     journey.isFollowing = false;
                 });
         }
-
-        /*unfollowJourneySuccess() {
-            //TODO what if it's not this.currentJourney ?
-            var index, len;
-            for (index = 0, len = this.currentJourney.followers.length; index < len; ++index) {
-                if (this.currentJourney.followers[index]._id === this.currentAlias._id) {
-                    break;
-                }
-            }
-            this.currentJourney.followers.splice(index, 1);
-            this.currentJourney.isFollowing = false;
-        }*/
 
         linkJourney(userLinkJourney: JourneyBaseVO, journey ? : JourneyDetailVO) {
             if (!journey) {
@@ -179,23 +159,38 @@ module jm.journey {
 
         leaveJourney(journey: JourneyDetailVO) {
             var alias: AliasDetailVO = this.currentAlias;
+            var updateLeaveJourney = this.updateLeaveJourney;
             return this.journeyActionService.leaveJourney(journey._id, this.currentAlias._id).then(
                 function (response) {
-                    for (var i: number = 0; i < journey.joinedAliases.length; i++) {
-                        if (journey.joinedAliases[i]._id == alias._id) {
-                            break;
-                        }
-                    }
-                    journey.joinedAliases.splice(i, 1);
-                    for (i = 0; i < alias.joinedJourneys.length; i++) {
+                    updateLeaveJourney(journey, alias._id);
+                    for (var i: number = 0; i < alias.joinedJourneys.length; i++) {
                         if (alias.joinedJourneys[i]._id == journey._id) {
                             break;
                         }
                     }
                     alias.joinedJourneys.splice(i, 1);
-                    journey.isJoined = false;
                 }
             );
+        }
+
+        removeJoinedAlias(alias: AliasBaseVO) {
+            var journey: JourneyDetailVO = this.currentJourney;
+            var updateLeaveJourney = this.updateLeaveJourney;
+            return this.journeyActionService.leaveJourney(this.currentJourney._id, alias._id).then(
+                function (response) {
+                    updateLeaveJourney(journey, alias._id);
+                }
+            );
+        }
+
+        updateLeaveJourney(journey: JourneyDetailVO, aliasId: string) {
+            for (var i: number = 0; i < journey.joinedAliases.length; i++) {
+                if (journey.joinedAliases[i]._id == aliasId) {
+                    break;
+                }
+            }
+            journey.joinedAliases.splice(i, 1);
+            journey.isJoined = false;
         }
 
         acceptJoinRequest(requester: AliasBaseVO) {

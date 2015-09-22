@@ -3,10 +3,10 @@ module jm.journey.ctrl {
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
     import NGConst = jm.common.NGConst;
     import AliasModel = jm.user.AliasModel;
-    import AliasDetailVO = jm.user.AliasDetailVO;
     import JourneyModel = jm.journey.JourneyModel;
+    import AliasDetailVO = jm.user.AliasDetailVO;
 
-    export interface ILinkJourneyScope extends jm.common.ctrl.IBaseModalInstanceScope {
+    export interface ILinkJourneyModalScope extends jm.common.ctrl.IBaseModalInstanceScope {
         alias: AliasDetailVO;
         selectedJourney: JourneyBaseVO;
         select();
@@ -16,7 +16,7 @@ module jm.journey.ctrl {
 
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, AliasModel.NG_NAME, JourneyModel.NG_NAME];
 
-        constructor(private $scope: ILinkJourneyScope, $modalInstance: IModalServiceInstance, aliasModel: AliasModel, private journeyModel: JourneyModel) {
+        constructor(private $scope: ILinkJourneyModalScope, $modalInstance: IModalServiceInstance, aliasModel: AliasModel, private journeyModel: JourneyModel) {
             super($scope, $modalInstance);
             this.addScopeMethod('select');
             $scope.alias = aliasModel.getCurrentAlias();

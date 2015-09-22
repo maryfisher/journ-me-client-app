@@ -5,6 +5,9 @@
     <ul class="list-group">
         <li data-ng-repeat="alias in aliasList" class="list-group-item">
             <data-jm-alias-list-item data-jm-alias="alias"></data-jm-alias-list-item>
+            <button data-ng-if="removeJoin" data-ng-click="removeJoinedAlias(alias)" popover-placement="top" popover-trigger="mouseenter" popover="Retract permission for this person to participate in your journey." class="btn btn-primary pull-right">
+                <span class="fa fa-close"></span>
+            </button>
         </li>
     </ul>
 </div>

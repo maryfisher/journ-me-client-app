@@ -3,6 +3,8 @@ module jm.user {
     export interface IAliasListModalScope extends jm.common.IBaseModalScope {
         aliasList: AliasBaseVO[];
         listHeader: string;
+        removeJoin: boolean;
+        removeJoinedAlias();
     }
 
     export class AliasListDirect extends jm.common.BaseModalDirect {
@@ -11,13 +13,12 @@ module jm.user {
         restrict: string = 'A';
         scope: any = {
             aliasList: '=jmAliasList',
-            listHeader: '@jmListHeader'
+            listHeader: '@jmListHeader',
+            removeJoin: '=?'
         };
 
         constructor($injector: ng.auto.IInjectorService) {
-            super($injector, '', 'user/ui/list/aliasListModal.tpl.html');
+            super($injector, 'AliasListController', 'user/ui/list/aliasListModal.tpl.html');
         }
-
-
     }
 }
