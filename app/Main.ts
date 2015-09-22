@@ -71,10 +71,10 @@ module jm {
             this.addDirective(jm.auth.LoginDirect);
             this.addDirective(jm.auth.RegisterDirect);
             this.addDirective(jm.user.AliasListItemDirect);
+            this.addDirective(jm.user.AliasListDirect);
             this.addDirective(jm.journey.JourneyListItemDirect);
             this.addDirective(jm.journey.JourneyEditDirect);
             this.addDirective(jm.journey.JourneyTimelineDirect);
-            this.addDirective(jm.journey.JourneyFollowersDirect);
             this.addDirective(jm.journey.LinkJourneyDirect);
             this.addDirective(jm.journey.JourneyRequestsDirect);
         }

@@ -9,7 +9,7 @@
             <!-- JOINS -->
             <div class="col-xs-2"></div>
             <div class="col-xs-2">
-                <a href="" class="jm-journey-a">
+                <a href="" data-jm-alias-list="{{journey.joinedAliases}}" data-jm-list-header="{{journey.name}} Participants" class="jm-journey-a">
                     <div>
                         {{journey.joinedAliases.length + 1}}
                         <!--<span class="glyphicon glyphicon-link"></span>-->
@@ -38,7 +38,7 @@
             </div>
             <!-- FOLLOWER -->
             <div class="col-xs-2">
-                <a href="" data-jm-journey-followers="{{journey}}" class="jm-journey-a">
+                <a href="" data-jm-alias-list="{{journey.followers}}" data-jm-list-header="Following {{journey.name}}" class="jm-journey-a">
                     <div>
                         {{journey.followers.length}}
                         <!--<span class="glyphicon glyphicon-user"></span>-->
@@ -73,7 +73,7 @@
                         <span class="fa fa-close"></span>
                     </button>
                     <!-- LINK -->
-                    <button data-jm-link-journey data-ng-show="!journey.aliasJourneyLink" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
+                    <button data-jm-link-journey data-ng-show="!journey.aliasJourneyLink && !journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
                         <span class="fa fa-chain"></span>
                     </button>
                     <!-- UNLINK -->
@@ -81,7 +81,7 @@
                         <span class="fa fa-chain-broken"></span>
                     </button>
                     <!-- FOLLOW -->
-                    <button data-ng-click="followJourney()" data-ng-show="!journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Follow this journey" class="btn btn-primary">
+                    <button data-ng-click="followJourney()" data-ng-show="!journey.isFollowing && !journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Follow this journey" class="btn btn-primary">
                         <!--<span class="glyphicon glyphicon-eye-open"></span>-->
                         <span class="fa fa-eye"></span>
                     </button>

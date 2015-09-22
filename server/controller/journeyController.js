@@ -6,12 +6,12 @@ var mongoose = require('mongoose'),
 
 exports.read = function (req, res) {
     req.journey
-        .populate('alias', '_id name')
+        .populate('alias', '_id name image')
         .populate('moments')
-        .populate('followers', '_id name')
+        .populate('followers', '_id name image')
         .populate('linkedToJourneys', '_id alias name descript')
-        .populate('joinRequests', '_id name')
-        .populate('joinedAliases', '_id name')
+        .populate('joinRequests', '_id name image')
+        .populate('joinedAliases', '_id name image')
         .populate({
                 path: 'linkedFromJourneys',
                 select: '_id alias name descript'
