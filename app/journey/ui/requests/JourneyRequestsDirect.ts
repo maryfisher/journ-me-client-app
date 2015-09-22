@@ -2,17 +2,17 @@ module jm.journey {
 
     'use strict';
 
-    export class JourneyLinkRequestsDirect implements ng.IDirective {
+    export class JourneyRequestsDirect implements ng.IDirective {
 
-        static NG_NAME: string = 'jmJourneyLinkRequests';
+        static NG_NAME: string = 'jmJourneyRequests';
 
         restrict: string = 'A';
         scope: any = {
-            journeyStr: '@jmJourneyLinkRequests',
+            journeyStr: '@jmJourneyRequests',
             isTo: '@',
             isFrom: '@'
         }
-        controller: string = 'JourneyLinkRequestsController';
+        controller: string = 'JourneyRequestsController';
 
         constructor($injector: ng.auto.IInjectorService) {}
     }

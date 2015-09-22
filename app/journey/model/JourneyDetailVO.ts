@@ -5,6 +5,8 @@ module jm.journey {
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
+        joinedAliases: jm.user.IAliasBaseVO[] = [];
+        joinRequests: jm.user.IAliasBaseVO[] = [];
         moments: jm.moment.IMomentBaseVO[] = [];
         followers: jm.user.IAliasBaseVO[] = [];
         linkedToJourneys: IJourneyBaseVO[] = [];
@@ -13,6 +15,8 @@ module jm.journey {
         joinedLinkedJourneys: IJourneyBaseVO[] = [];
         aliasJourneyLink: IJourneyBaseVO;
         isFollowing: boolean = false;
+        isJoined: boolean = false;
+        sendRequest: boolean = false;
 
         constructor(data ? : IJourneyDetailVO) {
             super(data);
@@ -29,6 +33,8 @@ module jm.journey {
             this.followers = data.followers;
             this.linkedToJourneys = data.linkedToJourneys;
             this.linkedFromJourneys = data.linkedFromJourneys;
+            this.joinedAliases = data.joinedAliases ? data.joinedAliases : this.joinedAliases;
+            this.joinRequests = data.joinRequests ? data.joinRequests : this.joinRequests;
             this.isAlias = data.isAlias ? data.isAlias : this.isAlias;
         }
 
@@ -39,8 +45,12 @@ module jm.journey {
             this.linkedToJourneys.length = 0;
             this.linkedFromJourneys.length = 0;
             this.joinedLinkedJourneys.length = 0;
+            this.joinedAliases.length = 0;
+            this.joinRequests.length = 0;
             this.aliasJourneyLink = undefined;
             this.isFollowing = false;
+            this.isJoined = false;
+            this.sendRequest = false;
         }
 
         updateLinks() {
@@ -62,6 +72,8 @@ module jm.journey {
             this.updateAlias(alias);
             this.updateFollowing(alias);
             this.updateAliasJourneyLink(alias);
+            this.updateIsJoined(alias);
+            this.updateSendRequest(alias);
         }
 
         updateFollowing(alias: IAliasDetailVO) {
@@ -95,6 +107,38 @@ module jm.journey {
                     }
                 }
             }
+        }
+
+        updateIsJoined(alias: IAliasDetailVO) {
+            if (this.alias._id === alias._id) {
+                return;
+            }
+            this.isJoined = false;
+            var index, len;
+            for (index = 0, len = this.joinedAliases.length; index < len; ++index) {
+                if (this.joinedAliases[index]._id === alias._id) {
+                    this.isJoined = true;
+                    break;
+                }
+            }
+        }
+
+        updateSendRequest(alias: IAliasDetailVO) {
+            if (this.alias._id === alias._id) {
+                return;
+            }
+            this.sendRequest = false;
+            var index, len;
+            for (index = 0, len = this.joinRequests.length; index < len; ++index) {
+                if (this.joinRequests[index]._id === alias._id) {
+                    this.sendRequest = true;
+                    break;
+                }
+            }
+        }
+
+        canJoin(): boolean {
+            return this.join !== JourneyJoinEnum.none;
         }
     }
 }

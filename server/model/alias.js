@@ -17,6 +17,10 @@ var AliasSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Journey'
     }],
+    joinedJourneys: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Journey'
+    }],
     created: {
         type: Date,
         default: Date.now

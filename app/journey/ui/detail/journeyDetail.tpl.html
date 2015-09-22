@@ -6,17 +6,26 @@
         <hr></hr>
         <!-- STATS & COMPS -->
         <div class="row container text-center">
+            <!-- JOINS -->
             <div class="col-xs-2"></div>
-            <!-- LINK REQUESTS -->
             <div class="col-xs-2">
-                <a href="" data-jm-journey-link-requests="{{journey}}" data-is-from="true" data-is-to="true" class="jm-journey-a">
+                <a href="" class="jm-journey-a">
                     <div>
-                        {{journey.linkedToJourneys.length + journey.linkedFromJourneys.length}}
-                        <!--<span class="glyphicon glyphicon-user"></span>-->
+                        {{journey.joinedAliases.length + 1}}
+                        <!--<span class="glyphicon glyphicon-link"></span>-->
+                    </div>
+                    Participants
+                </a>
+            </div>
+            <!-- LINK REQUESTS -->
+            <!--<div class="col-xs-2">
+                <a href="" data-jm-journey-requests="{{journey}}" data-is-from="true" data-is-to="true" class="jm-journey-a">
+                    <div>
+                        {{journey.linkedToJourneys.length + journey.linkedFromJourneys.length + journey.joinRequests.length}}
                     </div>
                     Link Requests
                 </a>
-            </div>
+            </div>-->
             <!-- LINKS -->
             <div class="col-xs-2">
                 <a href="" class="jm-journey-a">
@@ -46,15 +55,23 @@
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
                     <div class="text-center">
-                        <!-- LINK REQUESTS -->
-                        <div class="jm-journey-info">Open Link Requests</div>
-                        <button data-jm-journey-link-requests="{{journey}}" data-is-from="true" popover-placement="top" popover-trigger="mouseenter" popover="Other Journeys Requesting" class="btn btn-danger">
-                            {{journey.linkedFromJourneys.length}}
+                        <!-- LINK & JOIN REQUESTS -->
+                        <div class="jm-journey-info">Open Requests</div>
+                        <button data-jm-journey-requests="{{journey}}" data-is-from="true" popover-placement="top" popover-trigger="mouseenter" popover="Others requesting to join in or link their journey." class="btn btn-danger">
+                            {{journey.linkedFromJourneys.length + journey.joinRequests.length}}
                         </button>
                     </div>
                 </div>
                 <!-- IS NOT ALIAS COMPS -->
                 <div data-ng-show="!journey.isAlias">
+                    <!-- JOIN -->
+                    <button data-ng-click="requestJoin()" data-ng-show="!journey.isJoined && journey.canJoin() && !journey.sendRequest" popover-placement="top" popover-trigger="mouseenter" popover="Send a request to join this journey" class="btn btn-primary">
+                        <span class="fa fa-plus"></span>
+                    </button>
+                    <!-- UNJOIN -->
+                    <button data-ng-click="leaveJourney()" data-ng-show="journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Stop participating in this journey" class="btn btn-danger">
+                        <span class="fa fa-close"></span>
+                    </button>
                     <!-- LINK -->
                     <button data-jm-link-journey data-ng-show="!journey.aliasJourneyLink" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
                         <span class="fa fa-chain"></span>
@@ -78,7 +95,7 @@
         </div>
     </div>
     <!-- TIMELINE -->
-    <data-jm-journey-timeline data-journey-id="journey._id" data-has-edit="{{journey.isAlias || ''}}"></data-jm-journey-timeline>
+    <data-jm-journey-timeline data-journey-id="journey._id" data-has-edit="true"></data-jm-journey-timeline>
 </div>
 
 <!-- MOMENT DETAIL -->

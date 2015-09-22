@@ -10,6 +10,12 @@ var JourneySchema = new Schema({
     descript: {
         type: String
     },
+    join: {
+        type: Number
+    },
+    isPublic: {
+        type: Boolean
+    },
     alias: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
@@ -29,6 +35,14 @@ var JourneySchema = new Schema({
     linkedFromJourneys: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Journey'
+    }],
+    joinedAliases: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Alias'
+    }],
+    joinRequests: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Alias'
     }]
 });
 

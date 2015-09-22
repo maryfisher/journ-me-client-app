@@ -2,6 +2,7 @@ module jm.journey {
     'use strict';
 
     import AliasDetailVO = jm.user.AliasDetailVO;
+    import AliasBaseVO = jm.user.AliasBaseVO;
     import IPromise = angular.IPromise;
 
     export class JourneyModel {
@@ -162,6 +163,52 @@ module jm.journey {
                     journey.updateLinks();
 
                     journey.aliasJourneyLink = undefined;
+                }
+            );
+        }
+
+        requestJoin(journey: JourneyDetailVO) {
+            var alias: AliasDetailVO = this.currentAlias;
+            return this.journeyActionService.requestJoin(journey._id, this.currentAlias._id).then(
+                function (response) {
+                    journey.joinRequests.push(alias);
+                    journey.sendRequest = true;
+                }
+            );
+        }
+
+        leaveJourney(journey: JourneyDetailVO) {
+            var alias: AliasDetailVO = this.currentAlias;
+            return this.journeyActionService.leaveJourney(journey._id, this.currentAlias._id).then(
+                function (response) {
+                    for (var i: number = 0; i < journey.joinedAliases.length; i++) {
+                        if (journey.joinedAliases[i]._id == alias._id) {
+                            break;
+                        }
+                    }
+                    journey.joinedAliases.splice(i, 1);
+                    for (i = 0; i < alias.joinedJourneys.length; i++) {
+                        if (alias.joinedJourneys[i]._id == journey._id) {
+                            break;
+                        }
+                    }
+                    alias.joinedJourneys.splice(i, 1);
+                    journey.isJoined = false;
+                }
+            );
+        }
+
+        acceptJoinRequest(requester: AliasBaseVO) {
+            var journey: JourneyDetailVO = this.currentJourney;
+            return this.journeyActionService.acceptJoinRequest(journey._id, requester._id).then(
+                function (response) {
+                    for (var i: number = 0; i < journey.joinRequests.length; i++) {
+                        if (journey.joinRequests[i]._id == requester._id) {
+                            break;
+                        }
+                    }
+                    journey.joinRequests.splice(i, 1);
+                    journey.joinedAliases.push(requester);
                 }
             );
         }

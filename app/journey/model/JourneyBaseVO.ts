@@ -11,7 +11,7 @@ module jm.journey {
         hasLocation: boolean = false;
         location: string;
         isPublic: boolean = true;
-        join: number = JourneyJoinEnum.all;
+        join: number = JourneyJoinEnum.selected;
 
         constructor(data ? : IJourneyBaseVO) {
             if (data) {
@@ -39,7 +39,7 @@ module jm.journey {
             this.hasLocation = false;
             this.location = undefined;
             this.isPublic = true;
-            this.join = JourneyJoinEnum.all;
+            this.join = JourneyJoinEnum.selected;
         }
 
         updateAlias(alias: IAliasBaseVO) {
