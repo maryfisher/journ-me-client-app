@@ -1,4 +1,7 @@
 module jm.moment {
+
+    import AliasBaseVO = jm.user.AliasBaseVO;
+
     export class MomentBaseVO {
 
         _id: string;
@@ -29,6 +32,10 @@ module jm.moment {
             this.journey = undefined;
             this.created = undefined;
             this.isAlias = false;
+        }
+
+        updateAlias(alias: AliasBaseVO) {
+            this.isAlias = this.alias === alias._id;
         }
     }
 }

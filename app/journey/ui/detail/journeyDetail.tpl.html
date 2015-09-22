@@ -65,7 +65,7 @@
                 <!-- IS NOT ALIAS COMPS -->
                 <div data-ng-show="!journey.isAlias">
                     <!-- JOIN -->
-                    <button data-ng-click="requestJoin()" data-ng-show="!journey.isJoined && journey.canJoin() && !journey.sendRequest" popover-placement="top" popover-trigger="mouseenter" popover="Send a request to join this journey" class="btn btn-primary">
+                    <button data-ng-click="requestJoin()" data-ng-show="!journey.isJoined && journey.canJoin()" data-ng-disabled="journey.sendRequest" popover-placement="top" popover-trigger="mouseenter" popover="Send a request to join this journey" class="btn btn-primary">
                         <span class="fa fa-plus"></span>
                     </button>
                     <!-- UNJOIN -->

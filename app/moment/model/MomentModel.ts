@@ -19,14 +19,9 @@ module jm.moment {
 
         private setMoment(data: IMomentDetailVO) {
             this.currentMoment.parseData(data);
-            this.updateAlias(this.currentMoment);
-        }
-
-        private updateAlias(moment: MomentDetailVO) {
-            if (!this.currentAlias) {
-                return;
+            if (this.currentAlias) {
+                this.currentMoment.updateAlias(this.currentAlias);
             }
-            moment.isAlias = moment.alias === this.currentAlias._id;
         }
 
         getCurrentMoment(id ? : string): MomentDetailVO {
@@ -41,7 +36,7 @@ module jm.moment {
 
         refreshMoment(alias: AliasDetailVO) {
             this.currentAlias = alias;
-            this.updateAlias(this.currentMoment);
+            this.currentMoment.updateAlias(alias);
         }
 
         createMoment(moment: MomentBaseVO, journeyId: string): IPromise < void > {

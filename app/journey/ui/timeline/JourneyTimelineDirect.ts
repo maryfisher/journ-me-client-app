@@ -3,7 +3,7 @@ module jm {
 
         export interface IJourneyTimelineScope extends ng.IScope {
             journeyId: string;
-            isEdit: boolean;
+            hasEdit: boolean;
             journey: IJourneyDetailVO;
         }
 

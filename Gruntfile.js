@@ -135,7 +135,7 @@ module.exports = function (grunt) {
         less: {
             dev: {
                 files: {
-                    '.temp/style/main.css': '<%= app.src %>/compile.lesstpl'
+                    '.temp/style/main.css': '<%= app.app %>/compile.lesstpl'
                 },
                 options: {
                     plugins: [require('less-plugin-glob')]

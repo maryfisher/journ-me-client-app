@@ -42,8 +42,8 @@ module jm.journey {
             if (id) {
                 if (this.currentJourney._id !== id) {
                     this.currentJourney.invalidateData();
+                    this.journeyService.getJourney(id).$promise.then(this.setCurrentJourney);
                 }
-                this.journeyService.getJourney(id).$promise.then(this.setCurrentJourney);
             }
             return this.currentJourney;
         }

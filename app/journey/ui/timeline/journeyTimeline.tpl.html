@@ -3,7 +3,7 @@
     <ul class="list-inline well">
         <li data-ng-repeat="moment in journey.moments">
             <a data-ui-sref="MOMENT_DETAIL({momentId: moment._id})" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.created | date:'medium'}}">
-                <img src="" width="40" height="40" class="img-rounded" />
+                <img src="" class="img-rounded jm-moment-img" data-ng-class="getMomentClass(moment)" />
             </a>
         </li>
         <li>
