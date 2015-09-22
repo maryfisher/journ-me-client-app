@@ -1,4 +1,4 @@
-module jm.common {
+module jm.common.ctrl {
     'use strict';
 
     import NGConst = jm.common.NGConst;

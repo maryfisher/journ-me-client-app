@@ -5,14 +5,14 @@ module jm.journey.ctrl {
     import NGConst = jm.common.NGConst;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
-    export interface IJourneyFormScope extends jm.common.IBaseModalInstanceScope, IBaseJourneyScope {
+    export interface IJourneyFormScope extends jm.common.ctrl.IBaseModalInstanceScope, IBaseJourneyScope {
         hasJourney: boolean;
         //journey: IJourneyBaseVO;
         journeyForm: ng.IFormController;
         save();
     }
 
-    export class JourneyFormController extends jm.common.BaseModalInstanceController {
+    export class JourneyFormController extends jm.common.ctrl.BaseModalInstanceController {
 
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME];
 

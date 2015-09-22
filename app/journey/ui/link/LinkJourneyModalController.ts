@@ -6,13 +6,13 @@ module jm.journey.ctrl {
     import AliasDetailVO = jm.user.AliasDetailVO;
     import JourneyModel = jm.journey.JourneyModel;
 
-    export interface ILinkJourneyScope extends jm.common.IBaseModalInstanceScope {
+    export interface ILinkJourneyScope extends jm.common.ctrl.IBaseModalInstanceScope {
         alias: AliasDetailVO;
         selectedJourney: JourneyBaseVO;
         select();
     }
 
-    export class LinkJourneyModalController extends jm.common.BaseModalInstanceController {
+    export class LinkJourneyModalController extends jm.common.ctrl.BaseModalInstanceController {
 
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, AliasModel.NG_NAME, JourneyModel.NG_NAME];
 

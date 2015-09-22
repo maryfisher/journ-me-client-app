@@ -48,6 +48,7 @@ module jm {
             this.user.controller(jm.user.ctrl);
             this.journey.controller(jm.journey.ctrl);
             this.moment.controller(jm.moment.ctrl);
+            this.common.controller(jm.common.ctrl);
         }
 
         initDAOs() {

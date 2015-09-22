@@ -1,14 +1,23 @@
 module jm.user {
-    export class AliasListDirect implements ng.IDirective {
+
+    export interface IAliasListModalScope extends jm.common.IBaseModalScope {
+        aliasList: AliasBaseVO[];
+        listHeader: string;
+    }
+
+    export class AliasListDirect extends jm.common.BaseModalDirect {
         static NG_NAME: string = 'jmAliasList';
 
         restrict: string = 'A';
         scope: any = {
-            listStr: '@jmAliasList',
+            aliasList: '=jmAliasList',
             listHeader: '@jmListHeader'
         };
-        controller: string = 'AliasListController';
 
-        constructor($injector: ng.auto.IInjectorService) {}
+        constructor($injector: ng.auto.IInjectorService) {
+            super($injector, '', 'user/ui/list/aliasListModal.tpl.html');
+        }
+
+
     }
 }

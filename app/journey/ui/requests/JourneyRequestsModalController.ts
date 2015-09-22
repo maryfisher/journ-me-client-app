@@ -4,12 +4,12 @@ module jm.journey.ctrl {
     import NGConst = jm.common.NGConst;
     import AliasBaseVO = jm.user.AliasBaseVO;
 
-    export interface IJourneyRequestsModalScope extends jm.common.IBaseModalInstanceScope, IBaseJourneyScope {
+    export interface IJourneyRequestsModalScope extends jm.common.ctrl.IBaseModalInstanceScope, IBaseJourneyScope {
         linkJourney(linkingFromJourney: JourneyBaseVO);
         acceptJoinRequest(alias: AliasBaseVO);
     }
 
-    export class JourneyRequestsModalController extends jm.common.BaseModalInstanceController {
+    export class JourneyRequestsModalController extends jm.common.ctrl.BaseModalInstanceController {
 
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME];
 

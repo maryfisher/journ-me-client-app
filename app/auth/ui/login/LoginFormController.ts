@@ -7,7 +7,7 @@ module jm {
             import NGConst = jm.common.NGConst;
             import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
-            export interface ILoginFormScope extends jm.common.IBaseModalInstanceScope {
+            export interface ILoginFormScope extends jm.common.ctrl.IBaseModalInstanceScope {
                 rememberMe: boolean;
                 login();
                 forgotPW();
@@ -17,7 +17,7 @@ module jm {
                 password: string;
             }
 
-            export class LoginFormController extends jm.common.BaseModalInstanceController {
+            export class LoginFormController extends jm.common.ctrl.BaseModalInstanceController {
 
                 static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, AuthModel.NG_NAME, RouteUtil.NG_NAME];
 
