@@ -10,6 +10,7 @@ module jm.moment {
         alias: string;
         journey: string;
         created: string;
+        isPublic: boolean = true;
 
         constructor(data ? : IMomentBaseVO) {
             if (data) {
@@ -23,6 +24,7 @@ module jm.moment {
             this.alias = data.alias;
             this.journey = data.journey;
             this.created = data.created;
+            this.isPublic = data.isPublic;
         }
 
         invalidateData() {
@@ -32,6 +34,7 @@ module jm.moment {
             this.journey = undefined;
             this.created = undefined;
             this.isAlias = false;
+            this.isPublic = true;
         }
 
         updateAlias(alias: AliasBaseVO) {

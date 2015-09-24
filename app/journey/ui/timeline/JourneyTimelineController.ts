@@ -41,6 +41,9 @@ module jm.journey.ctrl {
             if (!this.$scope.hasEdit) {
                 return 'jm-moment-alias';
             } else {
+                if (!moment.isPublic) {
+                    return 'jm-moment-alias-secret';
+                }
                 var index: number = this.joinedAliasIds.indexOf(moment.alias);
                 return 'jm-moment-alias-' + index;
             }

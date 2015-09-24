@@ -1,7 +1,9 @@
 /// <reference path="../../../common/interfaces/journey/JourneyJoinEnum.ts" />
+/// <reference path="../../moment/model/MomentBaseVO.ts" />
 module jm.journey {
 
     import IAliasDetailVO = jm.user.IAliasDetailVO;
+    import MomentBaseVO = jm.moment.MomentBaseVO;
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
@@ -21,15 +23,18 @@ module jm.journey {
         constructor(data ? : IJourneyDetailVO) {
             super(data);
             if (data) {
-                this.parseData(data);
+                this.parseDetailData(data);
             }
         }
 
         //maybe put this into super class and loop over properties to set them
-        parseData(data: IJourneyDetailVO) {
-            super.parseData(data);
+        parseDetailData(data: IJourneyDetailVO) {
+            this.parseBaseData(data);
             //TODO make sure to not overwrite if the properties are not set
-            this.moments = data.moments;
+            this.moments = [];
+            for (var i: number = 0; i < data.moments.length; i++) {
+                this.moments.push(new MomentBaseVO(data.moments[i]));
+            }
             this.followers = data.followers;
             this.linkedToJourneys = data.linkedToJourneys;
             this.linkedFromJourneys = data.linkedFromJourneys;
@@ -81,6 +86,7 @@ module jm.journey {
             this.updateAliasJourneyLink(alias);
             this.updateIsJoined(alias);
             this.updateSendRequest(alias);
+            this.updateMoments(alias);
         }
 
         updateFollowing(alias: IAliasDetailVO) {
@@ -141,6 +147,12 @@ module jm.journey {
                     this.sendRequest = true;
                     break;
                 }
+            }
+        }
+
+        updateMoments(alias: IAliasDetailVO) {
+            for (var i: number = 0; i < this.moments.length; ++i) {
+                this.moments[i].isAlias = this.moments[i].alias === alias._id;
             }
         }
 

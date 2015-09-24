@@ -6,5 +6,6 @@ module jm.moment {
         alias: string;
         journey: string;
         created: string;
+        isPublic: boolean;
     }
 }

@@ -18,6 +18,9 @@ var MomentSchema = new Schema({
     alias: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
+    },
+    isPublic: {
+        type: Boolean
     }
 });
 

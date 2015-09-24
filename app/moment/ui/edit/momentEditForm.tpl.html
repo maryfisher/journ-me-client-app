@@ -7,11 +7,17 @@
                 <textarea name="descript" data-ng-model="moment.descript" class="form-control" placeholder="Tell us how your moment was!"></textarea>
             </div>
 
-            <span data-ng-switch="hasMoment">
-                <button data-ng-switch-when="true" ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
-                <button data-ng-switch-default ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Create Moment</button>
-            </span>
-            <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
+            <div class="form-group btn-group">
+                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="true" uncheckable>Public</label>
+                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="false" uncheckable>Private</label>
+            </div>
+            <div class="form-group">
+                <span data-ng-switch="hasMoment">
+                    <button data-ng-switch-when="true" ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
+                    <button data-ng-switch-default ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Create Moment</button>
+                </span>
+                <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
+            </div>
         </form>
     </div>
 </div>

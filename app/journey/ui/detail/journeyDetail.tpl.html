@@ -1,7 +1,11 @@
 <div class="row panel">
     <!-- JOURNEY DETAILS -->
     <div class="col-xs-12 jm-journey-header">
-        <h1 class="text-center">{{journey.name}} by <a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias._id})">{{journey.alias.name}}</a></h1>
+        <span data-ng-if="!journey.isPublic" class="pull-left text-danger">
+       <span class="fa fa-lock"></span> Psst - this journey is private.
+        <span data-ng-if="!journey.isAlias">Please think twice before sharing it.</span>
+        </span>
+        <h1 class="text-center">{{journey.name}} <span data-ng-if="!journey.isAlias">by <a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias._id})">{{journey.alias.name}}</a></span></h1>
         <p class="text-center">{{journey.descript}}</p>
         <hr></hr>
         <!-- STATS & COMPS -->

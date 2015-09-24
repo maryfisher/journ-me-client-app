@@ -24,14 +24,14 @@ module jm.journey {
         }
 
         private setCurrentJourneyBase(data: IJourneyDetailVO) {
-            this.currentJourney.parseData(data);
+            this.currentJourney.parseBaseData(data);
             if (this.currentAlias) {
                 this.currentJourney.updateAlias(this.currentAlias);
             }
         }
 
         private setCurrentJourney(data: IJourneyDetailVO) {
-            this.setCurrentJourneyBase(data);
+            this.currentJourney.parseDetailData(data);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
                 this.currentJourney.updateFromAlias(this.currentAlias);
@@ -42,8 +42,8 @@ module jm.journey {
             if (id) {
                 if (this.currentJourney._id !== id) {
                     this.currentJourney.invalidateData();
-                    this.journeyService.getJourney(id).$promise.then(this.setCurrentJourney);
                 }
+                this.journeyService.getJourney(id).$promise.then(this.setCurrentJourney);
             }
             return this.currentJourney;
         }
@@ -54,7 +54,9 @@ module jm.journey {
         }
 
         updateJourney(journey): IPromise < void > {
-            return this.journeyService.updateJourney(journey).then(this.setCurrentJourneyBase);
+            var updateJourney: JourneyBaseVO = new JourneyBaseVO(journey);
+            updateJourney.alias = undefined;
+            return this.journeyService.updateJourney(updateJourney).then(this.setCurrentJourneyBase);
         }
 
         getJourney(id): IJourneyDetailVO {

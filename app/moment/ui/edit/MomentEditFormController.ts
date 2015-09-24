@@ -3,16 +3,19 @@ module jm.moment.ctrl {
     import NGConst = jm.common.NGConst;
     import RouteConst = jm.common.RouteConst;
     import RouteUtil = jm.common.RouteUtil;
+    import JourneyModel = jm.journey.JourneyModel;
+    import IJourneyDetailVO = jm.journey.IJourneyDetailVO;
 
     export interface IMomentEditScope extends IMomentDetailScope {
         hasMoment: boolean;
         cancel();
+        journey: IJourneyDetailVO;
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME];
 
-        constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil) {
+        constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
             this.addScopeMethod('cancel');
             this.addScopeMethod('save');
@@ -25,7 +28,9 @@ module jm.moment.ctrl {
                     this.cancel();
                 }
             } else {
+                $scope.journey = journeyModel.getCurrentJourney();
                 $scope.moment = new MomentDetailVO();
+                $scope.moment.isPublic = $scope.journey.isPublic;
             }
         }
 

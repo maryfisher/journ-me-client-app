@@ -15,12 +15,12 @@ module jm.journey {
 
         constructor(data ? : IJourneyBaseVO) {
             if (data) {
-                this.parseData(data);
+                this.parseBaseData(data);
             }
         }
 
         //maybe put this into super class and loop over properties to set them
-        parseData(data: IJourneyBaseVO) {
+        parseBaseData(data: IJourneyBaseVO) {
             this._id = data._id;
             this.name = data.name;
             this.descript = data.descript;
