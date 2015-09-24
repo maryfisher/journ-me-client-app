@@ -88,7 +88,7 @@ module jm {
             this.jm.config(jm.RouterConfig.init);
             this.jm.config(jm.InterceptorConfig.init);
             this.jm.run(jm.config.TokenLoginCommand.execute);
-            this.jm.run(jm.config.StateRedirectCommand.execute);
+            this.jm.run(FactoryUtil.getFactory(jm.config.StateRedirectCommand));
         }
 
         addFactory(classType: any) {
@@ -99,4 +99,6 @@ module jm {
             this.jm.directive(className.NG_NAME, FactoryUtil.getDirective(className));
         }
     }
+
+    new Main();
 }

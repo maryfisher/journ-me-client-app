@@ -1,8 +1,8 @@
 <form name="aliasForm" data-ng-submit="saveChanges()" novalidate role="form">
     <div class="row jm-alias-pic-container">
         <div class="col-sm-4">
-            <div data-ng-show="!file && alias.thumb">
-                <img data-ng-src="data:image/png;base64, {{alias.thumb}}" class="jm-profile-img" />
+            <div data-ng-show="!file && alias.image">
+                <img data-ng-src="data:image/png;base64, {{alias.image}}" class="jm-profile-img" />
             </div>
             <div data-ng-show="file">
                 <img data-ngf-src="file" class="jm-img-preview">
@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <div data-ngf-select data-ngf-drop data-ng-model="file" accept="image/*" data-ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="jm-drop-box ng-pristine ng-valid">
+            <div data-ngf-select data-ngf-drop data-ng-model="file" accept="image/*" data-ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" data-ngf-max-size="1MB" class="jm-drop-box ng-pristine ng-valid">
                 <span>Select or Drop File</span>
             </div>
         </div>

@@ -5,6 +5,22 @@ module jm {
     import IUrlRouterProvider = angular.ui.IUrlRouterProvider;
     import RouteConst = jm.common.RouteConst;
 
+    export interface IRedirectSettings {
+        redirectState: string;
+    }
+
+    export interface IRedirectAuthenticatedSettings extends IRedirectSettings {
+        redirectIfAuthenticated: boolean;
+    }
+
+    export interface IRedirectUnauthenticatedSettings extends IRedirectSettings {
+        redirectIfUnauthenticated: boolean;
+    }
+
+    export interface IRedirectAllSettings extends IRedirectSettings {
+        redirectAll: boolean;
+    }
+
     export class RouterConfig {
 
         static init($stateProvider: IStateProvider, $urlRouterProvider: IUrlRouterProvider) {
@@ -13,28 +29,46 @@ module jm {
 
         constructor($stateProvider: IStateProvider, $urlRouterProvider: IUrlRouterProvider) {*/
 
+            var redirectAuth: IRedirectAuthenticatedSettings = {
+                redirectIfAuthenticated: true,
+                redirectState: RouteConst.DASHBOARD
+            }
+
+            var redirectUnauth: IRedirectUnauthenticatedSettings = {
+                redirectIfUnauthenticated: true,
+                redirectState: RouteConst.HOME
+            }
+
+            var redirectAlias: IRedirectAllSettings = {
+                redirectAll: true,
+                redirectState: RouteConst.ALIAS_DETAIL
+            }
+
             $urlRouterProvider.otherwise(RouteConst.HOME_PATH);
             $stateProvider.state(RouteConst.HOME, {
                 url: RouteConst.HOME_PATH,
                 templateUrl: 'public/ui/home/home.tpl.html',
-                data: {
-                    redirectIfAuthenticated: true,
-                    redirectState: RouteConst.DASHBOARD
-                }
+                data: redirectAuth
             });
             $stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
                 templateUrl: 'public/ui/browse/browse.tpl.html'
             });
+
+            $stateProvider.state(RouteConst.ALIAS_DETAIL, {
+                url: RouteConst.ALIAS_DETAIL_PATH,
+                templateUrl: 'user/ui/alias/aliasDetail.tpl.html',
+                controller: 'AliasDetailController',
+                data: redirectAuth
+            })
+
             $stateProvider.state(RouteConst.DASHBOARD, {
                 url: RouteConst.DASHBOARD_PATH,
                 templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
                 controller: 'DashboardController',
-                data: {
-                    redirectIfUnauthenticated: true,
-                    redirectState: RouteConst.HOME
-                }
+                data: redirectAlias
             });
+
             $stateProvider
                 .state(RouteConst.JOURNEY_DETAIL, {
                     url: RouteConst.JOURNEY_DETAIL_PATH,
@@ -51,31 +85,27 @@ module jm {
                 url: RouteConst.MOMENT_UPDATE_PATH,
                 templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
                 controller: 'MomentEditFormController',
-                data: {
-                    redirectIfUnauthenticated: true,
-                    redirectState: RouteConst.HOME
-                }
+                data: redirectUnauth
             });
             $stateProvider.state(RouteConst.MOMENT_CREATE, {
                 url: RouteConst.MOMENT_CREATE_PATH,
                 templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
                 controller: 'MomentEditFormController',
-                data: {
-                    redirectIfUnauthenticated: true,
-                    redirectState: RouteConst.HOME
-                }
+                data: redirectUnauth
             });
             $stateProvider
                 .state(RouteConst.PROFILE, {
                     url: RouteConst.PROFILE_PATH,
                     templateUrl: 'user/ui/profile/profile.tpl.html',
-                    controller: 'ProfileController'
+                    controller: 'ProfileController',
+                    data: redirectUnauth
                 })
                 .state(RouteConst.ALIAS_UPDATE, {
                     parent: RouteConst.PROFILE,
                     url: RouteConst.ALIAS_UPDATE_PATH,
                     templateUrl: 'user/ui/profile/editAlias.tpl.html',
-                    controller: 'EditAliasController'
+                    controller: 'EditAliasController',
+                    data: redirectUnauth
                 });
         }
     }

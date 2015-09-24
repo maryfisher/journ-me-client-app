@@ -56,15 +56,22 @@ module jm.journey {
         updateLinks() {
             this.joinedLinkedJourneys.length = 0;
             var i, j, len, len2;
+            var deleteFrom: number[] = [];
+            var deleteTo: number[] = [];
             for (i = 0, len = this.linkedFromJourneys.length; i < len; ++i) {
                 for (j = 0, len2 = this.linkedToJourneys.length; j < len2; ++j) {
                     if (this.linkedFromJourneys[i]._id === this.linkedToJourneys[j]._id) {
                         this.joinedLinkedJourneys.push(this.linkedFromJourneys[i]);
-                        //NOTE probably gonna throw an error, have to keep an eye on this
-                        this.linkedFromJourneys.splice(i, 1);
-                        this.linkedToJourneys.splice(j, 1);
+                        deleteFrom.push(i);
+                        deleteTo.push(j);
                     }
                 }
+            }
+            for (i = 0; i < deleteFrom.length; i++) {
+                this.linkedFromJourneys.splice(deleteFrom[i], 1);
+            }
+            for (i = 0; i < deleteTo.length; i++) {
+                this.linkedToJourneys.splice(deleteTo[i], 1);
             }
         }
 

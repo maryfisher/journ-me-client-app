@@ -1,22 +1,63 @@
-module jm {
-    export module config {
+module jm.config {
 
-        import AuthModel = jm.auth.AuthModel;
-        import RouteUtil = jm.common.RouteUtil;
-        import NGConst = jm.common.NGConst;
+    import AuthModel = jm.auth.AuthModel;
+    import RouteUtil = jm.common.RouteUtil;
+    import RouteConst = jm.common.RouteConst;
+    import NGConst = jm.common.NGConst;
+    import IRootScopeService = ng.IRootScopeService;
 
-        export class StateRedirectCommand {
-            static execute($rootScope: ng.IRootScopeService, routeUtil: RouteUtil, authModel: AuthModel) {
-                $rootScope.$on(NGConst.$STATE_CHANGE_START, function (event: ng.IAngularEvent, next) {
+    export class StateRedirectCommand {
 
-                    if (!authModel.isLoggedIn() && next.data && next.data.redirectIfUnauthenticated) {
-                        event.preventDefault();
-                        routeUtil.redirectTo(next.data.redirectState);
-                    } else if (authModel.isLoggedIn() && next.data && next.data.redirectIfAuthenticated) {
-                        event.preventDefault();
-                        routeUtil.redirectTo(next.data.redirectState);
+        private $rootScope: IRootScopeService;
+        private routeUtil: RouteUtil;
+        private authModel: AuthModel;
+
+        constructor($injector: ng.auto.IInjectorService) {
+            this.$rootScope = $injector.get < IRootScopeService > (NGConst.$ROOT_SCOPE);
+            this.routeUtil = $injector.get < RouteUtil > (RouteUtil.NG_NAME);
+            this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
+            _.bindAll(this, 'onStateChangeStart');
+            this.execute();
+        }
+
+        execute() {
+            this.$rootScope.$on(NGConst.$STATE_CHANGE_START, this.onStateChangeStart);
+        }
+
+        onStateChangeStart(event: ng.IAngularEvent, nextState: angular.ui.IState, nextParams, prevState: angular.ui.IState, prevParams) {
+
+            if (!nextState.data) {
+                return;
+            }
+            var params: any = {};
+
+            if (!this.authModel.isLoggedIn() && nextState.data.redirectIfUnauthenticated) {
+                event.preventDefault();
+
+                if (nextState.data.redirectState === RouteConst.ALIAS_DETAIL) {
+                    params = nextParams;
+                }
+                this.routeUtil.redirectTo(nextState.data.redirectState, params);
+            } else if (this.authModel.isLoggedIn() && nextState.data.redirectIfAuthenticated) {
+                params.aliasId = this.authModel.currentUser().currentAlias;
+                if (nextState.name === RouteConst.ALIAS_DETAIL) {
+                    if (nextParams['aliasId'] !== this.authModel.currentUser().currentAlias) {
+                        return;
                     }
-                });
+                }
+
+                event.preventDefault();
+                this.routeUtil.redirectTo(nextState.data.redirectState, params);
+            } else if (nextState.data.redirectAll) {
+                if (nextState.name === RouteConst.DASHBOARD) {
+                    if (nextParams['aliasId'] === this.authModel.currentUser().currentAlias) {
+                        return;
+                    } else {
+                        params.aliasId = nextParams['aliasId'];
+                    }
+                }
+                event.preventDefault();
+                this.routeUtil.redirectTo(nextState.data.redirectState, params);
             }
         }
     }

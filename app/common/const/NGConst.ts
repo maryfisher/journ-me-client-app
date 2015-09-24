@@ -13,6 +13,8 @@ module jm {
             static $STATE_CHANGE_START: string = '$stateChangeStart';
             static $STATE_PARAMS: string = '$stateParams';
 
+            static $ROOT_SCOPE: string = '$rootScope';
+
             static $SCOPE: string = '$scope';
             static $ELEMENT: string = '$element';
 

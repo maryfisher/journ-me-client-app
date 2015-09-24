@@ -1,7 +1,7 @@
 <div class="row panel">
     <!-- JOURNEY DETAILS -->
     <div class="col-xs-12 jm-journey-header">
-        <h1 class="text-center">{{journey.name}} by {{journey.alias.name}}</h1>
+        <h1 class="text-center">{{journey.name}} by <a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias._id})">{{journey.alias.name}}</a></h1>
         <p class="text-center">{{journey.descript}}</p>
         <hr></hr>
         <!-- STATS & COMPS -->
@@ -49,7 +49,7 @@
             <!-- ALIAS & NOT ALIAS COMPS -->
             <div class="col-xs-4">
                 <!-- IS ALIAS COMPS -->
-                <div data-ng-show="journey.isAlias">
+                <div data-ng-if="journey.isAlias">
                     <!-- EDIT -->
                     <button data-jm-journey-edit="{{journey}}" class="btn btn-default pull-right">
                         <span class="glyphicon glyphicon-pencil"></span>
@@ -63,17 +63,17 @@
                     </div>
                 </div>
                 <!-- IS NOT ALIAS COMPS -->
-                <div data-ng-show="!journey.isAlias">
+                <div data-ng-if="!journey.isAlias">
                     <!-- JOIN -->
-                    <button data-ng-click="requestJoin()" data-ng-show="!journey.isJoined && journey.canJoin()" data-ng-disabled="journey.sendRequest" popover-placement="top" popover-trigger="mouseenter" popover="Send a request to join this journey" class="btn btn-primary">
+                    <button data-ng-click="requestJoin()" data-ng-if="!journey.isJoined && journey.canJoin()" data-ng-disabled="journey.sendRequest" popover-placement="top" popover-trigger="mouseenter" popover="Send a request to join this journey" class="btn btn-primary">
                         <span class="fa fa-plus"></span>
                     </button>
                     <!-- UNJOIN -->
-                    <button data-ng-click="leaveJourney()" data-ng-show="journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Stop participating in this journey" class="btn btn-danger">
+                    <button data-ng-click="leaveJourney()" data-ng-if="journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Stop participating in this journey" class="btn btn-danger">
                         <span class="fa fa-close"></span>
                     </button>
                     <!-- LINK -->
-                    <button data-jm-link-journey data-ng-show="!journey.aliasJourneyLink && !journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
+                    <button data-jm-link-journey data-ng-if="!journey.aliasJourneyLink && !journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Link your journey" class="btn btn-primary">
                         <span class="fa fa-chain"></span>
                     </button>
                     <!-- UNLINK -->
@@ -81,12 +81,12 @@
                         <span class="fa fa-chain-broken"></span>
                     </button>
                     <!-- FOLLOW -->
-                    <button data-ng-click="followJourney()" data-ng-show="!journey.isFollowing && !journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Follow this journey" class="btn btn-primary">
+                    <button data-ng-click="followJourney()" data-ng-if="!journey.isFollowing && !journey.isJoined" popover-placement="top" popover-trigger="mouseenter" popover="Follow this journey" class="btn btn-primary">
                         <!--<span class="glyphicon glyphicon-eye-open"></span>-->
                         <span class="fa fa-eye"></span>
                     </button>
                     <!-- UNFOLLOW -->
-                    <button data-ng-click="unfollowJourney()" data-ng-show="journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Unfollow this journey" class="btn btn-danger">
+                    <button data-ng-click="unfollowJourney()" data-ng-if="journey.isFollowing" popover-placement="top" popover-trigger="mouseenter" popover="Unfollow this journey" class="btn btn-danger">
                         <!--<span class="glyphicon glyphicon-eye-close"></span>-->
                         <span class="fa fa-eye-slash"></span>
                     </button>
