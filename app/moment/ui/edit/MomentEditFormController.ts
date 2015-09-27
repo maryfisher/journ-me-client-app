@@ -1,3 +1,4 @@
+/// <reference path="../../../journey/model/JourneyModel.ts" />
 module jm.moment.ctrl {
 
     import NGConst = jm.common.NGConst;
@@ -13,7 +14,7 @@ module jm.moment.ctrl {
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
-        static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME];
+        static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
 
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);

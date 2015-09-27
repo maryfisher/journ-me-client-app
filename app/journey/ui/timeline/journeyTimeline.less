@@ -1,7 +1,6 @@
 .jm-moment-img {
     width: 40px;
     height: 40px;
-    border: none;
 }
 
 .jm-moment-lock {
@@ -20,9 +19,11 @@
 
 .jm-moment-img-lock {
     color: grey;
-    position: absolute;
-    margin-top: -10px;
-    padding-left: 30px;
+    position: relative;
+    float: left;
+    margin-right: -10px;
+    left: 30px;
+    top: 30px;
 }
 
 .jm-moment-alias {
@@ -39,4 +40,61 @@
 
 .jm-moment-alias-secret {
     border: 1px solid darkgrey;
+}
+
+.jm-moment-selected {
+    width: 44px;
+    height: 44px;
+    border: 2px solid yellow;
+    display: block;
+    margin-right: -50px;
+    float: left;
+    //pointer-events: none;
+    position: relative;
+    margin-top: -2px;
+    -ms-transform: translateY(3px);
+    /* IE 9 */
+    -webkit-transform: translateY(3px);
+    /* Safari */
+    transform: translateX(3px);
+}
+
+.jm-timeline {
+    overflow-x: scroll;
+    padding: 10px 30px;
+    white-space: nowrap;
+}
+
+.jm-timeline-btn {
+    position: absolute;
+    top: 57px;
+    bottom: 38px;
+    box-shadow: none;
+    border: none;
+    background-color: #cccccc;
+    border-radius: 4px;
+}
+
+.jm-timeline-btn:hover {
+    background-color: #bbbbbb;
+}
+
+.jm-timeline-btn:disabled {
+    color: darkgrey;
+    background-color: #eeeeee;
+}
+
+.jm-timeline-btn.left {
+    left: 11px;
+}
+
+.jm-timeline-btn.right {
+    left: auto;
+    right: 16px;
+}
+
+.jm-timeline-li {
+    padding: 0px;
+    clear: none;
+    display: inline-block;
 }

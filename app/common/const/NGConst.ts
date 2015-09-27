@@ -17,6 +17,7 @@ module jm {
 
             static $SCOPE: string = '$scope';
             static $ELEMENT: string = '$element';
+            static $ANIMATE_CSS: string = '$animateCss';
 
             static UPLOAD: string = 'Upload';
         }

@@ -33,6 +33,7 @@ module jm {
                 'ngCookies',
                 'ngResource',
                 'ui.router',
+                'ngAnimate',
                 'ngFileUpload']);
             this.auth = angular.module('auth', []);
             this.journey = angular.module('journey', []);
@@ -76,6 +77,8 @@ module jm {
             this.addDirective(jm.journey.JourneyListItemDirect);
             this.addDirective(jm.journey.JourneyEditDirect);
             this.addDirective(jm.journey.JourneyTimelineDirect);
+            this.addDirective(jm.journey.TimelineMomentDirect);
+            this.addDirective(jm.journey.TimelineSelectDirect);
             this.addDirective(jm.journey.LinkJourneyDirect);
             this.addDirective(jm.journey.JourneyRequestsDirect);
         }
