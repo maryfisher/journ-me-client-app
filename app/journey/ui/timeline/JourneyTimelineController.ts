@@ -5,20 +5,25 @@ module jm.journey.ctrl {
     import NGConst = jm.common.NGConst;
     import RouteConst = jm.common.RouteConst;
     import MomentBaseVO = jm.moment.MomentBaseVO;
+    import IMomentBaseVO = jm.moment.IMomentBaseVO;
+    import IAugmentedJQuery = ng.IAugmentedJQuery;
+    import IAnimateCssRunner = angular.animate.IAnimateCssRunner;
 
     export class JourneyTimelineController extends jm.common.BaseController {
 
         static $inject = [NGConst.$SCOPE, JourneyModel.NG_NAME, RouteUtil.NG_NAME, NGConst.$ELEMENT,
-                          NGConst.$STATE_PARAMS, '$timeout', '$animate'];
+                          NGConst.$STATE_PARAMS, '$timeout', '$animate', NGConst.$ANIMATE_CSS];
 
         static ELM_W: number = 50;
         private joinedAliasIds: string[];
-        private timelineElm: HTMLElement; //ng.IAugmentedJQuery;
+        private momentElms: any = {};
+        private timelineElm: HTMLElement;
+        private animator: IAnimateCssRunner;
 
         constructor(private $scope: IJourneyTimelineScope,
-            private journeyModel: JourneyModel, private routeUtil: RouteUtil, private $element: ng.IAugmentedJQuery,
+            private journeyModel: JourneyModel, private routeUtil: RouteUtil, private $element: IAugmentedJQuery,
             private $stateParams: angular.ui.IStateParamsService, private $timeout: angular.ITimeoutService,
-            private $animate: angular.animate.IAnimateService) {
+            private $animate: angular.animate.IAnimateService, private $animateCss: angular.animate.IAnimateCssService) {
             super($scope);
 
             //TODO
@@ -26,11 +31,9 @@ module jm.journey.ctrl {
             this.timelineElm = this.$element.children()[2];
 
             $scope.selectedIndex = -1;
-            this.addScopeMethod('getMomentClass');
-            this.addScopeMethod('setSelected');
             this.addScopeMethod('nextMoment');
             this.addScopeMethod('prevMoment');
-            _.bindAll(this, 'selectIndex', 'scrollTimeline');
+            _.bindAll(this, 'selectIndex', 'scrollTimeline', 'setSelected', 'getMomentClass', 'setSelectedMoment');
             if (!$scope.journeyId) {
                 _.bindAll(this, 'getJourney');
                 $scope.$watch('journeyId', this.getJourney);
@@ -66,19 +69,52 @@ module jm.journey.ctrl {
             } else {
                 this.$scope.selectedIndex = len - 1;
             }
-            this.$scope.selectedMoment = this.$scope.journey.moments[this.$scope.selectedIndex];
+            this.$timeout(this.setSelectedMoment, 0, true, this.$scope.journey.moments[this.$scope.selectedIndex]);
             this.$timeout(this.scrollTimeline);
+        }
+
+        addMomentElm(moment: IMomentBaseVO, $element: IAugmentedJQuery) {
+            this.momentElms[moment._id] = $element;
         }
 
         setSelected(moment: MomentBaseVO) {
             if (this.$scope.selectedMoment === moment) {
-                this.$scope.selectedMoment = undefined;
+                this.setSelectedMoment(undefined);
                 this.$scope.selectedIndex = -1;
             } else {
-                this.$scope.selectedMoment = moment;
+                this.setSelectedMoment(moment);
                 this.$scope.selectedIndex = this.$scope.journey.moments.indexOf(moment);
                 this.scrollTimeline();
             }
+        }
+
+        setSelectedMoment(moment: IMomentBaseVO) {
+            if (this.$scope.selectedMoment) {
+                //scale down
+                this.animateMoment(this.momentElms[this.$scope.selectedMoment._id], 1);
+            }
+            this.$scope.selectedMoment = moment;
+
+            if (!moment) {
+                return;
+            }
+            //scale up
+            this.animateMoment(this.momentElms[moment._id], 1.2);
+        }
+
+        animateMoment(elm: IAugmentedJQuery, scale: number) {
+            //BUG
+            //this is very funky with the popovers
+            this.animator = this.$animateCss(elm, {
+                from: {
+                    transform: 'scale(' + scale + ',' + scale + ')'
+                },
+                to: {
+                    transform: 'scale(' + scale + ',' + scale + ')'
+                },
+                duration: 0.8
+            });
+            this.animator.start();
         }
 
         nextMoment() {
@@ -100,7 +136,7 @@ module jm.journey.ctrl {
         }
 
         selectIndex() {
-            this.$scope.selectedMoment = this.$scope.journey.moments[this.$scope.selectedIndex];
+            this.setSelectedMoment(this.$scope.journey.moments[this.$scope.selectedIndex]);
             this.scrollTimeline();
             this.routeUtil.redirectTo(RouteConst.MOMENT_DETAIL, {
                 journeyId: this.$scope.journey._id,
@@ -113,7 +149,7 @@ module jm.journey.ctrl {
 
             var elmW: number = JourneyTimelineController.ELM_W;
             var buttonW: number = 26 * 2;
-            var timelineW: number = this.timelineElm.clientWidth - buttonW; //angular.element(this.$element)[0].clientWidth - 40;
+            var timelineW: number = this.timelineElm.clientWidth - buttonW;
             var currentPos: number = this.timelineElm.scrollLeft;
             var firstIndex: number = Math.round(currentPos / elmW);
             var lastIndex: number = firstIndex + Math.floor(timelineW / elmW) - 1;

@@ -1,0 +1,9 @@
+<li class="jm-timeline-li">
+    <a data-ui-sref="MOMENT_DETAIL({momentId: moment._id})" data-ng-if="moment.isPublic || moment.isAlias" data-ng-click="setSelected(moment)" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.descript}} {{moment.created | date:'medium'}}">
+        <img src="" class="img-rounded jm-moment-img" data-ng-class="getMomentClass(moment)" />
+        <span data-ng-if="!moment.isPublic" class="fa fa-lock jm-moment-img-lock"></span>
+    </a>
+    <span data-ng-if="!moment.isPublic && !moment.isAlias" popover-placement="top" popover-trigger="mouseenter" popover="This moment is private. :(" class="jm-moment-lock">
+                <span class="fa fa-lock"></span>
+    </span>
+</li>
