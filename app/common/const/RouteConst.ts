@@ -25,6 +25,16 @@ module jm.common {
         static MOMENT_CREATE: string = 'MOMENT_CREATE';
         static MOMENT_CREATE_PATH: string = RouteConst.momentPath + '/create' + RouteConst.journeyId; //this is the wrong way round for now so ui.router does not get confused (bug??)
 
+        static MOMENT_SLIDES: string = 'MOMENT_SLIDES';
+        static MOMENT_SLIDES_PATH: string = '';
+        static MOMENT_COMMENTS: string = 'MOMENT_COMMENTS';
+        static MOMENT_COMMENTS_PATH: string = '/comments';
+        static MOMENT_STATS: string = 'MOMENT_STATS';
+        static MOMENT_STATS_PATH: string = '/stats';
+        static MOMENT_LINKS: string = 'MOMENT_LINKS';
+        static MOMENT_LINKS_PATH: string = '/links';
+
+
         static USER_PATH: string = RouteConst.userPath;
         static PROFILE: string = 'PROFILE';
         static PROFILE_PATH: string = RouteConst.userPath + '/profile';

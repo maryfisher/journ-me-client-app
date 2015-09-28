@@ -76,10 +76,23 @@ module jm {
                     controller: 'JourneyDetailController'
                 })
                 .state(RouteConst.MOMENT_DETAIL, {
+                    abstract: true,
                     parent: RouteConst.JOURNEY_DETAIL,
                     url: RouteConst.MOMENT_DETAIL_PATH,
                     templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
                     controller: 'MomentDetailController'
+                })
+                .state(RouteConst.MOMENT_SLIDES, {
+                    parent: RouteConst.MOMENT_DETAIL,
+                    url: RouteConst.MOMENT_SLIDES_PATH,
+                    templateUrl: 'moment/ui/slides/momentSlides.tpl.html',
+                    controller: 'MomentSlidesController'
+                })
+                .state(RouteConst.MOMENT_COMMENTS, {
+                    parent: RouteConst.MOMENT_DETAIL,
+                    url: RouteConst.MOMENT_COMMENTS_PATH,
+                    templateUrl: 'moment/ui/comments/momentComments.tpl.html',
+                    controller: 'MomentCommentsController'
                 });
             $stateProvider.state(RouteConst.MOMENT_UPDATE, {
                 url: RouteConst.MOMENT_UPDATE_PATH,

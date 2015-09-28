@@ -42,7 +42,7 @@ module jm.moment.ctrl {
                 });
             } else {
                 var momentId = this.$scope.moment._id || this.$stateParams['momentId'];
-                this.routeUtil.redirectTo(RouteConst.MOMENT_DETAIL, {
+                this.routeUtil.redirectTo(RouteConst.MOMENT_SLIDES, {
                     journeyId: this.$stateParams['journeyId'],
                     momentId: momentId
                 });

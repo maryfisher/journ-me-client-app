@@ -138,7 +138,7 @@ module jm.journey.ctrl {
         selectIndex() {
             this.setSelectedMoment(this.$scope.journey.moments[this.$scope.selectedIndex]);
             this.scrollTimeline();
-            this.routeUtil.redirectTo(RouteConst.MOMENT_DETAIL, {
+            this.routeUtil.redirectTo(RouteConst.MOMENT_SLIDES, {
                 journeyId: this.$scope.journey._id,
                 momentId: this.$scope.selectedMoment._id
             });

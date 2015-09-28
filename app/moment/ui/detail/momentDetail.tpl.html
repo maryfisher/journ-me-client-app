@@ -1,18 +1,17 @@
-<div class="col-sm-12 panel">
-    <span data-ng-if="!moment.isPublic" class="pull-left text-danger">
-       <span class="fa fa-lock"></span> Psst - this moment is private.
-    <!--<a data-ng-if="moment.isAlias" data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey._id, momentId:moment._id})">Change to make it publicly accessable.</a>-->
-    <span data-ng-if="!moment.isAlias">Please think twice before sharing it.</span>
-    </span>
-    <span class="pull-right">{{moment.created | date:'medium'}}</span>
-    <h2 class="text-center">What happened was ...</h2>
-    <hr></hr>
-    <p class="text-center">{{moment.descript}}</p>
-    <button data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey._id, momentId:moment._id})" data-ng-if="moment.isAlias" class="btn btn-default pull-right">
-        <span class="glyphicon glyphicon-pencil"></span>
-    </button>
+<div class="panel">
+    <div data-ui-view></div>
+    <ul class="nav nav-tabs nav-justified">
+        <li data-ng-class="{ active: showsSlides() }">
+            <a data-ui-sref="MOMENT_SLIDES">Slides</a>
+        </li>
+        <li data-ui-sref-active="active">
+            <a data-ui-sref="MOMENT_COMMENTS">Comments</a>
+        </li>
+        <!--<li ui-sref-active="active">
+            <a ui-sref="MOMENT_STATS">Stats</a>
+        </li>
+        <li ui-sref-active="active">
+            <a ui-sref="MOMENT_LINKS">Links</a>
+        </li>-->
+    </ul>
 </div>
-<!--<div data-ng-if="!moment.isPublic && !moment.isAlias" class="col-sm-12 panel">
-    <h2 class="text-center">We're so sorry, but ...</h2>
-    <p class="text-center">... this moment is private. :(</p>
-</div>-->

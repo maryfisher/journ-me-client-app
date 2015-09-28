@@ -10,6 +10,7 @@ module jm {
             static $MODAL_INSTANCE: string = '$modalInstance';
             static $RESOURCE: string = '$resource';
 
+            static $STATE: string = '$state';
             static $STATE_CHANGE_START: string = '$stateChangeStart';
             static $STATE_PARAMS: string = '$stateParams';
 
