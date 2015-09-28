@@ -14,11 +14,11 @@ module jm.moment {
 
         constructor(data ? : IMomentBaseVO) {
             if (data) {
-                this.parseData(data);
+                this.parseBaseData(data);
             }
         }
 
-        parseData(data: IMomentBaseVO) {
+        parseBaseData(data: IMomentBaseVO) {
             this._id = data._id;
             this.descript = data.descript;
             this.alias = data.alias;

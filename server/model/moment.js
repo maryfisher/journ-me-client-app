@@ -21,7 +21,11 @@ var MomentSchema = new Schema({
     },
     isPublic: {
         type: Boolean
-    }
+    },
+    empathies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Empathy'
+    }]
 });
 
 mongoose.model('Moment', MomentSchema);
