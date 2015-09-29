@@ -1,0 +1,33 @@
+<div class="col-sm-12">
+    <h5>Empathy shown ({{moment.empathies.length}})</h5>
+    <form name="empathyForm" data-ng-submit="addEmpathy()" novalidate class="row">
+        <div class="col-sm-1">
+            <img data-ng-src="data:image/png;base64, {{alias.image}}" width="40" height="40" class="img-circle" />
+        </div>
+        <div class="col-sm-10">
+            <textarea name="descript" data-ng-model="empathy" required class="form-control" placeholder="Show Empathy!"></textarea>
+        </div>
+        <div class="col-sm-1">
+            <button ng-disabled="empathyForm.$invalid" type="submit" class="btn btn-primary">Post</button>
+        </div>
+    </form>
+    <hr></hr>
+    <ul class="list-group">
+        <li data-ng-repeat="empathy in moment.empathies" class="list-group-item">
+            <div class="row">
+                <a data-ui-sref="ALIAS_DETAIL({aliasId: empathy.alias._id})" class="col-sm-1">
+                    <img data-ng-src="data:image/png;base64, {{empathy.alias.image}}" width="40" height="40" class="img-circle" />
+                </a>
+                <div class="col-sm-11">
+                    <h5>
+                        <a data-ui-sref="ALIAS_DETAIL({aliasId: empathy.alias._id})">
+                            {{empathy.alias.name}}
+                        </a> 
+                        <small>{{empathy.created | date:'medium'}}</small>
+                    </h5>
+                    <p>{{empathy.body}}</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

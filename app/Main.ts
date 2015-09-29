@@ -58,6 +58,7 @@ module jm {
             this.addFactory(jm.journey.JourneyDAO);
             this.addFactory(jm.journey.JourneyActionDAO);
             this.addFactory(jm.moment.MomentDAO);
+            this.addFactory(jm.moment.EmpathyDAO);
         }
 
         initModels() {

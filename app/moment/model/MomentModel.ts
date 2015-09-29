@@ -1,6 +1,7 @@
 module jm.moment {
 
     import AliasDetailVO = jm.user.AliasDetailVO;
+    import AliasBaseVO = jm.user.AliasBaseVO;
     import IPromise = ng.IPromise;
 
     export class MomentModel {
@@ -9,19 +10,29 @@ module jm.moment {
 
         private currentMoment: MomentDetailVO;
         private momentService: MomentDAO;
+        private empathyService: EmpathyDAO;
         private currentAlias: AliasDetailVO;
 
         constructor($injector: ng.auto.IInjectorService) {
             this.momentService = $injector.get < MomentDAO > (MomentDAO.NG_NAME);
+            this.empathyService = $injector.get < EmpathyDAO > (EmpathyDAO.NG_NAME);
             this.currentMoment = new MomentDetailVO();
-            _.bindAll(this, 'setMoment');
+            _.bindAll(this, 'setMoment', 'setEmpathies', 'addEmpathy');
         }
 
         private setMoment(data: IMomentDetailVO) {
-            this.currentMoment.parseData(data);
+            this.currentMoment.parseDetailData(data);
             if (this.currentAlias) {
                 this.currentMoment.updateAlias(this.currentAlias);
             }
+        }
+
+        private setEmpathies(data: IMomentDetailVO) {
+            this.currentMoment.addEmpathies(data.empathies);
+        }
+
+        private addEmpathy(data: IEmpathyVO) {
+            this.currentMoment.empathies.push(data);
         }
 
         getCurrentMoment(id ? : string): MomentDetailVO {
@@ -30,6 +41,7 @@ module jm.moment {
                     this.currentMoment.invalidateData();
                 }
                 this.momentService.getMoment(id).$promise.then(this.setMoment);
+                this.currentMoment._id = id;
             }
             return this.currentMoment;
         }
@@ -52,56 +64,20 @@ module jm.moment {
         updateMoment(moment): IPromise < void > {
             return this.momentService.updateMoment(moment).then(this.setMoment);
         }
+
+        getEmpathies(): IPromise < void > {
+            //TODO
+            //make a note when empathies have been fetched once so as not to send a request every time?
+            return this.empathyService.getEmpathies(this.currentMoment._id).then(this.setEmpathies);
+        }
+
+        createEmpathy(empathyBody: string) {
+            var empathy: EmpathyVO = new EmpathyVO();
+            empathy.moment = this.currentMoment._id;
+            empathy.alias = new AliasBaseVO();
+            empathy.alias._id = this.currentAlias._id;
+            empathy.body = empathyBody;
+            return this.empathyService.createEmpathy(empathy).then(this.addEmpathy);
+        }
     }
 }
-
-/*
-(function (angular, undefined) {
-    'use strict';
-
-    var app = angular.module('jmMoment');
-
-    app.factory('jmMomentModel', function (jmMomentService, jmAliasVO, jmMomentVO, jmJourneyVO) {
-
-        var setMoment = function (data) {
-            jmMomentVO.setMoment(data);
-            updateUser(jmMomentVO);
-        };
-
-        var updateUser = function (moment) {
-            moment.isAlias = moment.alias === jmAliasVO._id;
-        };
-
-        var model = {
-            getCurrentMoment: function (id) {
-                if (id) {
-                    if (jmMomentVO._id !== id) {
-                        jmMomentVO.invalidateMoment();
-                    }
-                    jmMomentService.getMoment(id).then(setMoment);
-                }
-                return jmMomentVO;
-            },
-            createMoment: function (moment, journeyId) {
-                moment.aliasId = jmAliasVO._id;
-                return jmMomentService.createMoment(moment, journeyId, jmAliasVO._id).then(
-                    function (data) {
-                        setMoment(data);
-                        jmJourneyVO.moments.push(data);
-                    });
-            },
-            updateMoment: function (moment) {
-                return jmMomentService.updateMoment(moment).then(setMoment);
-            },
-            getMoment: function (id) {
-                if (id === jmMomentVO._id) {
-                    return jmMomentVO;
-                }
-                return jmMomentService.getMoment(id);
-            }
-        };
-
-        return model;
-    });
-
-}(window.angular));*/

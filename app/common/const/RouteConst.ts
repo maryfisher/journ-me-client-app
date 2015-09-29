@@ -27,8 +27,8 @@ module jm.common {
 
         static MOMENT_SLIDES: string = 'MOMENT_SLIDES';
         static MOMENT_SLIDES_PATH: string = '';
-        static MOMENT_COMMENTS: string = 'MOMENT_COMMENTS';
-        static MOMENT_COMMENTS_PATH: string = '/comments';
+        static MOMENT_EMPATHIES: string = 'MOMENT_EMPATHIES';
+        static MOMENT_EMPATHIES_PATH: string = '/empathies';
         static MOMENT_STATS: string = 'MOMENT_STATS';
         static MOMENT_STATS_PATH: string = '/stats';
         static MOMENT_LINKS: string = 'MOMENT_LINKS';

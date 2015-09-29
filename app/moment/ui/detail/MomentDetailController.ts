@@ -12,8 +12,8 @@ module jm.moment.ctrl {
 
         constructor(private $scope: IMomentDetailScope, private momentModel: MomentModel, $stateParams: angular.ui.IStateParamsService, private $state: angular.ui.IStateService) {
             super($scope);
+            $scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
             this.addScopeMethod('showsSlides');
-            //$scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
         }
 
         showsSlides(): boolean {

@@ -88,11 +88,11 @@ module jm {
                     templateUrl: 'moment/ui/slides/momentSlides.tpl.html',
                     controller: 'MomentSlidesController'
                 })
-                .state(RouteConst.MOMENT_COMMENTS, {
+                .state(RouteConst.MOMENT_EMPATHIES, {
                     parent: RouteConst.MOMENT_DETAIL,
-                    url: RouteConst.MOMENT_COMMENTS_PATH,
-                    templateUrl: 'moment/ui/comments/momentComments.tpl.html',
-                    controller: 'MomentCommentsController'
+                    url: RouteConst.MOMENT_EMPATHIES_PATH,
+                    templateUrl: 'moment/ui/empathies/momentEmpathies.tpl.html',
+                    controller: 'MomentEmpathiesController'
                 });
             $stateProvider.state(RouteConst.MOMENT_UPDATE, {
                 url: RouteConst.MOMENT_UPDATE_PATH,
