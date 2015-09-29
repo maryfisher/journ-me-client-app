@@ -8,6 +8,7 @@
     require('./model/journey');
     require('./model/moment');
     require('./model/alias');
+    require('./model/empathy');
 
     var app = express();
     var bodyParser = require('body-parser');
