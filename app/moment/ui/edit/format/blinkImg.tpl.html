@@ -1,0 +1,14 @@
+<div data-ng-class="getColClass()" class="form-group">
+    <div data-ng-show="!imageFile" data-ngf-select data-ngf-drop name="imageFile{{id}}" required data-ng-model="imageFile" accept="image/*" data-ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" data-ngf-max-size="1MB" data-ng-class="size" class="jm-blink-img-upload ng-pristine ng-valid">
+        <span class="jm-img-uplodad-text">Select or Drop File</span>
+    </div>
+
+    <div data-ng-show="!imageFile && image">
+        <img data-ng-src="data:image/png;base64, {{image}}" class="jm-blink-img" />
+        <a data-ng-click="deleteImage()" class="btn btn-default jm-blink-img-btn">X</a>
+    </div>
+    <div data-ng-show="imageFile">
+        <img data-ngf-src="imageFile" class="jm-blink-img">
+        <a href="" data-ng-click="deleteImageFile()" class="btn btn-default jm-blink-img-btn">X</a>
+    </div>
+</div>

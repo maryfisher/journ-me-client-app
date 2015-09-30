@@ -2,10 +2,10 @@
     <div class="container">
         <h2>Edit Your Moment</h2>
         <form name="momentForm" data-ng-submit="save()" novalidate>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label>Description</label>
                 <textarea name="descript" data-ng-model="moment.descript" class="form-control" placeholder="Tell us how your moment was!"></textarea>
-            </div>
+            </div>-->
 
             <div class="form-group btn-group">
                 <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="true" uncheckable>Public</label>
@@ -13,11 +13,83 @@
             </div>
             <div class="form-group">
                 <span data-ng-switch="hasMoment">
-                    <button data-ng-switch-when="true" ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Save Changes</button>
-                    <button data-ng-switch-default ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Create Moment</button>
+                    <button data-ng-switch-when="true" data-ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Save Moment</button>
+                    <button data-ng-switch-default data-ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Create Moment</button>
                 </span>
                 <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
             </div>
         </form>
+
+    </div>
+</div>
+<div class="row panel">
+    <div class="container">
+        <!--<div ng-switch="editBlink"> ng-switch-when="true"-->
+        <form name="blinkForm" ng-show="editBlink" data-ng-submit="saveBlink()" novalidate>
+            <h3>Create a New Blink</h3>
+            <ul class="nav nav-pills">
+                <!--<li ng-class="{'active' : selectedBlink.format === format}" data-ng-repeat="format in formats">
+                        <a href="" data-ng-click="selectFormat(format)">
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                            <span class="glyphicon glyphicon-align-justify"></span>
+                        </a>
+                    </li>-->
+                <li ng-class="{'active' : selectedBlink.format === 0}">
+                    <a href="" data-ng-click="selectFormat(0)">
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </a>
+                </li>
+                <li ng-class="{'active' : selectedBlink.format === 1}">
+                    <a href="" data-ng-click="selectFormat(1)">
+                        <span class="glyphicon glyphicon-picture"></span>
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                    </a>
+                </li>
+                <li ng-class="{'active' : selectedBlink.format === 2}">
+                    <a href="" data-ng-click="selectFormat(2)">
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                    </a>
+                </li>
+                <li ng-class="{'active' : selectedBlink.format === 3}">
+                    <a href="" data-ng-click="selectFormat(3)">
+                        <span class="glyphicon glyphicon-align-justify"></span>
+                    </a>
+                </li>
+                <li ng-class="{'active' : selectedBlink.format === 4}">
+                    <a href="" data-ng-click="selectFormat(4)">
+                        <span class="glyphicon glyphicon-play"></span>
+                    </a>
+                </li>
+                <li ng-class="{'active' : selectedBlink.format === 5}">
+                    <a href="" data-ng-click="selectFormat(5)">
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </a>
+                </li>
+                <li ng-class="{'active' : selectedBlink.format === 6}">
+                    <a href="" data-ng-click="selectFormat(6)">
+                        <span class="glyphicon glyphicon-picture"></span>
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </a>
+                </li>
+            </ul>
+            <!-- NOTE: Unfortunately this does not work since the value for 'format' is set later when the templateUrl
+             function has already run
+            <jm-blink-format data-ng-repeat="format in formats" format="{{format}}" blink="selectedBlink" ng-switch-when="format"></jm-blink-format>-->
+            <div ng-switch="selectedBlink.format">
+
+                <jm-blink-format blink="selectedBlink" ng-switch-when="1"></jm-blink-format>
+                <jm-blink-format blink="selectedBlink" ng-switch-when="2"></jm-blink-format>
+                <jm-blink-format blink="selectedBlink" ng-switch-when="3"></jm-blink-format>
+                <jm-blink-format blink="selectedBlink" ng-switch-when="4"></jm-blink-format>
+                <jm-blink-format blink="selectedBlink" ng-switch-when="5"></jm-blink-format>
+                <jm-blink-format blink="selectedBlink" ng-switch-when="6"></jm-blink-format>
+                <jm-blink-format blink="selectedBlink" ng-switch-default></jm-blink-format>
+            </div>
+            <button data-ng-disabled="blinkForm.$invalid" type="submit" class="btn btn-primary">Save Blink</button>
+            <button data-ng-disabled="moment.blinks.length === 0" data-ng-click="cancelBlink()" type="button" class="btn btn-warning">Cancel</button>
+        </form>
+        <jm-blink-carousel ng-show="!editBlink" data-jm-blink="selectedBlink"></jm-blink-carousel>
     </div>
 </div>
