@@ -82,26 +82,20 @@ module jm {
                     templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
                     controller: 'MomentDetailController'
                 })
-                .state(RouteConst.MOMENT_SLIDES, {
+                .state(RouteConst.MOMENT_BLINKS, {
                     parent: RouteConst.MOMENT_DETAIL,
-                    url: RouteConst.MOMENT_SLIDES_PATH,
-                    templateUrl: 'moment/ui/slides/momentSlides.tpl.html',
-                    controller: 'MomentSlidesController'
+                    url: RouteConst.MOMENT_BLINKS_PATH,
+                    templateUrl: 'moment/ui/blink/momentBlinks.tpl.html',
+                    controller: 'MomentBlinksController'
                 })
                 .state(RouteConst.MOMENT_EMPATHIES, {
                     parent: RouteConst.MOMENT_DETAIL,
                     url: RouteConst.MOMENT_EMPATHIES_PATH,
-                    templateUrl: 'moment/ui/empathies/momentEmpathies.tpl.html',
+                    templateUrl: 'moment/ui/empathy/momentEmpathies.tpl.html',
                     controller: 'MomentEmpathiesController'
                 });
-            $stateProvider.state(RouteConst.MOMENT_UPDATE, {
-                url: RouteConst.MOMENT_UPDATE_PATH,
-                templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
-                controller: 'MomentEditFormController',
-                data: redirectUnauth
-            });
-            $stateProvider.state(RouteConst.MOMENT_CREATE, {
-                url: RouteConst.MOMENT_CREATE_PATH,
+            $stateProvider.state(RouteConst.MOMENT_EDIT, {
+                url: RouteConst.MOMENT_EDIT_PATH,
                 templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
                 controller: 'MomentEditFormController',
                 data: redirectUnauth

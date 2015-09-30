@@ -14,7 +14,7 @@
             </span>
         </li>-->
         <li>
-            <a data-ui-sref="MOMENT_CREATE({journeyId: journey._id})" data-ng-show="hasEdit && (journey.isAlias || journey.isJoined)" popover-placement="top" popover-trigger="mouseenter" popover="Add a new moment to your journey!" class="btn btn-primary">+</a>
+            <a data-ui-sref="MOMENT_EDIT({journeyId: journey._id})" data-ng-show="hasEdit && (journey.isAlias || journey.isJoined)" popover-placement="top" popover-trigger="mouseenter" popover="Add a new moment to your journey!" class="btn btn-primary">+</a>
         </li>
     </ul>
     <button data-ng-click="nextMoment()" data-ng-show="journey.moments.length > 1" data-ng-disabled="selectedIndex === journey.moments.length - 1" class="jm-timeline-btn right"><span class="glyphicon glyphicon-chevron-right"></span></button>

@@ -20,13 +20,17 @@ module jm.common {
 
         static MOMENT_DETAIL: string = 'MOMENT_DETAIL';
         static MOMENT_DETAIL_PATH: string = RouteConst.momentId;
-        static MOMENT_UPDATE: string = 'MOMENT_UPDATE';
-        static MOMENT_UPDATE_PATH: string = RouteConst.momentId + '/update' + RouteConst.journeyId; //this is the wrong way round to match MOMENT_CREATE
+        /*static MOMENT_UPDATE: string = 'MOMENT_UPDATE';
+        //this is the wrong way round to match MOMENT_CREATE
+        static MOMENT_UPDATE_PATH: string = RouteConst.momentId + '/update' + RouteConst.journeyId;
         static MOMENT_CREATE: string = 'MOMENT_CREATE';
-        static MOMENT_CREATE_PATH: string = RouteConst.momentPath + '/create' + RouteConst.journeyId; //this is the wrong way round for now so ui.router does not get confused (bug??)
+        //this is the wrong way round for now so ui.router does not get confused (bug??)
+        static MOMENT_CREATE_PATH: string = RouteConst.momentPath + '/create' + RouteConst.journeyId; */
+        static MOMENT_EDIT: string = 'MOMENT_EDIT';
+        static MOMENT_EDIT_PATH: string = RouteConst.journeyId + RouteConst.momentPath + '/edit/:momentId';
 
-        static MOMENT_SLIDES: string = 'MOMENT_SLIDES';
-        static MOMENT_SLIDES_PATH: string = '';
+        static MOMENT_BLINKS: string = 'MOMENT_BLINKS';
+        static MOMENT_BLINKS_PATH: string = '';
         static MOMENT_EMPATHIES: string = 'MOMENT_EMPATHIES';
         static MOMENT_EMPATHIES_PATH: string = '/empathies';
         static MOMENT_STATS: string = 'MOMENT_STATS';

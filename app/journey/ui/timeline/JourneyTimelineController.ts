@@ -59,6 +59,7 @@ module jm.journey.ctrl {
             }
 
             var len: number = this.$scope.journey.moments.length;
+            var reroute: boolean = false;
             if (this.$stateParams['momentId']) {
                 for (i = 0; i < len; i++) {
                     if (this.$scope.journey.moments[i]._id === this.$stateParams['momentId']) {
@@ -68,9 +69,14 @@ module jm.journey.ctrl {
                 this.$scope.selectedIndex = i;
             } else {
                 this.$scope.selectedIndex = len - 1;
+                reroute = true;
             }
-            this.$timeout(this.setSelectedMoment, 0, true, this.$scope.journey.moments[this.$scope.selectedIndex]);
-            this.$timeout(this.scrollTimeline);
+            if (reroute) {
+                this.$timeout(this.selectIndex);
+            } else {
+                this.$timeout(this.setSelectedMoment, 0, true, this.$scope.journey.moments[this.$scope.selectedIndex]);
+                this.$timeout(this.scrollTimeline);
+            }
         }
 
         addMomentElm(moment: IMomentBaseVO, $element: IAugmentedJQuery) {
@@ -138,7 +144,7 @@ module jm.journey.ctrl {
         selectIndex() {
             this.setSelectedMoment(this.$scope.journey.moments[this.$scope.selectedIndex]);
             this.scrollTimeline();
-            this.routeUtil.redirectTo(RouteConst.MOMENT_SLIDES, {
+            this.routeUtil.redirectTo(RouteConst.MOMENT_BLINKS, {
                 journeyId: this.$scope.journey._id,
                 momentId: this.$scope.selectedMoment._id
             });

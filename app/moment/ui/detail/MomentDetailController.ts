@@ -17,7 +17,7 @@ module jm.moment.ctrl {
         }
 
         showsSlides(): boolean {
-            return this.$state.includes(RouteConst.MOMENT_SLIDES);
+            return this.$state.includes(RouteConst.MOMENT_BLINKS);
         }
     }
 }

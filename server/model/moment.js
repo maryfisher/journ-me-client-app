@@ -4,9 +4,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var MomentSchema = new Schema({
-    descript: {
-        type: String
-    },
     created: {
         type: Date,
         default: Date.now
@@ -25,6 +22,10 @@ var MomentSchema = new Schema({
     empathies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Empathy'
+    }],
+    blinks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Blink'
     }]
 });
 

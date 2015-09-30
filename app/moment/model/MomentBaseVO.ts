@@ -5,7 +5,6 @@ module jm.moment {
     export class MomentBaseVO {
 
         _id: string;
-        descript: string;
         isAlias: boolean;
         alias: string;
         journey: string;
@@ -20,7 +19,6 @@ module jm.moment {
 
         parseBaseData(data: IMomentBaseVO) {
             this._id = data._id;
-            this.descript = data.descript;
             this.alias = data.alias;
             this.journey = data.journey;
             this.created = data.created;
@@ -29,7 +27,6 @@ module jm.moment {
 
         invalidateData() {
             this._id = undefined;
-            this.descript = undefined;
             this.alias = undefined;
             this.journey = undefined;
             this.created = undefined;

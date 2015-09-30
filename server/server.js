@@ -9,6 +9,7 @@
     require('./model/moment');
     require('./model/alias');
     require('./model/empathy');
+    require('./model/blink');
 
     var app = express();
     var bodyParser = require('body-parser');
