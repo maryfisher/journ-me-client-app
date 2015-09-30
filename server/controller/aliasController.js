@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Alias = mongoose.model('Alias');
+    Alias = mongoose.model('Alias'),
+    fs = require('fs');
 
 exports.read = function (req, res) {
     try {
@@ -39,7 +40,43 @@ exports.create = function (req, res) {
 };
 
 exports.update = function (req, res) {
+    var alias = Alias.findOne({
+        _id: req.alias._id
+    }, function (err, alias) {
+        var file = req.files.file;
 
+        fs.readFile(file.path, function (err, original_data) {
+            if (err) {
+                return res.status(400).send({
+                    message: ''
+                });
+            }
+            // save image in db as base64 encoded - this limits the image size
+            // to there should be size checks here and in client
+            var base64Image = original_data.toString('base64');
+            fs.unlink(file.path, function (err) {
+                if (err) {
+                    console.log('failed to delete ' + file.path);
+                } else {
+                    console.log('successfully deleted ' + file.path);
+                }
+            });
+
+            alias.name = req.alias.name;
+            alias.image = base64Image;
+
+            alias.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    return res.status(400).send({
+                        message: ''
+                    });
+                } else {
+                    res.status(200).send(alias);
+                }
+            });
+        });
+    });
 };
 
 exports.remove = function (req, res) {
