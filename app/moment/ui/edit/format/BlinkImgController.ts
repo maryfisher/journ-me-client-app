@@ -13,6 +13,8 @@ module jm.moment.ctrl {
             this.addScopeMethod('deleteImage');
         }
 
+
+
         deleteImageFile() {
             this.$scope.imageFile = undefined;
         }

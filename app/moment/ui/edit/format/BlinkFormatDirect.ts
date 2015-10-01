@@ -2,6 +2,8 @@ module jm.moment {
 
     export interface IBlinkFormatScope extends ng.IScope {
         blink: BlinkVO;
+        ratio: number;
+        maxRange: number;
     }
 
     export class BlinkFormatDirect implements ng.IDirective {
@@ -19,7 +21,8 @@ module jm.moment {
         };
         link = (scope: IBlinkImgScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             element.addClass('row jm-blink-edit');
-        }
+        };
+        controller: string = 'BlinkFormatController';
 
         constructor($injector: ng.auto.IInjectorService) {
 
