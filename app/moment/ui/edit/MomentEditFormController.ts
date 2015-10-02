@@ -17,10 +17,10 @@ module jm.moment.ctrl {
         createNewBlink();
         selectFormat(format: number);
         journey: IJourneyDetailVO;
-        selectedBlink: BlinkFormVO;
+        formBlink: BlinkFormVO;
+        selectedIndex: number;
         editBlink: boolean;
         formats: number[];
-        selectedFormat: number;
         momentForm: IFormController;
         blinkForm: IFormController;
     }
@@ -49,11 +49,15 @@ module jm.moment.ctrl {
                 $scope.moment = new MomentDetailVO();
                 $scope.moment.isPublic = $scope.journey.isPublic;
             }
-            this.isNewBlink = $scope.editBlink = $scope.moment.blinks.length === 0;
+            //this.isNewBlink = $scope.editBlink = $scope.moment.blinks.length === 0;
 
-            $scope.selectedBlink = new BlinkFormVO();
-            if(!this.isNewBlink){
-                this.momentModel.getBlinkByIndex(0, $scope.selectedBlink);
+            $scope.formBlink = new BlinkFormVO();
+            if($scope.moment.blinks.length !== 0){
+                this.$scope.selectedIndex = 0;
+                this.getBlink();
+            }else{
+                //this.selectedIndex = -1;
+                this.createNewBlink();
             }
 
             $scope.formats = [];
@@ -64,7 +68,6 @@ module jm.moment.ctrl {
                     i++;
                 }
             }
-            $scope.selectedFormat = 0;
         }
 
         cancel() {
@@ -96,7 +99,7 @@ module jm.moment.ctrl {
 
         saveBlink() {
             if(this.isNewBlink){
-                this.momentModel.createBlink(this.$scope.selectedBlink);
+                this.momentModel.createBlink(this.$scope.formBlink);
             }
         }
 
@@ -107,14 +110,21 @@ module jm.moment.ctrl {
         }
 
         selectFormat(format: number) {
-            this.$scope.selectedBlink.format = format;
+            this.$scope.formBlink.blink.format = format;
         }
 
         createNewBlink(){
             //TODO
+            this.$scope.formBlink.blink = new BlinkVO();
             this.$scope.editBlink = true;
-            this.$scope.selectedBlink = new BlinkFormVO();
+            this.$scope.formBlink.imageFiles.length = 0;
             this.isNewBlink = true;
+            this.$scope.selectedIndex = this.$scope.moment.blinks.length;
+        }
+
+        getBlink(){
+            this.$scope.formBlink.blink = new BlinkVO();
+            this.momentModel.getBlinkByIndex(this.$scope.selectedIndex, this.$scope.formBlink.blink);
         }
     }
 }

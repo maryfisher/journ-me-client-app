@@ -9,11 +9,11 @@
         <!--<a data-ng-if="moment.isAlias" data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey._id, momentId:moment._id})">Change to make it publicly accessable.</a>-->
         <span data-ng-if="!moment.isAlias">Please think twice before sharing it.</span>
         </span>
-        <span class="pull-right">{{moment.created | date:'medium'}}</span>
-        <p class="text-center">{{moment.descript}}</p>
         <button data-ui-sref="MOMENT_EDIT({journeyId: moment.journey._id, momentId:moment._id})" data-ng-if="moment.isAlias" class="btn btn-default pull-right">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
+        <span class="pull-right">{{moment.created | date:'medium'}}</span>
+        <jm-blink-carousel moment="moment" index="0" can-edit="true"></jm-blink-carousel>
     </div>
 </div>
 <!--<div data-ng-if="!moment.isPublic && !moment.isAlias" class="col-sm-12 panel">

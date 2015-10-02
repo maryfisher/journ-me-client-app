@@ -86,6 +86,8 @@ module jm {
             this.addDirective(jm.moment.BlinkFormatDirect);
             this.addDirective(jm.moment.BlinkImgDirect);
             this.addDirective(jm.moment.BlinkTextDirect);
+            this.addDirective(jm.moment.BlinkCarouselDirect);
+            this.addDirective(jm.moment.BlinkCarouselElementDirect);
         }
 
         initInterceptor() {

@@ -14,11 +14,11 @@ module jm.moment.ctrl {
         }
 
         deleteImageFile() {
-            this.$scope.blink.imageFiles[this.$scope.id] = undefined;
+            this.$scope.formBlink.imageFiles[this.$scope.id] = undefined;
         }
 
         deleteImage() {
-            this.$scope.blink.images[this.$scope.id] = undefined;
+            this.$scope.formBlink.blink.images[this.$scope.id] = undefined;
         }
     }
 }

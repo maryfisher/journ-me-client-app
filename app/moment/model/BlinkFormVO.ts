@@ -1,10 +1,13 @@
 /// <reference path="BlinkVO.ts" />
 module jm.moment {
-    export class BlinkFormVO extends BlinkVO {
+    export class BlinkFormVO {
         imageFiles: File[] = [];
+        blink: BlinkVO;
 
-        constructor(data ? : IBlinkVO) {
-            super(data);
+        constructor(data ? : BlinkVO) {
+            if(data){
+                this.blink = data;
+            }
         }
     }
 }

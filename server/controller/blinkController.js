@@ -8,17 +8,21 @@ var mongoose = require('mongoose'),
 
 
 exports.list = function (req, res) {
+    console.log('list');
     if(!req.query['index']){
         Blink.find({
-            'moment': req.query['moment']
+            'moment': req.query['momentId']
         }, function (err, blinks) {
+            console.log(err);
             res.status(200).send(blinks);
         });
     }else {
+        console.log(req.query['momentId'] + ' ' + req.query['index']);
         Blink.findOne({
-            moment: req.query['moment'],
+            moment: req.query['momentId'],
             index: req.query['index']
         }, function (err, blink) {
+            console.log(err + ' ' + blink);
             res.status(200).send(blink);
         });
     }
@@ -50,7 +54,7 @@ exports.create = function (req, res) {
         var blink = new Blink(JSON.parse(req.body.blink));
         momentCtrl.momentByID(req, res, function(err){
             var moment = req.moment;
-            blink.index = moment.blinks.length - 1;
+            blink.index = moment.blinks.length;
             blink.images = [];
             blink.images.push(base64Image);
 

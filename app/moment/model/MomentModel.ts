@@ -88,10 +88,12 @@ module jm.moment {
             })
         }
 
-        createBlink(blink: BlinkFormVO){
-            blink.moment = this.currentMoment._id;
-            return this.blinkService.createBlink(blink).then(function (response: BlinkVO) {
-                blink.parseData(response);
+        createBlink(formBlink: BlinkFormVO){
+            formBlink.blink.moment = this.currentMoment._id;
+            var moment: MomentDetailVO = this.currentMoment;
+            return this.blinkService.createBlink(formBlink).then(function (response: BlinkVO) {
+                formBlink.blink.parseData(response);
+                moment.blinks.push(formBlink.blink._id);
             });
         }
     }

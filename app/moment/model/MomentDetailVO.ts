@@ -3,6 +3,7 @@ module jm.moment {
 
         empathies: IEmpathyVO[] = [];
         blinks: string[] = [];
+        currentBlink: BlinkVO;
 
         constructor(data ? : IMomentDetailVO) {
             super(data);
@@ -28,6 +29,7 @@ module jm.moment {
             super.invalidateData();
             this.empathies.length = 0;
             this.blinks.length = 0;
+            this.currentBlink = undefined;
         }
     }
 }

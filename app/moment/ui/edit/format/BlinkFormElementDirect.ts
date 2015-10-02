@@ -6,7 +6,7 @@ module jm.moment {
         size: string;
         id: string;
         order: number;
-        blink: BlinkFormVO;
+        formBlink: BlinkFormVO;
     }
 
     export class BlinkFormElementDirect implements ng.IDirective {

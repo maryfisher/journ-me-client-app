@@ -54,7 +54,7 @@ module jm.moment {
         }
 
         updateBlink(blinkForm: BlinkFormVO): IUploadPromise < IBlinkVO > {
-            return this.uploadBlink(blinkForm, ServerConst.BLINK_PATH + blinkForm._id);
+            return this.uploadBlink(blinkForm, ServerConst.BLINK_PATH + blinkForm.blink._id);
             /*return this.blinkDAO.save({
                     blinkId: blink._id
                 },
@@ -63,7 +63,6 @@ module jm.moment {
         }
 
         uploadBlink(blinkForm: BlinkFormVO, url: string): IUploadPromise < IBlinkVO > {
-            var blink: BlinkVO = new BlinkVO(blinkForm);
             //TODO several images
             return this.Upload.upload<IBlinkVO>(<IFileUploadConfig>{
                 url: url,
@@ -71,7 +70,7 @@ module jm.moment {
                     'Content-Type': 'multipart/form-data'
                 },
                 fields: {
-                    blink: blink
+                    blink: blinkForm.blink
                 },
                 file: blinkForm.imageFiles[0],
                 method: null
