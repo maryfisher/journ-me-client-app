@@ -6,6 +6,7 @@ module jm.moment {
         size: string;
         id: string;
         order: number;
+        blink: BlinkFormVO;
     }
 
     export class BlinkFormElementDirect implements ng.IDirective {
@@ -18,8 +19,8 @@ module jm.moment {
             id: '@',
             order: '@?'
         }
-        link = (scope: IBlinkImgScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: BlinkFormatController) => {
-            ctrl.addElement(element, scope.order);
+        link = (scope: IBlinkFormElementScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: BlinkFormatController) => {
+            ctrl.addElement(element, scope);
         }
 
         constructor() {

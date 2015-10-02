@@ -11,20 +11,23 @@ module jm.moment.ctrl {
 
         constructor(private $scope: IBlinkFormatScope) {
             super($scope);
-            $scope.ratio = 49;
             $scope.maxRange = 98;
             _.bindAll(this, 'onRatioChange');
             $scope.$watch('ratio', this.onRatioChange);
         }
 
-        addElement(element: ng.IAugmentedJQuery, order: number) {
-            element.css('width', this.$scope.ratio.toString() + '%');
-            this.elements[order] = element;
+        addElement(element: ng.IAugmentedJQuery, scope: IBlinkFormElementScope) {
+            this.elements[scope.order] = element;
+            scope.blink = this.$scope.blink;
+            this.$scope.blink.ratio = this.$scope.maxRange / this.elements.length;
         }
 
         onRatioChange(){
-            this.elements[0].css('width', this.$scope.ratio.toString() + '%');
-            this.elements[1].css('width', (this.$scope.maxRange - this.$scope.ratio).toString() + '%');
+            if(this.elements.length <= 1){
+                return;
+            }
+            this.elements[0].css('width', this.$scope.blink.ratio.toString() + '%');
+            this.elements[1].css('width', (this.$scope.maxRange - this.$scope.blink.ratio).toString() + '%');
         }
     }
 }

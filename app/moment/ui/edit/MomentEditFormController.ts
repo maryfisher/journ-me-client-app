@@ -6,6 +6,7 @@ module jm.moment.ctrl {
     import RouteUtil = jm.common.RouteUtil;
     import JourneyModel = jm.journey.JourneyModel;
     import IJourneyDetailVO = jm.journey.IJourneyDetailVO;
+    import IFormController = ng.IFormController;
 
     export interface IMomentEditScope extends IMomentDetailScope {
         hasMoment: boolean;
@@ -13,18 +14,21 @@ module jm.moment.ctrl {
         save();
         saveBlink();
         cancelBlink();
+        createNewBlink();
         selectFormat(format: number);
         journey: IJourneyDetailVO;
-        selectedBlink: IBlinkVO;
+        selectedBlink: BlinkFormVO;
         editBlink: boolean;
         formats: number[];
         selectedFormat: number;
-        momentForm: ng.IFormController;
-        blinkForm: ng.IFormController;
+        momentForm: IFormController;
+        blinkForm: IFormController;
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
+
+        private isNewBlink: boolean;
 
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
@@ -33,6 +37,7 @@ module jm.moment.ctrl {
             this.addScopeMethod('save');
             this.addScopeMethod('saveBlink');
             this.addScopeMethod('selectFormat');
+            this.addScopeMethod('createNewBlink');
             _.bindAll(this, 'saveNewSuccess');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
@@ -44,8 +49,12 @@ module jm.moment.ctrl {
                 $scope.moment = new MomentDetailVO();
                 $scope.moment.isPublic = $scope.journey.isPublic;
             }
-            $scope.editBlink = $scope.moment.blinks.length === 0;
-            $scope.selectedBlink = new BlinkVO($scope.moment.blinks[0]);
+            this.isNewBlink = $scope.editBlink = $scope.moment.blinks.length === 0;
+
+            $scope.selectedBlink = new BlinkFormVO();
+            if(!this.isNewBlink){
+                this.momentModel.getBlinkByIndex(0, $scope.selectedBlink);
+            }
 
             $scope.formats = [];
             var i: number = 0;
@@ -86,7 +95,9 @@ module jm.moment.ctrl {
         }
 
         saveBlink() {
-
+            if(this.isNewBlink){
+                this.momentModel.createBlink(this.$scope.selectedBlink);
+            }
         }
 
         cancelBlink() {
@@ -97,6 +108,13 @@ module jm.moment.ctrl {
 
         selectFormat(format: number) {
             this.$scope.selectedBlink.format = format;
+        }
+
+        createNewBlink(){
+            //TODO
+            this.$scope.editBlink = true;
+            this.$scope.selectedBlink = new BlinkFormVO();
+            this.isNewBlink = true;
         }
     }
 }

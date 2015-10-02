@@ -5,6 +5,7 @@ module jm.common {
         static ALIAS_ID: string = ':aliasId/';
         static MOMENT_ID: string = ':momentId/';
         static EMPATHY_ID: string = ':empathyId/';
+        static BLINK_ID: string = ':blinkId/';
 
         static API: string = 'api/';
         static USER: string = ServerConst.API + 'user/';
@@ -25,6 +26,9 @@ module jm.common {
 
         static EMPATHY_PATH: string = ServerConst.API + 'empathy/';
         static EMPATHY_ID_PATH: string = ServerConst.EMPATHY_PATH + ServerConst.EMPATHY_ID;
+
+        static BLINK_PATH: string = ServerConst.API + 'blink/';
+        static BLINK_ID_PATH: string = ServerConst.BLINK_PATH + ServerConst.EMPATHY_ID;
 
         static COOKIE_TOKEN_KEY: string = 'jmAuthToken';
 

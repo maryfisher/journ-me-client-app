@@ -11,15 +11,21 @@ var BlinkSchema = new Schema({
     format: {
         type: String
     },
-    image: {
+    images: [{
         type: String
-    },
+    }],
     texts: [{
         type: String
     }],
     moods: [{
         type: String
-    }]
+    }],
+    ratio: {
+        type: Number
+    },
+    index: {
+        type: Number
+    }
 });
 
 mongoose.model('Blink', BlinkSchema);

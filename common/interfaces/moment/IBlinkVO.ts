@@ -1,8 +1,11 @@
 module jm.moment {
     export interface IBlinkVO {
+        _id: string;
         format: number;
-        image: string;
+        images: string[];
         texts: string[];
         index: number;
+        moment: string;
+        ratio: number;
     }
 }

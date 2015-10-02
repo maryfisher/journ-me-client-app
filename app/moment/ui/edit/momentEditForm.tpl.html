@@ -90,6 +90,9 @@
             <button data-ng-disabled="blinkForm.$invalid" type="submit" class="btn btn-primary">Save Blink</button>
             <button data-ng-disabled="moment.blinks.length === 0" data-ng-click="cancelBlink()" type="button" class="btn btn-warning">Cancel</button>
         </form>
-        <jm-blink-carousel ng-show="!editBlink" data-jm-blink="selectedBlink"></jm-blink-carousel>
+        <div data-ng-if="!editBlink">
+            <jm-blink-carousel data-jm-blink="selectedBlink"></jm-blink-carousel>
+            <button data-ng-click="createNewBlink()">+ Blink</button>
+        </div>
     </div>
 </div>

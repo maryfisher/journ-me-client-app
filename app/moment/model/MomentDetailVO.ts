@@ -2,7 +2,7 @@ module jm.moment {
     export class MomentDetailVO extends MomentBaseVO {
 
         empathies: IEmpathyVO[] = [];
-        blinks: IBlinkVO[] = [];
+        blinks: string[] = [];
 
         constructor(data ? : IMomentDetailVO) {
             super(data);
@@ -14,20 +14,13 @@ module jm.moment {
         parseDetailData(data: IMomentDetailVO) {
             this.parseBaseData(data);
             this.addEmpathies(data.empathies);
-            this.addBlinks(data.blinks);
+            this.blinks = data.blinks || this.blinks;
         }
 
         addEmpathies(data: IEmpathyVO[]) {
             this.empathies.length = 0;
             for (var i: number = 0; i < data.length; i++) {
                 this.empathies.push(new EmpathyVO(data[i]));
-            }
-        }
-
-        addBlinks(data: IBlinkVO[]) {
-            this.blinks.length = 0;
-            for (var i: number = 0; i < data.length; i++) {
-                this.blinks.push(new BlinkVO(data[i]));
             }
         }
 

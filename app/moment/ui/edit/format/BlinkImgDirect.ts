@@ -1,10 +1,5 @@
 module jm.moment {
 
-    export interface IBlinkImgScope extends IBlinkFormElementScope {
-        imageFile: File;
-        image: string;
-    }
-
     export class BlinkImgDirect extends BlinkFormElementDirect {
 
         static NG_NAME: string = 'jmBlinkImg';

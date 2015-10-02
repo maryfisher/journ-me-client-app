@@ -1,9 +1,5 @@
 module jm.moment {
 
-    export interface IBlinkTextScope extends IBlinkFormElementScope {
-        text: string;
-    }
-
     export class BlinkTextDirect extends BlinkFormElementDirect {
 
         static NG_NAME: string = 'jmBlinkText';

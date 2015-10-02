@@ -7,20 +7,18 @@ module jm.moment.ctrl {
 
         static $inject = [NGConst.$SCOPE];
 
-        constructor(private $scope: IBlinkImgScope) {
+        constructor(private $scope: IBlinkFormElementScope) {
             super($scope);
             this.addScopeMethod('deleteImageFile');
             this.addScopeMethod('deleteImage');
         }
 
-
-
         deleteImageFile() {
-            this.$scope.imageFile = undefined;
+            this.$scope.blink.imageFiles[this.$scope.id] = undefined;
         }
 
         deleteImage() {
-            this.$scope.image = undefined;
+            this.$scope.blink.images[this.$scope.id] = undefined;
         }
     }
 }

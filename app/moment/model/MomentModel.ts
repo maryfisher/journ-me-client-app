@@ -11,11 +11,13 @@ module jm.moment {
         private currentMoment: MomentDetailVO;
         private momentService: MomentDAO;
         private empathyService: EmpathyDAO;
+        private blinkService: BlinkDAO;
         private currentAlias: AliasDetailVO;
 
         constructor($injector: ng.auto.IInjectorService) {
             this.momentService = $injector.get < MomentDAO > (MomentDAO.NG_NAME);
             this.empathyService = $injector.get < EmpathyDAO > (EmpathyDAO.NG_NAME);
+            this.blinkService = $injector.get < BlinkDAO > (BlinkDAO.NG_NAME);
             this.currentMoment = new MomentDetailVO();
             _.bindAll(this, 'setMoment', 'setEmpathies', 'addEmpathy');
         }
@@ -27,8 +29,8 @@ module jm.moment {
             }
         }
 
-        private setEmpathies(data: IMomentDetailVO) {
-            this.currentMoment.addEmpathies(data.empathies);
+        private setEmpathies(data: IEmpathyVO[]) {
+            this.currentMoment.addEmpathies(data);
         }
 
         private addEmpathy(data: IEmpathyVO) {
@@ -78,6 +80,19 @@ module jm.moment {
             empathy.alias._id = this.currentAlias._id;
             empathy.body = empathyBody;
             return this.empathyService.createEmpathy(empathy).then(this.addEmpathy);
+        }
+
+        getBlinkByIndex(index: number, blinkVO ? : BlinkVO){
+            this.blinkService.getBlinkByIndex(this.currentMoment._id, index).then(function(data: BlinkVO){
+                blinkVO.parseData(data);
+            })
+        }
+
+        createBlink(blink: BlinkFormVO){
+            blink.moment = this.currentMoment._id;
+            return this.blinkService.createBlink(blink).then(function (response: BlinkVO) {
+                blink.parseData(response);
+            });
         }
     }
 }

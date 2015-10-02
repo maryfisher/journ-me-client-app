@@ -21,8 +21,8 @@ module jm.moment {
             );
         }
 
-        getEmpathies(momentId: string): IPromise < IMomentDetailVO > {
-            return this.empathyDAO.get({
+        getEmpathies(momentId: string): IPromise < IEmpathyVO[] > {
+            return this.empathyDAO.query({
                 momentId: momentId
             }).$promise;
         }
