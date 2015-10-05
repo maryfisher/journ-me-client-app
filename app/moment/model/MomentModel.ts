@@ -3,6 +3,7 @@ module jm.moment {
     import AliasDetailVO = jm.user.AliasDetailVO;
     import AliasBaseVO = jm.user.AliasBaseVO;
     import IPromise = ng.IPromise;
+    import IHttpPromiseCallbackArg = ng.IHttpPromiseCallbackArg;
 
     export class MomentModel {
 
@@ -91,9 +92,18 @@ module jm.moment {
         createBlink(formBlink: BlinkFormVO){
             formBlink.blink.moment = this.currentMoment._id;
             var moment: MomentDetailVO = this.currentMoment;
-            return this.blinkService.createBlink(formBlink).then(function (response: BlinkVO) {
-                formBlink.blink.parseData(response);
+            return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink).then(function (response: any) {
+                formBlink.blink.parseData(response.data);
                 moment.blinks.push(formBlink.blink._id);
+            });
+        }
+
+        editBlink(formBlink: BlinkFormVO){
+            var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
+            saveBlink.images.length = 0;
+            return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {
+                formBlink.blink.parseData(response.data);
+                console.log(formBlink.blink);
             });
         }
     }

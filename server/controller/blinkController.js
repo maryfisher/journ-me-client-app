@@ -8,21 +8,29 @@ var mongoose = require('mongoose'),
 
 
 exports.list = function (req, res) {
-    console.log('list');
     if(!req.query['index']){
         Blink.find({
             'moment': req.query['momentId']
         }, function (err, blinks) {
-            console.log(err);
+            if(err){
+                console.log(err);
+                return res.status(400).send({
+                    message: ''
+                });
+            }
             res.status(200).send(blinks);
         });
     }else {
-        console.log(req.query['momentId'] + ' ' + req.query['index']);
         Blink.findOne({
             moment: req.query['momentId'],
             index: req.query['index']
         }, function (err, blink) {
-            console.log(err + ' ' + blink);
+            if(err){
+                console.log(err);
+                return res.status(400).send({
+                    message: ''
+                });
+            }
             res.status(200).send(blink);
         });
     }
@@ -32,8 +40,14 @@ exports.read = function (req, res) {
     res.status(200).send(req.blink);
 }
 
-exports.create = function (req, res) {
+var save = function(req, res, saveBlink){
     var file = req.files.file;
+    if(!file){
+        saveBlink();
+        return;
+    }
+    //TODO
+    //loop over several files?
     fs.readFile(file.path, function (err, original_data) {
         if (err) {
             return res.status(400).send({
@@ -51,6 +65,12 @@ exports.create = function (req, res) {
             }
         });
 
+        saveBlink(base64Image);
+    });
+}
+
+exports.create = function (req, res) {
+    save(req, res, function(base64Image){
         var blink = new Blink(JSON.parse(req.body.blink));
         momentCtrl.momentByID(req, res, function(err){
             var moment = req.moment;
@@ -77,6 +97,28 @@ exports.create = function (req, res) {
 
 exports.update = function (req, res) {
 
+    save(req, res, function(base64Image1, base64Image2){
+        var jsonBlink = JSON.parse(req.body.blink);
+        req.blink.texts = jsonBlink.texts;
+        req.blink.format = jsonBlink.format;
+        req.blink.ratio = jsonBlink.ratio;
+        if(base64Image1) {
+            req.blink.images[0] = base64Image1;
+        }
+        if(base64Image2) {
+            req.blink.images[1] = base64Image2;
+        }
+        req.blink.save(function (err) {
+            if (err) {
+                console.log(err);
+                return res.status(400).send({
+                    message: ''
+                });
+            } else {
+                res.status(200).send(req.blink);
+            }
+        });
+    });
 };
 
 exports.remove = function (req, res) {

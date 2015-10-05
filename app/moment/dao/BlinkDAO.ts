@@ -46,33 +46,25 @@ module jm.moment {
             }).$promise;
         }
 
-        createBlink(blinkForm: BlinkFormVO): IUploadPromise < IBlinkVO > {
-            return this.uploadBlink(blinkForm, ServerConst.BLINK_PATH);
-            /*return this.blinkDAO.save({}, {
-             blink: blink
-             }).$promise;*/
+        createBlink(images: File[], blink:BlinkVO): IUploadPromise < any > {
+            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH);
         }
 
-        updateBlink(blinkForm: BlinkFormVO): IUploadPromise < IBlinkVO > {
-            return this.uploadBlink(blinkForm, ServerConst.BLINK_PATH + blinkForm.blink._id);
-            /*return this.blinkDAO.save({
-                    blinkId: blink._id
-                },
-                blink
-            ).$promise;*/
+        updateBlink(images: File[], blink:BlinkVO): IUploadPromise < any > {
+            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH + blink._id);
         }
 
-        uploadBlink(blinkForm: BlinkFormVO, url: string): IUploadPromise < IBlinkVO > {
+        uploadBlink(imageFiles: File[], blink:BlinkVO, url: string): IUploadPromise < any > {
             //TODO several images
-            return this.Upload.upload<IBlinkVO>(<IFileUploadConfig>{
+            return this.Upload.upload(<IFileUploadConfig>{
                 url: url,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
                 fields: {
-                    blink: blinkForm.blink
+                    blink: blink
                 },
-                file: blinkForm.imageFiles[0],
+                file: imageFiles[0],
                 method: null
             });
         }

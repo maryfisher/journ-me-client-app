@@ -1,5 +1,5 @@
 <div class="form-group">
-    <div data-ng-show="!formBlink.imageFiles[id]" data-ngf-select data-ngf-drop name="imageFile{{id}}" required data-ng-model="formBlink.imageFiles[id]" accept="image/*" data-ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" data-ngf-max-size="2MB" data-ng-class="size" class="jm-blink-img-upload ng-pristine ng-valid">
+    <div data-ng-show="!formBlink.imageFiles[id] && !formBlink.blink.images[id]" data-ngf-select data-ngf-drop name="imageFile{{id}}" required data-ng-model="formBlink.imageFiles[id]" accept="image/*" data-ngf-drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" data-ngf-max-size="2MB" data-ng-class="size" class="jm-blink-img-upload ng-pristine ng-valid">
         <span class="jm-img-uplodad-text">Select or Drop File</span>
     </div>
 
@@ -7,7 +7,7 @@
         <a data-ng-click="deleteImage()" class="btn btn-default jm-blink-img-btn">X</a>
         <img data-ng-src="data:image/png;base64, {{formBlink.blink.images[id]}}" class="jm-blink-img" />
     </div>
-    <div data-ng-show="formBlink.imageFiles[id]" style="background: red">
+    <div data-ng-show="formBlink.imageFiles[id]">
         <a href="" data-ng-click="deleteImageFile()" class="btn btn-default jm-blink-img-btn">X</a>
         <img data-ngf-src="formBlink.imageFiles[id]" class="jm-blink-img">
     </div>

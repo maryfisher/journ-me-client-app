@@ -15,11 +15,13 @@ module jm.moment.ctrl {
         saveBlink();
         cancelBlink();
         createNewBlink();
+        editBlink();
+        isBlinkValid();
         selectFormat(format: number);
         journey: IJourneyDetailVO;
         formBlink: BlinkFormVO;
         selectedIndex: number;
-        editBlink: boolean;
+        canEditBlink: boolean;
         formats: number[];
         momentForm: IFormController;
         blinkForm: IFormController;
@@ -38,6 +40,8 @@ module jm.moment.ctrl {
             this.addScopeMethod('saveBlink');
             this.addScopeMethod('selectFormat');
             this.addScopeMethod('createNewBlink');
+            this.addScopeMethod('editBlink');
+            this.addScopeMethod('isBlinkValid');
             _.bindAll(this, 'saveNewSuccess');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
@@ -49,14 +53,12 @@ module jm.moment.ctrl {
                 $scope.moment = new MomentDetailVO();
                 $scope.moment.isPublic = $scope.journey.isPublic;
             }
-            //this.isNewBlink = $scope.editBlink = $scope.moment.blinks.length === 0;
 
             $scope.formBlink = new BlinkFormVO();
             if($scope.moment.blinks.length !== 0){
                 this.$scope.selectedIndex = 0;
                 this.getBlink();
             }else{
-                //this.selectedIndex = -1;
                 this.createNewBlink();
             }
 
@@ -97,15 +99,37 @@ module jm.moment.ctrl {
             this.cancel();
         }
 
+        isBlinkValid():boolean {
+            if(this.$scope.blinkForm.$valid){
+                return true;
+            }
+            if(this.$scope.blinkForm['imageFile0'] && !this.$scope.formBlink.blink.images[0]){
+                return false;
+            }
+            if(this.$scope.blinkForm['imageFile1'] && !this.$scope.formBlink.blink.images[1]){
+                return false;
+            }
+            if(this.$scope.blinkForm['text0'] && this.$scope.blinkForm['text0'].$invalid){
+                return false;
+            }
+            if(this.$scope.blinkForm['text1'] && this.$scope.blinkForm['text1'].$invalid){
+                return false;
+            }
+            return true;
+        }
+
         saveBlink() {
             if(this.isNewBlink){
                 this.momentModel.createBlink(this.$scope.formBlink);
+            } else {
+                this.momentModel.editBlink(this.$scope.formBlink);
             }
+            this.$scope.canEditBlink = this.isNewBlink = false;
         }
 
         cancelBlink() {
             if (this.$scope.moment.blinks.length > 0) {
-                this.$scope.editBlink = false;
+                this.$scope.canEditBlink = this.isNewBlink = false;
             }
         }
 
@@ -114,12 +138,16 @@ module jm.moment.ctrl {
         }
 
         createNewBlink(){
-            //TODO
             this.$scope.formBlink.blink = new BlinkVO();
-            this.$scope.editBlink = true;
+            this.$scope.canEditBlink = true;
             this.$scope.formBlink.imageFiles.length = 0;
             this.isNewBlink = true;
             this.$scope.selectedIndex = this.$scope.moment.blinks.length;
+        }
+
+        editBlink(){
+            this.$scope.formBlink.blink = this.$scope.moment.currentBlink;
+            this.$scope.canEditBlink = true;
         }
 
         getBlink(){
