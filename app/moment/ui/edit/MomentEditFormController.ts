@@ -42,7 +42,7 @@ module jm.moment.ctrl {
             this.addScopeMethod('createNewBlink');
             this.addScopeMethod('editBlink');
             this.addScopeMethod('isBlinkValid');
-            _.bindAll(this, 'saveNewSuccess');
+            _.bindAll(this, 'createMomentSuccess', 'createBlinkSuccess');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
 
@@ -55,10 +55,10 @@ module jm.moment.ctrl {
             }
 
             $scope.formBlink = new BlinkFormVO();
-            if($scope.moment.blinks.length !== 0){
+            if ($scope.moment.blinks.length !== 0) {
                 this.$scope.selectedIndex = 0;
                 this.getBlink();
-            }else{
+            } else {
                 this.createNewBlink();
             }
 
@@ -87,39 +87,38 @@ module jm.moment.ctrl {
         }
 
         save() {
-            if (!this.$scope.hasMoment) {
-                this.momentModel.createMoment(this.$scope.moment, this.$stateParams['journeyId']).then(this.saveNewSuccess);
-            } else {
-                this.momentModel.updateMoment(this.$scope.moment).then(this.cancel);
+            this.momentModel.updateMoment(this.$scope.moment).then(this.cancel);
+        }
+
+        isBlinkValid(): boolean {
+            if (!this.$scope.blinkForm) {
+                return false;
             }
-        }
-
-        saveNewSuccess() {
-            this.$scope.moment = this.momentModel.getCurrentMoment();
-            this.cancel();
-        }
-
-        isBlinkValid():boolean {
-            if(this.$scope.blinkForm.$valid){
+            if (this.$scope.blinkForm.$valid) {
                 return true;
             }
-            if(this.$scope.blinkForm['imageFile0'] && !this.$scope.formBlink.blink.images[0]){
+            if (this.$scope.blinkForm['imageFile0'] && !this.$scope.formBlink.blink.images[0]) {
                 return false;
             }
-            if(this.$scope.blinkForm['imageFile1'] && !this.$scope.formBlink.blink.images[1]){
+            if (this.$scope.blinkForm['imageFile1'] && !this.$scope.formBlink.blink.images[1]) {
                 return false;
             }
-            if(this.$scope.blinkForm['text0'] && this.$scope.blinkForm['text0'].$invalid){
+            if (this.$scope.blinkForm['text0'] && this.$scope.blinkForm['text0'].$invalid) {
                 return false;
             }
-            if(this.$scope.blinkForm['text1'] && this.$scope.blinkForm['text1'].$invalid){
+            if (this.$scope.blinkForm['text1'] && this.$scope.blinkForm['text1'].$invalid) {
                 return false;
             }
             return true;
         }
 
         saveBlink() {
-            if(this.isNewBlink){
+            if (!this.$scope.hasMoment) {
+                //put blink on moment
+                this.momentModel.createMoment(this.$scope.moment, this.$stateParams['journeyId']).then(this.createMomentSuccess);
+                return;
+            }
+            if (this.isNewBlink) {
                 this.momentModel.createBlink(this.$scope.formBlink);
             } else {
                 this.momentModel.editBlink(this.$scope.formBlink);
@@ -127,7 +126,21 @@ module jm.moment.ctrl {
             this.$scope.canEditBlink = this.isNewBlink = false;
         }
 
+        createMomentSuccess() {
+            this.$scope.moment = this.momentModel.getCurrentMoment();
+            this.momentModel.createBlink(this.$scope.formBlink).then(this.createBlinkSuccess);
+        }
+
+        createBlinkSuccess() {
+            this.$scope.hasMoment = true;
+            this.$scope.canEditBlink = false;
+        }
+
         cancelBlink() {
+            if (!this.$scope.hasMoment) {
+                this.cancel();
+                return;
+            }
             if (this.$scope.moment.blinks.length > 0) {
                 this.$scope.canEditBlink = this.isNewBlink = false;
             }
@@ -137,7 +150,7 @@ module jm.moment.ctrl {
             this.$scope.formBlink.blink.format = format;
         }
 
-        createNewBlink(){
+        createNewBlink() {
             this.$scope.formBlink.blink = new BlinkVO();
             this.$scope.canEditBlink = true;
             this.$scope.formBlink.imageFiles.length = 0;
@@ -145,12 +158,12 @@ module jm.moment.ctrl {
             this.$scope.selectedIndex = this.$scope.moment.blinks.length;
         }
 
-        editBlink(){
+        editBlink() {
             this.$scope.formBlink.blink = this.$scope.moment.currentBlink;
             this.$scope.canEditBlink = true;
         }
 
-        getBlink(){
+        getBlink() {
             this.$scope.formBlink.blink = new BlinkVO();
             this.momentModel.getBlinkByIndex(this.$scope.selectedIndex, this.$scope.formBlink.blink);
         }

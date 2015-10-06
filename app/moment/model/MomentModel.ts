@@ -16,9 +16,9 @@ module jm.moment {
         private currentAlias: AliasDetailVO;
 
         constructor($injector: ng.auto.IInjectorService) {
-            this.momentService = $injector.get < MomentDAO > (MomentDAO.NG_NAME);
-            this.empathyService = $injector.get < EmpathyDAO > (EmpathyDAO.NG_NAME);
-            this.blinkService = $injector.get < BlinkDAO > (BlinkDAO.NG_NAME);
+            this.momentService = $injector.get < MomentDAO >(MomentDAO.NG_NAME);
+            this.empathyService = $injector.get < EmpathyDAO >(EmpathyDAO.NG_NAME);
+            this.blinkService = $injector.get < BlinkDAO >(BlinkDAO.NG_NAME);
             this.currentMoment = new MomentDetailVO();
             _.bindAll(this, 'setMoment', 'setEmpathies', 'addEmpathy');
         }
@@ -38,7 +38,7 @@ module jm.moment {
             this.currentMoment.empathies.push(data);
         }
 
-        getCurrentMoment(id ? : string): MomentDetailVO {
+        getCurrentMoment(id ?: string): MomentDetailVO {
             if (id) {
                 if (this.currentMoment._id !== id) {
                     this.currentMoment.invalidateData();
@@ -59,13 +59,16 @@ module jm.moment {
             moment.journey = journeyId;
             return this.momentService.createMoment(moment).then(this.setMoment);
             /*function (data) {
-                this.setMoment(data);
-                //TODO do we really need to do this?
-                //this.journeyModel.getCurrentJourney().moments.push(data);
-            });*/
+             this.setMoment(data);
+             //TODO do we really need to do this?
+             //this.journeyModel.getCurrentJourney().moments.push(data);
+             });*/
         }
+
         updateMoment(moment): IPromise < void > {
-            return this.momentService.updateMoment(moment).then(this.setMoment);
+            //so as not to send blink details
+            var sendMoment: MomentBaseVO = new MomentBaseVO(moment);
+            return this.momentService.updateMoment(sendMoment).then(this.setMoment);
         }
 
         getEmpathies(): IPromise < void > {
@@ -83,13 +86,13 @@ module jm.moment {
             return this.empathyService.createEmpathy(empathy).then(this.addEmpathy);
         }
 
-        getBlinkByIndex(index: number, blinkVO ? : BlinkVO){
-            this.blinkService.getBlinkByIndex(this.currentMoment._id, index).then(function(data: BlinkVO){
+        getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
+            this.blinkService.getBlinkByIndex(this.currentMoment._id, index).then(function (data: BlinkVO) {
                 blinkVO.parseData(data);
             })
         }
 
-        createBlink(formBlink: BlinkFormVO){
+        createBlink(formBlink: BlinkFormVO) {
             formBlink.blink.moment = this.currentMoment._id;
             var moment: MomentDetailVO = this.currentMoment;
             return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink).then(function (response: any) {
@@ -98,7 +101,7 @@ module jm.moment {
             });
         }
 
-        editBlink(formBlink: BlinkFormVO){
+        editBlink(formBlink: BlinkFormVO) {
             var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
             saveBlink.images.length = 0;
             return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {

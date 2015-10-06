@@ -1,6 +1,9 @@
 <div class="row panel">
     <div class="container">
-        <h2>Edit Your Moment</h2>
+        <h2 data-ng-if="hasMoment">Edit Your Moment</h2>
+
+        <h2 data-ng-if="!hasMoment">Create a New Moment</h2>
+
         <form name="momentForm" data-ng-submit="save()" novalidate>
             <!--<div class="form-group">
                 <label>Description</label>
@@ -8,15 +11,20 @@
             </div>-->
 
             <div class="form-group btn-group">
-                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="true" uncheckable>Public</label>
-                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="false" uncheckable>Private</label>
+                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="true"
+                       uncheckable>Public</label>
+                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="false"
+                       uncheckable>Private</label>
             </div>
             <div class="form-group">
-                <span data-ng-switch="hasMoment">
-                    <button data-ng-switch-when="true" data-ng-disabled="momentForm.$invalid || moment.blinks.length === 0" type="submit" class="btn btn-primary">Save Moment</button>
-                    <button data-ng-switch-default data-ng-disabled="momentForm.$invalid" type="submit" class="btn btn-primary">Create Moment</button>
-                </span>
-                <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
+                <button data-ng-if="hasMoment"
+                        data-ng-disabled="momentForm.$invalid" type="submit"
+                        class="btn btn-primary">
+                    Save Moment
+                </button>
+                <button data-ng-if="hasMoment" class="btn btn-warning" type="button" data-ng-click="cancel()">
+                    Cancel
+                </button>
             </div>
         </form>
 
@@ -25,7 +33,7 @@
 <div class="row panel">
     <div class="container">
         <!--<div ng-switch="editBlink"> ng-switch-when="true"-->
-        <form name="blinkForm" ng-if="canEditBlink" data-ng-submit="saveBlink()" novalidate>
+        <form name="blinkForm" data-ng-show="canEditBlink" data-ng-submit="saveBlink()" novalidate>
             <h3>Create a New Blink</h3>
             <ul class="nav nav-pills">
                 <!--<li ng-class="{'active' : formBlink.format === format}" data-ng-repeat="format in formats">
@@ -87,8 +95,15 @@
                 <jm-blink-format blink="formBlink" ng-switch-when="6"></jm-blink-format>
                 <jm-blink-format blink="formBlink" ng-switch-default></jm-blink-format>
             </div>
-            <button data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">Save Blink</button>
-            <button data-ng-disabled="moment.blinks.length === 0" data-ng-click="cancelBlink()" type="button" class="btn btn-warning">Cancel</button>
+            <button data-ng-if="hasMoment" data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">
+                Save Blink
+            </button>
+            <button data-ng-if="!hasMoment" data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">
+                Create Moment
+            </button>
+            <button data-ng-click="cancelBlink()" type="button"
+                    class="btn btn-warning">Cancel
+            </button>
         </form>
         <div data-ng-if="!canEditBlink">
             <div class="jm-blink-new">
