@@ -95,9 +95,9 @@ module jm {
         }
 
         initConfig() {
-            this.jm.config(jm.RouterConfig.init);
-            this.jm.config(jm.InterceptorConfig.init);
-            this.jm.run(jm.config.TokenLoginCommand.execute);
+            this.jm.config(FactoryUtil.getFactory(jm.RouterConfig));
+            this.jm.config(FactoryUtil.getFactory(jm.InterceptorConfig));
+            this.jm.run(FactoryUtil.getFactory(jm.config.TokenLoginCommand));
             this.jm.run(FactoryUtil.getFactory(jm.config.StateRedirectCommand));
         }
 

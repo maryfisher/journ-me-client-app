@@ -4,6 +4,7 @@ module jm {
     import IStateProvider = angular.ui.IStateProvider;
     import IUrlRouterProvider = angular.ui.IUrlRouterProvider;
     import RouteConst = jm.common.RouteConst;
+    import NGConst = jm.common.NGConst;
 
     export interface IRedirectSettings {
         redirectState: string;
@@ -23,11 +24,16 @@ module jm {
 
     export class RouterConfig {
 
-        static init($stateProvider: IStateProvider, $urlRouterProvider: IUrlRouterProvider) {
-            /*return new RouterConfig($stateProvider, $urlRouterProvider);
+        private $stateProvider: IStateProvider;
+        private $urlRouterProvider: IUrlRouterProvider;
+
+        constructor($injector: ng.auto.IInjectorService) {
+            this.$stateProvider = $injector.get < IStateProvider >(NGConst.$STATE_PROVIDER);
+            this.$urlRouterProvider = $injector.get < IUrlRouterProvider >(NGConst.$URL_ROUTER_PROVIDER);
+            this.execute();
         }
 
-        constructor($stateProvider: IStateProvider, $urlRouterProvider: IUrlRouterProvider) {*/
+        execute() {
 
             var redirectAuth: IRedirectAuthenticatedSettings = {
                 redirectIfAuthenticated: true,
@@ -44,32 +50,32 @@ module jm {
                 redirectState: RouteConst.ALIAS_DETAIL
             }
 
-            $urlRouterProvider.otherwise(RouteConst.HOME_PATH);
-            $stateProvider.state(RouteConst.HOME, {
+            this.$urlRouterProvider.otherwise(RouteConst.HOME_PATH);
+            this.$stateProvider.state(RouteConst.HOME, {
                 url: RouteConst.HOME_PATH,
                 templateUrl: 'public/ui/home/home.tpl.html',
                 data: redirectAuth
             });
-            $stateProvider.state(RouteConst.BROWSE, {
+            this.$stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
                 templateUrl: 'public/ui/browse/browse.tpl.html'
             });
 
-            $stateProvider.state(RouteConst.ALIAS_DETAIL, {
+            this.$stateProvider.state(RouteConst.ALIAS_DETAIL, {
                 url: RouteConst.ALIAS_DETAIL_PATH,
                 templateUrl: 'user/ui/alias/aliasDetail.tpl.html',
                 controller: 'AliasDetailController',
                 data: redirectAuth
             })
 
-            $stateProvider.state(RouteConst.DASHBOARD, {
+            this.$stateProvider.state(RouteConst.DASHBOARD, {
                 url: RouteConst.DASHBOARD_PATH,
                 templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
                 controller: 'DashboardController',
                 data: redirectAlias
             });
 
-            $stateProvider
+            this.$stateProvider
                 .state(RouteConst.JOURNEY_DETAIL, {
                     url: RouteConst.JOURNEY_DETAIL_PATH,
                     templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
@@ -94,13 +100,13 @@ module jm {
                     templateUrl: 'moment/ui/empathy/momentEmpathies.tpl.html',
                     controller: 'MomentEmpathiesController'
                 });
-            $stateProvider.state(RouteConst.MOMENT_EDIT, {
+            this.$stateProvider.state(RouteConst.MOMENT_EDIT, {
                 url: RouteConst.MOMENT_EDIT_PATH,
                 templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
                 controller: 'MomentEditFormController',
                 data: redirectUnauth
             });
-            $stateProvider
+            this.$stateProvider
                 .state(RouteConst.PROFILE, {
                     url: RouteConst.PROFILE_PATH,
                     templateUrl: 'user/ui/profile/profile.tpl.html',
