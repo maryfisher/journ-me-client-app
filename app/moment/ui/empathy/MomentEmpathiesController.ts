@@ -21,10 +21,10 @@ module jm.moment.ctrl {
             $scope.alias = this.aliasModel.getCurrentAlias();
             $scope.moment = this.momentModel.getCurrentMoment();
             this.momentModel.getEmpathies();
-            this.addScopeMethod('addEmpathy');
+            this.addScopeMethods('addEmpathy');
         }
 
-        addEmpathy() {
+        addEmpathy = () => {
             if (this.$scope.empathyForm.$valid) {
                 this.momentModel.createEmpathy(this.$scope.empathy);
             }

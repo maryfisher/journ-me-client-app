@@ -34,15 +34,8 @@ module jm.moment.ctrl {
 
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
-            this.addScopeMethod('cancel');
-            this.addScopeMethod('cancelBlink');
-            this.addScopeMethod('save');
-            this.addScopeMethod('saveBlink');
-            this.addScopeMethod('selectFormat');
-            this.addScopeMethod('createNewBlink');
-            this.addScopeMethod('editBlink');
-            this.addScopeMethod('isBlinkValid');
-            _.bindAll(this, 'createMomentSuccess', 'createBlinkSuccess');
+            this.addScopeMethods('cancel', 'cancelBlink', 'save', 'saveBlink', 'selectFormat', 'createNewBlink',
+                'editBlink', 'isBlinkValid');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
 
@@ -72,7 +65,7 @@ module jm.moment.ctrl {
             }
         }
 
-        cancel() {
+        cancel = () => {
             if (!this.$scope.hasMoment && !this.$scope.moment._id) {
                 this.routeUtil.redirectTo(RouteConst.JOURNEY_DETAIL, {
                     journeyId: this.$stateParams['journeyId']
@@ -86,11 +79,11 @@ module jm.moment.ctrl {
             }
         }
 
-        save() {
+        save = () => {
             this.momentModel.updateMoment(this.$scope.moment).then(this.cancel);
         }
 
-        isBlinkValid(): boolean {
+        isBlinkValid = (): boolean => {
             if (!this.$scope.blinkForm) {
                 return false;
             }
@@ -112,9 +105,8 @@ module jm.moment.ctrl {
             return true;
         }
 
-        saveBlink() {
+        saveBlink = () => {
             if (!this.$scope.hasMoment) {
-                //put blink on moment
                 this.momentModel.createMoment(this.$scope.moment, this.$stateParams['journeyId']).then(this.createMomentSuccess);
                 return;
             }
@@ -126,17 +118,17 @@ module jm.moment.ctrl {
             this.$scope.canEditBlink = this.isNewBlink = false;
         }
 
-        createMomentSuccess() {
+        createMomentSuccess = () => {
             this.$scope.moment = this.momentModel.getCurrentMoment();
             this.momentModel.createBlink(this.$scope.formBlink).then(this.createBlinkSuccess);
         }
 
-        createBlinkSuccess() {
+        createBlinkSuccess = () => {
             this.$scope.hasMoment = true;
             this.$scope.canEditBlink = false;
         }
 
-        cancelBlink() {
+        cancelBlink = () => {
             if (!this.$scope.hasMoment) {
                 this.cancel();
                 return;
@@ -146,11 +138,11 @@ module jm.moment.ctrl {
             }
         }
 
-        selectFormat(format: number) {
+        selectFormat = (format: number) => {
             this.$scope.formBlink.blink.format = format;
         }
 
-        createNewBlink() {
+        createNewBlink = () => {
             this.$scope.formBlink.blink = new BlinkVO();
             this.$scope.canEditBlink = true;
             this.$scope.formBlink.imageFiles.length = 0;
@@ -158,7 +150,7 @@ module jm.moment.ctrl {
             this.$scope.selectedIndex = this.$scope.moment.blinks.length;
         }
 
-        editBlink() {
+        editBlink = () => {
             this.$scope.formBlink.blink = this.$scope.moment.currentBlink;
             this.$scope.canEditBlink = true;
         }

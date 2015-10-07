@@ -13,11 +13,10 @@ module jm.journey.ctrl {
 
         constructor(private $scope: IJourneyTimelineScope, private $animateCss: angular.animate.IAnimateCssService, private $element: ng.IAugmentedJQuery) {
             super($scope);
-            _.bindAll(this, 'onSelectedIndexChange');
             $scope.$watch('selectedIndex', this.onSelectedIndexChange);
         }
 
-        onSelectedIndexChange() {
+        onSelectedIndexChange = () => {
             if (this.$scope.selectedIndex === -1) {
                 return;
             }

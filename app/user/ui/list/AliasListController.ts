@@ -10,10 +10,10 @@ module jm.user.ctrl {
 
         constructor(private $scope: IAliasListModalScope, $modalInstance: IModalServiceInstance, private journeyModel: JourneyModel) {
             super($scope, $modalInstance);
-            this.addScopeMethod('removeJoinedAlias');
+            this.addScopeMethods('removeJoinedAlias');
         }
 
-        removeJoinedAlias(alias: AliasBaseVO) {
+        removeJoinedAlias = (alias: AliasBaseVO) => {
             this.journeyModel.removeJoinedAlias(alias);
         }
     }

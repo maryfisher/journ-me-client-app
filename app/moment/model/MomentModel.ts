@@ -20,21 +20,20 @@ module jm.moment {
             this.empathyService = $injector.get < EmpathyDAO >(EmpathyDAO.NG_NAME);
             this.blinkService = $injector.get < BlinkDAO >(BlinkDAO.NG_NAME);
             this.currentMoment = new MomentDetailVO();
-            _.bindAll(this, 'setMoment', 'setEmpathies', 'addEmpathy');
         }
 
-        private setMoment(data: IMomentDetailVO) {
+        private setMoment = (data: IMomentDetailVO) => {
             this.currentMoment.parseDetailData(data);
             if (this.currentAlias) {
                 this.currentMoment.updateAlias(this.currentAlias);
             }
         }
 
-        private setEmpathies(data: IEmpathyVO[]) {
+        private setEmpathies = (data: IEmpathyVO[]) => {
             this.currentMoment.addEmpathies(data);
         }
 
-        private addEmpathy(data: IEmpathyVO) {
+        private addEmpathy = (data: IEmpathyVO) => {
             this.currentMoment.empathies.push(data);
         }
 

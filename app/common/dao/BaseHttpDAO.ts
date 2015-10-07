@@ -1,28 +1,26 @@
 /// <reference path="BaseDAO.ts" />
-module jm {
-    export module common {
-        'use strict';
+module jm.common {
+    'use strict';
 
-        import IPromise = ng.IPromise;
-        import IQService = ng.IQService;
-        import IHttpService = ng.IHttpService;
+    import IPromise = ng.IPromise;
+    import IQService = ng.IQService;
+    import IHttpService = ng.IHttpService;
 
-        export class BaseHttpDAO extends jm.common.BaseDAO {
+    export class BaseHttpDAO extends jm.common.BaseDAO {
 
-            $http: IHttpService;
+        $http: IHttpService;
 
-            constructor($injector: ng.auto.IInjectorService) {
-                super($injector);
-                this.$http = $injector.get < IHttpService > ('$http');
-            }
+        constructor($injector: ng.auto.IInjectorService) {
+            super($injector);
+            this.$http = $injector.get < IHttpService >('$http');
+        }
 
-            returnData(response) {
-                return response.data;
-            }
+        returnData(response) {
+            return response.data;
+        }
 
-            reject(response) {
-                return this.$q.reject(response);
-            }
+        reject = (response) => {
+            return this.$q.reject(response);
         }
     }
 }

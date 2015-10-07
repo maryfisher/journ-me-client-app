@@ -18,17 +18,11 @@ module jm.journey.ctrl {
 
             $scope.journey = this.journeyModel.getCurrentJourney($stateParams['journeyId']);
 
-            this.addScopeMethod('setSelected');
-            this.addScopeMethod('isNotSelected');
-            this.addScopeMethod('followJourney');
-            this.addScopeMethod('unfollowJourney');
-            this.addScopeMethod('unlinkJourney');
-            this.addScopeMethod('requestJoin');
-            this.addScopeMethod('leaveJourney');
-            _.bindAll(this, 'checkForLogin');
+            this.addScopeMethods('setSelected', 'isNotSelected', 'followJourney', 'unfollowJourney',
+                'unlinkJourney', 'requestJoin', 'leaveJourney');
         }
 
-        setSelected(journey: JourneyBaseVO) {
+        setSelected = (journey: JourneyBaseVO) => {
             if (this.$scope.selectedLinkedJourney === journey) {
                 this.$scope.selectedLinkedJourney = undefined;
             } else {
@@ -36,35 +30,35 @@ module jm.journey.ctrl {
             }
         }
 
-        isNotSelected(id) {
+        isNotSelected = (id) => {
             return !(this.$scope.selectedLinkedJourney && this.$scope.selectedLinkedJourney._id === id);
         }
 
-        followJourney() {
+        followJourney = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.followJourney();
             }
         }
 
-        unfollowJourney() {
+        unfollowJourney = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.unfollowJourney();
             }
         }
 
-        unlinkJourney() {
+        unlinkJourney = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.unlinkJourney(this.$scope.journey, this.$scope.journey.aliasJourneyLink);
             }
         }
 
-        requestJoin() {
+        requestJoin = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.requestJoin(this.$scope.journey);
             }
         }
 
-        leaveJourney() {
+        leaveJourney = () => {
             //TODO prompt: are you sure
 
             if (this.checkForLogin()) {
@@ -72,7 +66,7 @@ module jm.journey.ctrl {
             }
         }
 
-        checkForLogin(): boolean {
+        checkForLogin = (): boolean => {
             var isLoggedIn: boolean = this.authModel.isLoggedIn();
 
             //TODO prompt login modal

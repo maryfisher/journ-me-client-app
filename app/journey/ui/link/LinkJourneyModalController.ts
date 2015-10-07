@@ -18,11 +18,11 @@ module jm.journey.ctrl {
 
         constructor(private $scope: ILinkJourneyModalScope, $modalInstance: IModalServiceInstance, aliasModel: AliasModel, private journeyModel: JourneyModel) {
             super($scope, $modalInstance);
-            this.addScopeMethod('select');
+            this.addScopeMethods('select');
             $scope.alias = aliasModel.getCurrentAlias();
         }
 
-        select() {
+        select = () => {
             this.journeyModel.linkJourney(this.$scope.selectedJourney);
             this.close();
         }

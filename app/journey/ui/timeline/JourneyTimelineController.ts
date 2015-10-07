@@ -12,7 +12,7 @@ module jm.journey.ctrl {
     export class JourneyTimelineController extends jm.common.BaseController {
 
         static $inject = [NGConst.$SCOPE, JourneyModel.NG_NAME, RouteUtil.NG_NAME, NGConst.$ELEMENT,
-                          NGConst.$STATE_PARAMS, '$timeout', '$animate', NGConst.$ANIMATE_CSS];
+            NGConst.$STATE_PARAMS, '$timeout', '$animate', NGConst.$ANIMATE_CSS];
 
         static ELM_W: number = 50;
         private joinedAliasIds: string[];
@@ -21,9 +21,9 @@ module jm.journey.ctrl {
         private animator: IAnimateCssRunner;
 
         constructor(private $scope: IJourneyTimelineScope,
-            private journeyModel: JourneyModel, private routeUtil: RouteUtil, private $element: IAugmentedJQuery,
-            private $stateParams: angular.ui.IStateParamsService, private $timeout: angular.ITimeoutService,
-            private $animate: angular.animate.IAnimateService, private $animateCss: angular.animate.IAnimateCssService) {
+                    private journeyModel: JourneyModel, private routeUtil: RouteUtil, private $element: IAugmentedJQuery,
+                    private $stateParams: angular.ui.IStateParamsService, private $timeout: angular.ITimeoutService,
+                    private $animate: angular.animate.IAnimateService, private $animateCss: angular.animate.IAnimateCssService) {
             super($scope);
 
             //TODO
@@ -31,20 +31,15 @@ module jm.journey.ctrl {
             this.timelineElm = this.$element.children()[2];
 
             $scope.selectedIndex = -1;
-            this.addScopeMethod('nextMoment');
-            this.addScopeMethod('prevMoment');
-            _.bindAll(this, 'selectIndex', 'scrollTimeline', 'setSelected', 'getMomentClass', 'setSelectedMoment');
+            this.addScopeMethods('nextMoment', 'prevMoment');
             if (!$scope.journeyId) {
-                _.bindAll(this, 'getJourney');
                 $scope.$watch('journeyId', this.getJourney);
             } else {
                 this.getJourney();
             }
-
-
         }
 
-        getJourney() {
+        getJourney = () => {
             if (!this.$scope.journeyId) {
                 return;
             }
@@ -83,7 +78,7 @@ module jm.journey.ctrl {
             this.momentElms[moment._id] = $element;
         }
 
-        setSelected(moment: MomentBaseVO) {
+        setSelected = (moment: MomentBaseVO) => {
             if (this.$scope.selectedMoment === moment) {
                 this.setSelectedMoment(undefined);
                 this.$scope.selectedIndex = -1;
@@ -94,7 +89,7 @@ module jm.journey.ctrl {
             }
         }
 
-        setSelectedMoment(moment: IMomentBaseVO) {
+        setSelectedMoment = (moment: IMomentBaseVO) => {
             if (this.$scope.selectedMoment) {
                 //scale down
                 this.animateMoment(this.momentElms[this.$scope.selectedMoment._id], 1);
@@ -123,7 +118,7 @@ module jm.journey.ctrl {
             this.animator.start();
         }
 
-        nextMoment() {
+        nextMoment = () => {
             this.$scope.selectedIndex++;
             if (this.$scope.selectedIndex >= this.$scope.journey.moments.length) {
                 this.$scope.selectedIndex = this.$scope.journey.moments.length - 1;
@@ -132,7 +127,7 @@ module jm.journey.ctrl {
             this.selectIndex();
         }
 
-        prevMoment() {
+        prevMoment = () => {
             this.$scope.selectedIndex--;
             if (this.$scope.selectedIndex < 0) {
                 this.$scope.selectedIndex = 0;
@@ -141,7 +136,7 @@ module jm.journey.ctrl {
             this.selectIndex();
         }
 
-        selectIndex() {
+        selectIndex = () => {
             this.setSelectedMoment(this.$scope.journey.moments[this.$scope.selectedIndex]);
             this.scrollTimeline();
             this.routeUtil.redirectTo(RouteConst.MOMENT_BLINKS, {
@@ -151,7 +146,7 @@ module jm.journey.ctrl {
 
         }
 
-        scrollTimeline() {
+        scrollTimeline = () => {
 
             var elmW: number = JourneyTimelineController.ELM_W;
             var buttonW: number = 26 * 2;
@@ -180,7 +175,7 @@ module jm.journey.ctrl {
             this.timelineElm.scrollLeft = scroll;
         }
 
-        getMomentClass(moment: MomentBaseVO): string {
+        getMomentClass = (moment: MomentBaseVO): string => {
             if (!this.$scope.hasEdit) {
                 return 'jm-moment-alias';
             } else {
@@ -188,8 +183,8 @@ module jm.journey.ctrl {
                     return 'jm-moment-alias-secret';
                 }
                 /*if (this.$scope.selectedMoment === moment) {
-                    return 'jm-moment-alias-selected';
-                }*/
+                 return 'jm-moment-alias-selected';
+                 }*/
                 var index: number = this.joinedAliasIds.indexOf(moment.alias);
                 return 'jm-moment-alias-' + index;
             }

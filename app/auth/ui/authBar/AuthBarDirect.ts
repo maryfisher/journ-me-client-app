@@ -28,22 +28,20 @@ module jm {
             link = (scope: IAuthBarScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
 
                 scope.alias = this.aliasModel.getCurrentAlias();
-
-                _.bindAll(this, 'logout', 'logoutSuccess');
                 scope.logout = this.logout;
             };
 
             constructor($injector: ng.auto.IInjectorService) {
-                this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
-                this.aliasModel = $injector.get < AliasModel > (AliasModel.NG_NAME);
-                this.routeUtil = $injector.get < RouteUtil > (RouteUtil.NG_NAME);
+                this.authModel = $injector.get < AuthModel >(AuthModel.NG_NAME);
+                this.aliasModel = $injector.get < AliasModel >(AliasModel.NG_NAME);
+                this.routeUtil = $injector.get < RouteUtil >(RouteUtil.NG_NAME);
             }
 
-            logout() {
+            logout = () => {
                 this.authModel.logout().then(this.logoutSuccess);
             }
 
-            logoutSuccess() {
+            private logoutSuccess = () => {
                 if (!this.authModel.isLoggedIn()) {
                     this.routeUtil.reload();
                 }

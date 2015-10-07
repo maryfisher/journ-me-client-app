@@ -17,9 +17,9 @@ module jm.journey.ctrl {
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME];
 
         constructor(private $scope: IJourneyFormScope,
-            $modalInstance: IModalServiceInstance,
-            private journeyModel: JourneyModel,
-            private routeUtil: RouteUtil) {
+                    $modalInstance: IModalServiceInstance,
+                    private journeyModel: JourneyModel,
+                    private routeUtil: RouteUtil) {
             super($scope, $modalInstance);
             $scope.hasJourney = (!!$scope.journeyStr);
             if (!$scope.hasJourney) {
@@ -28,11 +28,10 @@ module jm.journey.ctrl {
                 $scope.journey = new JourneyBaseVO(angular.fromJson($scope.journeyStr));
             }
 
-            this.addScopeMethod('save');
-            _.bindAll(this, 'saveSuccess');
+            this.addScopeMethods('save');
         }
 
-        save() {
+        save = () => {
             if (this.$scope.journeyForm.$valid) {
                 if (!this.$scope.hasJourney) {
                     this.journeyModel.createJourney(this.$scope.journey).then(this.saveSuccess);
@@ -42,7 +41,7 @@ module jm.journey.ctrl {
             }
         }
 
-        saveSuccess() {
+        saveSuccess = () => {
             this.routeUtil.redirectToJourney(this.journeyModel.getCurrentJourney()._id);
             this.close();
         }

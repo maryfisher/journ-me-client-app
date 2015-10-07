@@ -16,16 +16,15 @@ module jm.journey.ctrl {
         constructor(private $scope: IJourneyRequestsModalScope, $modalInstance: IModalServiceInstance, private journeyModel: JourneyModel) {
             super($scope, $modalInstance);
             $scope.journeyDetail = new JourneyDetailVO(angular.fromJson($scope.journeyStr));
-            this.addScopeMethod('linkJourney');
-            this.addScopeMethod('acceptJoinRequest');
+            this.addScopeMethods('linkJourney', 'acceptJoinRequest');
         }
 
-        linkJourney(linkingFromJourney: JourneyBaseVO) {
+        linkJourney = (linkingFromJourney: JourneyBaseVO) => {
             this.journeyModel.linkBackJourney(this.$scope.journeyDetail, linkingFromJourney);
             this.close();
         }
 
-        acceptJoinRequest(alias: AliasBaseVO) {
+        acceptJoinRequest = (alias: AliasBaseVO) => {
             this.journeyModel.acceptJoinRequest(alias);
             this.close();
         }

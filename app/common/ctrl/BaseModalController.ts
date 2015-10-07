@@ -11,12 +11,11 @@ module jm.common.ctrl {
         private modalScope: IBaseModalScope;
 
         constructor($scope: IBaseModalScope, private $element: ng.IAugmentedJQuery, private $modal: IModalService) {
-            _.bindAll(this, 'openModal');
             this.modalScope = $scope;
             $element.on('click', this.openModal);
         }
 
-        openModal() {
+        openModal = () => {
             var modalObj: IModalSettings = {
                 templateUrl: this.modalScope.modalTemplateUrl,
                 scope: this.modalScope,

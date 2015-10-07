@@ -9,8 +9,7 @@
         "angular-ui-router": "~0.2.0",
         "angular-animate": "~1.4.4",
         "bootstrap": "3.2.0",
-        "ng-file-upload": "~7.2.1",
-        "underscore": "1.8.3"
+        "ng-file-upload": "~7.2.1"
     },
     "devDependencies": {}
 }

@@ -12,7 +12,6 @@ module jm.moment.ctrl {
         constructor(private $scope: IBlinkFormatScope) {
             super($scope);
             $scope.maxRange = 98;
-            _.bindAll(this, 'onRatioChange');
             $scope.$watch('formBlink.blink.ratio', this.onRatioChange);
         }
 
@@ -22,8 +21,8 @@ module jm.moment.ctrl {
             this.$scope.formBlink.blink.ratio = this.$scope.maxRange / this.elements.length;
         }
 
-        onRatioChange(){
-            if(this.elements.length <= 1){
+        onRatioChange = () => {
+            if (this.elements.length <= 1) {
                 return;
             }
             this.elements[0].css('width', this.$scope.formBlink.blink.ratio.toString() + '%');

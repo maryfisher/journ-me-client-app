@@ -9,15 +9,14 @@ module jm.moment.ctrl {
 
         constructor(private $scope: IBlinkFormElementScope) {
             super($scope);
-            this.addScopeMethod('deleteImageFile');
-            this.addScopeMethod('deleteImage');
+            this.addScopeMethods('deleteImageFile', 'deleteImage');
         }
 
-        deleteImageFile() {
+        deleteImageFile = () => {
             this.$scope.formBlink.imageFiles[this.$scope.id] = undefined;
         }
 
-        deleteImage() {
+        deleteImage = () => {
             this.$scope.formBlink.blink.images[this.$scope.id] = undefined;
         }
     }

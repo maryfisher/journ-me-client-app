@@ -13,10 +13,10 @@ module jm.moment.ctrl {
         constructor(private $scope: IMomentDetailScope, private momentModel: MomentModel, $stateParams: angular.ui.IStateParamsService, private $state: angular.ui.IStateService) {
             super($scope);
             $scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
-            this.addScopeMethod('showsSlides');
+            this.addScopeMethods('showsSlides');
         }
 
-        showsSlides(): boolean {
+        showsSlides = (): boolean => {
             return this.$state.includes(RouteConst.MOMENT_BLINKS);
         }
     }

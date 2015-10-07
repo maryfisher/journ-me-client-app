@@ -15,22 +15,20 @@ module jm.journey {
         private currentAlias: AliasDetailVO;
 
         constructor($injector: ng.auto.IInjectorService) {
-            this.journeyService = $injector.get < JourneyDAO > (JourneyDAO.NG_NAME);
-            this.journeyActionService = $injector.get < JourneyActionDAO > (JourneyActionDAO.NG_NAME);
+            this.journeyService = $injector.get < JourneyDAO >(JourneyDAO.NG_NAME);
+            this.journeyActionService = $injector.get < JourneyActionDAO >(JourneyActionDAO.NG_NAME);
 
             this.currentJourney = new JourneyDetailVO();
-
-            _.bindAll(this, 'setCurrentJourney', 'setCurrentJourneyBase', 'updateLeaveJourney');
         }
 
-        private setCurrentJourneyBase(data: IJourneyDetailVO) {
+        private setCurrentJourneyBase = (data: IJourneyDetailVO) => {
             this.currentJourney.parseBaseData(data);
             if (this.currentAlias) {
                 this.currentJourney.updateAlias(this.currentAlias);
             }
         }
 
-        private setCurrentJourney(data: IJourneyDetailVO) {
+        private setCurrentJourney = (data: IJourneyDetailVO) => {
             this.currentJourney.parseDetailData(data);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
@@ -38,7 +36,7 @@ module jm.journey {
             }
         }
 
-        getCurrentJourney(id ? : string): JourneyDetailVO {
+        getCurrentJourney(id ?: string): JourneyDetailVO {
             if (id) {
                 if (this.currentJourney._id !== id) {
                     this.currentJourney.invalidateData();
@@ -77,7 +75,7 @@ module jm.journey {
             this.currentJourney.updateFromAlias(this.currentAlias);
         }
 
-        followJourney(journey ? : IJourneyDetailVO): IPromise < any > {
+        followJourney(journey ?: IJourneyDetailVO): IPromise < any > {
             if (!journey) {
                 journey = this.currentJourney;
             }
@@ -92,7 +90,7 @@ module jm.journey {
                 });
         }
 
-        unfollowJourney(journey ? : IJourneyDetailVO) {
+        unfollowJourney(journey ?: IJourneyDetailVO) {
             if (!journey) {
                 journey = this.currentJourney;
             }
@@ -110,7 +108,7 @@ module jm.journey {
                 });
         }
 
-        linkJourney(userLinkJourney: JourneyBaseVO, journey ? : JourneyDetailVO) {
+        linkJourney(userLinkJourney: JourneyBaseVO, journey ?: JourneyDetailVO) {
             if (!journey) {
                 journey = this.currentJourney;
             }
@@ -185,7 +183,7 @@ module jm.journey {
             );
         }
 
-        updateLeaveJourney(journey: JourneyDetailVO, aliasId: string) {
+        updateLeaveJourney = (journey: JourneyDetailVO, aliasId: string) => {
             for (var i: number = 0; i < journey.joinedAliases.length; i++) {
                 if (journey.joinedAliases[i]._id == aliasId) {
                     break;

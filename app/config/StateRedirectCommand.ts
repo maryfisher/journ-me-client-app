@@ -13,10 +13,9 @@ module jm.config {
         private authModel: AuthModel;
 
         constructor($injector: ng.auto.IInjectorService) {
-            this.$rootScope = $injector.get < IRootScopeService > (NGConst.$ROOT_SCOPE);
-            this.routeUtil = $injector.get < RouteUtil > (RouteUtil.NG_NAME);
-            this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
-            _.bindAll(this, 'onStateChangeStart');
+            this.$rootScope = $injector.get < IRootScopeService >(NGConst.$ROOT_SCOPE);
+            this.routeUtil = $injector.get < RouteUtil >(RouteUtil.NG_NAME);
+            this.authModel = $injector.get < AuthModel >(AuthModel.NG_NAME);
             this.execute();
         }
 
@@ -24,7 +23,7 @@ module jm.config {
             this.$rootScope.$on(NGConst.$STATE_CHANGE_START, this.onStateChangeStart);
         }
 
-        onStateChangeStart(event: ng.IAngularEvent, nextState: angular.ui.IState, nextParams, prevState: angular.ui.IState, prevParams) {
+        onStateChangeStart = (event: ng.IAngularEvent, nextState: angular.ui.IState, nextParams) => {
 
             if (!nextState.data) {
                 return;

@@ -22,17 +22,15 @@ module jm.user {
         private Upload: IUploadService;
 
         constructor($injector: ng.auto.IInjectorService) {
-            this.aliasService = $injector.get < AliasDAO > (AliasDAO.NG_NAME);
-            this.journeyModel = $injector.get < JourneyModel > (JourneyModel.NG_NAME);
-            this.momentModel = $injector.get < MomentModel > (MomentModel.NG_NAME);
-            this.Upload = $injector.get < IUploadService > (NGConst.UPLOAD);
+            this.aliasService = $injector.get < AliasDAO >(AliasDAO.NG_NAME);
+            this.journeyModel = $injector.get < JourneyModel >(JourneyModel.NG_NAME);
+            this.momentModel = $injector.get < MomentModel >(MomentModel.NG_NAME);
+            this.Upload = $injector.get < IUploadService >(NGConst.UPLOAD);
 
             this.currentAlias = new AliasDetailVO();
-
-            _.bindAll(this, 'setAlias', 'updateAliasSuccess', 'updateAliasProgress', 'updateAliasError');
         }
 
-        private setAlias(data: IAliasVOResource) {
+        private setAlias = (data: IAliasVOResource) => {
             this.currentAlias.parseData(data);
             this.journeyModel.refreshJourney(this.currentAlias);
             this.momentModel.refreshMoment(this.currentAlias);
@@ -42,7 +40,7 @@ module jm.user {
             this.currentAlias.invalidateData();
         }
 
-        getCurrentAlias(id ? : string): AliasDetailVO {
+        getCurrentAlias(id ?: string): AliasDetailVO {
             if (id) {
                 this.currentAlias._id = id;
                 this.aliasService.getAlias(id).$promise.then(this.setAlias);
@@ -63,33 +61,33 @@ module jm.user {
             alias.journeys = undefined;
             alias.followedJourneys = undefined;
             this.Upload.upload({
-                    url: 'api/user/profile/' + this.currentAlias._id,
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    },
-                    fields: {
-                        alias: alias
-                    },
-                    file: file,
-                    method: null
-                })
+                url: 'api/user/profile/' + this.currentAlias._id,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                fields: {
+                    alias: alias
+                },
+                file: file,
+                method: null
+            })
                 .progress(this.updateAliasProgress)
                 .success(this.updateAliasSuccess)
                 .error(this.updateAliasError);
         }
 
-        updateAliasProgress(evt: IFileProgressEvent) {
+        updateAliasProgress = (evt: IFileProgressEvent) => {
             var progressPercentage: number = 100.0 * evt.loaded / evt.total;
             //console.log('progress: ' + progressPercentage.toString() + '% ' + evt.config.file.name);
         }
 
-        updateAliasSuccess(data: any, status: number, headers: ng.IHttpHeadersGetter, config: IFileUploadConfig) {
+        updateAliasSuccess = (data: any, status: number, headers: ng.IHttpHeadersGetter, config: IFileUploadConfig) => {
             this.currentAlias.image = data.image;
             this.currentAlias.name = data.name;
             //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
         }
 
-        updateAliasError(status: number) {
+        updateAliasError = (status: number) => {
             //console.log('error status: ' + status);
         }
     }
