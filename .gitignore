@@ -27,8 +27,11 @@ crashlytics-build.properties
 
 
 lib/bower_components/
+lib/typings/
 node_modules/
 dist/
 target/
 out/
 .temp/
+.tscache/
+app/reference.ts

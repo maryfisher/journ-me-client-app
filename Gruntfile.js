@@ -13,13 +13,15 @@ module.exports = function (grunt) {
         pkg: pkg,
         app: {
             src: 'src',
+            app: 'app',
+            common: 'common',
             lib: 'lib',
             test: 'test',
             temp: '.temp',
             dist: 'dist',
             server: 'server'
         },
-        bowerInstall: {
+        bower: {
             install: {
                 options: {
                     install: true,
@@ -38,23 +40,23 @@ module.exports = function (grunt) {
                 '<%= app.lib %>/bower_components'
             ]
         },
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc'
-            },
-            all: [
-                'Gruntfile.js',
-                '<%= app.src %>/**/*.js',
-                '<%= app.test %>/**/*.js'
-            ]
-        },
+        //jshint: {
+        //    options: {
+        //        jshintrc: '.jshintrc'
+        //    },
+        //    all: [
+        //        'Gruntfile.js',
+        //        '<%= app.src %>/**/*.js',
+        //        '<%= app.test %>/**/*.js'
+        //    ]
+        //},
         ngtemplates: {
             all: {
-                cwd: '<%= app.src %>',
+                cwd: '<%= app.app %>',
                 src: '**/*.tpl.html',
                 dest: '<%= app.temp %>/scripts/templates.js',
                 options: {
-                    module: 'jmApp',
+                    module: 'jm',
                     htmlmin: {
                         collapseBooleanAttributes: true,
                         collapseWhitespace: true,
@@ -68,29 +70,68 @@ module.exports = function (grunt) {
                 }
             }
         },
-        ngAnnotate: {
-            all: {
-                expand: true,
-                cwd: '<%= app.src %>',
-                src: ['**/*.js'],
-                dest: '<%= app.temp %>/ngAnnotate'
-            }
-        },
-        preConcat: {
-            correct: {
+        tsd: {
+            refresh: {
                 options: {
-                    cwd: '<%= app.temp %>/ngAnnotate'
-                },
-                src: '<%= app.temp %>/ngAnnotate/**/*.js',
-                dest: '<%= app.temp %>/scripts/build.js'
+                    command: 'reinstall',
+                    latest: true,
+                    config: 'tsd.json',
+                    // experimental: options to pass to tsd.API 
+                    opts: {
+                        // props from tsd.Options 
+                    }
+                }
             }
         },
-        concat: {
-            options: {
-                separator: ';' + grunt.util.linefeed,
+        ts: {
+            dev: {
+                src: [
+                    '<%= app.common %>/**/*.ts',
+                    '<%= app.app %>/common/**/*.ts',
+                    '<%= app.app %>/user/**/*.ts',
+                    '<%= app.app %>/journey/**/*.ts',
+                    '<%= app.app %>/moment/**/*.ts',
+                    '<%= app.app %>/auth/**/*.ts',
+                    '<%= app.app %>/config/**/*.ts',
+                    '<%= app.app %>/Main.ts',
+                    '<%= app.app %>/app.ts',
+                    '<%= app.lib %>/typings/**/*.ts'],
+                reference: '<%= app.app %>/reference.ts',
+                out: '.temp/scripts/build.js',
                 sourceMap: true
             }
         },
+        tslint: {
+            options: {
+                configuration: grunt.file.readJSON("tslint.json")
+            },
+            files: {
+                src: ['<%= app.app %>/**/*.ts']
+            }
+        },
+        //ngAnnotate: {
+        //    all: {
+        //        expand: true,
+        //        cwd: '<%= app.src %>',
+        //        src: ['**/*.js'],
+        //        dest: '<%= app.temp %>/ngAnnotate'
+        //    }
+        //},
+        //preConcat: {
+        //    correct: {
+        //        options: {
+        //            cwd: '<%= app.temp %>/ngAnnotate'
+        //        },
+        //        src: '<%= app.temp %>/ngAnnotate/**/*.js',
+        //        dest: '<%= app.temp %>/scripts/build.js'
+        //    }
+        //},
+        //concat: {
+        //    options: {
+        //        separator: ';' + grunt.util.linefeed,
+        //        sourceMap: true
+        //    }
+        //},
         less: {
             dev: {
                 files: {
@@ -104,7 +145,7 @@ module.exports = function (grunt) {
         copy: {
             dev: {
                 expand: true,
-                cwd: '<%= app.src %>/',
+                cwd: '<%= app.app %>/',
                 src: ['index.html'],
                 dest: '<%= app.temp %>/'
             }
@@ -125,15 +166,16 @@ module.exports = function (grunt) {
         },
         watch: {
             ngTemplates: {
-                files: ['<%= app.src %>/**/*.html'],
+                files: ['<%= app.app %>/**/*.html'],
                 tasks: ['ngtemplates', 'copy:dev']
             },
             devSource: {
-                files: ['<%= app.src %>/**/*.js'],
-                tasks: ['jshint', 'ngAnnotate', 'preConcat', 'concat']
+                files: ['<%= app.app %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
+                //tasks: ['jshint', 'ngAnnotate', 'preConcat', 'concat']
+                tasks: ['tslint', 'ts']
             },
             devStyle: {
-                files: ['<%= app.src %>/**/*.less'],
+                files: ['<%= app.app %>/**/*.less'],
                 tasks: ['less']
             }
         }
@@ -141,19 +183,20 @@ module.exports = function (grunt) {
 
     // GruntJS task registration
 
-    grunt.renameTask('bower', 'bowerInstall');
-    grunt.registerTask('bower', [
+    grunt.registerTask('bowerInstall', [
         'clean:bower',
-        'bowerInstall'
+        'bower'
     ]);
 
     grunt.registerTask('build', [
         'clean:dev',
-        'jshint',
+        //'jshint',
+        'tslint',
         'ngtemplates',
-        'ngAnnotate',
+        /*'ngAnnotate',
         'preConcat',
-        'concat',
+        'concat',*/
+        'ts',
         'less',
         'copy:dev'
     ]);

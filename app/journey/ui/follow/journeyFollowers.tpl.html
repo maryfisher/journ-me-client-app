@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h2 class="text-center">Following {{journey.name}}</h2>
+</div>
+<div class="modal-body">
+    <ul class="list-group">
+        <li data-ng-repeat="alias in journey.followers" class="list-group-item">
+            <a>
+                <img data-ng-src="data:image/png;base64, {{alias.thumb}}" width="40" height="40" class="img-circle" /> {{alias.name}}
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="modal-footer">
+    <button data-ng-click="cancel()" class="btn btn-default"> Close </button>
+</div>

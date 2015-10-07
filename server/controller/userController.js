@@ -45,7 +45,7 @@ exports.register = function (req, res) {
     var user = new User(req.body);
     var alias = new Alias(req.body);
     user.aliases.push(alias);
-    user.currentAlias = alias;
+    user.currentAlias = alias._id;
 
     // Then save the user 
     user.save(function (err) {
@@ -77,31 +77,34 @@ exports.register = function (req, res) {
 exports.signin = function (req, res) {
     exports.userByEmail(req, res, req.body.email, function (err) {
         if (err) {
-
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
         } else {
-            req.user.populate({
+            /*req.user.populate({
                 path: 'currentAlias',
                 select: '_id name'
-            }, function () {
-                exports.login(req.user, req, res);
-            });
+            }, function () {*/
+            exports.login(req.user, req, res);
+            //});
         }
     });
 };
 
 exports.tokenlogin = function (req, res) {
     //exports.userByEmail(req, res, "eureka.mira@gmail.com", function (err) {
-    //exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
-    exports.userByEmail(req, res, "die_ulli@hotmail.com", function (err) {
+    exports.userByEmail(req, res, "office@coronadogames.com", function (err) {
+        //exports.userByEmail(req, res, "die_ulli@hotmail.com", function (err) {
         if (err) {
 
         } else {
-            req.user.populate({
+            /*req.user.populate({
                 path: 'currentAlias',
                 select: '_id name'
-            }, function () {
-                exports.login(req.user, req, res);
-            });
+            }, function () {*/
+            exports.login(req.user, req, res);
+            //});
         }
     });
 };
