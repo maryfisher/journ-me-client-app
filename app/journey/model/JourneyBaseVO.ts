@@ -2,7 +2,7 @@ module jm.journey {
 
     import IAliasBaseVO = jm.user.IAliasBaseVO;
 
-    export class JourneyBaseVO implements IJourneyBaseVO {
+    export class JourneyBaseVO extends jm.common.BaseVO implements IJourneyBaseVO {
         _id: string;
         name: string;
         descript: string;
@@ -13,22 +13,8 @@ module jm.journey {
         isPublic: boolean = true;
         join: number = JourneyJoinEnum.selected;
 
-        constructor(data ? : IJourneyBaseVO) {
-            if (data) {
-                this.parseBaseData(data);
-            }
-        }
-
-        //maybe put this into super class and loop over properties to set them
-        parseBaseData(data: IJourneyBaseVO) {
-            this._id = data._id;
-            this.name = data.name;
-            this.descript = data.descript;
-            this.alias = this.alias ? this.alias : data.alias;
-            this.hasLocation = data.hasLocation;
-            this.location = data.location;
-            this.isPublic = data.isPublic;
-            this.join = data.join;
+        constructor(data ?: IJourneyBaseVO) {
+            super(data);
         }
 
         invalidateData() {

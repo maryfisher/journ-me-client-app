@@ -1,3 +1,4 @@
+///<reference path="..\auth\model\AuthModel.ts"/>
 module jm.config {
 
     import AuthModel = jm.auth.AuthModel;
@@ -15,11 +16,13 @@ module jm.config {
         }
 
         private execute() {
-            this.authModel.tokenLogin().then(function () {
-                if (this.authModel.isLoggedIn()) {
-                    this.routeUtil.reload();
-                }
-            });
+            this.authModel.tokenLogin().then(this.reload);
+        }
+
+        private reload = () => {
+            if (this.authModel.isLoggedIn()) {
+                this.routeUtil.reload();
+            }
         }
     }
 }

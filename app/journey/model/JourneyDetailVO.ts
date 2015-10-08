@@ -1,5 +1,4 @@
-/// <reference path="../../../common/interfaces/journey/JourneyJoinEnum.ts" />
-/// <reference path="../../moment/model/MomentBaseVO.ts" />
+///<reference path="..\..\moment\model\MomentBaseVO.ts"/>
 module jm.journey {
 
     import IAliasDetailVO = jm.user.IAliasDetailVO;
@@ -20,27 +19,28 @@ module jm.journey {
         isJoined: boolean = false;
         sendRequest: boolean = false;
 
-        constructor(data ? : IJourneyDetailVO) {
+        constructor(data ?: IJourneyDetailVO) {
             super(data);
-            if (data) {
-                this.parseDetailData(data);
-            }
         }
 
-        //maybe put this into super class and loop over properties to set them
-        parseDetailData(data: IJourneyDetailVO) {
-            this.parseBaseData(data);
+        parseJson(data: IJourneyDetailVO) {
+            super.parseJson(data);
+            this.parseDetailData(data);
+        }
+
+        parseBaseData(data: IJourneyDetailVO) {
+            super.parseJson(data);
+        }
+
+        private parseDetailData(data: IJourneyDetailVO) {
+            if (!data) {
+                return;
+            }
             //TODO make sure to not overwrite if the properties are not set
             this.moments = [];
             for (var i: number = 0; i < data.moments.length; i++) {
                 this.moments.push(new MomentBaseVO(data.moments[i]));
             }
-            this.followers = data.followers;
-            this.linkedToJourneys = data.linkedToJourneys;
-            this.linkedFromJourneys = data.linkedFromJourneys;
-            this.joinedAliases = data.joinedAliases ? data.joinedAliases : this.joinedAliases;
-            this.joinRequests = data.joinRequests ? data.joinRequests : this.joinRequests;
-            this.isAlias = data.isAlias ? data.isAlias : this.isAlias;
         }
 
         invalidateData() {

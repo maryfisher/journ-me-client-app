@@ -2,7 +2,7 @@ module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
 
-    export class MomentBaseVO {
+    export class MomentBaseVO extends jm.common.BaseVO implements IMomentBaseVO {
 
         _id: string;
         isAlias: boolean;
@@ -11,18 +11,8 @@ module jm.moment {
         created: string;
         isPublic: boolean = true;
 
-        constructor(data ? : IMomentBaseVO) {
-            if (data) {
-                this.parseBaseData(data);
-            }
-        }
-
-        parseBaseData(data: IMomentBaseVO) {
-            this._id = data._id;
-            this.alias = data.alias;
-            this.journey = data.journey;
-            this.created = data.created;
-            this.isPublic = data.isPublic;
+        constructor(data ?: IMomentBaseVO) {
+            super(data);
         }
 
         invalidateData() {

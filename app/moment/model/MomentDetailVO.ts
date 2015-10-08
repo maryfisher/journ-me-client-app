@@ -1,21 +1,27 @@
 module jm.moment {
-    export class MomentDetailVO extends MomentBaseVO {
+    export class MomentDetailVO extends MomentBaseVO implements IMomentDetailVO {
 
         empathies: IEmpathyVO[] = [];
         blinks: string[] = [];
         currentBlink: BlinkVO;
 
-        constructor(data ? : IMomentDetailVO) {
+        constructor(data ?: IMomentDetailVO) {
             super(data);
             if (data) {
                 this.parseDetailData(data);
             }
         }
 
-        parseDetailData(data: IMomentDetailVO) {
-            this.parseBaseData(data);
+        parseJson(data: IMomentDetailVO) {
+            super.parseJson(data);
+            this.parseDetailData(data);
+        }
+
+        private parseDetailData(data: IMomentDetailVO) {
+            if (!data) {
+                return;
+            }
             this.addEmpathies(data.empathies);
-            this.blinks = data.blinks || this.blinks;
         }
 
         addEmpathies(data: IEmpathyVO[]) {

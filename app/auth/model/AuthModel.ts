@@ -44,7 +44,7 @@ module jm.auth {
         }
 
         private setData = (data: IAuthVO): IAuthVO => {
-            this.authVO.parseData(data);
+            this.authVO.parseJson(data);
             this.aliasModel.getCurrentAlias(data.currentAlias);
             return data;
         }

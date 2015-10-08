@@ -10,16 +10,20 @@ module jm.user {
         followedJourneys: IJourneyBaseVO[] = [];
         joinedJourneys: IJourneyBaseVO[] = [];
 
-        constructor(data ? : IAliasDetailVO) {
+        constructor(data ?: IAliasDetailVO) {
             super(data);
-            if (data) {
-                this.parseData(data);
-            }
+        }
+
+        parseJson(data: IAliasDetailVO) {
+            super.parseJson(data);
+            this.parseDetailData(data);
         }
 
         //maybe put this into super class and loop over properties to set them
-        parseData(data: IAliasDetailVO) {
-            super.parseData(data);
+        parseDetailData(data: IAliasDetailVO) {
+            if (!data) {
+                return;
+            }
             this.journeys = [];
             for (var i: number = 0; i < data.journeys.length; i++) {
                 this.journeys.push(new JourneyBaseVO(data.journeys[i]));

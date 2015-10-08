@@ -23,7 +23,7 @@ module jm.moment {
         }
 
         private setMoment = (data: IMomentDetailVO) => {
-            this.currentMoment.parseDetailData(data);
+            this.currentMoment.parseJson(data);
             if (this.currentAlias) {
                 this.currentMoment.updateAlias(this.currentAlias);
             }
@@ -87,7 +87,7 @@ module jm.moment {
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
             this.blinkService.getBlinkByIndex(this.currentMoment._id, index).then(function (data: BlinkVO) {
-                blinkVO.parseData(data);
+                blinkVO.parseJson(data);
             })
         }
 
@@ -95,7 +95,7 @@ module jm.moment {
             formBlink.blink.moment = this.currentMoment._id;
             var moment: MomentDetailVO = this.currentMoment;
             return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink).then(function (response: any) {
-                formBlink.blink.parseData(response.data);
+                formBlink.blink.parseJson(response.data);
                 moment.blinks.push(formBlink.blink._id);
             });
         }
@@ -104,7 +104,7 @@ module jm.moment {
             var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
             saveBlink.images.length = 0;
             return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {
-                formBlink.blink.parseData(response.data);
+                formBlink.blink.parseJson(response.data);
                 console.log(formBlink.blink);
             });
         }

@@ -2,7 +2,7 @@ module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
 
-    export class EmpathyVO {
+    export class EmpathyVO extends jm.common.BaseVO implements IEmpathyVO {
 
         _id: string;
         alias: AliasBaseVO;
@@ -11,19 +11,13 @@ module jm.moment {
         moods: string[];
         created: Date;
 
-        constructor(data ? : IEmpathyVO) {
-            if (data) {
-                this.parseData(data);
-            }
+        constructor(data ?: IEmpathyVO) {
+            super(data);
         }
 
-        parseData(data: IEmpathyVO) {
-            this._id = data._id;
+        parseJson(data: IEmpathyVO) {
+            super.parseJson(data);
             this.alias = new AliasBaseVO(data.alias);
-            this.created = data.created;
-            this.moods = data.moods;
-            this.body = data.body;
-            this.moment = data.moment;
         }
     }
 }

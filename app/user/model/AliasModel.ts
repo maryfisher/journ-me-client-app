@@ -31,7 +31,7 @@ module jm.user {
         }
 
         private setAlias = (data: IAliasVOResource) => {
-            this.currentAlias.parseData(data);
+            this.currentAlias.parseJson(data);
             this.journeyModel.refreshJourney(this.currentAlias);
             this.momentModel.refreshMoment(this.currentAlias);
         }

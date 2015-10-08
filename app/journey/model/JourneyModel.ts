@@ -29,7 +29,7 @@ module jm.journey {
         }
 
         private setCurrentJourney = (data: IJourneyDetailVO) => {
-            this.currentJourney.parseDetailData(data);
+            this.currentJourney.parseJson(data);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
                 this.currentJourney.updateFromAlias(this.currentAlias);
