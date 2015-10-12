@@ -8,11 +8,11 @@ var mongoose = require('mongoose'),
 
 
 exports.list = function (req, res) {
-    if(!req.query['index']){
+    if (!req.query['index']) {
         Blink.find({
             'moment': req.query['momentId']
         }, function (err, blinks) {
-            if(err){
+            if (err) {
                 console.log(err);
                 return res.status(400).send({
                     message: ''
@@ -20,18 +20,22 @@ exports.list = function (req, res) {
             }
             res.status(200).send(blinks);
         });
-    }else {
+    } else {
         Blink.findOne({
             moment: req.query['momentId'],
             index: req.query['index']
         }, function (err, blink) {
-            if(err){
+            if (err) {
                 console.log(err);
                 return res.status(400).send({
                     message: ''
                 });
             }
-            res.status(200).send(blink);
+            blink.populate({
+                path: 'states'
+            }, function (err) {
+                res.status(200).send(blink);
+            });
         });
     }
 };
@@ -40,9 +44,9 @@ exports.read = function (req, res) {
     res.status(200).send(req.blink);
 }
 
-var save = function(req, res, saveBlink){
+var save = function (req, res, saveBlink) {
     var file = req.files.file;
-    if(!file){
+    if (!file) {
         saveBlink();
         return;
     }
@@ -70,13 +74,19 @@ var save = function(req, res, saveBlink){
 }
 
 exports.create = function (req, res) {
-    save(req, res, function(base64Image){
+    save(req, res, function (base64Image) {
         var blink = new Blink(JSON.parse(req.body.blink));
-        momentCtrl.momentByID(req, res, function(err){
+        momentCtrl.momentByID(req, res, function (err) {
             var moment = req.moment;
             blink.index = moment.blinks.length;
             blink.images = [];
-            blink.images.push(base64Image);
+            if (base64Image) {
+                blink.images.push(base64Image);
+            }
+            console.log(req.body.blink);
+            for (var i = 0; i < req.body.blink.states.length; i++) {
+                blink.states.push(req.body.blink.states[i]._id);
+            }
 
             blink.save(function (err) {
                 if (err) {
@@ -87,7 +97,11 @@ exports.create = function (req, res) {
                 } else {
                     moment.blinks.push(blink);
                     moment.save(function (err) {
-                        res.status(200).send(blink);
+                        blink.populate({
+                            path: 'states'
+                        }, function (err) {
+                            res.status(200).send(blink);
+                        });
                     });
                 }
             });
@@ -97,16 +111,21 @@ exports.create = function (req, res) {
 
 exports.update = function (req, res) {
 
-    save(req, res, function(base64Image1, base64Image2){
+    save(req, res, function (base64Image1, base64Image2) {
         var jsonBlink = JSON.parse(req.body.blink);
         req.blink.texts = jsonBlink.texts;
         req.blink.format = jsonBlink.format;
         req.blink.ratio = jsonBlink.ratio;
-        if(base64Image1) {
+        if (base64Image1) {
             req.blink.images[0] = base64Image1;
         }
-        if(base64Image2) {
+        if (base64Image2) {
             req.blink.images[1] = base64Image2;
+        }
+
+        req.blink.states.length = 0;
+        for (var i = 0; i < jsonBlink.states.length; i++) {
+            req.blink.states.push(jsonBlink.states[i]._id);
         }
         req.blink.save(function (err) {
             if (err) {
@@ -115,7 +134,11 @@ exports.update = function (req, res) {
                     message: ''
                 });
             } else {
-                res.status(200).send(req.blink);
+                req.blink.populate({
+                    path: 'states'
+                }, function (err) {
+                    res.status(200).send(req.blink);
+                });
             }
         });
     });

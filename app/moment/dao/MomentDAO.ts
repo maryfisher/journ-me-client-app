@@ -36,7 +36,7 @@ module jm.moment {
             return this.getOne(id, this.returnMoment);
         }
 
-        getStates(): IPromise<IStateVO> {
+        getStates(): IPromise<StateVO[]> {
             return this.makeCall(this.get, ServerConst.STATE_PATH, null, this.returnStates);
         }
 

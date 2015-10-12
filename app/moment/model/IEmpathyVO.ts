@@ -1,3 +1,4 @@
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
 module jm.moment {
     export interface IEmpathyVO {
         _id: string;

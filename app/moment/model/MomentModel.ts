@@ -14,7 +14,7 @@ module jm.moment {
         private empathyService: EmpathyDAO;
         private blinkService: BlinkDAO;
         private currentAlias: AliasDetailVO;
-        private allStates: IStateVO[];
+        private allStates: StateVO[];
 
         constructor($injector: ng.auto.IInjectorService) {
             this.momentService = $injector.get < MomentDAO >(MomentDAO.NG_NAME);
@@ -39,12 +39,14 @@ module jm.moment {
             data.alias = this.currentAlias;
         }
 
-        getStates(): IStateVO[] {
+        getStates(): StateVO[] {
             if (!this.allStates) {
                 this.allStates = [];
                 this.momentService.getStates().then(
                     (data: StateVO[]) => {
-                        this.allStates = data;
+                        for (var i: number = 0; i < data.length; i++) {
+                            this.allStates.push(data[i]);
+                        }
                     }
                 );
             }

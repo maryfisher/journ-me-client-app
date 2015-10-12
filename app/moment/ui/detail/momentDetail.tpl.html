@@ -1,11 +1,15 @@
 <div class="panel">
-    <div data-ui-view></div>
-    <ul class="nav nav-tabs nav-justified">
+    <ul class="nav nav-tabs">
         <li data-ng-class="{ active: showsSlides() }">
-            <a data-ui-sref="MOMENT_BLINKS">Blinks</a>
+            <a data-ui-sref="MOMENT_BLINKS">
+                <span class="glyphicon glyphicon-picture"></span>
+                <span class="glyphicon glyphicon-align-justify"></span>
+            </a>
         </li>
         <li data-ui-sref-active="active">
-            <a data-ui-sref="MOMENT_EMPATHIES">Empathy</a>
+            <a data-ui-sref="MOMENT_EMPATHIES">
+                <span class="fa fa-comment"></span>
+            </a>
         </li>
         <!--<li ui-sref-active="active">
             <a ui-sref="MOMENT_STATS">Stats</a>
@@ -14,4 +18,6 @@
             <a ui-sref="MOMENT_LINKS">Links</a>
         </li>-->
     </ul>
+    <div data-ui-view></div>
+    <div style="clear: both"></div>
 </div>
