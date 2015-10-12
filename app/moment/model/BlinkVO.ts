@@ -9,6 +9,7 @@ module jm.moment {
         index: number = 0;
         moment: string;
         ratio: number;
+        states: IStateVO[] = [];
 
         constructor(data ?: IBlinkVO) {
             super(data);

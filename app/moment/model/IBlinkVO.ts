@@ -7,5 +7,6 @@ module jm.moment {
         index: number;
         moment: string;
         ratio: number;
+        states: IStateVO[];
     }
 }

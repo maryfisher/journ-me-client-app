@@ -3,16 +3,22 @@
 var mongoose = require('mongoose'),
     Moment = mongoose.model('Moment'),
     journeyCtrl = require('./journeyController'),
-    aliasCtrl = require('./aliasController');
+    State = mongoose.model('State');
 
+exports.listStates = function (req, res) {
+    State.find({}, function (err, states) {
+        res.status(200).json(states);
+    });
+};
 
 exports.read = function (req, res) {
-    req.moment.populate({
-        path: 'journey',
-        select: 'id'
-    }, function (err) {
-        res.status(200).send(req.moment);
-    });
+    req.moment
+        .populate({
+            path: 'journey',
+            select: 'id'
+        }, function (err) {
+            res.status(200).send(req.moment);
+        });
 };
 
 exports.create = function (req, res) {
@@ -37,7 +43,6 @@ exports.create = function (req, res) {
 };
 
 exports.update = function (req, res) {
-    console.log(req.body);
     Moment.findByIdAndUpdate(req.body._id, req.body, {
         new: true
     }, function (err, moment) {

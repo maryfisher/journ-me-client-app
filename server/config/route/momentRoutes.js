@@ -8,6 +8,7 @@ module.exports = function (app) {
         multiparty = require('connect-multiparty');
 
     var moment = '/api/moment/';
+    var state = '/api/state/';
     var momentId = moment + ':momentId/';
     var empathy = '/api/empathy/';
     var blink = '/api/blink/';
@@ -16,6 +17,8 @@ module.exports = function (app) {
     app.route(moment).post(momentCtrl.create);
     app.route(momentId).post(momentCtrl.update);
     app.param('momentId', momentCtrl.momentByID);
+
+    app.route(state).get(momentCtrl.listStates);
 
     app.route(empathy).get(empathyCtrl.list);
     app.route(empathy).post(empathyCtrl.create);

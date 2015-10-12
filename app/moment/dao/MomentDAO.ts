@@ -22,8 +22,22 @@ module jm.moment {
             return response.data;
         };
 
+        returnStates = (response): StateVO[] => {
+            var states: StateVO[] = [];
+            for (var i = 0; i < response.data.length; i++) {
+                var e: StateVO = new StateVO();
+                e.parseJson(response.data[i]);
+                states.push(e);
+            }
+            return states;
+        }
+
         getMoment(id: string): IPromise < IMomentDetailVO > {
             return this.getOne(id, this.returnMoment);
+        }
+
+        getStates(): IPromise<IStateVO> {
+            return this.makeCall(this.get, ServerConst.STATE_PATH, null, this.returnStates);
         }
 
         createMoment(moment: MomentBaseVO): IPromise < IMomentBaseVO > {

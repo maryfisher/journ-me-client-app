@@ -27,6 +27,8 @@ module jm.common {
         static EMPATHY_PATH: string = ServerConst.API + 'empathy/';
         static EMPATHY_ID_PATH: string = ServerConst.EMPATHY_PATH + ServerConst.EMPATHY_ID;
 
+        static STATE_PATH: string = ServerConst.API + 'state/';
+
         static BLINK_PATH: string = ServerConst.API + 'blink/';
         static BLINK_ID_PATH: string = ServerConst.BLINK_PATH + ServerConst.EMPATHY_ID;
 
