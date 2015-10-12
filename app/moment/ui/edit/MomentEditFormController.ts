@@ -1,109 +1,163 @@
+/// <reference path="../../../journey/model/JourneyModel.ts" />
 module jm.moment.ctrl {
 
     import NGConst = jm.common.NGConst;
     import RouteConst = jm.common.RouteConst;
     import RouteUtil = jm.common.RouteUtil;
+    import JourneyModel = jm.journey.JourneyModel;
+    import IJourneyDetailVO = jm.journey.IJourneyDetailVO;
+    import IFormController = ng.IFormController;
 
     export interface IMomentEditScope extends IMomentDetailScope {
         hasMoment: boolean;
         cancel();
+        save();
+        saveBlink();
+        cancelBlink();
+        createNewBlink();
+        editBlink();
+        isBlinkValid();
+        selectFormat(format: number);
+        journey: IJourneyDetailVO;
+        formBlink: BlinkFormVO;
+        selectedIndex: number;
+        canEditBlink: boolean;
+        formats: number[];
+        momentForm: IFormController;
+        blinkForm: IFormController;
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
-        static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME];
+        static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
 
-        constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil) {
+        private isNewBlink: boolean;
+
+        constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
-            this.addScopeMethod('cancel');
-            this.addScopeMethod('save');
-            _.bindAll(this, 'saveNewSuccess');
+            this.addScopeMethods('cancel', 'cancelBlink', 'save', 'saveBlink', 'selectFormat', 'createNewBlink',
+                'editBlink', 'isBlinkValid');
+
             $scope.hasMoment = (!!$stateParams['momentId']);
 
             if ($scope.hasMoment) {
                 $scope.moment = momentModel.getCurrentMoment($stateParams['momentId']);
-                if (!$scope.moment.isAlias) {
-                    this.cancel();
-                }
             } else {
+                $scope.journey = journeyModel.getCurrentJourney();
                 $scope.moment = new MomentDetailVO();
+                $scope.moment.isPublic = $scope.journey.isPublic;
+            }
+
+            $scope.formBlink = new BlinkFormVO();
+            if ($scope.moment.blinks.length !== 0) {
+                this.$scope.selectedIndex = 0;
+                this.getBlink();
+            } else {
+                this.createNewBlink();
+            }
+
+            $scope.formats = [];
+            var i: number = 0;
+            for (var item in BlinkFormatEnum) {
+                if (/^\d+$/.test(item)) {
+                    $scope.formats.push(i);
+                    i++;
+                }
             }
         }
 
-        cancel() {
+        cancel = () => {
             if (!this.$scope.hasMoment && !this.$scope.moment._id) {
                 this.routeUtil.redirectTo(RouteConst.JOURNEY_DETAIL, {
                     journeyId: this.$stateParams['journeyId']
                 });
             } else {
                 var momentId = this.$scope.moment._id || this.$stateParams['momentId'];
-                this.routeUtil.redirectTo(RouteConst.MOMENT_DETAIL, {
+                this.routeUtil.redirectTo(RouteConst.MOMENT_BLINKS, {
                     journeyId: this.$stateParams['journeyId'],
                     momentId: momentId
                 });
             }
         }
 
-        save() {
+        save = () => {
+            this.momentModel.updateMoment(this.$scope.moment).then(this.cancel);
+        }
+
+        isBlinkValid = (): boolean => {
+            if (!this.$scope.blinkForm) {
+                return false;
+            }
+            if (this.$scope.blinkForm.$valid) {
+                return true;
+            }
+            if (this.$scope.blinkForm['imageFile0'] && !this.$scope.formBlink.blink.images[0]) {
+                return false;
+            }
+            if (this.$scope.blinkForm['imageFile1'] && !this.$scope.formBlink.blink.images[1]) {
+                return false;
+            }
+            if (this.$scope.blinkForm['text0'] && this.$scope.blinkForm['text0'].$invalid) {
+                return false;
+            }
+            if (this.$scope.blinkForm['text1'] && this.$scope.blinkForm['text1'].$invalid) {
+                return false;
+            }
+            return true;
+        }
+
+        saveBlink = () => {
             if (!this.$scope.hasMoment) {
-                this.momentModel.createMoment(this.$scope.moment, this.$stateParams['journeyId']).then(this.saveNewSuccess);
+                this.momentModel.createMoment(this.$scope.moment, this.$stateParams['journeyId']).then(this.createMomentSuccess);
+                return;
+            }
+            if (this.isNewBlink) {
+                this.momentModel.createBlink(this.$scope.formBlink);
             } else {
-                this.momentModel.updateMoment(this.$scope.moment).then(this.cancel);
+                this.momentModel.editBlink(this.$scope.formBlink);
+            }
+            this.$scope.canEditBlink = this.isNewBlink = false;
+        }
+
+        createMomentSuccess = () => {
+            this.$scope.moment = this.momentModel.getCurrentMoment();
+            this.momentModel.createBlink(this.$scope.formBlink).then(this.createBlinkSuccess);
+        }
+
+        createBlinkSuccess = () => {
+            this.$scope.hasMoment = true;
+            this.$scope.canEditBlink = false;
+        }
+
+        cancelBlink = () => {
+            if (!this.$scope.hasMoment) {
+                this.cancel();
+                return;
+            }
+            if (this.$scope.moment.blinks.length > 0) {
+                this.$scope.canEditBlink = this.isNewBlink = false;
             }
         }
 
-        saveNewSuccess() {
-            this.$scope.moment = this.momentModel.getCurrentMoment();
-            this.cancel();
+        selectFormat = (format: number) => {
+            this.$scope.formBlink.blink.format = format;
+        }
+
+        createNewBlink = () => {
+            this.$scope.formBlink.blink = new BlinkVO();
+            this.$scope.canEditBlink = true;
+            this.$scope.formBlink.imageFiles.length = 0;
+            this.isNewBlink = true;
+            this.$scope.selectedIndex = this.$scope.moment.blinks.length;
+        }
+
+        editBlink = () => {
+            this.$scope.formBlink.blink = this.$scope.moment.currentBlink;
+            this.$scope.canEditBlink = true;
+        }
+
+        getBlink() {
+            this.$scope.formBlink.blink = new BlinkVO();
+            this.momentModel.getBlinkByIndex(this.$scope.selectedIndex, this.$scope.formBlink.blink);
         }
     }
 }
-
-/*(function (angular, undefined) {
-    'use strict';
-
-    var app = angular.module('jmMoment');
-
-    app.controller('jmMomentEditFormController', function ($scope, jmMomentModel, jmRouteUtil, jmRouteConst, $stateParams) {
-
-        $scope.cancel = function () {
-            if (!$scope.hasMoment && !$scope.moment._id) {
-                jmRouteUtil.redirectTo(jmRouteConst.JOURNEY_DETAIL, {
-                    journeyId: $stateParams.journeyId
-                });
-            } else {
-                var momentId = $scope.moment._id || $stateParams.momentId;
-                jmRouteUtil.redirectTo(jmRouteConst.MOMENT_DETAIL, {
-                    journeyId: $stateParams.journeyId,
-                    momentId: momentId
-                });
-            }
-        };
-
-        $scope.hasMoment = (!!$stateParams.momentId);
-        if ($scope.hasMoment) {
-            $scope.moment = jmMomentModel.getCurrentMoment($stateParams.momentId);
-            if (!$scope.moment.isAlias) {
-                $scope.cancel();
-            }
-        } else {
-            $scope.moment = {
-                _id: undefined,
-                descript: ''
-            };
-        }
-
-        $scope.save = function () {
-            if (!$scope.hasMoment) {
-                jmMomentModel.createMoment($scope.moment, $stateParams.journeyId).then(function () {
-                    $scope.moment = jmMomentModel.getCurrentMoment();
-                    $scope.cancel();
-                });
-            } else {
-                jmMomentModel.updateMoment($scope.moment, $stateParams.journeyId).then($scope.cancel);
-            }
-        };
-
-    });
-
-
-}(window.angular));*/

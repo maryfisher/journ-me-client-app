@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <div data-jm-logged-in-show="true">
-                <a data-ui-sref="DASHBOARD" class="navbar-brand">Dashboard</a>
+                <a data-ui-sref="DASHBOARD({aliasId: alias._id})" class="navbar-brand">Dashboard</a>
             </div>
             <div data-jm-logged-in-show="false">
                 <a data-ui-sref="HOME" class="navbar-brand">Home</a>
@@ -21,7 +21,9 @@
                 <span>
                     <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
                 </span>
-                <a data-ui-sref="DASHBOARD" class=""><img data-ng-src="data:image/png;base64, {{alias.image}}" width="40" height="40" class="img-circle" /></a>
+                <a data-ui-sref="DASHBOARD({aliasId: alias._id})">
+                    <img data-ng-src="data:image/png;base64, {{alias.image}}" width="40" height="40" class="img-circle" />
+                </a>
 
                 <span data-dropdown>
                     <button type="button" data-dropdown-toggle class="btn btn-xs">
@@ -30,7 +32,7 @@
                 <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
                     <li role="menuitem" data-ng-bind="alias.name"></li>
                     <li role="menuitem">
-                        <a data-ui-sref="DASHBOARD">View Dashboard</a>
+                        <a data-ui-sref="DASHBOARD({aliasId: alias._id})">View Dashboard</a>
                     </li>
                     <li role="menuitem">
                         <a data-ui-sref="ALIAS_UPDATE">Edit Profile</a>

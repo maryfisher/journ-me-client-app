@@ -1,46 +1,37 @@
-module jm {
-    export module journey {
-        'use strict';
+module jm.journey {
+    'use strict';
 
-        import IResourceService = angular.resource.IResourceService;
-        import IResourceClass = angular.resource.IResourceClass;
-        import ServerConst = jm.common.ServerConst;
-        import NGConst = jm.common.NGConst;
-        import IPromise = angular.IPromise;
+    import ServerConst = jm.common.ServerConst;
+    import NGConst = jm.common.NGConst;
+    import IPromise = angular.IPromise;
 
-        export class JourneyDAO extends jm.common.BaseDAO {
+    export class JourneyDAO extends jm.common.BaseResourceDAO {
 
-            static NG_NAME: string = 'journeyDAO';
+        static NG_NAME: string = 'journeyDAO';
 
-            private journeyDAO: IResourceClass < IJourneyVOResource > ;
+        constructor($injector: ng.auto.IInjectorService) {
+            super($injector);
+            this.path = ServerConst.JOURNEY_PATH;
+        }
 
-            constructor($injector: ng.auto.IInjectorService) {
-                super($injector);
-                var $resource = $injector.get < IResourceService > (NGConst.$RESOURCE);
-                this.journeyDAO = $resource < IJourneyVOResource > (
-                    ServerConst.JOURNEY_ID_PATH
-                );
-            }
+        returnJourney = (response): IJourneyDetailVO => {
+            return response.data;
+        };
 
-            getJourney(id) {
-                return this.journeyDAO.get({
-                    journeyId: id
-                });
-            }
+        returnBaseJourney = (response): IJourneyBaseVO => {
+            return response.data;
+        };
 
-            createJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {
-                return this.journeyDAO.save({},
-                    journey
-                ).$promise;
-            }
+        getJourney(id): IPromise < IJourneyDetailVO > {
+            return this.getOne(id, this.returnJourney);
+        }
 
-            updateJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {
-                return this.journeyDAO.save({
-                        journeyId: journey._id
-                    },
-                    journey
-                ).$promise;
-            }
+        createJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {
+            return this.create(journey, this.returnBaseJourney);
+        }
+
+        updateJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {
+            return this.update(journey, this.returnBaseJourney);
         }
     }
 }

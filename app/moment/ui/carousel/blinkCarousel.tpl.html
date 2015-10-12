@@ -1,0 +1,37 @@
+<div class="jm-blink-carousel">
+    <!-- prev blink -->
+    <button data-ng-click="prevBlink()" data-ng-disabled="!hasPrevBlink()" class="btn btn-default jm-blink-carousel-btn left">
+                    <span class="glyphicon glyphicon-chevron-left">
+    </button>
+
+    <div class="jm-blink-carousel-ul" data-ng-switch="moment.currentBlink.format">
+        <div data-ng-switch-when="0">
+            <jm-blink-elm text="{{moment.currentBlink.texts[0]}}" ratio="{{moment.currentBlink.ratio}}"></jm-blink-elm>
+            <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{98 - moment.currentBlink.ratio}}"></jm-blink-elm>
+        </div>
+        <div data-ng-switch-when="1">
+            <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{moment.currentBlink.ratio}}"></jm-blink-elm>
+            <jm-blink-elm text="{{moment.currentBlink.texts[0]}}" ratio="{{98 - moment.currentBlink.ratio}}"></jm-blink-elm>
+        </div>
+        <div data-ng-switch-when="2">
+            <jm-blink-elm text="{{moment.currentBlink.texts[0]}}" ratio="{{moment.currentBlink.ratio}}"></jm-blink-elm>
+            <jm-blink-elm text="{{moment.currentBlink.texts[1]}}" ratio="{{98 - moment.currentBlink.ratio}}"></jm-blink-elm>
+        </div>
+        <div data-ng-switch-when="3">
+            <jm-blink-elm text="{{moment.currentBlink.texts[0]}}" ratio="{{100}}"></jm-blink-elm>
+        </div>
+        <div data-ng-switch-when="4"></div>
+        <div data-ng-switch-when="5">
+            <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{100}}"></jm-blink-elm>
+        </div>
+        <div data-ng-switch-when="6">
+            <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{moment.currentBlink.ratio}}"></jm-blink-elm>
+            <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{98 - moment.currentBlink.ratio}}"></jm-blink-elm>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    <!-- next blink -->
+    <button data-ng-click="nextBlink()" data-ng-disabled="!hasNextBlink()" class="btn btn-default jm-blink-carousel-btn right">
+                    <span class="glyphicon glyphicon-chevron-right">
+    </button>
+</div>

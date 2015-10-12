@@ -33,6 +33,7 @@ module jm {
                 'ngCookies',
                 'ngResource',
                 'ui.router',
+                'ngAnimate',
                 'ngFileUpload']);
             this.auth = angular.module('auth', []);
             this.journey = angular.module('journey', []);
@@ -48,6 +49,7 @@ module jm {
             this.user.controller(jm.user.ctrl);
             this.journey.controller(jm.journey.ctrl);
             this.moment.controller(jm.moment.ctrl);
+            this.common.controller(jm.common.ctrl);
         }
 
         initDAOs() {
@@ -56,6 +58,8 @@ module jm {
             this.addFactory(jm.journey.JourneyDAO);
             this.addFactory(jm.journey.JourneyActionDAO);
             this.addFactory(jm.moment.MomentDAO);
+            this.addFactory(jm.moment.EmpathyDAO);
+            this.addFactory(jm.moment.BlinkDAO);
         }
 
         initModels() {
@@ -70,12 +74,20 @@ module jm {
             this.addDirective(jm.auth.LoggedInDirect);
             this.addDirective(jm.auth.LoginDirect);
             this.addDirective(jm.auth.RegisterDirect);
+            this.addDirective(jm.user.AliasListItemDirect);
+            this.addDirective(jm.user.AliasListDirect);
             this.addDirective(jm.journey.JourneyListItemDirect);
             this.addDirective(jm.journey.JourneyEditDirect);
             this.addDirective(jm.journey.JourneyTimelineDirect);
-            this.addDirective(jm.journey.JourneyFollowersDirect);
+            this.addDirective(jm.journey.TimelineMomentDirect);
+            this.addDirective(jm.journey.TimelineSelectDirect);
             this.addDirective(jm.journey.LinkJourneyDirect);
-            this.addDirective(jm.journey.JourneyLinkRequestsDirect);
+            this.addDirective(jm.journey.JourneyRequestsDirect);
+            this.addDirective(jm.moment.BlinkFormatDirect);
+            this.addDirective(jm.moment.BlinkImgDirect);
+            this.addDirective(jm.moment.BlinkTextDirect);
+            this.addDirective(jm.moment.BlinkCarouselDirect);
+            this.addDirective(jm.moment.BlinkCarouselElementDirect);
         }
 
         initInterceptor() {
@@ -83,10 +95,10 @@ module jm {
         }
 
         initConfig() {
-            this.jm.config(jm.RouterConfig.init);
-            this.jm.config(jm.InterceptorConfig.init);
-            this.jm.run(jm.config.TokenLoginCommand.execute);
-            this.jm.run(jm.config.StateRedirectCommand.execute);
+            this.jm.config(FactoryUtil.getFactory(jm.RouterConfig));
+            this.jm.config(FactoryUtil.getFactory(jm.InterceptorConfig));
+            this.jm.run(FactoryUtil.getFactory(jm.config.TokenLoginCommand));
+            this.jm.run(FactoryUtil.getFactory(jm.config.StateRedirectCommand));
         }
 
         addFactory(classType: any) {
@@ -97,4 +109,6 @@ module jm {
             this.jm.directive(className.NG_NAME, FactoryUtil.getDirective(className));
         }
     }
+
+    new Main();
 }

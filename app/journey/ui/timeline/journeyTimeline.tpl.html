@@ -1,13 +1,21 @@
 <div class="col-sm-12">
     <h3 class="text-center">All Moments</h3>
-    <ul class="list-inline well">
-        <li data-ng-repeat="moment in journey.moments">
-            <a data-ui-sref="MOMENT_DETAIL({momentId: moment._id})" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.created | date:'medium'}}">
-                <img src="" width="40" height="40" class="img-rounded" />
+    <button data-ng-click="prevMoment()" data-ng-show="journey.moments.length > 1" data-ng-disabled="selectedIndex <= 0" class="jm-timeline-btn left"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <ul class="list-inline well jm-timeline">
+        <jm-timeline-select data-ng-show="selectedIndex > -1"></jm-timeline-select>
+        <jm-timeline-moment data-ng-repeat="moment in journey.moments" data-jm-moment="moment"></jm-timeline-moment>
+        <!--<li data-ng-repeat="moment in journey.moments" class="jm-timeline-li">
+            <a data-ui-sref="MOMENT_DETAIL({momentId: moment._id})" data-ng-if="moment.isPublic || moment.isAlias" data-ng-click="setSelected(moment)" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.descript}} {{moment.created | date:'medium'}}">
+                <img src="" class="img-rounded jm-moment-img" data-ng-class="getMomentClass(moment)" />
+                <span data-ng-if="!moment.isPublic" class="fa fa-lock jm-moment-img-lock"></span>
             </a>
-        </li>
+            <span data-ng-if="!moment.isPublic && !moment.isAlias" popover-placement="top" popover-trigger="mouseenter" popover="This moment is private. :(" class="jm-moment-lock">
+                <span class="fa fa-lock"></span>
+            </span>
+        </li>-->
         <li>
-            <a data-ui-sref="MOMENT_CREATE({journeyId: journey._id})" data-ng-show="hasEdit" popover-placement="top" popover-trigger="mouseenter" popover="Add a new moment to your journey!" class="btn btn-primary">+</a>
+            <a data-ui-sref="MOMENT_EDIT({journeyId: journey._id})" data-ng-show="hasEdit && (journey.isAlias || journey.isJoined)" popover-placement="top" popover-trigger="mouseenter" popover="Add a new moment to your journey!" class="btn btn-primary">+</a>
         </li>
     </ul>
+    <button data-ng-click="nextMoment()" data-ng-show="journey.moments.length > 1" data-ng-disabled="selectedIndex === journey.moments.length - 1" class="jm-timeline-btn right"><span class="glyphicon glyphicon-chevron-right"></span></button>
 </div>

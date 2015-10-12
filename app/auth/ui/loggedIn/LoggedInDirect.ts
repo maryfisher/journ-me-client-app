@@ -1,58 +1,43 @@
-module jm {
-    export module auth {
+module jm.auth {
 
-        import IAnimateService = ng.IAnimateService;
-        import NGConst = jm.common.NGConst;
+    import IAnimateService = ng.IAnimateService;
+    import NGConst = jm.common.NGConst;
+    import IDirective = ng.IDirective;
 
-        export class LoggedInDirect implements ng.IDirective {
+    export class LoggedInDirect implements IDirective {
 
-            static NG_NAME: string = 'jmLoggedInShow';
+        static NG_NAME: string = 'jmLoggedInShow';
 
-            private authModel: AuthModel;
-            private $animate: IAnimateService;
-            private showElm: boolean;
-            private element: ng.IAugmentedJQuery;
+        private authModel: AuthModel;
+        private $animate: IAnimateService;
+        private ngIf: any;
 
-            restrict: string = 'A';
+        transclude: any;
+        priority: number;
+        terminal: boolean;
+        restrict: string;
 
-            link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-                this.showElm = attrs[LoggedInDirect.NG_NAME] === 'true';
-                this.element = element;
-                //This is not working for some reason
-                //scope.$watch(this.isLoggedIn, this.animateClass);
-                //so for now it stays ugly
-                var authModel = this.authModel;
-                var $animate = this.$animate;
-                var showElm = this.showElm;
-                scope.$watch(function () {
-                    return authModel.isLoggedIn();
-                }, function () {
-                    var remove = (authModel.isLoggedIn() && !showElm) || (!authModel.isLoggedIn() && showElm);
-                    $animate[remove ? 'addClass' : 'removeClass'](element, 'ng-hide', {
-                        tempClasses: 'ng-hide-animate'
-                    })
-                });
-            }
+        link = (scope: ng.IScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes, ctrl: {}, $transclude: ng.ITranscludeFunction) => {
+            var showElm: boolean = attrs[LoggedInDirect.NG_NAME] === 'true';
+            attrs['ngIf'] = (): boolean => {
+                return !((this.isLoggedIn() && !showElm) || (!this.isLoggedIn() && showElm));
+            };
+            this.ngIf.link.call(this.ngIf, scope, element, attrs, ctrl, $transclude);
+        };
 
-            isLoggedIn() {
-                return this.authModel.isLoggedIn();
-            }
+        isLoggedIn = (): boolean => {
+            return this.authModel.isLoggedIn();
+        }
 
-            animateClass() {
-                console.log(this.element);
-                var remove = (this.authModel.isLoggedIn() && !this.showElm) || (!this.authModel.isLoggedIn() && this.showElm);
-                this.$animate[remove ? 'addClass' : 'removeClass'](this.element, 'ng-hide', {
-                    tempClasses: 'ng-hide-animate'
-                })
-            }
+        constructor($injector: ng.auto.IInjectorService) {
+            this.authModel = $injector.get < AuthModel >(AuthModel.NG_NAME);
+            this.$animate = $injector.get < IAnimateService >(NGConst.$ANIMATE);
+            this.ngIf = $injector.get < IDirective >('ngIfDirective')[0];
 
-            constructor($injector: ng.auto.IInjectorService) {
-                this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
-                this.$animate = $injector.get < IAnimateService > (NGConst.$ANIMATE);
-
-                _.bindAll(this, 'isLoggedIn');
-                _.bindAll(this, 'animateClass');
-            }
+            this.transclude = this.ngIf.transclude;
+            this.priority = this.ngIf.priority;
+            this.terminal = this.ngIf.terminal;
+            this.restrict = this.ngIf.restrict;
         }
     }
 }

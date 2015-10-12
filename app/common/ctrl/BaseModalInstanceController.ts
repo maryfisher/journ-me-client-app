@@ -1,5 +1,7 @@
-module jm.common {
+module jm.common.ctrl {
     'use strict';
+
+    import NGConst = jm.common.NGConst;
 
     export interface IBaseModalInstanceScope extends ng.IScope {
         cancel();
@@ -7,17 +9,18 @@ module jm.common {
 
     export class BaseModalInstanceController extends BaseController {
 
+        static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE];
+
         constructor($scope: IBaseModalInstanceScope, private $modalInstance: angular.ui.bootstrap.IModalServiceInstance) {
             super($scope);
-            this.addScopeMethod('cancel');
-            _.bindAll(this, 'close');
+            this.addScopeMethods('cancel');
         }
 
-        cancel() {
+        cancel = () => {
             this.$modalInstance.dismiss('dismiss');
         }
 
-        close() {
+        close = () => {
             this.$modalInstance.close();
         }
     }

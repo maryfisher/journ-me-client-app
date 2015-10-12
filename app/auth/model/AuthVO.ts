@@ -1,34 +1,23 @@
-module jm {
-    export module auth {
+///<reference path="..\..\common\model\BaseVO"/>
+module jm.auth {
 
-        import IAuthVO = jm.auth.IAuthVO;
+    import IAuthVO = jm.auth.IAuthVO;
 
-        export class AuthVO {
-            _id: string;
-            email: string;
-            authToken: string;
-            currentAlias: string;
+    export class AuthVO extends jm.common.BaseVO implements IAuthVO {
+        _id: string;
+        email: string;
+        authToken: string;
+        currentAlias: string;
 
-            constructor(data ? : IAuthVO) {
-                if (data) {
-                    this.parseData(data);
-                }
-            }
+        constructor(data ?: IAuthVO) {
+            super(data);
+        }
 
-            //maybe put this into super class and loop over properties to set them
-            parseData(data: IAuthVO) {
-                this._id = data._id;
-                this.email = data.email;
-                this.currentAlias = data.currentAlias;
-                this.authToken = data.authToken;
-            }
-
-            invalidateData() {
-                this._id = undefined;
-                this.email = undefined;
-                this.currentAlias = undefined;
-                this.authToken = undefined;
-            }
+        invalidateData() {
+            this._id = undefined;
+            this.email = undefined;
+            this.currentAlias = undefined;
+            this.authToken = undefined;
         }
     }
 }

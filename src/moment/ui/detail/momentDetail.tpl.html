@@ -1,9 +1,0 @@
-<div class="col-sm-12 panel">
-    <span class="pull-right">{{moment.created | date:'medium'}}</span>
-    <h2 class="text-center">What happened was ...</h2>
-    <hr></hr>
-    <p class="text-center">{{moment.descript}}</p>
-    <button data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey._id, momentId:moment._id})" data-ng-show="moment.isAlias" class="btn btn-default pull-right">
-        <span class="glyphicon glyphicon-pencil"></span>
-    </button>
-</div>

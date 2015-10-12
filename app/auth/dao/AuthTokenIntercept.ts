@@ -1,26 +1,25 @@
 /// <reference path="../model/AuthModel.ts" />
-module jm {
-    export module auth {
-        'use strict';
+module jm.auth {
+    'use strict';
 
-        import AuthModel = jm.auth.AuthModel;
+    import AuthModel = jm.auth.AuthModel;
 
-        export class AuthTokenIntercept implements ng.IHttpInterceptor {
-            static NG_NAME: string = 'authTokenIntercept';
+    export class AuthTokenIntercept implements ng.IHttpInterceptor {
+        static NG_NAME: string = 'authTokenIntercept';
 
-            authModel: AuthModel;
+        private authModel: AuthModel;
 
-            constructor($injector: ng.auto.IInjectorService) {
-                //this not working because of circular injection :(
-                //this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
-            }
+        constructor($injector: ng.auto.IInjectorService) {
+            //TODO FIXME
+            //this not working because of circular injection :(
+            //this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
+        }
 
-            request(config) {
-                /*if (this.authModel.isLoggedIn()) {
-                    config.headers['x-jm-auth-token'] = this.authModel.authToken;
-                }*/
-                return config;
-            }
+        request(config) {
+            /*if (this.authModel.isLoggedIn()) {
+             config.headers['x-jm-auth-token'] = this.authModel.authToken;
+             }*/
+            return config;
         }
     }
 }

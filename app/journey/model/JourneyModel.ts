@@ -2,6 +2,7 @@ module jm.journey {
     'use strict';
 
     import AliasDetailVO = jm.user.AliasDetailVO;
+    import AliasBaseVO = jm.user.AliasBaseVO;
     import IPromise = angular.IPromise;
 
     export class JourneyModel {
@@ -14,35 +15,33 @@ module jm.journey {
         private currentAlias: AliasDetailVO;
 
         constructor($injector: ng.auto.IInjectorService) {
-            this.journeyService = $injector.get < JourneyDAO > (JourneyDAO.NG_NAME);
-            this.journeyActionService = $injector.get < JourneyActionDAO > (JourneyActionDAO.NG_NAME);
+            this.journeyService = $injector.get < JourneyDAO >(JourneyDAO.NG_NAME);
+            this.journeyActionService = $injector.get < JourneyActionDAO >(JourneyActionDAO.NG_NAME);
 
             this.currentJourney = new JourneyDetailVO();
-
-            _.bindAll(this, 'setCurrentJourney', 'setCurrentJourneyBase');
         }
 
-        private setCurrentJourneyBase(data: IJourneyDetailVO) {
-            this.currentJourney.parseData(data);
+        private setCurrentJourneyBase = (data: IJourneyDetailVO) => {
+            this.currentJourney.parseBaseData(data);
             if (this.currentAlias) {
                 this.currentJourney.updateAlias(this.currentAlias);
             }
         }
 
-        private setCurrentJourney(data: IJourneyDetailVO) {
-            this.setCurrentJourneyBase(data);
+        private setCurrentJourney = (data: IJourneyDetailVO) => {
+            this.currentJourney.parseJson(data);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
                 this.currentJourney.updateFromAlias(this.currentAlias);
             }
         }
 
-        getCurrentJourney(id ? : string): JourneyDetailVO {
+        getCurrentJourney(id ?: string): JourneyDetailVO {
             if (id) {
                 if (this.currentJourney._id !== id) {
                     this.currentJourney.invalidateData();
                 }
-                this.journeyService.getJourney(id).$promise.then(this.setCurrentJourney);
+                this.journeyService.getJourney(id).then(this.setCurrentJourney);
             }
             return this.currentJourney;
         }
@@ -53,7 +52,10 @@ module jm.journey {
         }
 
         updateJourney(journey): IPromise < void > {
-            return this.journeyService.updateJourney(journey).then(this.setCurrentJourneyBase);
+            var updateJourney: JourneyDetailVO = new JourneyDetailVO();
+            updateJourney.parseBaseData(journey);
+            updateJourney.alias = undefined;
+            return this.journeyService.updateJourney(updateJourney).then(this.setCurrentJourneyBase);
         }
 
         getJourney(id): IJourneyDetailVO {
@@ -63,7 +65,12 @@ module jm.journey {
             if (id === this.currentJourney._id) {
                 return this.currentJourney;
             }
-            return this.journeyService.getJourney(id);
+            var journey: JourneyDetailVO = new JourneyDetailVO();
+            this.journeyService.getJourney(id).then(
+                (data: IJourneyDetailVO) => {
+                    journey.parseJson(data);
+                });
+            return journey;
         }
 
         refreshJourney(currentAlias: AliasDetailVO) {
@@ -74,13 +81,12 @@ module jm.journey {
             this.currentJourney.updateFromAlias(this.currentAlias);
         }
 
-        followJourney(journey ? : IJourneyDetailVO): IPromise < any > {
+        followJourney(journey ?: IJourneyDetailVO): IPromise < any > {
             if (!journey) {
                 journey = this.currentJourney;
             }
             var alias: AliasDetailVO = this.currentAlias;
             return this.journeyActionService.followJourney(journey._id, this.currentAlias._id)
-                //.then(this.followJourneySuccess);
                 .then(function () {
                     if (!journey.followers) {
                         journey.followers = [];
@@ -90,19 +96,12 @@ module jm.journey {
                 });
         }
 
-        /*followJourneySuccess() {
-            //TODO what if it's not this.currentJourney ?
-            this.currentJourney.followers.push(this.currentAlias);
-            this.currentJourney.isFollowing = true;
-        }*/
-
-        unfollowJourney(journey ? : IJourneyDetailVO) {
+        unfollowJourney(journey ?: IJourneyDetailVO) {
             if (!journey) {
                 journey = this.currentJourney;
             }
             var alias: AliasDetailVO = this.currentAlias;
             return this.journeyActionService.unfollowJourney(journey._id, this.currentAlias._id)
-                //.then(this.unfollowJourneySuccess);
                 .then(function () {
                     var index, len;
                     for (index = 0, len = journey.followers.length; index < len; ++index) {
@@ -115,19 +114,7 @@ module jm.journey {
                 });
         }
 
-        /*unfollowJourneySuccess() {
-            //TODO what if it's not this.currentJourney ?
-            var index, len;
-            for (index = 0, len = this.currentJourney.followers.length; index < len; ++index) {
-                if (this.currentJourney.followers[index]._id === this.currentAlias._id) {
-                    break;
-                }
-            }
-            this.currentJourney.followers.splice(index, 1);
-            this.currentJourney.isFollowing = false;
-        }*/
-
-        linkJourney(userLinkJourney: JourneyBaseVO, journey ? : JourneyDetailVO) {
+        linkJourney(userLinkJourney: JourneyBaseVO, journey ?: JourneyDetailVO) {
             if (!journey) {
                 journey = this.currentJourney;
             }
@@ -156,12 +143,73 @@ module jm.journey {
 
         unlinkJourney(journey: JourneyDetailVO, userLinkJourney: IJourneyBaseVO) {
             return this.journeyActionService.unlinkJourney(userLinkJourney._id, journey._id).then(
-                function (response) {
-                    journey.linkedToJourneys = response.data.linkedToJourneys;
-                    journey.linkedFromJourneys = response.data.linkedFromJourneys;
+                function (data: IJourneyDetailVO) {
+                    journey.linkedToJourneys = data.linkedToJourneys;
+                    journey.linkedFromJourneys = data.linkedFromJourneys;
                     journey.updateLinks();
 
                     journey.aliasJourneyLink = undefined;
+                }
+            );
+        }
+
+        requestJoin(journey: JourneyDetailVO) {
+            var alias: AliasDetailVO = this.currentAlias;
+            return this.journeyActionService.requestJoin(journey._id, this.currentAlias._id).then(
+                function () {
+                    journey.joinRequests.push(alias);
+                    journey.sendRequest = true;
+                }
+            );
+        }
+
+        leaveJourney(journey: JourneyDetailVO) {
+            var alias: AliasDetailVO = this.currentAlias;
+            var updateLeaveJourney = this.updateLeaveJourney;
+            return this.journeyActionService.leaveJourney(journey._id, this.currentAlias._id).then(
+                function () {
+                    updateLeaveJourney(journey, alias._id);
+                    for (var i: number = 0; i < alias.joinedJourneys.length; i++) {
+                        if (alias.joinedJourneys[i]._id == journey._id) {
+                            break;
+                        }
+                    }
+                    alias.joinedJourneys.splice(i, 1);
+                }
+            );
+        }
+
+        removeJoinedAlias(alias: AliasBaseVO) {
+            var journey: JourneyDetailVO = this.currentJourney;
+            var updateLeaveJourney = this.updateLeaveJourney;
+            return this.journeyActionService.leaveJourney(this.currentJourney._id, alias._id).then(
+                function () {
+                    updateLeaveJourney(journey, alias._id);
+                }
+            );
+        }
+
+        updateLeaveJourney = (journey: JourneyDetailVO, aliasId: string) => {
+            for (var i: number = 0; i < journey.joinedAliases.length; i++) {
+                if (journey.joinedAliases[i]._id == aliasId) {
+                    break;
+                }
+            }
+            journey.joinedAliases.splice(i, 1);
+            journey.isJoined = false;
+        }
+
+        acceptJoinRequest(requester: AliasBaseVO) {
+            var journey: JourneyDetailVO = this.currentJourney;
+            return this.journeyActionService.acceptJoinRequest(journey._id, requester._id).then(
+                function () {
+                    for (var i: number = 0; i < journey.joinRequests.length; i++) {
+                        if (journey.joinRequests[i]._id == requester._id) {
+                            break;
+                        }
+                    }
+                    journey.joinRequests.splice(i, 1);
+                    journey.joinedAliases.push(requester);
                 }
             );
         }

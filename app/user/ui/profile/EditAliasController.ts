@@ -16,42 +16,18 @@ module jm.user.ctrl {
         constructor(private $scope: IEditAliasScope, private aliasModel: AliasModel) {
             super($scope);
             $scope.alias = this.aliasModel.getCurrentAlias();
-            this.addScopeMethod('saveChanges');
-            _.bindAll(this, 'upload');
+            this.addScopeMethods('saveChanges');
         }
 
-        saveChanges() {
+        saveChanges = () => {
             //TODO
             if (this.$scope.file) { // && !this.$scope.file.$error) {
                 this.upload(this.$scope.file);
             }
         }
 
-        upload(file: File) {
+        upload = (file: File) => {
             this.aliasModel.updateAlias(file);
         }
     }
-
 }
-
-/*(function (angular, undefined) {
-    'use strict';
-
-    var app = angular.module('jmUser');
-
-    app.controller('jmEditAliasController', function ($scope, jmAliasModel) {
-        $scope.alias = jmAliasModel.getCurrentAlias();
-
-        $scope.saveChanges = function () {
-            if ($scope.file && !$scope.file.$error) {
-                $scope.upload($scope.file);
-            }
-        };
-
-        $scope.upload = function (file) {
-            jmAliasModel.updateAlias(file);
-        };
-    });
-
-
-}(window.angular));*/

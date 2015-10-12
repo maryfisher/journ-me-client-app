@@ -1,34 +1,32 @@
 /// <reference path="../const/RouteConst.ts" />
-module jm {
-    export module common {
+module jm.common {
 
-        import IStateService = angular.ui.IStateService;
-        import IInjectorService = ng.auto.IInjectorService;
+    import IStateService = angular.ui.IStateService;
+    import IInjectorService = ng.auto.IInjectorService;
 
-        export class RouteUtil {
+    export class RouteUtil {
 
-            static NG_NAME: string = 'routeUtil';
+        static NG_NAME: string = 'routeUtil';
 
-            private $state: IStateService;
+        private $state: IStateService;
 
-            constructor($injector: IInjectorService) {
-                this.$state = $injector.get < IStateService > ('$state');
-            }
-
-            redirectTo(state: string, params ? ) {
-                this.$state.go(state, params);
-            }
-
-            redirectToJourney(params ? ) {
-                this.$state.go(RouteConst.JOURNEY_DETAIL, params);
-            }
-
-            reload() {
-                this.$state.go(this.$state.$current, null, {
-                    reload: true
-                });
-            }
-
+        constructor($injector: IInjectorService) {
+            this.$state = $injector.get < IStateService > (NGConst.$STATE);
         }
+
+        redirectTo(state: string, params ? ) {
+            this.$state.go(state, params);
+        }
+
+        redirectToJourney(params ? ) {
+            this.$state.go(RouteConst.JOURNEY_DETAIL, params);
+        }
+
+        reload() {
+            this.$state.go(this.$state.$current, null, {
+                reload: true
+            });
+        }
+
     }
 }

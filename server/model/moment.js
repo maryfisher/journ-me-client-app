@@ -4,9 +4,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var MomentSchema = new Schema({
-    descript: {
-        type: String
-    },
     created: {
         type: Date,
         default: Date.now
@@ -18,7 +15,18 @@ var MomentSchema = new Schema({
     alias: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
-    }
+    },
+    isPublic: {
+        type: Boolean
+    },
+    empathies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Empathy'
+    }],
+    blinks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Blink'
+    }]
 });
 
 mongoose.model('Moment', MomentSchema);

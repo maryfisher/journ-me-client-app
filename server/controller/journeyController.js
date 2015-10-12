@@ -6,10 +6,12 @@ var mongoose = require('mongoose'),
 
 exports.read = function (req, res) {
     req.journey
-        .populate('alias', '_id name')
+        .populate('alias', '_id name image')
         .populate('moments')
-        .populate('followers', '_id name')
+        .populate('followers', '_id name image')
         .populate('linkedToJourneys', '_id alias name descript')
+        .populate('joinRequests', '_id name image')
+        .populate('joinedAliases', '_id name image')
         .populate({
                 path: 'linkedFromJourneys',
                 select: '_id alias name descript'
@@ -115,6 +117,63 @@ exports.unfollow = function (req, res) {
             var index = alias.followedJourneys.indexOf(journey._id);
             alias.followedJourneys.splice(index, 1);
             alias.save(function (err) {
+                res.status(200).send();
+            });
+        }
+    });
+};
+
+exports.requestJoin = function (req, res) {
+    var journey = req.journey;
+    journey.joinRequests.push(req.alias._id);
+
+    journey.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            res.status(200).send();
+        }
+    });
+};
+
+exports.leaveJourney = function (req, res) {
+    var journey = req.journey;
+    var alias = req.alias;
+    journey.joinedAliases.splice(journey.joinedAliases.indexOf(alias._id), 1);
+
+    journey.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            var index = alias.joinedJourneys.indexOf(journey._id);
+            alias.joinedJourneys.splice(index, 1);
+            alias.save(function (err) {
+                res.status(200).send();
+            });
+        }
+    });
+};
+
+exports.acceptJoinRequest = function (req, res) {
+    var journey = req.journey;
+    journey.joinedAliases.push(req.alias._id);
+    journey.joinRequests.splice(journey.joinRequests.indexOf(req.alias._id), 1);
+
+    journey.save(function (err) {
+        if (err) {
+            console.log(err);
+            return res.status(400).send({
+                message: ''
+            });
+        } else {
+            req.alias.joinedJourneys.push(journey._id);
+            req.alias.save(function (err) {
                 res.status(200).send();
             });
         }

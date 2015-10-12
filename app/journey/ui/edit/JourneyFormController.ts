@@ -5,34 +5,32 @@ module jm.journey.ctrl {
     import NGConst = jm.common.NGConst;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
-    export interface IJourneyFormScope extends jm.common.IBaseModalInstanceScope, IBaseJourneyScope {
+    export interface IJourneyFormScope extends jm.common.ctrl.IBaseModalInstanceScope, IBaseJourneyScope {
         hasJourney: boolean;
         //journey: IJourneyBaseVO;
         journeyForm: ng.IFormController;
         save();
     }
 
-    export class JourneyFormController extends jm.common.BaseModalInstanceController {
+    export class JourneyFormController extends jm.common.ctrl.BaseModalInstanceController {
 
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME];
 
         constructor(private $scope: IJourneyFormScope,
-            $modalInstance: IModalServiceInstance,
-            private journeyModel: JourneyModel,
-            private routeUtil: RouteUtil) {
+                    $modalInstance: IModalServiceInstance,
+                    private journeyModel: JourneyModel,
+                    private routeUtil: RouteUtil) {
             super($scope, $modalInstance);
             $scope.hasJourney = (!!$scope.journeyStr);
-            if (!$scope.hasJourney) {
-                $scope.journey = new JourneyBaseVO();
-            } else {
-                $scope.journey = new JourneyBaseVO(angular.fromJson($scope.journeyStr));
+            $scope.journey = new JourneyBaseVO();
+            if ($scope.hasJourney) {
+                $scope.journey.parseJson(angular.fromJson($scope.journeyStr));
             }
 
-            this.addScopeMethod('save');
-            _.bindAll(this, 'saveSuccess');
+            this.addScopeMethods('save');
         }
 
-        save() {
+        save = () => {
             if (this.$scope.journeyForm.$valid) {
                 if (!this.$scope.hasJourney) {
                     this.journeyModel.createJourney(this.$scope.journey).then(this.saveSuccess);
@@ -42,7 +40,7 @@ module jm.journey.ctrl {
             }
         }
 
-        saveSuccess() {
+        saveSuccess = () => {
             this.routeUtil.redirectToJourney(this.journeyModel.getCurrentJourney()._id);
             this.close();
         }

@@ -7,10 +7,10 @@ var mongoose = require('mongoose'),
 exports.read = function (req, res) {
     try {
         req.alias
-            .populate('journeys', '_id name descript alias linkedToJourneys linkedFromJourneys')
+            .populate('journeys', '_id name descript alias linkedToJourneys linkedFromJourneys isPublic')
             .populate({
                 path: 'followedJourneys',
-                select: '_id alias descript name'
+                select: '_id alias descript name isPublic'
             }, function (err, alias) {
                 res.status(200).send(alias);
             });

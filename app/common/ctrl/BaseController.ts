@@ -1,14 +1,13 @@
-module jm {
-    export module common {
-        export class BaseController {
+module jm.common {
+    export class BaseController {
 
-            constructor(private $baseScope: ng.IScope) {
+        constructor(private $baseScope: ng.IScope) {
 
-            }
+        }
 
-            addScopeMethod(methodName: string) {
-                _.bindAll(this, methodName);
-                this.$baseScope[methodName] = this[methodName];
+        addScopeMethods(...methodNames: string[]) {
+            for (var i: number = 0; i < methodNames.length; i++) {
+                this.$baseScope[methodNames[i]] = this[methodNames[i]];
             }
         }
     }

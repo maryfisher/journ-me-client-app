@@ -1,92 +1,80 @@
-module jm {
-    export module journey {
-        'use strict';
-        export module ctrl {
-
-            import NGConst = jm.common.NGConst;
-
-            export interface IJourneyDetailScope extends ng.IScope {
-                journey: JourneyDetailVO;
-                selectedLinkedJourney: JourneyBaseVO;
-            }
-
-            export class JourneyDetailController extends jm.common.BaseController {
-                static $inject = [NGConst.$SCOPE, JourneyModel.NG_NAME, NGConst.$STATE_PARAMS];
-
-                constructor(private $scope: IJourneyDetailScope, private journeyModel: JourneyModel, $stateParams: angular.ui.IStateParamsService) {
-                    super($scope);
-
-                    $scope.journey = this.journeyModel.getCurrentJourney($stateParams['journeyId']);
-
-                    this.addScopeMethod('setSelected');
-                    this.addScopeMethod('isNotSelected');
-                    this.addScopeMethod('followJourney');
-                    this.addScopeMethod('unfollowJourney');
-                    this.addScopeMethod('unlinkJourney');
-                }
-
-                setSelected(journey: JourneyBaseVO) {
-                    if (this.$scope.selectedLinkedJourney === journey) {
-                        this.$scope.selectedLinkedJourney = undefined;
-                    } else {
-                        this.$scope.selectedLinkedJourney = journey;
-                    }
-                }
-
-                isNotSelected(id) {
-                    return !(this.$scope.selectedLinkedJourney && this.$scope.selectedLinkedJourney._id === id);
-                }
-
-                followJourney() {
-                    this.journeyModel.followJourney();
-                }
-
-                unfollowJourney() {
-                    this.journeyModel.unfollowJourney();
-                }
-
-                unlinkJourney() {
-                    this.journeyModel.unlinkJourney(this.$scope.journey, this.$scope.journey.aliasJourneyLink);
-                }
-            }
-        }
-    }
-
-}
-/*(function (angular, undefined) {
+/// <reference path="../../../auth/model/AuthModel.ts" />
+module jm.journey.ctrl {
     'use strict';
 
-    var app = angular.module('jmJourney');
+    import NGConst = jm.common.NGConst;
+    import AuthModel = jm.auth.AuthModel;
 
-    app.controller('jmJourneyDetailController', function ($scope, jmJourneyModel, $stateParams) {
-        $scope.journey = jmJourneyModel.getCurrentJourney($stateParams.journeyId);
+    export interface IJourneyDetailScope extends ng.IScope {
+        journey: JourneyDetailVO;
+        selectedLinkedJourney: JourneyBaseVO;
+    }
 
-        $scope.followJourney = function () {
-            jmJourneyModel.followJourney();
-        };
+    export class JourneyDetailController extends jm.common.BaseController {
+        static $inject = [NGConst.$SCOPE, JourneyModel.NG_NAME, AuthModel.NG_NAME, NGConst.$STATE_PARAMS];
 
-        $scope.unfollowJourney = function () {
-            jmJourneyModel.unfollowJourney();
-        };
+        constructor(private $scope: IJourneyDetailScope, private journeyModel: JourneyModel, private authModel: AuthModel, $stateParams: angular.ui.IStateParamsService) {
+            super($scope);
 
-        $scope.unlinkJourney = function () {
-            jmJourneyModel.unlinkJourney($scope.journey, $scope.journey.aliasJourneyLink);
-        };
+            $scope.journey = this.journeyModel.getCurrentJourney($stateParams['journeyId']);
 
-        $scope.selectedLinkedJourney = undefined;
+            this.addScopeMethods('setSelected', 'isNotSelected', 'followJourney', 'unfollowJourney',
+                'unlinkJourney', 'requestJoin', 'leaveJourney');
+        }
 
-        $scope.setSelected = function (journey) {
-            if ($scope.selectedLinkedJourney === journey) {
-                $scope.selectedLinkedJourney = undefined;
+        setSelected = (journey: JourneyBaseVO) => {
+            if (this.$scope.selectedLinkedJourney === journey) {
+                this.$scope.selectedLinkedJourney = undefined;
             } else {
-                $scope.selectedLinkedJourney = journey;
+                this.$scope.selectedLinkedJourney = journey;
             }
-        };
+        }
 
-        $scope.isNotSelected = function (id) {
-            return !($scope.selectedLinkedJourney && $scope.selectedLinkedJourney._id === id);
-        };
-    });
+        isNotSelected = (id) => {
+            return !(this.$scope.selectedLinkedJourney && this.$scope.selectedLinkedJourney._id === id);
+        }
 
+        followJourney = () => {
+            if (this.checkForLogin()) {
+                this.journeyModel.followJourney();
+            }
+        }
 
-}(window.angular));*/
+        unfollowJourney = () => {
+            if (this.checkForLogin()) {
+                this.journeyModel.unfollowJourney();
+            }
+        }
+
+        unlinkJourney = () => {
+            if (this.checkForLogin()) {
+                this.journeyModel.unlinkJourney(this.$scope.journey, this.$scope.journey.aliasJourneyLink);
+            }
+        }
+
+        requestJoin = () => {
+            if (this.checkForLogin()) {
+                this.journeyModel.requestJoin(this.$scope.journey);
+            }
+        }
+
+        leaveJourney = () => {
+            //TODO prompt: are you sure
+
+            if (this.checkForLogin()) {
+                this.journeyModel.leaveJourney(this.$scope.journey);
+            }
+        }
+
+        checkForLogin = (): boolean => {
+            var isLoggedIn: boolean = this.authModel.isLoggedIn();
+
+            //TODO prompt login modal
+            if (!isLoggedIn) {
+
+            }
+
+            return isLoggedIn;
+        }
+    }
+}
