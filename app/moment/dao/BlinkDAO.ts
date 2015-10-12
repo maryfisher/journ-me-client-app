@@ -1,60 +1,47 @@
 module jm.moment {
     'use strict';
 
-    import IResourceService = angular.resource.IResourceService;
-    import IResourceClass = angular.resource.IResourceClass;
     import ServerConst = jm.common.ServerConst;
     import NGConst = jm.common.NGConst;
-    import IPromise = angular.IPromise;
+    import IPromise = ng.IPromise;
     import IUploadService = angular.angularFileUpload.IUploadService;
     import IUploadPromise = angular.angularFileUpload.IUploadPromise;
     import IFileProgressEvent = angular.angularFileUpload.IFileProgressEvent;
     import IFileUploadConfig = angular.angularFileUpload.IFileUploadConfig;
 
-    export class BlinkDAO extends jm.common.BaseDAO {
+    export class BlinkDAO extends jm.common.BaseResourceDAO {
 
         static NG_NAME: string = 'blinkDAO';
 
-        private blinkDAO: IResourceClass < any > ;
         private Upload: IUploadService;
 
         constructor($injector: ng.auto.IInjectorService) {
             super($injector);
-            var $resource = $injector.get < IResourceService > (NGConst.$RESOURCE);
-            this.Upload = $injector.get < IUploadService > (NGConst.UPLOAD);
-            this.blinkDAO = $resource < any > (
-                ServerConst.BLINK_ID_PATH
-            );
+            this.Upload = $injector.get < IUploadService >(NGConst.UPLOAD);
+            this.path = ServerConst.BLINK_PATH;
         }
 
-        getBlinkByIndex(momentId: string, index: number): IPromise <IBlinkVO>{
-            return this.blinkDAO.get({
-                momentId: momentId,
-                index: index
-            }).$promise;
+        returnBlink = (response): IBlinkVO => {
+            return response.data;
+        };
+
+        getBlinkByIndex(momentId: string, index: number): IPromise <IBlinkVO> {
+            return this.makeCall(this.get, this.path + '?momentId=' + momentId + '&index=' + index, null, this.returnBlink);
         }
 
-        getBlink(id: string): IPromise <IBlinkVO>{
-            return this.blinkDAO.get({
-                blinkId: id
-            }).$promise;
+        getBlink(id: string): IPromise <IBlinkVO> {
+            return this.getOne(id, this.returnBlink);
         }
 
-        getBlinks(momentId: string): IPromise < IBlinkVO[] > {
-            return this.blinkDAO.query({
-                momentId: momentId
-            }).$promise;
-        }
-
-        createBlink(images: File[], blink:BlinkVO): IUploadPromise < any > {
+        createBlink(images: File[], blink: BlinkVO): IUploadPromise < any > {
             return this.uploadBlink(images, blink, ServerConst.BLINK_PATH);
         }
 
-        updateBlink(images: File[], blink:BlinkVO): IUploadPromise < any > {
+        updateBlink(images: File[], blink: BlinkVO): IUploadPromise < any > {
             return this.uploadBlink(images, blink, ServerConst.BLINK_PATH + blink._id);
         }
 
-        uploadBlink(imageFiles: File[], blink:BlinkVO, url: string): IUploadPromise < any > {
+        uploadBlink(imageFiles: File[], blink: BlinkVO, url: string): IUploadPromise < any > {
             //TODO several images
             return this.Upload.upload(<IFileUploadConfig>{
                 url: url,

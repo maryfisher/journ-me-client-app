@@ -1,31 +1,25 @@
-module jm {
-    export module user {
-        'use strict';
+module jm.user {
+    'use strict';
 
-        import IResourceService = angular.resource.IResourceService;
-        import IResourceClass = angular.resource.IResourceClass;
-        import ServerConst = jm.common.ServerConst;
-        import NGConst = jm.common.NGConst;
+    import ServerConst = jm.common.ServerConst;
+    import NGConst = jm.common.NGConst;
+    import IPromise = ng.IPromise;
 
-        export class AliasDAO extends jm.common.BaseDAO {
+    export class AliasDAO extends jm.common.BaseResourceDAO {
 
-            static NG_NAME: string = 'aliasDAO';
+        static NG_NAME: string = 'aliasDAO';
 
-            private aliasDAO: IResourceClass < IAliasVOResource > ;
+        constructor($injector: ng.auto.IInjectorService) {
+            super($injector);
+            this.path = ServerConst.ALIAS_PATH;
+        }
 
-            constructor($injector: ng.auto.IInjectorService) {
-                super($injector);
-                var $resource = $injector.get < IResourceService > (NGConst.$RESOURCE);
-                this.aliasDAO = $resource < IAliasVOResource > (
-                    ServerConst.ALIAS_ID_PATH
-                );
-            }
+        returnAlias = (response): IAliasDetailVO => {
+            return response.data;
+        }
 
-            getAlias(aliasId): IAliasVOResource {
-                return this.aliasDAO.get({
-                    aliasId: aliasId
-                });
-            }
+        getAlias(aliasId: string): IPromise<IAliasDetailVO> {
+            return this.getOne(aliasId, this.returnAlias);
         }
     }
 }

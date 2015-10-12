@@ -15,16 +15,13 @@ exports.list = function (req, res) {
             path: 'alias',
             select: '_id name image'
         }, function (err, empathies) {
-            res.status(200).send({
-                empathies: empathies
-            });
+            res.status(200).send(empathies);
         });
     });
 };
 
 exports.create = function (req, res) {
-    console.log(req.body.empathy);
-    var empathy = new Empathy(req.body.empathy);
+    var empathy = new Empathy(req.body);
     empathy.save(function (err) {
         if (err) {
             console.log(err);

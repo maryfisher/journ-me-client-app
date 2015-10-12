@@ -7,9 +7,6 @@ module jm.moment {
 
         constructor(data ?: IMomentDetailVO) {
             super(data);
-            if (data) {
-                this.parseDetailData(data);
-            }
         }
 
         parseJson(data: IMomentDetailVO) {
@@ -25,9 +22,11 @@ module jm.moment {
         }
 
         addEmpathies(data: IEmpathyVO[]) {
-            this.empathies.length = 0;
+            this.empathies = [];
             for (var i: number = 0; i < data.length; i++) {
-                this.empathies.push(new EmpathyVO(data[i]));
+                var e: EmpathyVO = new EmpathyVO(data[i]);
+                e.parseJson(data[i]);
+                this.empathies.push(e);
             }
         }
 

@@ -35,6 +35,7 @@ module jm.moment {
 
         private addEmpathy = (data: IEmpathyVO) => {
             this.currentMoment.empathies.push(data);
+            data.alias = this.currentAlias;
         }
 
         getCurrentMoment(id ?: string): MomentDetailVO {
@@ -42,7 +43,7 @@ module jm.moment {
                 if (this.currentMoment._id !== id) {
                     this.currentMoment.invalidateData();
                 }
-                this.momentService.getMoment(id).$promise.then(this.setMoment);
+                this.momentService.getMoment(id).then(this.setMoment);
                 this.currentMoment._id = id;
             }
             return this.currentMoment;
@@ -66,7 +67,9 @@ module jm.moment {
 
         updateMoment(moment): IPromise < void > {
             //so as not to send blink details
-            var sendMoment: MomentBaseVO = new MomentBaseVO(moment);
+            var sendMoment: MomentDetailVO = new MomentDetailVO();
+            sendMoment.parseJson(moment);
+            sendMoment.currentBlink = undefined;
             return this.momentService.updateMoment(sendMoment).then(this.setMoment);
         }
 
@@ -101,7 +104,8 @@ module jm.moment {
         }
 
         editBlink(formBlink: BlinkFormVO) {
-            var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
+            var saveBlink: BlinkVO = new BlinkVO();
+            saveBlink.parseJson(formBlink.blink);
             saveBlink.images.length = 0;
             return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {
                 formBlink.blink.parseJson(response.data);

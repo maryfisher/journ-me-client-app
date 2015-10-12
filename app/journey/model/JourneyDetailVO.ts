@@ -29,7 +29,14 @@ module jm.journey {
         }
 
         parseBaseData(data: IJourneyDetailVO) {
-            super.parseJson(data);
+            this._id = data._id;
+            this.name = data.name;
+            this.descript = data.descript;
+            this.isAlias = data.isAlias;
+            this.hasLocation = data.hasLocation;
+            this.location = data.location;
+            this.isPublic = data.isPublic;
+            this.join = data.join;
         }
 
         private parseDetailData(data: IJourneyDetailVO) {

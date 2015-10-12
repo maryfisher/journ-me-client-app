@@ -22,10 +22,9 @@ module jm.journey.ctrl {
                     private routeUtil: RouteUtil) {
             super($scope, $modalInstance);
             $scope.hasJourney = (!!$scope.journeyStr);
-            if (!$scope.hasJourney) {
-                $scope.journey = new JourneyBaseVO();
-            } else {
-                $scope.journey = new JourneyBaseVO(angular.fromJson($scope.journeyStr));
+            $scope.journey = new JourneyBaseVO();
+            if ($scope.hasJourney) {
+                $scope.journey.parseJson(angular.fromJson($scope.journeyStr));
             }
 
             this.addScopeMethods('save');

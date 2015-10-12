@@ -4,7 +4,6 @@ module jm.moment {
         alias: jm.user.AliasBaseVO;
         moment: string;
         body: string;
-        moods: string[];
         created: Date;
     }
 }

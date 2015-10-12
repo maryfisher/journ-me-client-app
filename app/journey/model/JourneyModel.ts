@@ -41,7 +41,7 @@ module jm.journey {
                 if (this.currentJourney._id !== id) {
                     this.currentJourney.invalidateData();
                 }
-                this.journeyService.getJourney(id).$promise.then(this.setCurrentJourney);
+                this.journeyService.getJourney(id).then(this.setCurrentJourney);
             }
             return this.currentJourney;
         }
@@ -52,7 +52,8 @@ module jm.journey {
         }
 
         updateJourney(journey): IPromise < void > {
-            var updateJourney: JourneyBaseVO = new JourneyBaseVO(journey);
+            var updateJourney: JourneyDetailVO = new JourneyDetailVO();
+            updateJourney.parseBaseData(journey);
             updateJourney.alias = undefined;
             return this.journeyService.updateJourney(updateJourney).then(this.setCurrentJourneyBase);
         }
@@ -64,7 +65,12 @@ module jm.journey {
             if (id === this.currentJourney._id) {
                 return this.currentJourney;
             }
-            return this.journeyService.getJourney(id);
+            var journey: JourneyDetailVO = new JourneyDetailVO();
+            this.journeyService.getJourney(id).then(
+                (data: IJourneyDetailVO) => {
+                    journey.parseJson(data);
+                });
+            return journey;
         }
 
         refreshJourney(currentAlias: AliasDetailVO) {
@@ -137,9 +143,9 @@ module jm.journey {
 
         unlinkJourney(journey: JourneyDetailVO, userLinkJourney: IJourneyBaseVO) {
             return this.journeyActionService.unlinkJourney(userLinkJourney._id, journey._id).then(
-                function (response) {
-                    journey.linkedToJourneys = response.data.linkedToJourneys;
-                    journey.linkedFromJourneys = response.data.linkedFromJourneys;
+                function (data: IJourneyDetailVO) {
+                    journey.linkedToJourneys = data.linkedToJourneys;
+                    journey.linkedFromJourneys = data.linkedFromJourneys;
                     journey.updateLinks();
 
                     journey.aliasJourneyLink = undefined;
@@ -150,7 +156,7 @@ module jm.journey {
         requestJoin(journey: JourneyDetailVO) {
             var alias: AliasDetailVO = this.currentAlias;
             return this.journeyActionService.requestJoin(journey._id, this.currentAlias._id).then(
-                function (response) {
+                function () {
                     journey.joinRequests.push(alias);
                     journey.sendRequest = true;
                 }
@@ -161,7 +167,7 @@ module jm.journey {
             var alias: AliasDetailVO = this.currentAlias;
             var updateLeaveJourney = this.updateLeaveJourney;
             return this.journeyActionService.leaveJourney(journey._id, this.currentAlias._id).then(
-                function (response) {
+                function () {
                     updateLeaveJourney(journey, alias._id);
                     for (var i: number = 0; i < alias.joinedJourneys.length; i++) {
                         if (alias.joinedJourneys[i]._id == journey._id) {
@@ -177,7 +183,7 @@ module jm.journey {
             var journey: JourneyDetailVO = this.currentJourney;
             var updateLeaveJourney = this.updateLeaveJourney;
             return this.journeyActionService.leaveJourney(this.currentJourney._id, alias._id).then(
-                function (response) {
+                function () {
                     updateLeaveJourney(journey, alias._id);
                 }
             );
@@ -196,7 +202,7 @@ module jm.journey {
         acceptJoinRequest(requester: AliasBaseVO) {
             var journey: JourneyDetailVO = this.currentJourney;
             return this.journeyActionService.acceptJoinRequest(journey._id, requester._id).then(
-                function (response) {
+                function () {
                     for (var i: number = 0; i < journey.joinRequests.length; i++) {
                         if (journey.joinRequests[i]._id == requester._id) {
                             break;

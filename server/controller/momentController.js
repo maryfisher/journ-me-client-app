@@ -16,13 +16,8 @@ exports.read = function (req, res) {
 };
 
 exports.create = function (req, res) {
-    var moment = new Moment(req.body.moment);
+    var moment = new Moment(req.body);
 
-    //aliasCtrl.aliasByID(req, res, function () {
-    //moment.alias = req.alias._id;
-    //moment.alias = req.body.aliasId;
-    //journeyCtrl.journeyByID(req, res, function () {
-    //moment.journey = req.journey;
     moment.save(function (err) {
         if (err) {
             console.log(err);
@@ -39,10 +34,6 @@ exports.create = function (req, res) {
             }, moment.journey);
         }
     });
-    //}, req.body.journeyId);
-
-    //}, req.body.aliasId);
-
 };
 
 exports.update = function (req, res) {

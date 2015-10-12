@@ -8,7 +8,6 @@ module jm.moment {
         alias: AliasBaseVO;
         moment: string;
         body: string;
-        moods: string[];
         created: Date;
 
         constructor(data ?: IEmpathyVO) {
@@ -17,7 +16,11 @@ module jm.moment {
 
         parseJson(data: IEmpathyVO) {
             super.parseJson(data);
-            this.alias = new AliasBaseVO(data.alias);
+            if (!data) {
+                return;
+            }
+            this.alias = new AliasBaseVO();
+            this.alias.parseJson(data.alias);
         }
     }
 }

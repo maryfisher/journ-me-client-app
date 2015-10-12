@@ -1,4 +1,3 @@
-/// <reference path="../dao/IAliasVOResource.ts" />
 /// <reference path="../../journey/model/JourneyModel.ts" />
 /// <reference path="../../moment/model/MomentModel.ts" />
 module jm.user {
@@ -30,7 +29,7 @@ module jm.user {
             this.currentAlias = new AliasDetailVO();
         }
 
-        private setAlias = (data: IAliasVOResource) => {
+        private setAlias = (data: IAliasDetailVO) => {
             this.currentAlias.parseJson(data);
             this.journeyModel.refreshJourney(this.currentAlias);
             this.momentModel.refreshMoment(this.currentAlias);
@@ -43,7 +42,7 @@ module jm.user {
         getCurrentAlias(id ?: string): AliasDetailVO {
             if (id) {
                 this.currentAlias._id = id;
-                this.aliasService.getAlias(id).$promise.then(this.setAlias);
+                this.aliasService.getAlias(id).then(this.setAlias);
             }
             return this.currentAlias;
         }
@@ -52,7 +51,13 @@ module jm.user {
             if (id === this.currentAlias._id) {
                 return this.currentAlias;
             }
-            return this.aliasService.getAlias(id);
+            var alias: AliasDetailVO = new AliasDetailVO();
+            this.aliasService.getAlias(id).then(
+                (data: IAliasDetailVO) => {
+                    alias.parseJson(data);
+                }
+            )
+            return alias;
         }
 
         updateAlias(file: File) {
