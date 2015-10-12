@@ -75,16 +75,16 @@ module.exports = function (grunt) {
         ts: {
             dev: {
                 src: [
-                    '<%= app.app %>/common/**/*.ts',
-                    '<%= app.app %>/user/**/*.ts',
-                    '<%= app.app %>/journey/**/*.ts',
-                    '<%= app.app %>/moment/**/*.ts',
-                    '<%= app.app %>/auth/**/*.ts',
-                    '<%= app.app %>/config/**/*.ts',
-                    '<%= app.app %>/Main.ts',
-                    '<%= app.app %>/app.ts',
+                    '<%= app.temp %>/ts/common/**/*.ts',
+                    '<%= app.temp %>/ts/user/**/*.ts',
+                    '<%= app.temp %>/ts/journey/**/*.ts',
+                    '<%= app.temp %>/ts/moment/**/*.ts',
+                    '<%= app.temp %>/ts/auth/**/*.ts',
+                    '<%= app.temp %>/ts/config/**/*.ts',
+                    '<%= app.temp %>/ts/Main.ts',
+                    '<%= app.temp %>/ts/app.ts',
                     '<%= app.lib %>/typings/**/*.ts'],
-                reference: '<%= app.app %>/reference.ts',
+                reference: '<%= app.temp %>/ts/reference.ts',
                 out: '.temp/scripts/build.js',
                 sourceMap: true
             }
@@ -108,11 +108,17 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            dev: {
+            html: {
                 expand: true,
                 cwd: '<%= app.app %>/',
                 src: ['index.html'],
                 dest: '<%= app.temp %>/'
+            },
+            ts: {
+                expand: true,
+                cwd: '<%= app.app %>/',
+                src: ['**/*.ts'],
+                dest: '<%= app.temp %>/ts'
             }
         },
         express: {
@@ -132,7 +138,7 @@ module.exports = function (grunt) {
         watch: {
             ngTemplates: {
                 files: ['<%= app.app %>/**/*.html'],
-                tasks: ['ngtemplates', 'copy:dev']
+                tasks: ['ngtemplates', 'copy:html']
             },
             devSource: {
                 files: ['<%= app.app %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
@@ -156,9 +162,10 @@ module.exports = function (grunt) {
         'clean:dev',
         'tslint',
         'ngtemplates',
+        'copy:ts',
         'ts',
         'less',
-        'copy:dev'
+        'copy:html'
     ]);
 
     grunt.registerTask('run', [
