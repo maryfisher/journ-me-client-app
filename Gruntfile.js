@@ -14,7 +14,6 @@ module.exports = function (grunt) {
         app: {
             src: 'src',
             app: 'app',
-            common: 'common',
             lib: 'lib',
             test: 'test',
             temp: '.temp',
@@ -40,16 +39,6 @@ module.exports = function (grunt) {
                 '<%= app.lib %>/bower_components'
             ]
         },
-        //jshint: {
-        //    options: {
-        //        jshintrc: '.jshintrc'
-        //    },
-        //    all: [
-        //        'Gruntfile.js',
-        //        '<%= app.src %>/**/*.js',
-        //        '<%= app.test %>/**/*.js'
-        //    ]
-        //},
         ngtemplates: {
             all: {
                 cwd: '<%= app.app %>',
@@ -86,7 +75,6 @@ module.exports = function (grunt) {
         ts: {
             dev: {
                 src: [
-                    '<%= app.common %>/**/*.ts',
                     '<%= app.app %>/common/**/*.ts',
                     '<%= app.app %>/user/**/*.ts',
                     '<%= app.app %>/journey/**/*.ts',
@@ -109,29 +97,6 @@ module.exports = function (grunt) {
                 src: ['<%= app.app %>/**/*.ts']
             }
         },
-        //ngAnnotate: {
-        //    all: {
-        //        expand: true,
-        //        cwd: '<%= app.src %>',
-        //        src: ['**/*.js'],
-        //        dest: '<%= app.temp %>/ngAnnotate'
-        //    }
-        //},
-        //preConcat: {
-        //    correct: {
-        //        options: {
-        //            cwd: '<%= app.temp %>/ngAnnotate'
-        //        },
-        //        src: '<%= app.temp %>/ngAnnotate/**/*.js',
-        //        dest: '<%= app.temp %>/scripts/build.js'
-        //    }
-        //},
-        //concat: {
-        //    options: {
-        //        separator: ';' + grunt.util.linefeed,
-        //        sourceMap: true
-        //    }
-        //},
         less: {
             dev: {
                 files: {
@@ -171,7 +136,6 @@ module.exports = function (grunt) {
             },
             devSource: {
                 files: ['<%= app.app %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
-                //tasks: ['jshint', 'ngAnnotate', 'preConcat', 'concat']
                 tasks: ['tslint', 'ts']
             },
             devStyle: {
@@ -190,12 +154,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dev',
-        //'jshint',
         'tslint',
         'ngtemplates',
-        /*'ngAnnotate',
-        'preConcat',
-        'concat',*/
         'ts',
         'less',
         'copy:dev'

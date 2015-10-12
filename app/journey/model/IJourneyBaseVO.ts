@@ -1,4 +1,4 @@
-/// <reference path="../user/IAliasBaseVO.ts" />
+///<reference path="..\..\user\model\IAliasBaseVO.ts"/>
 module jm {
     export module journey {
         export interface IJourneyBaseVO {

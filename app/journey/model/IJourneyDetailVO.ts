@@ -1,5 +1,5 @@
-/// <reference path="../user/IAliasBaseVO.ts" />
-/// <reference path="../moment/IMomentBaseVO.ts" />
+///<reference path="..\..\moment\model\IMomentBaseVO.ts"/>
+///<reference path="..\..\user\model\IAliasBaseVO.ts"/>
 module jm.journey {
     export interface IJourneyDetailVO extends IJourneyBaseVO {
         joinedAliases: jm.user.IAliasBaseVO[];

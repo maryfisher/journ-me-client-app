@@ -1,4 +1,3 @@
-/// <reference path="../../../common/interfaces/journey/IJourneyBaseVO.ts" />
 /// <reference path="../../journey/model/JourneyBaseVO.ts" />
 module jm.user {
 

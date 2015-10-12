@@ -1,4 +1,4 @@
-/// <reference path="../journey/IJourneyBaseVO.ts" />
+///<reference path="..\..\journey\model\IJourneyBaseVO.ts"/>
 module jm.user {
 
     import IJourneyBaseVO = jm.journey.IJourneyBaseVO;
