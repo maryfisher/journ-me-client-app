@@ -112,17 +112,18 @@ module jm.moment.ctrl {
             if (this.$scope.blinkForm.$valid) {
                 return true;
             }
-            if (this.$scope.blinkForm['imageFile0'] && !this.$scope.formBlink.blink.images[0]) {
-                return false;
+            var format: BlinkFormatVO = jm.common.BlinkFormatConst.getFormat(this.$scope.formBlink.blink.format);
+            for (var i: number = 0; i < format.textsRequired; i++) {
+                if (this.$scope.blinkForm['text' + i] && this.$scope.blinkForm['text' + i].$invalid) {
+                    return false;
+                }
             }
-            if (this.$scope.blinkForm['imageFile1'] && !this.$scope.formBlink.blink.images[1]) {
-                return false;
-            }
-            if (this.$scope.blinkForm['text0'] && this.$scope.blinkForm['text0'].$invalid) {
-                return false;
-            }
-            if (this.$scope.blinkForm['text1'] && this.$scope.blinkForm['text1'].$invalid) {
-                return false;
+            for (i = 0; i < format.imagesRequired; i++) {
+                if (this.$scope.blinkForm['imageFile' + i]
+                    && this.$scope.blinkForm['imageFile' + i].$invalid
+                    && !this.$scope.formBlink.blink.images[i]) {
+                    return false;
+                }
             }
             return true;
         }
@@ -133,22 +134,26 @@ module jm.moment.ctrl {
                 return;
             }
             if (this.$scope.isNewBlink) {
-                this.momentModel.createBlink(this.$scope.formBlink);
+                this.momentModel.createBlink(this.$scope.formBlink).then(this.reset);
             } else {
-                this.momentModel.editBlink(this.$scope.formBlink);
+                this.momentModel.editBlink(this.$scope.formBlink).then(this.reset);
             }
+
+        };
+
+        reset = () => {
             this.$scope.canEditBlink = this.$scope.isNewBlink = false;
-        }
+        };
 
         createMomentSuccess = () => {
             this.$scope.moment = this.momentModel.getCurrentMoment();
             this.momentModel.createBlink(this.$scope.formBlink).then(this.createBlinkSuccess);
-        }
+        };
 
         createBlinkSuccess = () => {
             this.$scope.hasMoment = true;
             this.$scope.canEditBlink = false;
-        }
+        };
 
         cancelBlink = () => {
             if (!this.$scope.hasMoment) {

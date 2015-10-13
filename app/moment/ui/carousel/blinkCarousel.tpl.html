@@ -30,13 +30,25 @@
         </div>
         <div data-ng-switch-when="4"></div>
         <div data-ng-switch-when="5">
+            <jm-blink-elm data-ng-if="moment.currentBlink.texts[0]"
+                          text="{{moment.currentBlink.texts[0]}}"
+                          ratio="{{100}}"></jm-blink-elm>
             <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{100}}"></jm-blink-elm>
+            <jm-blink-elm data-ng-if="moment.currentBlink.texts[1]"
+                          text="{{moment.currentBlink.texts[1]}}"
+                          ratio="{{100}}"></jm-blink-elm>
         </div>
         <div data-ng-switch-when="6">
+            <jm-blink-elm data-ng-if="moment.currentBlink.texts[0]"
+                          text="{{moment.currentBlink.texts[0]}}"
+                          ratio="{{100}}"></jm-blink-elm>
             <jm-blink-elm image="{{moment.currentBlink.images[0]}}"
                           ratio="{{moment.currentBlink.ratio}}"></jm-blink-elm>
             <jm-blink-elm image="{{moment.currentBlink.images[0]}}"
                           ratio="{{98 - moment.currentBlink.ratio}}"></jm-blink-elm>
+            <jm-blink-elm data-ng-if="moment.currentBlink.texts[1]"
+                          text="{{moment.currentBlink.texts[1]}}"
+                          ratio="{{100}}"></jm-blink-elm>
         </div>
         <div style="clear: both"></div>
     </div>
