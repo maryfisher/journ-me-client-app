@@ -94,11 +94,11 @@ module jm {
                     templateUrl: 'moment/ui/blink/momentBlinks.tpl.html',
                     controller: 'MomentBlinksController'
                 })
-                .state(RouteConst.MOMENT_EMPATHIES, {
+                .state(RouteConst.MOMENT_FEEDBACK, {
                     parent: RouteConst.MOMENT_DETAIL,
-                    url: RouteConst.MOMENT_EMPATHIES_PATH,
-                    templateUrl: 'moment/ui/empathy/momentEmpathies.tpl.html',
-                    controller: 'MomentEmpathiesController'
+                    url: RouteConst.MOMENT_FEEDBACK_PATH,
+                    templateUrl: 'moment/ui/feedback/momentFeedback.tpl.html',
+                    controller: 'MomentFeedbackController'
                 });
             this.$stateProvider.state(RouteConst.MOMENT_EDIT, {
                 url: RouteConst.MOMENT_EDIT_PATH,

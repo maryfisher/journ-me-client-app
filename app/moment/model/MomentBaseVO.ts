@@ -2,6 +2,15 @@ module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
 
+    export interface IMomentBaseVO {
+        _id: string;
+        isAlias: boolean;
+        alias: string;
+        journey: string;
+        created: string;
+        isPublic: boolean;
+    }
+
     export class MomentBaseVO implements IMomentBaseVO {
 
         _id: string;

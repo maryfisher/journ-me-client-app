@@ -1,28 +1,28 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Empathy = mongoose.model('Empathy'),
+    Feedback = mongoose.model('Feedback'),
     Moment = mongoose.model('Moment'),
     momentCtrl = require('./momentController');
 
 
 exports.list = function (req, res) {
 
-    Empathy.find({
+    Feedback.find({
         'moment': req.query['momentId']
-    }, function (err, empathies) {
-        Empathy.populate(empathies, {
+    }, function (err, feedback) {
+        Feedback.populate(feedback, {
             path: 'alias',
             select: '_id name image'
-        }, function (err, empathies) {
-            res.status(200).send(empathies);
+        }, function (err, feedback) {
+            res.status(200).send(feedback);
         });
     });
 };
 
 exports.create = function (req, res) {
-    var empathy = new Empathy(req.body);
-    empathy.save(function (err) {
+    var feedback = new Feedback(req.body);
+    feedback.save(function (err) {
         if (err) {
             console.log(err);
             return res.status(400).send({
@@ -30,12 +30,12 @@ exports.create = function (req, res) {
             });
         } else {
             momentCtrl.momentByID(req, res, function () {
-                console.log('POST creating new empathy: ' + empathy);
-                req.moment.empathies.push(empathy);
+                console.log('POST creating new empathy: ' + feedback);
+                req.moment.feedback.push(feedback);
                 req.moment.save(function (err) {
-                    res.status(200).send(empathy);
+                    res.status(200).send(feedback);
                 });
-            }, empathy.moment);
+            }, feedback.moment);
         }
     });
 };
@@ -48,13 +48,13 @@ exports.remove = function (req, res) {
 
 };
 
-exports.empathyByID = function (req, res, next, id) {
-    Empathy.findOne({
+exports.feedbackByID = function (req, res, next, id) {
+    Feedback.findOne({
         _id: id
-    }).exec(function (err, empathy) {
+    }).exec(function (err, feedback) {
         if (err) return next(err);
-        if (!empathy) return next(new Error('Failed to load empathy ' + id));
-        req.empathy = empathy;
+        if (!feedback) return next(new Error('Failed to load empathy ' + id));
+        req.feedback = feedback;
         next();
     });
 };

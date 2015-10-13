@@ -1,16 +1,31 @@
 ///<reference path="..\..\moment\model\MomentBaseVO.ts"/>
-///<reference path="..\..\user\model\IAliasBaseVO.ts"/>
 module jm.journey {
 
     import IAliasDetailVO = jm.user.IAliasDetailVO;
+    import IAliasBaseVO = jm.user.IAliasBaseVO;
     import MomentBaseVO = jm.moment.MomentBaseVO;
+    import IMomentBaseVO = jm.moment.IMomentBaseVO;
+
+    export interface IJourneyDetailVO extends IJourneyBaseVO {
+        joinedAliases: IAliasBaseVO[];
+        joinRequests: IAliasBaseVO[];
+        moments: IMomentBaseVO[];
+        followers: IAliasBaseVO[];
+        linkedToJourneys: IJourneyBaseVO[];
+        linkedFromJourneys: IJourneyBaseVO[];
+        joinedLinkedJourneys: IJourneyBaseVO[];
+        aliasJourneyLink: IJourneyBaseVO;
+        isFollowing: boolean;
+        isAlias: boolean;
+
+    }
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
-        joinedAliases: jm.user.IAliasBaseVO[] = [];
-        joinRequests: jm.user.IAliasBaseVO[] = [];
-        moments: jm.moment.IMomentBaseVO[] = [];
-        followers: jm.user.IAliasBaseVO[] = [];
+        joinedAliases: IAliasBaseVO[] = [];
+        joinRequests: IAliasBaseVO[] = [];
+        moments: IMomentBaseVO[] = [];
+        followers: IAliasBaseVO[] = [];
         linkedToJourneys: IJourneyBaseVO[] = [];
         linkedFromJourneys: IJourneyBaseVO[] = [];
 

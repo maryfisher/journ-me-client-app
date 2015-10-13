@@ -6,7 +6,6 @@ var mongoose = require('mongoose'),
     momentCtrl = require('./momentController'),
     fs = require('fs');
 
-
 exports.list = function (req, res) {
     if (!req.query['index']) {
         Blink.find({
@@ -78,6 +77,7 @@ exports.create = function (req, res) {
         var blinkJson = JSON.parse(req.body.blink);
         var blink = new Blink(blinkJson);
         momentCtrl.momentByID(req, res, function (err) {
+            console.log('create' + blink.moment);
             var moment = req.moment;
             blink.index = moment.blinks.length;
             blink.images = [];
@@ -115,13 +115,13 @@ exports.update = function (req, res) {
         req.blink.format = jsonBlink.format;
         req.blink.ratio = jsonBlink.ratio;
         req.blink.states = jsonBlink.states;
+
         if (base64Image1) {
             req.blink.images[0] = base64Image1;
         }
         if (base64Image2) {
             req.blink.images[1] = base64Image2;
         }
-
         req.blink.save(function (err) {
             if (err) {
                 console.log(err);

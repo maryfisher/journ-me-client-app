@@ -3,7 +3,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var EmpathySchema = new Schema({
+var FeedbackSchema = new Schema({
     alias: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Alias'
@@ -12,14 +12,14 @@ var EmpathySchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Moment'
     },
-    moods: [{
+    states: [{
         type: String
     }],
     /* maybe for later when we want to have recursive empathies
-    empathy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Empathy'
-    },*/
+     empathy: {
+     type: mongoose.Schema.Types.ObjectId,
+     ref: 'Feedback'
+     },*/
     body: {
         type: String
     },
@@ -29,6 +29,6 @@ var EmpathySchema = new Schema({
     }
 });
 
-mongoose.model('Empathy', EmpathySchema);
+mongoose.model('Feedback', FeedbackSchema);
 
-module.exports = EmpathySchema;
+module.exports = FeedbackSchema;

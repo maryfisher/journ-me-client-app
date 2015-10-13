@@ -3,14 +3,14 @@
 module.exports = function (app) {
 
     var momentCtrl = require('../../controller/momentController');
-    var empathyCtrl = require('../../controller/empathyController');
+    var feedbackCtrl = require('../../controller/feedbackController');
     var blinkCtrl = require('../../controller/blinkController'),
         multiparty = require('connect-multiparty');
 
     var moment = '/api/moment/';
     var state = '/api/state/';
     var momentId = moment + ':momentId/';
-    var empathy = '/api/empathy/';
+    var feedback = '/api/feedback/';
     var blink = '/api/blink/';
 
     app.route(momentId).get(momentCtrl.read);
@@ -20,10 +20,10 @@ module.exports = function (app) {
 
     app.route(state).get(momentCtrl.listStates);
 
-    app.route(empathy).get(empathyCtrl.list);
-    app.route(empathy).post(empathyCtrl.create);
-    app.route(empathy + ':empathyId/').post(empathyCtrl.update);
-    app.param('empathyId', empathyCtrl.empathyByID);
+    app.route(feedback).get(feedbackCtrl.list);
+    app.route(feedback).post(feedbackCtrl.create);
+    app.route(feedback + ':feedbackId/').post(feedbackCtrl.update);
+    app.param('feedbackId', feedbackCtrl.feedbackByID);
 
     app.route(blink).get(blinkCtrl.list);
     app.route(blink + ':blinkId/').get(blinkCtrl.read);

@@ -8,7 +8,7 @@
     require('./model/journey');
     require('./model/moment');
     require('./model/alias');
-    require('./model/empathy');
+    require('./model/feedback');
     require('./model/blink');
     require('./model/state');
 

@@ -2,6 +2,17 @@ module jm.journey {
 
     import IAliasBaseVO = jm.user.IAliasBaseVO;
 
+    export interface IJourneyBaseVO {
+        _id: string;
+        name: string;
+        descript: string;
+        alias: IAliasBaseVO;
+        hasLocation: boolean;
+        location: string;
+        isPublic: boolean;
+        join: number;
+    }
+
     export class JourneyBaseVO implements IJourneyBaseVO {
         _id: string;
         name: string;

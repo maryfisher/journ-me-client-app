@@ -4,6 +4,12 @@ module jm.user {
     import IJourneyBaseVO = jm.journey.IJourneyBaseVO;
     import JourneyBaseVO = jm.journey.JourneyBaseVO;
 
+    export interface IAliasDetailVO extends IAliasBaseVO {
+        journeys: IJourneyBaseVO[];
+        followedJourneys: IJourneyBaseVO[];
+        joinedJourneys: IJourneyBaseVO[];
+    }
+
     export class AliasDetailVO extends AliasBaseVO implements IAliasDetailVO {
         journeys: IJourneyBaseVO[] = [];
         followedJourneys: IJourneyBaseVO[] = [];

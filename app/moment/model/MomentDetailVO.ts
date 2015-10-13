@@ -1,7 +1,13 @@
 module jm.moment {
+
+    export interface IMomentDetailVO extends IMomentBaseVO {
+        feedback: IFeedbackVO[];
+        blinks: string[];
+    }
+
     export class MomentDetailVO extends MomentBaseVO implements IMomentDetailVO {
 
-        empathies: IEmpathyVO[] = [];
+        feedback: IFeedbackVO[] = [];
         blinks: string[] = [];
         currentBlink: BlinkVO;
 
@@ -18,19 +24,20 @@ module jm.moment {
             if (!data) {
                 return;
             }
-            this.addEmpathies(data.empathies);
+            this.addFeedback(data.feedback);
         }
 
-        addEmpathies(data: IEmpathyVO[]) {
-            this.empathies = [];
+        addFeedback(data: IFeedbackVO[]) {
+            this.feedback = [];
             for (var i: number = 0; i < data.length; i++) {
-                this.empathies.push(new EmpathyVO(data[i]));
+                var f: FeedbackVO = new FeedbackVO(data[i]);
+                this.feedback.push(f);
             }
         }
 
         invalidateData() {
             super.invalidateData();
-            this.empathies.length = 0;
+            this.feedback.length = 0;
             this.blinks.length = 0;
             this.currentBlink = undefined;
         }

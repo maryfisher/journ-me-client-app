@@ -11,14 +11,14 @@ module jm.moment {
 
         private currentMoment: MomentDetailVO;
         private momentService: MomentDAO;
-        private empathyService: EmpathyDAO;
+        private feedbackService: FeedbackDAO;
         private blinkService: BlinkDAO;
         private currentAlias: AliasDetailVO;
         private allStates: StateVO[];
 
         constructor($injector: ng.auto.IInjectorService) {
             this.momentService = $injector.get < MomentDAO >(MomentDAO.NG_NAME);
-            this.empathyService = $injector.get < EmpathyDAO >(EmpathyDAO.NG_NAME);
+            this.feedbackService = $injector.get < FeedbackDAO >(FeedbackDAO.NG_NAME);
             this.blinkService = $injector.get < BlinkDAO >(BlinkDAO.NG_NAME);
             this.currentMoment = new MomentDetailVO();
         }
@@ -30,12 +30,12 @@ module jm.moment {
             }
         }
 
-        private setEmpathies = (data: IEmpathyVO[]) => {
-            this.currentMoment.addEmpathies(data);
+        private setFeedback = (data: IFeedbackVO[]) => {
+            this.currentMoment.addFeedback(data);
         }
 
-        private addEmpathy = (data: IEmpathyVO) => {
-            this.currentMoment.empathies.push(data);
+        private addFeedback = (data: IFeedbackVO) => {
+            this.currentMoment.feedback.push(data);
             data.alias = this.currentAlias;
         }
 
@@ -87,19 +87,19 @@ module jm.moment {
             return this.momentService.updateMoment(sendMoment).then(this.setMoment);
         }
 
-        getEmpathies(): IPromise < void > {
+        getFeedback(): IPromise < void > {
             //TODO
             //make a note when empathies have been fetched once so as not to send a request every time?
-            return this.empathyService.getEmpathies(this.currentMoment._id).then(this.setEmpathies);
+            return this.feedbackService.getFeedback(this.currentMoment._id).then(this.setFeedback);
         }
 
-        createEmpathy(empathyBody: string) {
-            var empathy: EmpathyVO = new EmpathyVO();
-            empathy.moment = this.currentMoment._id;
-            empathy.alias = new AliasBaseVO();
-            empathy.alias._id = this.currentAlias._id;
-            empathy.body = empathyBody;
-            return this.empathyService.createEmpathy(empathy).then(this.addEmpathy);
+        createFeedback(body: string) {
+            var f: FeedbackVO = new FeedbackVO();
+            f.moment = this.currentMoment._id;
+            f.alias = new AliasBaseVO();
+            f.alias._id = this.currentAlias._id;
+            f.body = body;
+            return this.feedbackService.createFeedback(f).then(this.addFeedback);
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {

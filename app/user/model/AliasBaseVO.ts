@@ -1,5 +1,11 @@
 module jm.user {
 
+    export interface IAliasBaseVO {
+        _id: string;
+        name: string;
+        image: string;
+    }
+
     export class AliasBaseVO implements IAliasBaseVO {
         _id: string;
         name: string;
