@@ -1,4 +1,5 @@
 ///<reference path="..\..\moment\model\MomentBaseVO.ts"/>
+///<reference path="..\..\user\model\IAliasBaseVO.ts"/>
 module jm.journey {
 
     import IAliasDetailVO = jm.user.IAliasDetailVO;
@@ -23,11 +24,6 @@ module jm.journey {
             super(data);
         }
 
-        parseJson(data: IJourneyDetailVO) {
-            super.parseJson(data);
-            this.parseDetailData(data);
-        }
-
         parseBaseData(data: IJourneyDetailVO) {
             this._id = data._id;
             this.name = data.name;
@@ -37,6 +33,11 @@ module jm.journey {
             this.location = data.location;
             this.isPublic = data.isPublic;
             this.join = data.join;
+        }
+
+        parseJson(data: IJourneyDetailVO) {
+            super.parseJson(data);
+            this.parseDetailData(data);
         }
 
         private parseDetailData(data: IJourneyDetailVO) {

@@ -17,9 +17,7 @@ module jm.moment {
         returnEmpathies = (response): IEmpathyVO[] => {
             var empathies: IEmpathyVO[] = [];
             for (var i = 0; i < response.data.length; i++) {
-                var e: EmpathyVO = new EmpathyVO();
-                e.parseJson(response.data[i]);
-                empathies.push(e);
+                empathies.push(new EmpathyVO(response.data[i]));
             }
             return empathies;
         };

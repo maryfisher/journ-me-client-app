@@ -25,9 +25,7 @@ module jm.moment {
         returnStates = (response): StateVO[] => {
             var states: StateVO[] = [];
             for (var i = 0; i < response.data.length; i++) {
-                var e: StateVO = new StateVO();
-                e.parseJson(response.data[i]);
-                states.push(e);
+                states.push(new StateVO(response.data[i]));
             }
             return states;
         }

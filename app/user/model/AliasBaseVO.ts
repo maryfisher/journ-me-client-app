@@ -1,13 +1,18 @@
-///<reference path="..\..\common\model\BaseVO"/>
 module jm.user {
 
-    export class AliasBaseVO extends jm.common.BaseVO implements IAliasBaseVO {
+    export class AliasBaseVO implements IAliasBaseVO {
         _id: string;
         name: string;
         image: string;
 
         constructor(data ?: IAliasBaseVO) {
-            super(data);
+            this.parseJson(data);
+        }
+
+        parseJson(data: IAliasBaseVO) {
+            if (data) {
+                jm.common.VOUtil.parseJson(data, this);
+            }
         }
 
         invalidateData() {

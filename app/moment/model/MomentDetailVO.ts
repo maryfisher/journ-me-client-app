@@ -24,9 +24,7 @@ module jm.moment {
         addEmpathies(data: IEmpathyVO[]) {
             this.empathies = [];
             for (var i: number = 0; i < data.length; i++) {
-                var e: EmpathyVO = new EmpathyVO(data[i]);
-                e.parseJson(data[i]);
-                this.empathies.push(e);
+                this.empathies.push(new EmpathyVO(data[i]));
             }
         }
 

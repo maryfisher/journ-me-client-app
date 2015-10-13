@@ -82,8 +82,7 @@ module jm.moment {
 
         updateMoment(moment): IPromise < void > {
             //so as not to send blink details
-            var sendMoment: MomentDetailVO = new MomentDetailVO();
-            sendMoment.parseJson(moment);
+            var sendMoment: MomentDetailVO = new MomentDetailVO(moment);
             sendMoment.currentBlink = undefined;
             return this.momentService.updateMoment(sendMoment).then(this.setMoment);
         }
@@ -119,8 +118,7 @@ module jm.moment {
         }
 
         editBlink(formBlink: BlinkFormVO) {
-            var saveBlink: BlinkVO = new BlinkVO();
-            saveBlink.parseJson(formBlink.blink);
+            var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
             saveBlink.images.length = 0;
             return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {
                 formBlink.blink.parseJson(response.data);

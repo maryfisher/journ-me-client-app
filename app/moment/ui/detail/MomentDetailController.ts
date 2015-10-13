@@ -6,6 +6,7 @@ module jm.moment.ctrl {
     export interface IMomentDetailScope extends ng.IScope {
         moment: MomentDetailVO;
         showSlides(): boolean;
+        allStates: IStateVO[];
     }
     export class MomentDetailController extends jm.common.BaseController {
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, NGConst.$STATE];
@@ -14,6 +15,8 @@ module jm.moment.ctrl {
             super($scope);
             $scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
             this.addScopeMethods('showsSlides');
+
+            this.$scope.allStates = momentModel.getStates();
         }
 
         showsSlides = (): boolean => {

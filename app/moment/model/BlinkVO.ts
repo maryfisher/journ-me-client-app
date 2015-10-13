@@ -1,6 +1,5 @@
-///<reference path="..\..\common\model\BaseVO"/>
 module jm.moment {
-    export class BlinkVO extends jm.common.BaseVO implements IBlinkVO {
+    export class BlinkVO implements IBlinkVO {
 
         _id: string;
         format: number = 0;
@@ -12,7 +11,13 @@ module jm.moment {
         states: IStateVO[] = [];
 
         constructor(data ?: IBlinkVO) {
-            super(data);
+            this.parseJson(data);
+        }
+
+        parseJson(data: IBlinkVO) {
+            if (data) {
+                jm.common.VOUtil.parseJson(data, this);
+            }
         }
     }
 }

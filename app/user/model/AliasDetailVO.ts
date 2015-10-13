@@ -18,7 +18,6 @@ module jm.user {
             this.parseDetailData(data);
         }
 
-        //maybe put this into super class and loop over properties to set them
         parseDetailData(data: IAliasDetailVO) {
             if (!data) {
                 return;

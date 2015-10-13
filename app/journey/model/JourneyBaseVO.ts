@@ -2,7 +2,7 @@ module jm.journey {
 
     import IAliasBaseVO = jm.user.IAliasBaseVO;
 
-    export class JourneyBaseVO extends jm.common.BaseVO implements IJourneyBaseVO {
+    export class JourneyBaseVO implements IJourneyBaseVO {
         _id: string;
         name: string;
         descript: string;
@@ -14,7 +14,13 @@ module jm.journey {
         join: number = JourneyJoinEnum.selected;
 
         constructor(data ?: IJourneyBaseVO) {
-            super(data);
+            this.parseJson(data);
+        }
+
+        parseJson(data: IJourneyBaseVO) {
+            if (data) {
+                jm.common.VOUtil.parseJson(data, this);
+            }
         }
 
         invalidateData() {
