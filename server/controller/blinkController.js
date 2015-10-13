@@ -75,17 +75,14 @@ var save = function (req, res, saveBlink) {
 
 exports.create = function (req, res) {
     save(req, res, function (base64Image) {
-        var blink = new Blink(JSON.parse(req.body.blink));
+        var blinkJson = JSON.parse(req.body.blink);
+        var blink = new Blink(blinkJson);
         momentCtrl.momentByID(req, res, function (err) {
             var moment = req.moment;
             blink.index = moment.blinks.length;
             blink.images = [];
             if (base64Image) {
                 blink.images.push(base64Image);
-            }
-            console.log(req.body.blink);
-            for (var i = 0; i < req.body.blink.states.length; i++) {
-                blink.states.push(req.body.blink.states[i]._id);
             }
 
             blink.save(function (err) {
@@ -95,6 +92,7 @@ exports.create = function (req, res) {
                         message: ''
                     });
                 } else {
+                    console.log('POST creating new blink: ' + blink);
                     moment.blinks.push(blink);
                     moment.save(function (err) {
                         blink.populate({
@@ -116,6 +114,7 @@ exports.update = function (req, res) {
         req.blink.texts = jsonBlink.texts;
         req.blink.format = jsonBlink.format;
         req.blink.ratio = jsonBlink.ratio;
+        req.blink.states = jsonBlink.states;
         if (base64Image1) {
             req.blink.images[0] = base64Image1;
         }
@@ -123,10 +122,6 @@ exports.update = function (req, res) {
             req.blink.images[1] = base64Image2;
         }
 
-        req.blink.states.length = 0;
-        for (var i = 0; i < jsonBlink.states.length; i++) {
-            req.blink.states.push(jsonBlink.states[i]._id);
-        }
         req.blink.save(function (err) {
             if (err) {
                 console.log(err);

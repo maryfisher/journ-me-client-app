@@ -30,12 +30,13 @@ module jm.moment.ctrl {
         selectedFeel: IStateVO;
         selectFeel(state: IStateVO);
         removeState(state: IStateVO);
+        allStates: IStateVO[];
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
 
-        private allStates: IStateVO[];
+        private unregisterWatchStates: Function;
 
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
@@ -44,16 +45,19 @@ module jm.moment.ctrl {
 
             $scope.hasMoment = (!!$stateParams['momentId']);
 
+            this.$scope.allStates = momentModel.getStates();
+            this.$scope.missingStates = [];
+
             if ($scope.hasMoment) {
                 $scope.moment = momentModel.getCurrentMoment($stateParams['momentId']);
             } else {
                 $scope.journey = journeyModel.getCurrentJourney();
                 $scope.moment = new MomentDetailVO();
                 $scope.moment.isPublic = $scope.journey.isPublic;
+                if (this.$scope.allStates.length === 0) {
+                    this.unregisterWatchStates = $scope.$watch('allStates', this.updateMissingStates, true);
+                }
             }
-
-            this.allStates = momentModel.getStates();
-            this.$scope.missingStates = [];
 
             $scope.formBlink = new BlinkFormVO();
             if ($scope.moment.blinks.length !== 0) {
@@ -72,6 +76,13 @@ module jm.moment.ctrl {
                 }
             }
         }
+
+        updateMissingStates = () => {
+            if (this.$scope.allStates.length > 0) {
+                this.$scope.missingStates = this.$scope.allStates.slice();
+                this.unregisterWatchStates();
+            }
+        };
 
         cancel = () => {
             if (!this.$scope.hasMoment && !this.$scope.moment._id) {
@@ -159,6 +170,7 @@ module jm.moment.ctrl {
             this.$scope.formBlink.imageFiles.length = 0;
             this.$scope.isNewBlink = true;
             this.$scope.selectedIndex = this.$scope.moment.blinks.length;
+            this.$scope.missingStates = this.$scope.allStates.slice();
         };
 
         editBlink = () => {
@@ -166,16 +178,16 @@ module jm.moment.ctrl {
             this.$scope.formBlink.blink = b;
             this.$scope.canEditBlink = true;
             this.$scope.missingStates.length = 0;
-            for (var j: number = 0; j < this.allStates.length; j++) {
+            for (var j: number = 0; j < this.$scope.allStates.length; j++) {
                 var add: boolean = true;
                 for (var i: number = 0; i < b.states.length; i++) {
-                    if (b.states[i]._id === this.allStates[j]._id) {
+                    if (b.states[i]._id === this.$scope.allStates[j]._id) {
                         add = false;
                         break;
                     }
                 }
                 if (add) {
-                    this.$scope.missingStates.push(this.allStates[j]);
+                    this.$scope.missingStates.push(this.$scope.allStates[j]);
                 }
             }
         };
