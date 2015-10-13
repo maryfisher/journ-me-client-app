@@ -1,5 +1,9 @@
 <div class="row panel">
     <div class="container">
+        <a href="" data-ng-if="hasMoment" class="pull-right" type="button" data-ng-click="cancel()">
+            &rarr; Back to Your Journey {{journey.name}}
+        </a>
+
         <h2 data-ng-if="hasMoment">Edit Your Moment</h2>
 
         <h2 data-ng-if="!hasMoment">Create a New Moment</h2>

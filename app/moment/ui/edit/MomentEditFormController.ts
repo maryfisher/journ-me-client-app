@@ -47,11 +47,11 @@ module jm.moment.ctrl {
 
             this.$scope.allStates = momentModel.getStates();
             this.$scope.missingStates = [];
+            $scope.journey = journeyModel.getCurrentJourney();
 
             if ($scope.hasMoment) {
                 $scope.moment = momentModel.getCurrentMoment($stateParams['momentId']);
             } else {
-                $scope.journey = journeyModel.getCurrentJourney();
                 $scope.moment = new MomentDetailVO();
                 $scope.moment.isPublic = $scope.journey.isPublic;
                 if (this.$scope.allStates.length === 0) {
