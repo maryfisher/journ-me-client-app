@@ -28,19 +28,19 @@
                 <span data-dropdown>
                     <button type="button" data-dropdown-toggle class="btn btn-xs">
                         <span class="caret"></span>
-                </button>
-                <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
-                    <li role="menuitem" data-ng-bind="alias.name"></li>
-                    <li role="menuitem">
-                        <a data-ui-sref="DASHBOARD({aliasId: alias._id})">View Dashboard</a>
-                    </li>
-                    <li role="menuitem">
-                        <a data-ui-sref="ALIAS_UPDATE">Edit Profile</a>
-                    </li>
-                    <li role="menuitem">
-                        <a href="" data-ng-click="logout()">Logout</a>
-                    </li>
-                </ul>
+                    </button>
+                    <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
+                        <li role="menuitem" data-ng-bind="alias.name"></li>
+                        <li role="menuitem">
+                            <a data-ui-sref="DASHBOARD({aliasId: alias._id})">View Dashboard</a>
+                        </li>
+                        <li role="menuitem">
+                            <a data-ui-sref="ALIAS_UPDATE">Edit Profile</a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="" data-ng-click="logout()">Logout</a>
+                        </li>
+                    </ul>
                 </span>
             </div>
             <div data-jm-logged-in-show="false">

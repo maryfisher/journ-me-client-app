@@ -17,7 +17,25 @@
         <li ui-sref-active="active">
             <a ui-sref="MOMENT_LINKS">Links</a>
         </li>-->
+        <div class="jm-feedback-state-btns">
+            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3">
+                <a data-ng-click="addFeedback(state)" href="">{{count.count}} {{count.state.name}}</a>
+            </li>
+            <li data-dropdown>
+                <a data-dropdown-toggle href="" class="more">
+                    <span class="caret-right"></span>
+                </a>
+                <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
+                    <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: moment.states.length - 3 : -1">
+                        <a data-ng-click="addFeedback(state)" href="">{{count.count}} {{count.state.name}}</a>
+                    </li>
+                    <li data-ng-repeat="state in missingStates">
+                        <a data-ng-click="addFeedback(state)" href="">0 {{state.name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </div>
     </ul>
     <div data-ui-view></div>
-    <div style="clear: both"></div>
+    <div class="clear"></div>
 </div>

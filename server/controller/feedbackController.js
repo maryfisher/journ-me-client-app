@@ -10,14 +10,11 @@ exports.list = function (req, res) {
 
     Feedback.find({
         'moment': req.query['momentId']
-    }, function (err, feedback) {
-        Feedback.populate(feedback, {
-            path: 'alias',
-            select: '_id name image'
-        }, function (err, feedback) {
+    }).populate('states')
+        .populate('alias', '_id name image')
+        .exec(function (err, feedback) {
             res.status(200).send(feedback);
         });
-    });
 };
 
 exports.create = function (req, res) {
@@ -30,7 +27,7 @@ exports.create = function (req, res) {
             });
         } else {
             momentCtrl.momentByID(req, res, function () {
-                console.log('POST creating new empathy: ' + feedback);
+                console.log('POST creating new feedback: ' + feedback);
                 req.moment.feedback.push(feedback);
                 req.moment.save(function (err) {
                     res.status(200).send(feedback);

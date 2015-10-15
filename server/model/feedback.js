@@ -13,10 +13,11 @@ var FeedbackSchema = new Schema({
         ref: 'Moment'
     },
     states: [{
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'State'
     }],
     /* maybe for later when we want to have recursive empathies
-     empathy: {
+     feedback: {
      type: mongoose.Schema.Types.ObjectId,
      ref: 'Feedback'
      },*/
