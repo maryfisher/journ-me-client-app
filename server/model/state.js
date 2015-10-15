@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var StateSchema = new Schema({
     type: {
-        type: String
+        type: Number
     },
     name: {
         type: String

@@ -41,31 +41,20 @@
             <h3 data-ng-if="isNewBlink">Create a New Blink</h3>
 
             <h3 data-ng-if="!isNewBlink">Edit Your Blink</h3>
-            <ul class="list-inline jm-states">
-                <li data-ng-repeat="state in formBlink.blink.states" class="jm-state-item {{state.type}}">
-                    #{{state.name}}
-                    <a href="" data-ng-click="removeState(state)">x</a>
-                </li>
-            </ul>
-            <div data-ng-if="missingStates.length > 0" class='dropdown input-group jm-state-input' dropdown>
-                <input type="text"
-                       ng-model="selectedFeel"
-                       typeahead="state as state.name for state in missingStates | filter:{name:$viewValue}"
-                       typeahead-editable="false"
-                       typeahead-on-select='selectFeel($item)'
-                       placeholder="Tells us what you felt"
-                       class="form-control"/>
-                <span class='input-group-btn'>
-                    <button class='btn btn-default dropdown-toggle' dropdown-toggle>
-                        <span class='caret'></span>
-                    </button>
-                </span>
-                <ul class="dropdown-menu" role='menu'>
-                    <li ng-repeat='state in missingStates'>
-                        <a href ng-click='selectFeel(state)'>{{state.name}}</a>
-                    </li>
-                </ul>
-            </div>
+            <jm-state-list can-edit="true"
+                           states="formBlink.blink.states"
+                           on-state-selected="removeState(state)"></jm-state-list>
+            <jm-state-select states="missingStates"
+                             types="0,1,2"
+                             on-state-selected="selectState(state)"
+                             class="jm-state-input"></jm-state-select>
+            <jm-state-select states="missingStates"
+                             types="3"
+                             on-state-selected="selectState(state)"
+                             class="jm-need-input"></jm-state-select>
+            <jm-state-select states="missingStates"
+                             types="4"
+                             on-state-selected="selectState(state)"></jm-state-select>
             <ul class="nav nav-pills">
                 <!--<li ng-class="{'active' : formBlink.format === format}" data-ng-repeat="format in formats">
                         <a href="" data-ng-click="selectFormat(format)">

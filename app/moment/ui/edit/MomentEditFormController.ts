@@ -41,7 +41,7 @@ module jm.moment.ctrl {
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
             this.addScopeMethods('cancel', 'cancelBlink', 'save', 'saveBlink', 'selectFormat', 'createNewBlink',
-                'editBlink', 'isBlinkValid', 'selectFeel', 'removeState');
+                'editBlink', 'isBlinkValid', 'selectState', 'removeState');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
 
@@ -202,7 +202,7 @@ module jm.moment.ctrl {
             this.momentModel.getBlinkByIndex(this.$scope.selectedIndex, this.$scope.formBlink.blink);
         }
 
-        selectFeel = (state: IStateVO) => {
+        selectState = (state: IStateVO) => {
             this.$scope.formBlink.blink.states.push(state);
             this.$scope.missingStates.splice(this.$scope.missingStates.indexOf(state), 1);
             this.$scope.selectedFeel = undefined;

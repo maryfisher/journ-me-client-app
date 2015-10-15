@@ -1,0 +1,6 @@
+<ul class="list-inline jm-states">
+    <li data-ng-repeat="state in states" class="jm-state-item state{{state.type}}">
+        #{{state.name}}
+        <a data-ng-if="canEdit" href="" data-ng-click="selectState(state)">x</a>
+    </li>
+</ul>
