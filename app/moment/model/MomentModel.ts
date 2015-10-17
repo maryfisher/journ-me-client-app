@@ -31,11 +31,11 @@ module jm.moment {
         }
 
         private setFeedback = (data: IFeedbackVO[]) => {
-            this.currentMoment.addFeedback(data);
+            this.currentMoment.parseFeedback(data);
         }
 
         private addFeedback = (data: IFeedbackVO) => {
-            this.currentMoment.feedback.push(data);
+            this.currentMoment.addFeedback(data);
             data.alias = this.currentAlias;
         }
 
@@ -87,18 +87,10 @@ module jm.moment {
             return this.momentService.updateMoment(sendMoment).then(this.setMoment);
         }
 
-        getFeedback(): IPromise < void > {
-            //TODO
-            //make a note when empathies have been fetched once so as not to send a request every time?
-            return this.feedbackService.getFeedback(this.currentMoment._id).then(this.setFeedback);
-        }
-
-        createFeedback(body: string) {
-            var f: FeedbackVO = new FeedbackVO();
+        createFeedback(f: FeedbackVO) {
             f.moment = this.currentMoment._id;
             f.alias = new AliasBaseVO();
             f.alias._id = this.currentAlias._id;
-            f.body = body;
             return this.feedbackService.createFeedback(f).then(this.addFeedback);
         }
 

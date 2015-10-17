@@ -3,7 +3,9 @@
 var mongoose = require('mongoose'),
     Moment = mongoose.model('Moment'),
     journeyCtrl = require('./journeyController'),
-    State = mongoose.model('State');
+    State = mongoose.model('State'),
+    Alias = mongoose.model('Alias'),
+    Feedback = mongoose.model('State');
 
 exports.listStates = function (req, res) {
     State.find({}, function (err, states) {
@@ -13,11 +15,25 @@ exports.listStates = function (req, res) {
 
 exports.read = function (req, res) {
     req.moment
+        .populate('feedback')
         .populate({
             path: 'journey',
             select: 'id'
-        }, function (err) {
-            res.status(200).send(req.moment);
+        }, function (err, moment) {
+
+            Feedback
+                .populate(moment, {
+                    path: 'feedback.alias',
+                    select: '_id name image',
+                    model: Alias
+                }, function (err) {
+                    Feedback.populate(moment, {
+                        path: 'feedback.states',
+                        model: State
+                    }, function (err) {
+                        res.status(200).send(req.moment);
+                    });
+                })
         });
 };
 

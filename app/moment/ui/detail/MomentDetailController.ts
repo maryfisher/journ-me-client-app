@@ -14,10 +14,13 @@ module jm.moment.ctrl {
 
         private unregisterWatchStates: Function;
 
-        constructor(private $scope: IMomentDetailScope, private momentModel: MomentModel, $stateParams: angular.ui.IStateParamsService, private $state: angular.ui.IStateService) {
+        constructor(private $scope: IMomentDetailScope,
+                    private momentModel: MomentModel,
+                    $stateParams: angular.ui.IStateParamsService,
+                    private $state: angular.ui.IStateService) {
             super($scope);
             $scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
-            this.addScopeMethods('showsSlides');
+            this.addScopeMethods('showsSlides', 'addFeedback');
 
             this.$scope.allStates = momentModel.getStates();
             if (this.$scope.allStates.length === 0) {
@@ -58,6 +61,13 @@ module jm.moment.ctrl {
 
         showsSlides = (): boolean => {
             return this.$state.includes(RouteConst.MOMENT_BLINKS);
+        };
+
+        addFeedback = (state: IStateVO) => {
+            var f: FeedbackVO = new FeedbackVO();
+            f.states.push(state);
+            console.log(state);
+            this.momentModel.createFeedback(f);
         };
     }
 }

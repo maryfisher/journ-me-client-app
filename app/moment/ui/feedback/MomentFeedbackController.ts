@@ -9,7 +9,7 @@ module jm.moment.ctrl {
         alias: AliasDetailVO;
         moment: MomentDetailVO;
         addFeedback();
-        feedback: string;
+        feedback: FeedbackVO;
         feedbackForm: ng.IFormController;
     }
 
@@ -20,14 +20,34 @@ module jm.moment.ctrl {
             super($scope);
             $scope.alias = this.aliasModel.getCurrentAlias();
             $scope.moment = this.momentModel.getCurrentMoment();
-            this.momentModel.getFeedback();
-            this.addScopeMethods('addFeedback');
+            $scope.feedback = new FeedbackVO();
+            //this.momentModel.getFeedback();
+            this.addScopeMethods('addFeedback', 'canSendFeedback', 'selectState', 'removeState');
         }
 
         addFeedback = () => {
             if (this.$scope.feedbackForm.$valid) {
                 this.momentModel.createFeedback(this.$scope.feedback);
             }
-        }
+        };
+
+        canSendFeedback = (): boolean => {
+            if (this.$scope.feedbackForm.$invalid) {
+                return false;
+            }
+            if (this.$scope.feedback.states.length === 0) {
+                return false;
+            }
+
+            return true;
+        };
+
+        selectState = (state: IStateVO) => {
+            this.$scope.feedback.states.push(state);
+        };
+
+        removeState = (state: IStateVO) => {
+            this.$scope.feedback.states.splice(this.$scope.feedback.states.indexOf(state), 1);
+        };
     }
 }

@@ -30,7 +30,14 @@ exports.create = function (req, res) {
                 console.log('POST creating new feedback: ' + feedback);
                 req.moment.feedback.push(feedback);
                 req.moment.save(function (err) {
-                    res.status(200).send(feedback);
+                    feedback
+                        .populate('states')
+                        .populate({
+                            path: 'alias',
+                            select: '_id name image'
+                        }, function (err, feedback) {
+                            res.status(200).send(feedback);
+                        });
                 });
             }, feedback.moment);
         }

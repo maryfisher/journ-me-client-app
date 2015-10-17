@@ -18,8 +18,10 @@
             <a ui-sref="MOMENT_LINKS">Links</a>
         </li>-->
         <div class="jm-feedback-state-btns">
-            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3">
-                <a data-ng-click="addFeedback(state)" href="">{{count.count}} {{count.state.name}}</a>
+            <span class="pull-left">People reacted ...</span>
+            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3"
+                class="state{{count.state.type}}">
+                <a data-ng-click="addFeedback(count.state)" href="">{{count.count}}x {{count.state.name}}</a>
             </li>
             <li data-dropdown>
                 <a data-dropdown-toggle href="" class="more">
@@ -27,7 +29,7 @@
                 </a>
                 <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
                     <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: moment.states.length - 3 : -1">
-                        <a data-ng-click="addFeedback(state)" href="">{{count.count}} {{count.state.name}}</a>
+                        <a data-ng-click="addFeedback(count.state)" href="">{{count.count}}x {{count.state.name}}</a>
                     </li>
                     <li data-ng-repeat="state in missingStates">
                         <a data-ng-click="addFeedback(state)" href="">0 {{state.name}}</a>

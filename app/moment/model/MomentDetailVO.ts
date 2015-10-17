@@ -28,27 +28,30 @@ module jm.moment {
             if (!data) {
                 return;
             }
-            this.addFeedback(data.feedback);
+            this.parseFeedback(data.feedback);
         }
 
-        addFeedback(data: IFeedbackVO[]) {
+        parseFeedback(data: IFeedbackVO[]) {
             this.feedback = [];
             this.statesCount = {};
             this.states = [];
             for (var i: number = 0; i < data.length; i++) {
-                var f: FeedbackVO = new FeedbackVO(data[i]);
-                this.feedback.push(f);
-                for (var j: number = 0; j < f.states.length; j++) {
-                    var s: IStateVO = f.states[j];
-                    var c: StateCountVO = this.statesCount[s._id];
-                    if (!c) {
-                        c = this.statesCount[s._id] = new StateCountVO(s);
-                        this.states.push(c);
-                    }
-                    c.addToState();
-                }
+                this.addFeedback(data[i]);
             }
+        }
 
+        addFeedback(data: IFeedbackVO) {
+            var f: FeedbackVO = new FeedbackVO(data);
+            this.feedback.push(f);
+            for (var j: number = 0; j < f.states.length; j++) {
+                var s: IStateVO = f.states[j];
+                var c: StateCountVO = this.statesCount[s._id];
+                if (!c) {
+                    c = this.statesCount[s._id] = new StateCountVO(s);
+                    this.states.push(c);
+                }
+                c.addToState();
+            }
         }
 
         invalidateData() {
