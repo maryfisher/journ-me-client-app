@@ -7,7 +7,7 @@ module jm.moment {
         templateUrl: string = 'moment/ui/edit/format/blinkText.tpl.html';
 
         constructor($injector: ng.auto.IInjectorService) {
-            super();
+            super($injector);
         }
     }
 }

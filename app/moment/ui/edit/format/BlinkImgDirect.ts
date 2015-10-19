@@ -7,7 +7,7 @@ module jm.moment {
         controller: string = 'BlinkImgController';
 
         constructor($injector: ng.auto.IInjectorService) {
-            super();
+            super($injector);
         }
     }
 }

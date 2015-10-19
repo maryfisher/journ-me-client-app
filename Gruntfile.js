@@ -142,7 +142,7 @@ module.exports = function (grunt) {
             },
             devSource: {
                 files: ['<%= app.app %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
-                tasks: ['tslint', 'ts']
+                tasks: ['tslint', 'copy:ts', 'ts']
             },
             devStyle: {
                 files: ['<%= app.app %>/**/*.less'],

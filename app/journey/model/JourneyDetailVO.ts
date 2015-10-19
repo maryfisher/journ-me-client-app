@@ -2,14 +2,30 @@
 module jm.journey {
 
     import IAliasDetailVO = jm.user.IAliasDetailVO;
+    import IAliasBaseVO = jm.user.IAliasBaseVO;
     import MomentBaseVO = jm.moment.MomentBaseVO;
+    import IMomentBaseVO = jm.moment.IMomentBaseVO;
+
+    export interface IJourneyDetailVO extends IJourneyBaseVO {
+        joinedAliases: IAliasBaseVO[];
+        joinRequests: IAliasBaseVO[];
+        moments: IMomentBaseVO[];
+        followers: IAliasBaseVO[];
+        linkedToJourneys: IJourneyBaseVO[];
+        linkedFromJourneys: IJourneyBaseVO[];
+        joinedLinkedJourneys: IJourneyBaseVO[];
+        aliasJourneyLink: IJourneyBaseVO;
+        isFollowing: boolean;
+        isAlias: boolean;
+
+    }
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
-        joinedAliases: jm.user.IAliasBaseVO[] = [];
-        joinRequests: jm.user.IAliasBaseVO[] = [];
-        moments: jm.moment.IMomentBaseVO[] = [];
-        followers: jm.user.IAliasBaseVO[] = [];
+        joinedAliases: IAliasBaseVO[] = [];
+        joinRequests: IAliasBaseVO[] = [];
+        moments: IMomentBaseVO[] = [];
+        followers: IAliasBaseVO[] = [];
         linkedToJourneys: IJourneyBaseVO[] = [];
         linkedFromJourneys: IJourneyBaseVO[] = [];
 
@@ -23,11 +39,6 @@ module jm.journey {
             super(data);
         }
 
-        parseJson(data: IJourneyDetailVO) {
-            super.parseJson(data);
-            this.parseDetailData(data);
-        }
-
         parseBaseData(data: IJourneyDetailVO) {
             this._id = data._id;
             this.name = data.name;
@@ -37,6 +48,11 @@ module jm.journey {
             this.location = data.location;
             this.isPublic = data.isPublic;
             this.join = data.join;
+        }
+
+        parseJson(data: IJourneyDetailVO) {
+            super.parseJson(data);
+            this.parseDetailData(data);
         }
 
         private parseDetailData(data: IJourneyDetailVO) {

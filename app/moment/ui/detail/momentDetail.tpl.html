@@ -1,11 +1,15 @@
 <div class="panel">
-    <div data-ui-view></div>
-    <ul class="nav nav-tabs nav-justified">
+    <ul class="nav nav-tabs">
         <li data-ng-class="{ active: showsSlides() }">
-            <a data-ui-sref="MOMENT_BLINKS">Blinks</a>
+            <a data-ui-sref="MOMENT_BLINKS">
+                <span class="glyphicon glyphicon-picture"></span>
+                <span class="glyphicon glyphicon-align-justify"></span>
+            </a>
         </li>
         <li data-ui-sref-active="active">
-            <a data-ui-sref="MOMENT_EMPATHIES">Empathy</a>
+            <a data-ui-sref="MOMENT_FEEDBACK">
+                <span class="fa fa-comment"></span>
+            </a>
         </li>
         <!--<li ui-sref-active="active">
             <a ui-sref="MOMENT_STATS">Stats</a>
@@ -13,5 +17,38 @@
         <li ui-sref-active="active">
             <a ui-sref="MOMENT_LINKS">Links</a>
         </li>-->
+        <div class="jm-feedback-state-btns">
+            <li>
+                <span class="jm-feedback-note pull-left">People reacted ...</span>
+            </li>
+            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3">
+                <button data-ng-click="addFeedback(count.state)" data-ng-disabled="count.isAlias"
+                        class="state{{count.state.type}}">
+                    {{count.count}}x {{count.state.name}} <span class="jm-state-caret state{{count.state.type}}"></span>
+                </button>
+            </li>
+            <li data-dropdown>
+                <a data-dropdown-toggle href="" class="more">
+                    <span class="caret-right"></span>
+                </a>
+                <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu jm-state-dropdown">
+                    <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: moment.states.length - 3 : -1">
+                        <button data-ng-click="addFeedback(count.state)" data-ng-disabled="count.isAlias"
+                                class="state{{count.state.type}}">
+                            {{count.count}}x {{count.state.name}}
+                            <span class="jm-state-caret state{{count.state.type}}"></span>
+                        </button>
+                    </li>
+                    <li data-ng-repeat="state in missingStates">
+                        <button data-ng-click="addFeedback(state)" data-ng-disabled="moment.isAlias"
+                                class="state{{state.type}}">0} <span class="jm-state-caret state{{state.type}}"></span>
+                            {{state.name}}
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </div>
     </ul>
+    <div data-ui-view></div>
+    <div class="clear"></div>
 </div>

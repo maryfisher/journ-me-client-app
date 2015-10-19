@@ -4,7 +4,7 @@ module jm.common {
         static JOURNEY_ID: string = ':journeyId/';
         static ALIAS_ID: string = ':aliasId/';
         static MOMENT_ID: string = ':momentId/';
-        static EMPATHY_ID: string = ':empathyId/';
+        static FEEDBACK_ID: string = ':feedbackId/';
         static BLINK_ID: string = ':blinkId/';
 
         static API: string = 'api/';
@@ -24,11 +24,13 @@ module jm.common {
         static MOMENT_PATH: string = ServerConst.API + 'moment/';
         static MOMENT_ID_PATH: string = ServerConst.MOMENT_PATH + ServerConst.MOMENT_ID;
 
-        static EMPATHY_PATH: string = ServerConst.API + 'empathy/';
-        static EMPATHY_ID_PATH: string = ServerConst.EMPATHY_PATH + ServerConst.EMPATHY_ID;
+        static FEEDBACK_PATH: string = ServerConst.API + 'feedback/';
+        static FEEDBACK_ID_PATH: string = ServerConst.FEEDBACK_PATH + ServerConst.FEEDBACK_ID;
+
+        static STATE_PATH: string = ServerConst.API + 'state/';
 
         static BLINK_PATH: string = ServerConst.API + 'blink/';
-        static BLINK_ID_PATH: string = ServerConst.BLINK_PATH + ServerConst.EMPATHY_ID;
+        static BLINK_ID_PATH: string = ServerConst.BLINK_PATH + ServerConst.BLINK_ID;
 
         static COOKIE_TOKEN_KEY: string = 'jmAuthToken';
 

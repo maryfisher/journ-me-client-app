@@ -1,0 +1,44 @@
+<div class="col-sm-12">
+    <h5>Feedback shown ({{filteredFeedback.length}})</h5>
+    <jm-state-list can-edit="true"
+                   states="feedback.states"
+                   on-state-selected="removeState(state)"></jm-state-list>
+    <jm-state-select states="allStates"
+                     types="0,1,2,3,4"
+                     on-state-selected="selectState(state)"></jm-state-select>
+    <form name="feedbackForm" data-ng-submit="addFeedback()" novalidate class="row">
+        <div class="col-sm-1">
+            <img data-ng-src="data:image/png;base64, {{alias.image}}" width="40" height="40" class="img-circle"/>
+        </div>
+        <div class="col-sm-10">
+            <textarea name="descript" data-ng-model="feedback.body" required class="form-control"
+                      placeholder="Show Feedback!"></textarea>
+        </div>
+        <div class="col-sm-1">
+            <button data-ng-disabled="!canSendFeedback()" type="submit" class="btn btn-primary">Post</button>
+        </div>
+    </form>
+    <hr></hr>
+    <ul class="list-group">
+        <li data-ng-repeat="feedback in filteredFeedback = (moment.feedback | filter: {body: ''})"
+            class="list-group-item">
+            <jm-state-list states="feedback.states"></jm-state-list>
+            <div class="row">
+                <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias._id})" class="col-sm-1">
+                    <img data-ng-src="data:image/png;base64, {{feedback.alias.image}}" width="40" height="40"
+                         class="img-circle"/>
+                </a>
+
+                <div class="col-sm-11">
+                    <h5>
+                        <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias._id})">
+                            {{feedback.alias.name}}
+                        </a>
+                        <small>{{empathy.created | date:'medium'}}</small>
+                    </h5>
+                    <p>{{feedback.body}}</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

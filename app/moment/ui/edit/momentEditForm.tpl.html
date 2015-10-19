@@ -1,5 +1,9 @@
 <div class="row panel">
     <div class="container">
+        <a href="" data-ng-if="hasMoment" class="pull-right" type="button" data-ng-click="cancel()">
+            &rarr; Back to Your Journey {{journey.name}}
+        </a>
+
         <h2 data-ng-if="hasMoment">Edit Your Moment</h2>
 
         <h2 data-ng-if="!hasMoment">Create a New Moment</h2>
@@ -33,8 +37,26 @@
 <div class="row panel">
     <div class="container">
         <!--<div ng-switch="editBlink"> ng-switch-when="true"-->
-        <form name="blinkForm" data-ng-show="canEditBlink" data-ng-submit="saveBlink()" novalidate>
-            <h3>Create a New Blink</h3>
+        <div data-ng-show="canEditBlink">
+            <h3 data-ng-if="isNewBlink">Create a New Blink</h3>
+
+            <h3 data-ng-if="!isNewBlink">Edit Your Blink</h3>
+            <jm-state-list can-edit="true"
+                           states="formBlink.blink.states"
+                           on-state-selected="removeState(state)"></jm-state-list>
+            <jm-state-select states="missingStates"
+                             types="0,1,2"
+                             on-state-selected="selectState(state)"
+                             class="jm-state-input"></jm-state-select>
+            <div data-ng-if="formBlink.blink.states.length > 0">
+                <jm-state-select states="missingStates"
+                                 types="3"
+                                 on-state-selected="selectState(state)"
+                                 class="jm-need-input"></jm-state-select>
+                <jm-state-select states="missingStates"
+                                 types="4"
+                                 on-state-selected="selectState(state)"></jm-state-select>
+            </div>
             <ul class="nav nav-pills">
                 <!--<li ng-class="{'active' : formBlink.format === format}" data-ng-repeat="format in formats">
                         <a href="" data-ng-click="selectFormat(format)">
@@ -82,29 +104,31 @@
                     </a>
                 </li>
             </ul>
-            <!-- NOTE: Unfortunately this does not work since the value for 'format' is set later when the templateUrl
-             function has already run
-            <jm-blink-format data-ng-repeat="format in formats" format="{{format}}" blink="formBlink" ng-switch-when="format"></jm-blink-format>-->
-            <div data-ng-switch="formBlink.blink.format">
-
-                <jm-blink-format blink="formBlink" ng-switch-when="1"></jm-blink-format>
-                <jm-blink-format blink="formBlink" ng-switch-when="2"></jm-blink-format>
-                <jm-blink-format blink="formBlink" ng-switch-when="3"></jm-blink-format>
-                <jm-blink-format blink="formBlink" ng-switch-when="4"></jm-blink-format>
-                <jm-blink-format blink="formBlink" ng-switch-when="5"></jm-blink-format>
-                <jm-blink-format blink="formBlink" ng-switch-when="6"></jm-blink-format>
-                <jm-blink-format blink="formBlink" ng-switch-default></jm-blink-format>
-            </div>
-            <button data-ng-if="hasMoment" data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">
-                Save Blink
-            </button>
-            <button data-ng-if="!hasMoment" data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">
-                Create Moment
-            </button>
-            <button data-ng-click="cancelBlink()" type="button"
-                    class="btn btn-warning">Cancel
-            </button>
-        </form>
+            <form name="blinkForm" data-ng-submit="saveBlink()" novalidate>
+                <!-- NOTE: Unfortunately this does not work since the value for 'format' is set later when the templateUrl
+                 function has already run
+                <jm-blink-format data-ng-repeat="format in formats" format="{{format}}" blink="formBlink" ng-switch-when="format"></jm-blink-format>-->
+                <div data-ng-switch="formBlink.blink.format">
+                    <jm-blink-format blink="formBlink" ng-switch-when="1"></jm-blink-format>
+                    <jm-blink-format blink="formBlink" ng-switch-when="2"></jm-blink-format>
+                    <jm-blink-format blink="formBlink" ng-switch-when="3"></jm-blink-format>
+                    <jm-blink-format blink="formBlink" ng-switch-when="4"></jm-blink-format>
+                    <jm-blink-format blink="formBlink" ng-switch-when="5"></jm-blink-format>
+                    <jm-blink-format blink="formBlink" ng-switch-when="6"></jm-blink-format>
+                    <jm-blink-format blink="formBlink" ng-switch-default></jm-blink-format>
+                </div>
+                <button data-ng-if="hasMoment" data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">
+                    Save Blink
+                </button>
+                <button data-ng-if="!hasMoment" data-ng-disabled="!isBlinkValid()" type="submit"
+                        class="btn btn-primary">
+                    Create Moment
+                </button>
+                <button data-ng-click="cancelBlink()" type="button"
+                        class="btn btn-warning">Cancel
+                </button>
+            </form>
+        </div>
         <div data-ng-if="!canEditBlink">
             <div class="jm-blink-new">
                 <button data-ng-click="createNewBlink()" class="btn btn-success">+ Blink</button>

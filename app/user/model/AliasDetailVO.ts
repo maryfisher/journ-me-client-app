@@ -4,6 +4,12 @@ module jm.user {
     import IJourneyBaseVO = jm.journey.IJourneyBaseVO;
     import JourneyBaseVO = jm.journey.JourneyBaseVO;
 
+    export interface IAliasDetailVO extends IAliasBaseVO {
+        journeys: IJourneyBaseVO[];
+        followedJourneys: IJourneyBaseVO[];
+        joinedJourneys: IJourneyBaseVO[];
+    }
+
     export class AliasDetailVO extends AliasBaseVO implements IAliasDetailVO {
         journeys: IJourneyBaseVO[] = [];
         followedJourneys: IJourneyBaseVO[] = [];
@@ -18,7 +24,6 @@ module jm.user {
             this.parseDetailData(data);
         }
 
-        //maybe put this into super class and loop over properties to set them
         parseDetailData(data: IAliasDetailVO) {
             if (!data) {
                 return;

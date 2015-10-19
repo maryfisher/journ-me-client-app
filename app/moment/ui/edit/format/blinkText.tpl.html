@@ -1,3 +1,9 @@
 <div class="form-group">
-    <textarea name="text{{id}}" data-ng-model="formBlink.blink.texts[id]" required data-ng-class="size" class="form-control jm-blink-text" placeholder="Tell us how your moment was!"></textarea>
+    <textarea name="text{{id}}"
+              data-ng-keyup="adjustHeight($event)"
+              data-ng-model="formBlink.blink.texts[id]"
+              required
+              data-ng-class="size"
+              class="form-control jm-blink-text"
+              placeholder="Tell us how your moment was!"></textarea>
 </div>

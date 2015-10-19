@@ -52,8 +52,7 @@ module jm.journey {
         }
 
         updateJourney(journey): IPromise < void > {
-            var updateJourney: JourneyDetailVO = new JourneyDetailVO();
-            updateJourney.parseBaseData(journey);
+            var updateJourney: JourneyBaseVO = new JourneyBaseVO(journey);
             updateJourney.alias = undefined;
             return this.journeyService.updateJourney(updateJourney).then(this.setCurrentJourneyBase);
         }

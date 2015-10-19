@@ -12,11 +12,11 @@
     </div>
 
     <div data-ng-show="!formBlink.imageFiles[id] && formBlink.blink.images[id]">
-        <a data-ng-click="deleteImage()" class="btn btn-default jm-blink-img-btn">X</a>
+        <a data-ng-click="deleteImage()" class="btn btn-danger jm-blink-img-btn">X</a>
         <img data-ng-src="data:image/png;base64, {{formBlink.blink.images[id]}}" class="jm-blink-img"/>
     </div>
     <div data-ng-show="formBlink.imageFiles[id]">
-        <a href="" data-ng-click="deleteImageFile()" class="btn btn-default jm-blink-img-btn">X</a>
+        <a href="" data-ng-click="deleteImageFile()" class="btn btn-danger jm-blink-img-btn">X</a>
         <img data-ngf-src="formBlink.imageFiles[id]" class="jm-blink-img">
     </div>
     <span data-ng-show="formBlink.imageFiles[id].size>=2000000"

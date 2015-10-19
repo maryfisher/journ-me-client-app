@@ -19,9 +19,9 @@ var MomentSchema = new Schema({
     isPublic: {
         type: Boolean
     },
-    empathies: [{
+    feedback: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Empathy'
+        ref: 'Feedback'
     }],
     blinks: [{
         type: mongoose.Schema.Types.ObjectId,

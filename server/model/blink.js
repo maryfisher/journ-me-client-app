@@ -17,15 +17,16 @@ var BlinkSchema = new Schema({
     texts: [{
         type: String
     }],
-    moods: [{
-        type: String
-    }],
     ratio: {
         type: Number
     },
     index: {
         type: Number
-    }
+    },
+    states: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'State'
+    }]
 });
 
 mongoose.model('Blink', BlinkSchema);

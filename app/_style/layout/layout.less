@@ -1,4 +1,6 @@
-@import (reference, optional) "/src/_style/vars/colour.less"; //This line is only a hint for IDEs to support LESS variable navigation
+@import (reference, optional) "/src/_style/vars/colour.less";
+
+//This line is only a hint for IDEs to support LESS variable navigation
 body {
     background-color: #CCCCCC;
     padding-top: 70px;
@@ -28,4 +30,18 @@ a:focus {
 .btn {
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.clear {
+    clear: both;
+}
+
+.caret-right {
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+    border-left: 4px solid;
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+    width: 0;
 }

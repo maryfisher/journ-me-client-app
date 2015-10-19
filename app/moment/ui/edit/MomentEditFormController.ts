@@ -25,26 +25,38 @@ module jm.moment.ctrl {
         formats: number[];
         momentForm: IFormController;
         blinkForm: IFormController;
+        missingStates: IStateVO[];
+        isNewBlink: boolean;
+        selectedFeel: IStateVO;
+        selectFeel(state: IStateVO);
+        removeState(state: IStateVO);
+        allStates: IStateVO[];
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
 
-        private isNewBlink: boolean;
+        private unregisterWatchStates: Function;
 
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
             this.addScopeMethods('cancel', 'cancelBlink', 'save', 'saveBlink', 'selectFormat', 'createNewBlink',
-                'editBlink', 'isBlinkValid');
+                'editBlink', 'isBlinkValid', 'selectState', 'removeState');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
+
+            this.$scope.allStates = momentModel.getStates();
+            this.$scope.missingStates = [];
+            $scope.journey = journeyModel.getCurrentJourney();
 
             if ($scope.hasMoment) {
                 $scope.moment = momentModel.getCurrentMoment($stateParams['momentId']);
             } else {
-                $scope.journey = journeyModel.getCurrentJourney();
                 $scope.moment = new MomentDetailVO();
                 $scope.moment.isPublic = $scope.journey.isPublic;
+                if (this.$scope.allStates.length === 0) {
+                    this.unregisterWatchStates = $scope.$watch('allStates', this.updateMissingStates, true);
+                }
             }
 
             $scope.formBlink = new BlinkFormVO();
@@ -65,6 +77,13 @@ module jm.moment.ctrl {
             }
         }
 
+        updateMissingStates = () => {
+            if (this.$scope.allStates.length > 0) {
+                this.$scope.missingStates = this.$scope.allStates.slice();
+                this.unregisterWatchStates();
+            }
+        };
+
         cancel = () => {
             if (!this.$scope.hasMoment && !this.$scope.moment._id) {
                 this.routeUtil.redirectTo(RouteConst.JOURNEY_DETAIL, {
@@ -84,23 +103,27 @@ module jm.moment.ctrl {
         }
 
         isBlinkValid = (): boolean => {
+            if (this.$scope.formBlink.blink.states.length === 0) {
+                return false;
+            }
             if (!this.$scope.blinkForm) {
                 return false;
             }
             if (this.$scope.blinkForm.$valid) {
                 return true;
             }
-            if (this.$scope.blinkForm['imageFile0'] && !this.$scope.formBlink.blink.images[0]) {
-                return false;
+            var format: BlinkFormatVO = jm.common.BlinkFormatConst.getFormat(this.$scope.formBlink.blink.format);
+            for (var i: number = 0; i < format.textsRequired; i++) {
+                if (this.$scope.blinkForm['text' + i] && this.$scope.blinkForm['text' + i].$invalid) {
+                    return false;
+                }
             }
-            if (this.$scope.blinkForm['imageFile1'] && !this.$scope.formBlink.blink.images[1]) {
-                return false;
-            }
-            if (this.$scope.blinkForm['text0'] && this.$scope.blinkForm['text0'].$invalid) {
-                return false;
-            }
-            if (this.$scope.blinkForm['text1'] && this.$scope.blinkForm['text1'].$invalid) {
-                return false;
+            for (i = 0; i < format.imagesRequired; i++) {
+                if (this.$scope.blinkForm['imageFile' + i]
+                    && this.$scope.blinkForm['imageFile' + i].$invalid
+                    && !this.$scope.formBlink.blink.images[i]) {
+                    return false;
+                }
             }
             return true;
         }
@@ -110,23 +133,27 @@ module jm.moment.ctrl {
                 this.momentModel.createMoment(this.$scope.moment, this.$stateParams['journeyId']).then(this.createMomentSuccess);
                 return;
             }
-            if (this.isNewBlink) {
-                this.momentModel.createBlink(this.$scope.formBlink);
+            if (this.$scope.isNewBlink) {
+                this.momentModel.createBlink(this.$scope.formBlink).then(this.reset);
             } else {
-                this.momentModel.editBlink(this.$scope.formBlink);
+                this.momentModel.editBlink(this.$scope.formBlink).then(this.reset);
             }
-            this.$scope.canEditBlink = this.isNewBlink = false;
-        }
+
+        };
+
+        reset = () => {
+            this.$scope.canEditBlink = this.$scope.isNewBlink = false;
+        };
 
         createMomentSuccess = () => {
             this.$scope.moment = this.momentModel.getCurrentMoment();
             this.momentModel.createBlink(this.$scope.formBlink).then(this.createBlinkSuccess);
-        }
+        };
 
         createBlinkSuccess = () => {
             this.$scope.hasMoment = true;
             this.$scope.canEditBlink = false;
-        }
+        };
 
         cancelBlink = () => {
             if (!this.$scope.hasMoment) {
@@ -134,7 +161,7 @@ module jm.moment.ctrl {
                 return;
             }
             if (this.$scope.moment.blinks.length > 0) {
-                this.$scope.canEditBlink = this.isNewBlink = false;
+                this.$scope.canEditBlink = this.$scope.isNewBlink = false;
             }
         }
 
@@ -146,18 +173,44 @@ module jm.moment.ctrl {
             this.$scope.formBlink.blink = new BlinkVO();
             this.$scope.canEditBlink = true;
             this.$scope.formBlink.imageFiles.length = 0;
-            this.isNewBlink = true;
+            this.$scope.isNewBlink = true;
             this.$scope.selectedIndex = this.$scope.moment.blinks.length;
-        }
+            this.$scope.missingStates = this.$scope.allStates.slice();
+        };
 
         editBlink = () => {
-            this.$scope.formBlink.blink = this.$scope.moment.currentBlink;
+            var b: BlinkVO = this.$scope.moment.currentBlink;
+            this.$scope.formBlink.blink = b;
             this.$scope.canEditBlink = true;
-        }
+            this.$scope.missingStates.length = 0;
+            for (var j: number = 0; j < this.$scope.allStates.length; j++) {
+                var add: boolean = true;
+                for (var i: number = 0; i < b.states.length; i++) {
+                    if (b.states[i]._id === this.$scope.allStates[j]._id) {
+                        add = false;
+                        break;
+                    }
+                }
+                if (add) {
+                    this.$scope.missingStates.push(this.$scope.allStates[j]);
+                }
+            }
+        };
 
         getBlink() {
             this.$scope.formBlink.blink = new BlinkVO();
             this.momentModel.getBlinkByIndex(this.$scope.selectedIndex, this.$scope.formBlink.blink);
+        }
+
+        selectState = (state: IStateVO) => {
+            this.$scope.formBlink.blink.states.push(state);
+            this.$scope.missingStates.splice(this.$scope.missingStates.indexOf(state), 1);
+            this.$scope.selectedFeel = undefined;
+        }
+
+        removeState = (state: IStateVO) => {
+            this.$scope.missingStates.push(state);
+            this.$scope.formBlink.blink.states.splice(this.$scope.formBlink.blink.states.indexOf(state), 1);
         }
     }
 }

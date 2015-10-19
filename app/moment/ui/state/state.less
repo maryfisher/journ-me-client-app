@@ -1,0 +1,83 @@
+.jm-states > li {
+    padding: 5px 15px;
+}
+
+.jm-state-item {
+    margin-right: 5px;
+    border-radius: 4px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
+}
+
+.state0 {
+    background-color: rgb(173, 255, 47);
+}
+
+.state0:disabled {
+    background-color: rgba(173, 255, 47, 0.5);
+}
+
+.state1 {
+    background-color: rgb(205, 92, 92);
+}
+
+.state1:disabled {
+    background-color: rgba(205, 92, 92, 0.5);
+}
+
+.state2 {
+    background-color: rgb(218, 165, 32);
+}
+
+.state2:disabled {
+    background-color: rgba(218, 165, 32, 0.5);
+}
+
+.state3 {
+    background-color: rgb(224, 255, 255);
+}
+
+.state3:disabled {
+    background-color: rgba(224, 255, 255, 0.5);
+}
+
+.state4 {
+    background-color: rgb(238, 130, 238);
+}
+
+.state4:disabled {
+    background-color: rgba(238, 130, 238, 0.5);
+}
+
+.jm-state-input {
+    width: 300px;
+}
+
+.jm-state-dropdown {
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
+.jm-state-caret {
+    display: inline-block;
+    height: 0;
+    vertical-align: middle;
+    width: 0;
+}
+
+.jm-state-caret.state1,
+.jm-state-caret.state4 {
+    background-color: transparent;
+    color: red;
+    border-right: 5px solid transparent;
+    border-top: 5px solid;
+    border-left: 5px solid transparent;
+}
+
+.jm-state-caret.state0,
+.jm-state-caret.state3 {
+    background-color: transparent;
+    color: green;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid;
+    border-left: 5px solid transparent;
+}

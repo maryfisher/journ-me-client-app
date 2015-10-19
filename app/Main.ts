@@ -2,6 +2,7 @@ module jm {
     'use strict';
 
     import FactoryUtil = jm.common.FactoryUtil;
+    import FilterUtil = jm.common.FilterUtil;
 
     export class Main {
 
@@ -18,6 +19,7 @@ module jm {
             this.initDAOs();
             this.initModels();
             this.initDirectives();
+            this.initFilter();
             this.initInterceptor();
             this.initConfig();
         }
@@ -58,7 +60,7 @@ module jm {
             this.addFactory(jm.journey.JourneyDAO);
             this.addFactory(jm.journey.JourneyActionDAO);
             this.addFactory(jm.moment.MomentDAO);
-            this.addFactory(jm.moment.EmpathyDAO);
+            this.addFactory(jm.moment.FeedbackDAO);
             this.addFactory(jm.moment.BlinkDAO);
         }
 
@@ -88,6 +90,12 @@ module jm {
             this.addDirective(jm.moment.BlinkTextDirect);
             this.addDirective(jm.moment.BlinkCarouselDirect);
             this.addDirective(jm.moment.BlinkCarouselElementDirect);
+            this.addDirective(jm.moment.StateListDirect);
+            this.addDirective(jm.moment.StateSelectDirect);
+        }
+
+        initFilter() {
+            this.addFilter(FilterUtil.STATE_SELECT_FILTER);
         }
 
         initInterceptor() {
@@ -99,6 +107,10 @@ module jm {
             this.jm.config(FactoryUtil.getFactory(jm.InterceptorConfig));
             this.jm.run(FactoryUtil.getFactory(jm.config.TokenLoginCommand));
             this.jm.run(FactoryUtil.getFactory(jm.config.StateRedirectCommand));
+        }
+
+        addFilter(name: string) {
+            this.jm.filter(name, () => FilterUtil[name]);
         }
 
         addFactory(classType: any) {

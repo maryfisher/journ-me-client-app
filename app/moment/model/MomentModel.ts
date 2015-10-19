@@ -11,13 +11,14 @@ module jm.moment {
 
         private currentMoment: MomentDetailVO;
         private momentService: MomentDAO;
-        private empathyService: EmpathyDAO;
+        private feedbackService: FeedbackDAO;
         private blinkService: BlinkDAO;
         private currentAlias: AliasDetailVO;
+        private allStates: StateVO[];
 
         constructor($injector: ng.auto.IInjectorService) {
             this.momentService = $injector.get < MomentDAO >(MomentDAO.NG_NAME);
-            this.empathyService = $injector.get < EmpathyDAO >(EmpathyDAO.NG_NAME);
+            this.feedbackService = $injector.get < FeedbackDAO >(FeedbackDAO.NG_NAME);
             this.blinkService = $injector.get < BlinkDAO >(BlinkDAO.NG_NAME);
             this.currentMoment = new MomentDetailVO();
         }
@@ -27,15 +28,25 @@ module jm.moment {
             if (this.currentAlias) {
                 this.currentMoment.updateAlias(this.currentAlias);
             }
-        }
+        };
 
-        private setEmpathies = (data: IEmpathyVO[]) => {
-            this.currentMoment.addEmpathies(data);
-        }
-
-        private addEmpathy = (data: IEmpathyVO) => {
-            this.currentMoment.empathies.push(data);
+        private addFeedback = (data: IFeedbackVO) => {
+            this.currentMoment.addFeedback(data);
             data.alias = this.currentAlias;
+        };
+
+        getStates(): StateVO[] {
+            if (!this.allStates) {
+                this.allStates = [];
+                this.momentService.getStates().then(
+                    (data: StateVO[]) => {
+                        for (var i: number = 0; i < data.length; i++) {
+                            this.allStates.push(data[i]);
+                        }
+                    }
+                );
+            }
+            return this.allStates;
         }
 
         getCurrentMoment(id ?: string): MomentDetailVO {
@@ -67,25 +78,16 @@ module jm.moment {
 
         updateMoment(moment): IPromise < void > {
             //so as not to send blink details
-            var sendMoment: MomentDetailVO = new MomentDetailVO();
-            sendMoment.parseJson(moment);
+            var sendMoment: MomentDetailVO = new MomentDetailVO(moment);
             sendMoment.currentBlink = undefined;
             return this.momentService.updateMoment(sendMoment).then(this.setMoment);
         }
 
-        getEmpathies(): IPromise < void > {
-            //TODO
-            //make a note when empathies have been fetched once so as not to send a request every time?
-            return this.empathyService.getEmpathies(this.currentMoment._id).then(this.setEmpathies);
-        }
-
-        createEmpathy(empathyBody: string) {
-            var empathy: EmpathyVO = new EmpathyVO();
-            empathy.moment = this.currentMoment._id;
-            empathy.alias = new AliasBaseVO();
-            empathy.alias._id = this.currentAlias._id;
-            empathy.body = empathyBody;
-            return this.empathyService.createEmpathy(empathy).then(this.addEmpathy);
+        createFeedback(f: FeedbackVO) {
+            f.moment = this.currentMoment._id;
+            f.alias = new AliasBaseVO();
+            f.alias._id = this.currentAlias._id;
+            return this.feedbackService.createFeedback(f).then(this.addFeedback);
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
@@ -104,12 +106,10 @@ module jm.moment {
         }
 
         editBlink(formBlink: BlinkFormVO) {
-            var saveBlink: BlinkVO = new BlinkVO();
-            saveBlink.parseJson(formBlink.blink);
+            var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
             saveBlink.images.length = 0;
             return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {
                 formBlink.blink.parseJson(response.data);
-                console.log(formBlink.blink);
             });
         }
     }
