@@ -1,6 +1,6 @@
 module jm.auth {
 
-    import IAnimateService = ng.IAnimateService;
+    import IAnimateService = angular.animate.IAnimateService;
     import NGConst = jm.common.NGConst;
     import IDirective = ng.IDirective;
 
@@ -30,9 +30,9 @@ module jm.auth {
         }
 
         constructor($injector: ng.auto.IInjectorService) {
-            this.authModel = $injector.get < AuthModel >(AuthModel.NG_NAME);
-            this.$animate = $injector.get < IAnimateService >(NGConst.$ANIMATE);
-            this.ngIf = $injector.get < IDirective >('ngIfDirective')[0];
+            this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);
+            this.$animate = $injector.get < IAnimateService > (NGConst.$ANIMATE);
+            this.ngIf = $injector.get < IDirective > ('ngIfDirective')[0];
 
             this.transclude = this.ngIf.transclude;
             this.priority = this.ngIf.priority;

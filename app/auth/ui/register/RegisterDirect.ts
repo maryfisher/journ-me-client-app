@@ -6,6 +6,7 @@ module jm.auth {
         static NG_NAME: string = 'jmRegister';
 
         restrict: string = 'A';
+        scope: any = {};
 
         constructor($injector: ng.auto.IInjectorService) {
             super($injector, 'RegisterFormController', 'auth/ui/register/registerForm.tpl.html')

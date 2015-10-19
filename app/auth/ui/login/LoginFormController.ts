@@ -26,18 +26,19 @@ module jm.auth.ctrl {
             super($scope, $modalInstance);
 
             $scope.rememberMe = true;
+            this.addScopeMethods('login', 'hasInvalidEmail');
         }
 
 
         hasInvalidEmail = (): boolean => {
             return this.$scope.loginForm['email'].$invalid && this.$scope.loginForm['email'].$touched;
-        }
+        };
 
         login = () => {
             this.authModel.login(this.$scope.email, this.$scope.password, this.$scope.rememberMe).then(
                 this.loginSuccess, this.loginFailure);
 
-        }
+        };
 
         private loginSuccess = () => {
             if (this.authModel.isLoggedIn()) {
@@ -45,7 +46,7 @@ module jm.auth.ctrl {
                 this.routeUtil.reload();
                 this.close();
             }
-        }
+        };
 
         private loginFailure = () => {
             this.$scope.loginForm.$setValidity('pw', false, null);
