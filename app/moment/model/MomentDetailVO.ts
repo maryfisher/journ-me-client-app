@@ -1,4 +1,7 @@
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
 module jm.moment {
+
+    import AliasBaseVO = jm.user.AliasBaseVO;
 
     export interface IMomentDetailVO extends IMomentBaseVO {
         statesCount: Object;
@@ -49,8 +52,30 @@ module jm.moment {
                 if (!c) {
                     c = this.statesCount[s._id] = new StateCountVO(s);
                     this.states.push(c);
+                    if (this.isAlias) {
+                        c.isAlias = true;
+                    }
                 }
                 c.addToState();
+            }
+        }
+
+        updateAlias(alias: AliasBaseVO) {
+            super.updateAlias(alias);
+            if (this.isAlias) {
+                return;
+            }
+            for (var j: number = 0; j < this.feedback.length; j++) {
+                var f: IFeedbackVO = this.feedback[j];
+                if (f.body) {
+                    continue;
+                }
+                if (f.alias._id === alias._id) {
+                    for (var i: number = 0; i < f.states.length; i++) {
+                        var c: StateCountVO = this.statesCount[f.states[i]._id];
+                        c.isAlias = true;
+                    }
+                }
             }
         }
 

@@ -28,16 +28,12 @@ module jm.moment {
             if (this.currentAlias) {
                 this.currentMoment.updateAlias(this.currentAlias);
             }
-        }
-
-        private setFeedback = (data: IFeedbackVO[]) => {
-            this.currentMoment.parseFeedback(data);
-        }
+        };
 
         private addFeedback = (data: IFeedbackVO) => {
             this.currentMoment.addFeedback(data);
             data.alias = this.currentAlias;
-        }
+        };
 
         getStates(): StateVO[] {
             if (!this.allStates) {

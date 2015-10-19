@@ -28,6 +28,10 @@ module jm.moment {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
                 this.alias = new AliasBaseVO(data.alias);
+                this.states = [];
+                for (var i: number = 0; i < data.states.length; i++) {
+                    this.states.push(new StateVO(data.states[i]));
+                }
             }
         }
     }

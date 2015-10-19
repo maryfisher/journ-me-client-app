@@ -19,6 +19,7 @@ module jm.moment.ctrl {
                     $stateParams: angular.ui.IStateParamsService,
                     private $state: angular.ui.IStateService) {
             super($scope);
+            $scope.missingStates = [];
             $scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
             this.addScopeMethods('showsSlides', 'addFeedback');
 

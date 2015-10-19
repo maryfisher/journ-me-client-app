@@ -18,21 +18,32 @@
             <a ui-sref="MOMENT_LINKS">Links</a>
         </li>-->
         <div class="jm-feedback-state-btns">
-            <span class="pull-left">People reacted ...</span>
-            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3"
-                class="state{{count.state.type}}">
-                <a data-ng-click="addFeedback(count.state)" href="">{{count.count}}x {{count.state.name}}</a>
+            <li>
+                <span class="jm-feedback-note pull-left">People reacted ...</span>
+            </li>
+            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3">
+                <button data-ng-click="addFeedback(count.state)" data-ng-disabled="count.isAlias"
+                        class="state{{count.state.type}}">
+                    {{count.count}}x {{count.state.name}} <span class="jm-state-caret state{{count.state.type}}"></span>
+                </button>
             </li>
             <li data-dropdown>
                 <a data-dropdown-toggle href="" class="more">
                     <span class="caret-right"></span>
                 </a>
-                <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
+                <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu jm-state-dropdown">
                     <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: moment.states.length - 3 : -1">
-                        <a data-ng-click="addFeedback(count.state)" href="">{{count.count}}x {{count.state.name}}</a>
+                        <button data-ng-click="addFeedback(count.state)" data-ng-disabled="count.isAlias"
+                                class="state{{count.state.type}}">
+                            {{count.count}}x {{count.state.name}}
+                            <span class="jm-state-caret state{{count.state.type}}"></span>
+                        </button>
                     </li>
                     <li data-ng-repeat="state in missingStates">
-                        <a data-ng-click="addFeedback(state)" href="">0 {{state.name}}</a>
+                        <button data-ng-click="addFeedback(state)" data-ng-disabled="moment.isAlias"
+                                class="state{{state.type}}">0} <span class="jm-state-caret state{{state.type}}"></span>
+                            {{state.name}}
+                        </button>
                     </li>
                 </ul>
             </li>
