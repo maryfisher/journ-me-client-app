@@ -37,15 +37,15 @@ module jm.journey {
         }
 
         requestJoin(journeyId: string, aliasId: string): IPromise < void > {
-            return this.makeCall(this.post, this.getId(journeyId) + '/join/' + aliasId);
+            return this.makeCall(this.post, this.getId(journeyId) + '/requestJoin/' + aliasId);
         }
 
         leaveJourney(journeyId: string, aliasId: string): IPromise < void > {
-            return this.makeCall(this.post, this.getId(journeyId) + '/unjoin/' + aliasId);
+            return this.makeCall(this.post, this.getId(journeyId) + '/removeJoin/' + aliasId);
         }
 
         acceptJoinRequest(journeyId: string, aliasId: string): IPromise < void > {
-            return this.makeCall(this.post, this.getId(journeyId) + '/accept/' + aliasId);
+            return this.makeCall(this.post, this.getId(journeyId) + '/acceptJoin/' + aliasId);
         }
     }
 }
