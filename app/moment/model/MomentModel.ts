@@ -86,9 +86,9 @@ module jm.moment {
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
-            this.blinkService.getBlinkByIndex(this.currentMoment.id, index).then(function (data: BlinkVO) {
+            this.blinkService.getBlink(this.currentMoment.blinks[index]).then(function (data: BlinkVO) {
                 blinkVO.parseJson(data);
-            })
+            });
         }
 
         createBlink(formBlink: BlinkFormVO) {

@@ -25,10 +25,6 @@ module jm.moment {
             return response.data;
         };
 
-        getBlinkByIndex(momentId: string, index: number): IPromise <IBlinkVO> {
-            return this.makeCall(this.get, this.path + '?momentId=' + momentId + '&index=' + index, null, this.returnBlink);
-        }
-
         getBlink(id: string): IPromise <IBlinkVO> {
             return this.getOne(id, this.returnBlink);
         }
