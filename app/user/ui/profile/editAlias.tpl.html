@@ -2,7 +2,7 @@
     <div class="row jm-alias-pic-container">
         <div class="col-sm-4">
             <div data-ng-show="!file && alias.image">
-                <img data-ng-src="data:image/png;base64, {{alias.image}}" class="jm-profile-img" />
+                <img data-ng-src="{{alias.image}}" class="jm-profile-img" />
             </div>
             <div data-ng-show="file">
                 <img data-ngf-src="file" class="jm-img-preview">

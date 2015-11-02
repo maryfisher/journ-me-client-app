@@ -1,5 +1,7 @@
 module jm.moment {
 
+    import ServerConst = jm.common.ServerConst;
+
     export interface IBlinkVO {
         id: string;
         format: number;
@@ -29,6 +31,9 @@ module jm.moment {
         parseJson(data: IBlinkVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
+                for(var i:number = 0; i < this.images.length; i++){
+                    this.images[i] = ServerConst.BLINK_IMG_PATH + this.images[i];
+                }
             }
         }
     }
