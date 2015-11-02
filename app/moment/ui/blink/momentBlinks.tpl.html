@@ -2,10 +2,10 @@
     <div class="col-sm-12">
         <span data-ng-if="!moment.isPublic" class="pull-left text-danger">
        <span class="fa fa-lock"></span> Psst - this moment is private.
-        <!--<a data-ng-if="moment.isAlias" data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey._id, momentId:moment._id})">Change to make it publicly accessable.</a>-->
+        <!--<a data-ng-if="moment.isAlias" data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey.id, momentId:moment.id})">Change to make it publicly accessable.</a>-->
         <span data-ng-if="!moment.isAlias">Please think twice before sharing it.</span>
         </span>
-        <button data-ui-sref="MOMENT_EDIT({journeyId: moment.journey._id, momentId:moment._id})"
+        <button data-ui-sref="MOMENT_EDIT({journeyId: moment.journey.id, momentId:moment.id})"
                 data-ng-if="moment.isAlias" class="btn btn-default pull-right">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>

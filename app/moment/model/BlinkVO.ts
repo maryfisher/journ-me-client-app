@@ -1,7 +1,7 @@
 module jm.moment {
 
     export interface IBlinkVO {
-        _id: string;
+        id: string;
         format: number;
         images: string[];
         texts: string[];
@@ -13,7 +13,7 @@ module jm.moment {
 
     export class BlinkVO implements IBlinkVO {
 
-        _id: string;
+        id: string;
         format: number = 0;
         images: string[] = [];
         texts: string[] = [];

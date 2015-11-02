@@ -87,7 +87,7 @@ module jm.auth {
         logout(): IPromise < any > {
             if (this.isLoggedIn()) {
                 this.$cookies.remove(ServerConst.COOKIE_TOKEN_KEY);
-                return this.authDAO.logout(this.authVO._id).finally(this.clearAll);
+                return this.authDAO.logout(this.authVO.id).finally(this.clearAll);
             } else {
                 return this.$q.reject('Cannot log out if not logged in.');
             }
@@ -98,7 +98,7 @@ module jm.auth {
         }
 
         isLoggedIn(): boolean {
-            return this.authVO._id !== undefined;
+            return this.authVO.id !== undefined;
         }
     }
 }

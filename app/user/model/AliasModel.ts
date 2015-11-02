@@ -41,14 +41,14 @@ module jm.user {
 
         getCurrentAlias(id ?: string): AliasDetailVO {
             if (id) {
-                this.currentAlias._id = id;
+                this.currentAlias.id = id;
                 this.aliasService.getAlias(id).then(this.setAlias);
             }
             return this.currentAlias;
         }
 
         getAlias(id: string): IAliasDetailVO {
-            if (id === this.currentAlias._id) {
+            if (id === this.currentAlias.id) {
                 return this.currentAlias;
             }
             var alias: AliasDetailVO = new AliasDetailVO();
@@ -66,7 +66,7 @@ module jm.user {
             alias.journeys = undefined;
             alias.followedJourneys = undefined;
             this.Upload.upload({
-                url: 'api/user/profile/' + this.currentAlias._id,
+                url: 'api/user/profile/' + this.currentAlias.id,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },

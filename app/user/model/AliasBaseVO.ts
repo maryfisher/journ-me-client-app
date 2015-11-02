@@ -1,13 +1,13 @@
 module jm.user {
 
     export interface IAliasBaseVO {
-        _id: string;
+        id: string;
         name: string;
         image: string;
     }
 
     export class AliasBaseVO implements IAliasBaseVO {
-        _id: string;
+        id: string;
         name: string;
         image: string;
 
@@ -22,7 +22,7 @@ module jm.user {
         }
 
         invalidateData() {
-            this._id = undefined;
+            this.id = undefined;
             this.name = undefined;
             this.image = undefined;
         }

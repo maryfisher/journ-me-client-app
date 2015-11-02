@@ -3,7 +3,7 @@ module jm.journey {
     import IAliasBaseVO = jm.user.IAliasBaseVO;
 
     export interface IJourneyBaseVO {
-        _id: string;
+        id: string;
         name: string;
         descript: string;
         alias: IAliasBaseVO;
@@ -14,7 +14,7 @@ module jm.journey {
     }
 
     export class JourneyBaseVO implements IJourneyBaseVO {
-        _id: string;
+        id: string;
         name: string;
         descript: string;
         alias: IAliasBaseVO;
@@ -35,7 +35,7 @@ module jm.journey {
         }
 
         invalidateData() {
-            this._id = undefined;
+            this.id = undefined;
             this.name = undefined;
             this.descript = undefined;
             this.alias = undefined;
@@ -46,7 +46,7 @@ module jm.journey {
         }
 
         updateAlias(alias: IAliasBaseVO) {
-            this.isAlias = this.alias._id === alias._id;
+            this.isAlias = this.alias.id === alias.id;
         }
     }
 }

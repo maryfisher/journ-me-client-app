@@ -3,7 +3,7 @@ module jm.common {
     import IPromise = ng.IPromise;
 
     export interface IIdObject {
-        _id: string;
+        id: string;
     }
 
     export class BaseResourceDAO extends BaseHttpDAO {
@@ -31,7 +31,7 @@ module jm.common {
         }
 
         update(data: IIdObject, successCallback) {
-            return this.makeCall(this.post, this.getId(data._id), data, successCallback);
+            return this.makeCall(this.post, this.getId(data.id), data, successCallback);
         }
     }
 }

@@ -38,7 +38,7 @@ module jm.moment {
         }
 
         updateBlink(images: File[], blink: BlinkVO): IUploadPromise < any > {
-            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH + blink._id);
+            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH + blink.id);
         }
 
         uploadBlink(imageFiles: File[], blink: BlinkVO, url: string): IUploadPromise < any > {

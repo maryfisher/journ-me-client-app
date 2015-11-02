@@ -31,7 +31,7 @@ module jm.journey.ctrl {
         }
 
         isNotSelected = (id) => {
-            return !(this.$scope.selectedLinkedJourney && this.$scope.selectedLinkedJourney._id === id);
+            return !(this.$scope.selectedLinkedJourney && this.$scope.selectedLinkedJourney.id === id);
         }
 
         followJourney = () => {

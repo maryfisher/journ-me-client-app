@@ -51,11 +51,11 @@ module jm.moment {
 
         getCurrentMoment(id ?: string): MomentDetailVO {
             if (id) {
-                if (this.currentMoment._id !== id) {
+                if (this.currentMoment.id !== id) {
                     this.currentMoment.invalidateData();
                 }
                 this.momentService.getMoment(id).then(this.setMoment);
-                this.currentMoment._id = id;
+                this.currentMoment.id = id;
             }
             return this.currentMoment;
         }
@@ -66,7 +66,7 @@ module jm.moment {
         }
 
         createMoment(moment: MomentBaseVO, journeyId: string): IPromise < void > {
-            moment.alias = this.currentAlias._id;
+            moment.alias = this.currentAlias.id;
             moment.journey = journeyId;
             return this.momentService.createMoment(moment).then(this.setMoment);
             /*function (data) {
@@ -84,24 +84,24 @@ module jm.moment {
         }
 
         createFeedback(f: FeedbackVO) {
-            f.moment = this.currentMoment._id;
+            f.moment = this.currentMoment.id;
             f.alias = new AliasBaseVO();
-            f.alias._id = this.currentAlias._id;
+            f.alias.id = this.currentAlias.id;
             return this.feedbackService.createFeedback(f).then(this.addFeedback);
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
-            this.blinkService.getBlinkByIndex(this.currentMoment._id, index).then(function (data: BlinkVO) {
+            this.blinkService.getBlinkByIndex(this.currentMoment.id, index).then(function (data: BlinkVO) {
                 blinkVO.parseJson(data);
             })
         }
 
         createBlink(formBlink: BlinkFormVO) {
-            formBlink.blink.moment = this.currentMoment._id;
+            formBlink.blink.moment = this.currentMoment.id;
             var moment: MomentDetailVO = this.currentMoment;
             return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink).then(function (response: any) {
                 formBlink.blink.parseJson(response.data);
-                moment.blinks.push(formBlink.blink._id);
+                moment.blinks.push(formBlink.blink.id);
             });
         }
 

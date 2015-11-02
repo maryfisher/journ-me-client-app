@@ -24,14 +24,14 @@
             class="list-group-item">
             <jm-state-list states="feedback.states"></jm-state-list>
             <div class="row">
-                <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias._id})" class="col-sm-1">
+                <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias.id})" class="col-sm-1">
                     <img data-ng-src="data:image/png;base64, {{feedback.alias.image}}" width="40" height="40"
                          class="img-circle"/>
                 </a>
 
                 <div class="col-sm-11">
                     <h5>
-                        <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias._id})">
+                        <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias.id})">
                             {{feedback.alias.name}}
                         </a>
                         <small>{{empathy.created | date:'medium'}}</small>

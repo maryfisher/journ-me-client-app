@@ -40,7 +40,7 @@ module jm.journey {
         }
 
         parseBaseData(data: IJourneyDetailVO) {
-            this._id = data._id;
+            this.id = data.id;
             this.name = data.name;
             this.descript = data.descript;
             this.isAlias = data.isAlias;
@@ -88,7 +88,7 @@ module jm.journey {
             var deleteTo: number[] = [];
             for (i = 0, len = this.linkedFromJourneys.length; i < len; ++i) {
                 for (j = 0, len2 = this.linkedToJourneys.length; j < len2; ++j) {
-                    if (this.linkedFromJourneys[i]._id === this.linkedToJourneys[j]._id) {
+                    if (this.linkedFromJourneys[i].id === this.linkedToJourneys[j].id) {
                         this.joinedLinkedJourneys.push(this.linkedFromJourneys[i]);
                         deleteFrom.push(i);
                         deleteTo.push(j);
@@ -113,14 +113,14 @@ module jm.journey {
         }
 
         updateFollowing(alias: IAliasDetailVO) {
-            var aliasId: string = alias._id;
-            if (this.alias._id === aliasId) {
+            var aliasId: string = alias.id;
+            if (this.alias.id === aliasId) {
                 return;
             }
             this.isFollowing = false;
             var index, len;
             for (index = 0, len = this.followers.length; index < len; ++index) {
-                if (this.followers[index]._id === aliasId) {
+                if (this.followers[index].id === aliasId) {
                     this.isFollowing = true;
                     break;
                 }
@@ -129,7 +129,7 @@ module jm.journey {
 
         updateAliasJourneyLink(alias: IAliasDetailVO) {
             this.aliasJourneyLink = undefined;
-            if (this.alias._id === alias._id || !alias.journeys) {
+            if (this.alias.id === alias.id || !alias.journeys) {
                 return;
             }
             var i, j, len, len2;
@@ -137,7 +137,7 @@ module jm.journey {
             for (i = 0, len = allJourneys.length; i < len; i++) {
                 for (j = 0, len2 = alias.journeys.length; j < len2; j++) {
                     //TO TEST
-                    if (allJourneys[i]._id === alias.journeys[j]._id) { // || allJourneys[i]._id === alias.journeys[j]) {
+                    if (allJourneys[i].id === alias.journeys[j].id) { // || allJourneys[i].id === alias.journeys[j]) {
                         this.aliasJourneyLink = allJourneys[i];
                         return;
                     }
@@ -146,13 +146,13 @@ module jm.journey {
         }
 
         updateIsJoined(alias: IAliasDetailVO) {
-            if (this.alias._id === alias._id) {
+            if (this.alias.id === alias.id) {
                 return;
             }
             this.isJoined = false;
             var index, len;
             for (index = 0, len = this.joinedAliases.length; index < len; ++index) {
-                if (this.joinedAliases[index]._id === alias._id) {
+                if (this.joinedAliases[index].id === alias.id) {
                     this.isJoined = true;
                     break;
                 }
@@ -160,13 +160,13 @@ module jm.journey {
         }
 
         updateSendRequest(alias: IAliasDetailVO) {
-            if (this.alias._id === alias._id) {
+            if (this.alias.id === alias.id) {
                 return;
             }
             this.sendRequest = false;
             var index, len;
             for (index = 0, len = this.joinRequests.length; index < len; ++index) {
-                if (this.joinRequests[index]._id === alias._id) {
+                if (this.joinRequests[index].id === alias.id) {
                     this.sendRequest = true;
                     break;
                 }
@@ -175,7 +175,7 @@ module jm.journey {
 
         updateMoments(alias: IAliasDetailVO) {
             for (var i: number = 0; i < this.moments.length; ++i) {
-                this.moments[i].isAlias = this.moments[i].alias === alias._id;
+                this.moments[i].isAlias = this.moments[i].alias === alias.id;
             }
         }
 
