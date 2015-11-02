@@ -30,8 +30,8 @@ module jm.moment {
             return this.getAll({momentId: momentId}, this.returnAllFeedback);
         }
 
-        createFeedback(f: FeedbackVO): IPromise < IFeedbackVO > {
-            return this.create(f, this.returnFeedback);
+        createFeedback(f: FeedbackVO, momentId: string, aliasId: string): IPromise < IFeedbackVO > {
+            return this.create(f, this.returnFeedback, {'momentId': momentId, 'aliasId': aliasId});
         }
 
         updateFeedback(f: FeedbackVO): IPromise < IFeedbackVO > {

@@ -1,7 +1,5 @@
 module jm.auth {
 
-    import IAuthVO = jm.auth.IAuthVO;
-
     export interface IAuthVO {
         id: string;
         email: string;

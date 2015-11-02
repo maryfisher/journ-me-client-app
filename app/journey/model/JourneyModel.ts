@@ -47,8 +47,7 @@ module jm.journey {
         }
 
         createJourney(journey): IPromise < void > {
-            journey.aliasId = this.currentAlias.id;
-            return this.journeyService.createJourney(journey).then(this.setCurrentJourneyBase);
+            return this.journeyService.createJourney(journey, this.currentAlias.id).then(this.setCurrentJourneyBase);
         }
 
         updateJourney(journey): IPromise < void > {

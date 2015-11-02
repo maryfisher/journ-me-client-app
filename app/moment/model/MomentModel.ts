@@ -66,9 +66,7 @@ module jm.moment {
         }
 
         createMoment(moment: MomentBaseVO, journeyId: string): IPromise < void > {
-            moment.alias = this.currentAlias.id;
-            moment.journey = journeyId;
-            return this.momentService.createMoment(moment).then(this.setMoment);
+            return this.momentService.createMoment(moment, this.currentAlias.id, journeyId).then(this.setMoment);
             /*function (data) {
              this.setMoment(data);
              //TODO do we really need to do this?
@@ -84,10 +82,7 @@ module jm.moment {
         }
 
         createFeedback(f: FeedbackVO) {
-            f.moment = this.currentMoment.id;
-            f.alias = new AliasBaseVO();
-            f.alias.id = this.currentAlias.id;
-            return this.feedbackService.createFeedback(f).then(this.addFeedback);
+            return this.feedbackService.createFeedback(f, this.currentMoment.id, this.currentAlias.id).then(this.addFeedback);
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
@@ -97,9 +92,8 @@ module jm.moment {
         }
 
         createBlink(formBlink: BlinkFormVO) {
-            formBlink.blink.moment = this.currentMoment.id;
             var moment: MomentDetailVO = this.currentMoment;
-            return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink).then(function (response: any) {
+            return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink, this.currentMoment.id).then(function (response: any) {
                 formBlink.blink.parseJson(response.data);
                 moment.blinks.push(formBlink.blink.id);
             });
