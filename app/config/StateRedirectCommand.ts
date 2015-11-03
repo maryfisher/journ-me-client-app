@@ -38,9 +38,9 @@ module jm.config {
                 }
                 this.routeUtil.redirectTo(nextState.data.redirectState, params);
             } else if (this.authModel.isLoggedIn() && nextState.data.redirectIfAuthenticated) {
-                params.aliasId = this.authModel.currentUser().currentAlias;
+                params.aliasId = this.authModel.currentUser.currentAlias;
                 if (nextState.name === RouteConst.ALIAS_DETAIL) {
-                    if (nextParams['aliasId'] !== this.authModel.currentUser().currentAlias) {
+                    if (nextParams['aliasId'] !== this.authModel.currentUser.currentAlias) {
                         return;
                     }
                 }
@@ -49,7 +49,7 @@ module jm.config {
                 this.routeUtil.redirectTo(nextState.data.redirectState, params);
             } else if (nextState.data.redirectAll) {
                 if (nextState.name === RouteConst.DASHBOARD) {
-                    if (nextParams['aliasId'] === this.authModel.currentUser().currentAlias) {
+                    if (nextParams['aliasId'] === this.authModel.currentUser.currentAlias) {
                         return;
                     } else {
                         params.aliasId = nextParams['aliasId'];

@@ -1,6 +1,8 @@
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
 module jm.journey {
 
     import IAliasBaseVO = jm.user.IAliasBaseVO;
+    import AliasBaseVO = jm.user.AliasBaseVO;
 
     export interface IJourneyBaseVO {
         id: string;

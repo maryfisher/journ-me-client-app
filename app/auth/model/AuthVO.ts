@@ -5,6 +5,7 @@ module jm.auth {
         email: string;
         authToken: string;
         currentAlias: string;
+        aliases: string[];
     }
 
     export class AuthVO implements IAuthVO {
@@ -12,6 +13,7 @@ module jm.auth {
         email: string;
         authToken: string;
         currentAlias: string;
+        aliases: string[] = [];
 
         constructor(data ?: IAuthVO) {
             this.parseJson(data);
@@ -28,6 +30,7 @@ module jm.auth {
             this.email = undefined;
             this.currentAlias = undefined;
             this.authToken = undefined;
+            this.aliases = [];
         }
     }
 }

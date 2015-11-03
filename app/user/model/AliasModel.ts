@@ -1,11 +1,13 @@
 /// <reference path="../../journey/model/JourneyModel.ts" />
 /// <reference path="../../moment/model/MomentModel.ts" />
+///<reference path="..\..\common\const\ServerConst.ts"/>
 module jm.user {
     'use strict';
 
     import JourneyModel = jm.journey.JourneyModel;
     import MomentModel = jm.moment.MomentModel;
     import NGConst = jm.common.NGConst;
+    import ServerConst = jm.common.ServerConst;
     import IUploadService = angular.angularFileUpload.IUploadService;
     import IFileProgressEvent = angular.angularFileUpload.IFileProgressEvent;
     import IFileUploadConfig = angular.angularFileUpload.IFileUploadConfig;

@@ -4,19 +4,21 @@ module jm.moment {
     import AliasBaseVO = jm.user.AliasBaseVO;
 
     export interface IMomentDetailVO extends IMomentBaseVO {
-        statesCount: Object;
         states: StateCountVO[];
         feedback: IFeedbackVO[];
         blinks: string[];
+
+        statesCount: Object;
     }
 
     export class MomentDetailVO extends MomentBaseVO implements IMomentDetailVO {
 
-        statesCount: Object; //StateVO.id => StateCountVO
         states: StateCountVO[] = [];
         feedback: IFeedbackVO[] = [];
         blinks: string[] = [];
+
         currentBlink: BlinkVO;
+        statesCount: Object; //StateVO.id => StateCountVO
 
         constructor(data ?: IMomentDetailVO) {
             super(data);

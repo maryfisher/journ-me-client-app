@@ -4,21 +4,23 @@ module jm.moment {
 
     export interface IMomentBaseVO {
         id: string;
-        isAlias: boolean;
         alias: string;
         journey: string;
         created: string;
         isPublic: boolean;
+
+        isAlias: boolean;
     }
 
     export class MomentBaseVO implements IMomentBaseVO {
 
         id: string;
-        isAlias: boolean;
         alias: string;
         journey: string;
         created: string;
         isPublic: boolean = true;
+
+        isAlias: boolean;
 
         constructor(data ?: IMomentBaseVO) {
             this.parseJson(data);

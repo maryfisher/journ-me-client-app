@@ -1,4 +1,5 @@
-/// <reference path="AuthVO.ts" />
+///<reference path="..\..\common\const\ServerConst.ts"/>
+///<reference path="..\..\common\const\NGConst.ts"/>
 module jm.auth {
     'use strict';
 
@@ -16,6 +17,7 @@ module jm.auth {
         private authVO: AuthVO;
         private aliasModel: AliasModel;
         private authDAO: AuthDAO;
+        private authTokenIntercept: AuthTokenIntercept;
         private $cookies: ICookiesService;
         private $q: IQService;
         private rememberMe: boolean;
@@ -25,7 +27,9 @@ module jm.auth {
             this.$cookies = $injector.get < ICookiesService >(NGConst.$COOKIES);
             this.authDAO = $injector.get < AuthDAO >(AuthDAO.NG_NAME);
             this.aliasModel = $injector.get < AliasModel >(AliasModel.NG_NAME);
+            this.authTokenIntercept = $injector.get < AuthTokenIntercept >(AuthTokenIntercept.NG_NAME);
             this.authVO = new AuthVO();
+            this.authTokenIntercept.init(this);
         }
 
         private clearAll = () => {
@@ -93,7 +97,7 @@ module jm.auth {
             }
         }
 
-        currentUser(): AuthVO {
+        get currentUser(): AuthVO {
             return this.authVO;
         }
 
