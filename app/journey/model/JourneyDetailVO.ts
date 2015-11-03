@@ -64,6 +64,26 @@ module jm.journey {
             for (var i: number = 0; i < data.moments.length; i++) {
                 this.moments.push(new MomentBaseVO(data.moments[i]));
             }
+            this.followers = [];
+            for (var i: number = 0; i < data.followers.length; i++) {
+                this.followers.push(new AliasBaseVO(data.followers[i]));
+            }
+            this.joinedAliases = [];
+            for (var i: number = 0; i < data.joinedAliases.length; i++) {
+                this.joinedAliases.push(new AliasBaseVO(data.joinedAliases[i]));
+            }
+            this.joinRequests = [];
+            for (var i: number = 0; i < data.joinRequests.length; i++) {
+                this.joinRequests.push(new AliasBaseVO(data.joinRequests[i]));
+            }
+            this.linkedFromJourneys = [];
+            for (var i: number = 0; i < data.linkedFromJourneys.length; i++) {
+                this.linkedFromJourneys.push(new JourneyBaseVO(data.linkedFromJourneys[i]));
+            }
+            this.linkedToJourneys = [];
+            for (var i: number = 0; i < data.linkedToJourneys.length; i++) {
+                this.linkedToJourneys.push(new JourneyBaseVO(data.linkedToJourneys[i]));
+            }
         }
 
         invalidateData() {

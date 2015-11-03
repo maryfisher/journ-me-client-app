@@ -6,14 +6,16 @@ module jm.user {
         id: string;
         name: string;
         image: string;
-        thumb: string;
+        imageUrl: string;
+        thumbUrl: string;
     }
 
     export class AliasBaseVO implements IAliasBaseVO {
         id: string;
         name: string;
         image: string;
-        thumb: string;
+        imageUrl: string;
+        thumbUrl: string;
 
         constructor(data ?: IAliasBaseVO) {
             this.parseJson(data);
@@ -22,8 +24,8 @@ module jm.user {
         parseJson(data: IAliasBaseVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
-                this.image = ServerConst.ALIAS_IMG_PATH + this.image;
-                this.thumb = this.image + ServerConst.THUMB;
+                this.imageUrl = ServerConst.ALIAS_IMG_PATH + this.image;
+                this.thumbUrl = this.image + ServerConst.THUMB;
             }
         }
 
@@ -31,7 +33,8 @@ module jm.user {
             this.id = undefined;
             this.name = undefined;
             this.image = undefined;
-            this.thumb = undefined;
+            this.imageUrl = undefined;
+            this.thumbUrl = undefined;
         }
     }
 }
