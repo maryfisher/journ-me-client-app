@@ -33,7 +33,7 @@ module jm.journey {
         parseJson(data: IJourneyBaseVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
-                this.alias = new AliasBaseVO(this.alias);
+                this.alias = new AliasBaseVO(data.alias);
             }
         }
 

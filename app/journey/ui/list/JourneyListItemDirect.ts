@@ -1,19 +1,18 @@
 module jm.journey {
 
-    export class JourneyListItemDirect extends BaseJourneyDirect {
+    export class JourneyListItemDirect implements ng.IDirective {
 
         static NG_NAME: string = 'jmJourneyListItem';
 
         restrict: string = 'E';
         replace: boolean = true;
         templateUrl: any = 'journey/ui/list/journeyListItem.tpl.html';
-
-        link: ng.IDirectiveLinkFn = (scope: IBaseJourneyScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-            this.parseJourney(scope);
+        scope: any = {
+            journey: '=jmJourney'
         };
 
         constructor($injector: ng.auto.IInjectorService) {
-            super('@jmJourney');
+
         }
     }
 }

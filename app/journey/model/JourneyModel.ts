@@ -47,8 +47,15 @@ module jm.journey {
         }
 
         createJourney(journey): IPromise < void > {
-            return this.journeyService.createJourney(journey, this.currentAlias.id).then(this.setCurrentJourneyBase);
+            return this.journeyService.createJourney(journey, this.currentAlias.id).then(this.createJourneySuccess);
         }
+
+        createJourneySuccess = (data: IJourneyDetailVO) => {
+            this.setCurrentJourneyBase(data);
+            if (this.currentAlias) {
+                this.currentAlias.journeys.push(this.currentJourney);
+            }
+        };
 
         updateJourney(journey): IPromise < void > {
             var updateJourney: JourneyBaseVO = new JourneyBaseVO(journey);
@@ -86,11 +93,9 @@ module jm.journey {
             var alias: AliasDetailVO = this.currentAlias;
             return this.journeyActionService.followJourney(journey.id, this.currentAlias.id)
                 .then(function () {
-                    if (!journey.followers) {
-                        journey.followers = [];
-                    }
                     journey.followers.push(alias);
                     journey.isFollowing = true;
+                    alias.followedJourneys.push(new JourneyBaseVO(journey));
                 });
         }
 
@@ -109,6 +114,13 @@ module jm.journey {
                     }
                     journey.followers.splice(index, 1);
                     journey.isFollowing = false;
+
+                    for (index = 0, len = alias.followedJourneys.length; index < len; ++index) {
+                        if (alias.followedJourneys[index].id === journey.id) {
+                            break;
+                        }
+                    }
+                    alias.followedJourneys.splice(index, 1);
                 });
         }
 

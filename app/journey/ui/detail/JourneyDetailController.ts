@@ -28,35 +28,35 @@ module jm.journey.ctrl {
             } else {
                 this.$scope.selectedLinkedJourney = journey;
             }
-        }
+        };
 
         isNotSelected = (id) => {
             return !(this.$scope.selectedLinkedJourney && this.$scope.selectedLinkedJourney.id === id);
-        }
+        };
 
         followJourney = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.followJourney();
             }
-        }
+        };
 
         unfollowJourney = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.unfollowJourney();
             }
-        }
+        };
 
         unlinkJourney = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.unlinkJourney(this.$scope.journey, this.$scope.journey.aliasJourneyLink);
             }
-        }
+        };
 
         requestJoin = () => {
             if (this.checkForLogin()) {
                 this.journeyModel.requestJoin(this.$scope.journey);
             }
-        }
+        };
 
         leaveJourney = () => {
             //TODO prompt: are you sure
@@ -64,7 +64,7 @@ module jm.journey.ctrl {
             if (this.checkForLogin()) {
                 this.journeyModel.leaveJourney(this.$scope.journey);
             }
-        }
+        };
 
         checkForLogin = (): boolean => {
             var isLoggedIn: boolean = this.authModel.isLoggedIn();

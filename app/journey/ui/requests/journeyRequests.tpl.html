@@ -7,7 +7,8 @@
         <ul class="list-group">
             <li data-ng-repeat="alias in journeyDetail.joinRequests" class="list-group-item clearfix">
                 <data-jm-alias-list-item data-jm-alias="alias"></data-jm-alias-list-item>
-                <button data-ng-click="acceptJoinRequest(alias)" data-ng-show="journeyDetail.isAlias" class="btn btn-primary pull-right">
+                <button data-ng-click="acceptJoinRequest(alias)" data-ng-show="journeyDetail.isAlias"
+                        class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-link"></span> Accept Request
                 </button>
             </li>
@@ -17,8 +18,9 @@
         <h3>Link requests to {{journeyDetail.name}}</h3>
         <ul class="list-group">
             <li data-ng-repeat="lJourney in journeyDetail.linkedFromJourneys" class="list-group-item clearfix">
-                <data-jm-journey-list-item data-jm-journey="{{lJourney}}"></data-jm-journey-list-item>
-                <button data-ng-click="linkJourney(lJourney)" data-ng-show="journeyDetail.isAlias" class="btn btn-primary pull-right">
+                <data-jm-journey-list-item data-jm-journey="lJourney"></data-jm-journey-list-item>
+                <button data-ng-click="linkJourney(lJourney)" data-ng-show="journeyDetail.isAlias"
+                        class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-link"></span> Link back
                 </button>
             </li>
@@ -28,11 +30,11 @@
         <h3>This journey wants to link to</h3>
         <ul class="list-group">
             <li data-ng-repeat="journeyTo in journeyDetail.linkedToJourneys" class="list-group-item">
-                <data-jm-journey-list-item data-jm-journey="{{journeyTo}}"></data-jm-journey-list-item>
+                <data-jm-journey-list-item data-jm-journey="journeyTo"></data-jm-journey-list-item>
             </li>
         </ul>
     </div>
 </div>
 <div class="modal-footer">
-    <button data-ng-click="cancel()" class="btn btn-default"> Close </button>
+    <button data-ng-click="cancel()" class="btn btn-default"> Close</button>
 </div>

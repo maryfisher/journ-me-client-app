@@ -25,12 +25,12 @@ module jm.journey {
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
-        moments: IMomentBaseVO[] = [];
-        followers: IAliasBaseVO[] = [];
-        linkedToJourneys: IJourneyBaseVO[] = [];
-        linkedFromJourneys: IJourneyBaseVO[] = [];
-        joinRequests: IAliasBaseVO[] = [];
-        joinedAliases: IAliasBaseVO[] = [];
+        moments: IMomentBaseVO[];
+        followers: IAliasBaseVO[];
+        linkedToJourneys: IJourneyBaseVO[];
+        linkedFromJourneys: IJourneyBaseVO[];
+        joinRequests: IAliasBaseVO[];
+        joinedAliases: IAliasBaseVO[];
 
         joinedLinkedJourneys: IJourneyBaseVO[] = [];
         aliasJourneyLink: IJourneyBaseVO;
@@ -46,7 +46,7 @@ module jm.journey {
             this.id = data.id;
             this.name = data.name;
             this.descript = data.descript;
-            this.isAlias = data.isAlias;
+            this.alias = this.alias ? this.alias : new AliasBaseVO(data.alias);
             this.hasLocation = data.hasLocation;
             this.location = data.location;
             this.isPublic = data.isPublic;
@@ -91,13 +91,13 @@ module jm.journey {
 
         invalidateData() {
             super.invalidateData();
-            this.moments.length = 0;
-            this.followers.length = 0;
-            this.linkedToJourneys.length = 0;
-            this.linkedFromJourneys.length = 0;
-            this.joinedLinkedJourneys.length = 0;
-            this.joinedAliases.length = 0;
-            this.joinRequests.length = 0;
+            this.moments = [];
+            this.followers = [];
+            this.linkedToJourneys = [];
+            this.linkedFromJourneys = [];
+            this.joinedLinkedJourneys = [];
+            this.joinedAliases = [];
+            this.joinRequests = [];
             this.aliasJourneyLink = undefined;
             this.isFollowing = false;
             this.isJoined = false;
@@ -159,8 +159,7 @@ module jm.journey {
             var allJourneys: IJourneyBaseVO[] = this.joinedLinkedJourneys.concat(this.linkedFromJourneys);
             for (i = 0, len = allJourneys.length; i < len; i++) {
                 for (j = 0, len2 = alias.journeys.length; j < len2; j++) {
-                    //TO TEST
-                    if (allJourneys[i].id === alias.journeys[j].id) { // || allJourneys[i].id === alias.journeys[j]) {
+                    if (allJourneys[i].id === alias.journeys[j].id) {
                         this.aliasJourneyLink = allJourneys[i];
                         return;
                     }

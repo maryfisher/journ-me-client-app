@@ -1,27 +1,25 @@
-module jm {
-    export module journey {
+module jm.journey {
 
-        export interface IBaseJourneyScope extends ng.IScope {
-            journey: JourneyBaseVO;
-            journeyDetail: JourneyDetailVO;
-            journeyStr: string;
-            element: ng.IAugmentedJQuery;
+    export interface IBaseJourneyScope extends ng.IScope {
+        journey: JourneyBaseVO;
+        journeyDetail: JourneyDetailVO;
+        journeyStr: string;
+        element: ng.IAugmentedJQuery;
+    }
+
+    export class BaseJourneyDirect implements ng.IDirective {
+
+        scope: any;
+
+        constructor(attrName: string) {
+            this.scope = {
+                journeyStr: attrName
+            };
         }
 
-        export class BaseJourneyDirect implements ng.IDirective {
-
-            scope: any;
-
-            constructor(attrName: string) {
-                this.scope = {
-                    journeyStr: attrName
-                };
-            }
-
-            parseJourney(scope: IBaseJourneyScope) {
-                if (scope.journeyStr) {
-                    scope.journey = JSON.parse(scope.journeyStr);
-                }
+        parseJourney(scope: IBaseJourneyScope) {
+            if (scope.journeyStr) {
+                scope.journey = JSON.parse(scope.journeyStr);
             }
         }
     }
