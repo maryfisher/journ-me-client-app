@@ -1,5 +1,6 @@
 ///<reference path="..\..\common\const\ServerConst.ts"/>
 ///<reference path="..\..\common\const\NGConst.ts"/>
+///<reference path="..\..\user\model\AliasModel.ts"/>
 module jm.auth {
     'use strict';
 
@@ -14,7 +15,7 @@ module jm.auth {
 
         static NG_NAME: string = 'authModel';
 
-        private authVO: AuthVO;
+        private userVO: UserVO;
         private aliasModel: AliasModel;
         private authDAO: AuthDAO;
         private authTokenIntercept: AuthTokenIntercept;
@@ -28,42 +29,41 @@ module jm.auth {
             this.authDAO = $injector.get < AuthDAO >(AuthDAO.NG_NAME);
             this.aliasModel = $injector.get < AliasModel >(AliasModel.NG_NAME);
             this.authTokenIntercept = $injector.get < AuthTokenIntercept >(AuthTokenIntercept.NG_NAME);
-            this.authVO = new AuthVO();
+            this.userVO = new UserVO();
             this.authTokenIntercept.init(this);
         }
 
         private clearAll = () => {
-            this.authVO.invalidateData();
+            this.userVO.invalidateData();
             this.aliasModel.invalidateAlias();
-        }
+        };
 
         private clearAllResponse = (response): IPromise < any > => {
             this.clearAll();
             return response;
-        }
+        };
 
         private reject = (response): IPromise < any > => {
             this.clearAll();
             return this.$q.reject();
-        }
+        };
 
-        private setData = (data: IAuthVO): IAuthVO => {
-            this.authVO.parseJson(data);
+        private setData = (data: IUserVO) => {
+            this.userVO.parseJson(data);
             this.aliasModel.getCurrentAlias(data.currentAlias);
-            return data;
-        }
+        };
 
-        private setDataAndCookie = (data: IAuthVO): IAuthVO => {
+        private setDataAndCookie = (data: IUserVO) => {
+            this.setData(data);
             if (this.rememberMe) {
-                this.$cookies.put(ServerConst.COOKIE_TOKEN_KEY, data.authToken);
+                this.$cookies.put(ServerConst.COOKIE_TOKEN_KEY, this.userVO.authToken);
             }
-            return this.setData(data);
-        }
+        };
 
         private removeCookie = (response): IPromise < any > => {
             this.$cookies.remove(ServerConst.COOKIE_TOKEN_KEY);
             return this.reject(response);
-        }
+        };
 
         login(email, password, rememberMe): IPromise < any > {
             this.rememberMe = rememberMe;
@@ -72,10 +72,10 @@ module jm.auth {
         }
 
         tokenLogin(): IPromise < any > {
-            var token = this.$cookies.get(ServerConst.COOKIE_TOKEN_KEY);
             this.rememberMe = true;
-            if (token) {
-                return this.authDAO.tokenLogin(this.authVO.authToken).then(
+            this.userVO.authToken = this.$cookies.get(ServerConst.COOKIE_TOKEN_KEY);
+            if (this.userVO.authToken) {
+                return this.authDAO.tokenLogin().then(
                     this.setDataAndCookie,
                     this.removeCookie
                 );
@@ -91,18 +91,18 @@ module jm.auth {
         logout(): IPromise < any > {
             if (this.isLoggedIn()) {
                 this.$cookies.remove(ServerConst.COOKIE_TOKEN_KEY);
-                return this.authDAO.logout(this.authVO.id).finally(this.clearAll);
+                return this.authDAO.logout(this.userVO.id).finally(this.clearAll);
             } else {
                 return this.$q.reject('Cannot log out if not logged in.');
             }
         }
 
-        get currentUser(): AuthVO {
-            return this.authVO;
+        get currentUser(): UserVO {
+            return this.userVO;
         }
 
         isLoggedIn(): boolean {
-            return this.authVO.id !== undefined;
+            return this.userVO.id !== undefined || this.userVO.authToken !== undefined;
         }
     }
 }

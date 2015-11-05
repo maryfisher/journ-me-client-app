@@ -1,8 +1,9 @@
-/// <reference path="../model/AuthModel.ts" />
+///<reference path="..\..\common\const\ServerConst.ts"/>
+///<reference path="..\model\AuthModel.ts"/>
 module jm.auth {
     'use strict';
 
-    import AuthModel = jm.auth.AuthModel;
+    import ServerConst = jm.common.ServerConst;
     import IRequestConfig = ng.IRequestConfig;
 
     export class AuthTokenIntercept implements ng.IHttpInterceptor {
@@ -21,7 +22,7 @@ module jm.auth {
 
         request = (config: IRequestConfig): IRequestConfig => {
             if (this.authModel.isLoggedIn()) {
-                config.headers['x-jm-auth-token'] = this.authModel.currentUser.authToken;
+                config.headers[ServerConst.SERVER_TOKEN_KEY] = this.authModel.currentUser.authToken;
             }
             return config;
         }

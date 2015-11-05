@@ -9,7 +9,7 @@ module jm.common {
 
         static AUTH_PATH: string = ServerConst.USER + 'authentication/';
         static LOGIN_PATH: string = ServerConst.AUTH_PATH + 'login/';
-        static LOGIN_TOKEN_PATH: string = ServerConst.AUTH_PATH + 'tokenlogin/';
+        static LOGIN_TOKEN_PATH: string = ServerConst.AUTH_PATH + 'token-login/';
         static LOGOUT_PATH: string = ServerConst.AUTH_PATH + 'logout/';
         static REGISTER_PATH: string = ServerConst.AUTH_PATH + 'register/';
         static PROFILE_PATH: string = ServerConst.USER + 'profile/';
@@ -28,6 +28,8 @@ module jm.common {
         static BLINK_PATH: string = ServerConst.API + 'blink/';
         static BLINK_IMG_PATH: string = ServerConst.BLINK_PATH + ServerConst.IMG;
 
+        static HEADER_ITEMS: string = 'headerItems';
+        static SERVER_TOKEN_KEY: string = 'x-jm-auth-token';
         static COOKIE_TOKEN_KEY: string = 'jmAuthToken';
 
         static DEFAULT_CONFIG = {

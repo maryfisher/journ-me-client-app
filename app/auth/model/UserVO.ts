@@ -1,6 +1,8 @@
 module jm.auth {
 
-    export interface IAuthVO {
+    import ServerConst = jm.common.ServerConst;
+
+    export interface IUserVO {
         id: string;
         email: string;
         authToken: string;
@@ -8,20 +10,21 @@ module jm.auth {
         aliases: string[];
     }
 
-    export class AuthVO implements IAuthVO {
+    export class UserVO implements IUserVO {
         id: string;
         email: string;
         authToken: string;
         currentAlias: string;
         aliases: string[] = [];
 
-        constructor(data ?: IAuthVO) {
+        constructor(data ?: IUserVO) {
             this.parseJson(data);
         }
 
-        parseJson(data: IAuthVO) {
+        parseJson(data: IUserVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
+                this.authToken = data[ServerConst.HEADER_ITEMS][ServerConst.SERVER_TOKEN_KEY];
             }
         }
 
