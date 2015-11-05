@@ -68,7 +68,7 @@ module jm.user {
             alias.journeys = undefined;
             alias.followedJourneys = undefined;
             this.Upload.upload({
-                url: ServerConst.PROFILE_PATH + this.currentAlias.id,
+                url: ServerConst.ALIAS_PATH + this.currentAlias.id,
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
