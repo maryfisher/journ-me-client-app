@@ -1,0 +1,31 @@
+language: node_js
+
+node_js:
+   - 0.12
+
+build_image: shippableimages/ubuntu1404_nodejs
+
+before_install:
+   - source ~/.nvm/nvm.sh && nvm install $SHIPPABLE_NODE_VERSION
+   - node --version
+   - npm install -g grunt-cli
+
+install:
+   - npm install
+   - grunt bowerInstall
+   - grunt tsd
+
+script:
+   - grunt
+
+after_success:
+   - git submodule init
+   - git submodule update --remote
+   - grunt package
+   - cd dist/journ-me-client-dist/
+   - git config user.email "journmetechuser@gmail.com"
+   - git config user.name "JournMe Tech User"
+   - git add .
+   - git commit -a -m "New distribution commit"
+#   - if [ "$BRANCH" == "develop" ]; then git push origin origin--master:master; fi
+   - git push origin HEAD:master

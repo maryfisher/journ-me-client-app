@@ -112,13 +112,19 @@ module.exports = function (grunt) {
                 expand: true,
                 cwd: '<%= app.app %>/',
                 src: ['indexDev.html'],
-                dest: '<%= app.temp %>/index.html'
+                dest: '<%= app.temp %>/',
+                rename: function (dest, src) {
+                    return dest + src.replace(/indexDev/, 'index');
+                }
             },
             indexProd: {
                 expand: true,
                 cwd: '<%= app.app %>/',
                 src: ['indexProd.html'],
-                dest: '<%= app.dist %>/index.html'
+                dest: '<%= app.dist %>/',
+                rename: function (dest, src) {
+                    return dest + src.replace(/indexProd/, 'index');
+                }
             },
             ts: {
                 expand: true,
