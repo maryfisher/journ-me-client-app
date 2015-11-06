@@ -6,12 +6,12 @@
         {
             "name": "Ulrike Meyer",
             "email": "die_ulli@hotmail.com"
-    },
+        },
         {
             "name": "Hao Tri Pham",
             "email": "phamhaotri@googlemail.com"
-    }
-  ],
+        }
+    ],
     "repository": {
         "type": "git",
         "url": "https://bitbucket.org/journ-me/journ-me-client-app.git"
@@ -29,7 +29,7 @@
         "connect-multiparty": "~2.0.0",
         "mongodb": "~2.0.42",
         "mongoose": "~4.1.5",
-        "tsd": "0.6.4",
+        "tsd": "~0.6.4",
         "grunt-angular-templates": "~0.5.7",
         "grunt-bower-task": "~0.4.0",
         "grunt-contrib-clean": "~0.6.0",
@@ -42,7 +42,7 @@
         "grunt-contrib-watch": "~0.6.1",
         "grunt-express": "~1.4.1",
         "grunt-ng-annotate": "~1.0.1",
-        "grunt-pre-concat": "^1.0.0",
+        "grunt-pre-concat": "~1.0.0",
         "load-grunt-tasks": "~3.2.0",
         "grunt-ts": "~4.2.0",
         "grunt-tsd": "~0.1.0",
