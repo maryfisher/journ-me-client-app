@@ -7,7 +7,7 @@ module jm.moment {
     import IUploadService = angular.angularFileUpload.IUploadService;
     import IUploadPromise = angular.angularFileUpload.IUploadPromise;
     import IFileProgressEvent = angular.angularFileUpload.IFileProgressEvent;
-    import IFileUploadConfig = angular.angularFileUpload.IFileUploadConfig;
+    import IFileUploadConfigFiles = angular.angularFileUpload.IFileUploadConfigFiles;
 
     export class BlinkDAO extends jm.common.BaseResourceDAO {
 
@@ -39,7 +39,7 @@ module jm.moment {
 
         uploadBlink(imageFiles: File[], blink: BlinkVO, url: string): IUploadPromise < any > {
             //TODO several images
-            return this.Upload.upload(<IFileUploadConfig>{
+            return this.Upload.upload(<IFileUploadConfigFiles>{
                 url: url,
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -47,7 +47,7 @@ module jm.moment {
                 fields: {
                     blink: blink
                 },
-                file: imageFiles[0],
+                file: imageFiles,
                 method: null
             });
         }
