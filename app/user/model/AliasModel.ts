@@ -78,6 +78,7 @@ module jm.user {
         updateAliasSuccess = (data: any, status: number, headers: ng.IHttpHeadersGetter, config: IFileUploadConfigFile) => {
             this.currentAlias.image = data.image;
             this.currentAlias.name = data.name;
+            this.currentAlias.createUrls();
             //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
         };
 

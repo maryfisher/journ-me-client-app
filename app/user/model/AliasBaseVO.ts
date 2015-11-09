@@ -24,9 +24,13 @@ module jm.user {
         parseJson(data: IAliasBaseVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
-                this.imageUrl = this.image ? ServerConst.ALIAS_IMG_PATH + this.image : '';
-                this.thumbUrl = this.image ? this.imageUrl + ServerConst.THUMB : '';
+                this.createUrls();
             }
+        }
+
+        createUrls() {
+            this.imageUrl = this.image ? ServerConst.ALIAS_IMG_PATH + this.image : '';
+            this.thumbUrl = this.image ? this.imageUrl + ServerConst.THUMB : '';
         }
 
         invalidateData() {
