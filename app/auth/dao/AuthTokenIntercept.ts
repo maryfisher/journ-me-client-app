@@ -21,7 +21,7 @@ module jm.auth {
         }
 
         request = (config: IRequestConfig): IRequestConfig => {
-            if (this.authModel.isLoggedIn()) {
+            if (this.authModel.hasAuth()) {
                 config.headers[ServerConst.SERVER_TOKEN_KEY] = this.authModel.currentUser.authToken;
             }
             return config;

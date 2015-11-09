@@ -102,6 +102,10 @@ module jm.auth {
         }
 
         isLoggedIn(): boolean {
+            return this.userVO.id !== undefined;
+        }
+
+        hasAuth(): boolean {
             return this.userVO.id !== undefined || this.userVO.authToken !== undefined;
         }
     }
