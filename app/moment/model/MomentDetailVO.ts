@@ -40,6 +40,9 @@ module jm.moment {
             this.feedback = [];
             this.statesCount = {};
             this.states = [];
+            if (!data) {
+                return;
+            }
             for (var i: number = 0; i < data.length; i++) {
                 this.addFeedback(data[i]);
             }
