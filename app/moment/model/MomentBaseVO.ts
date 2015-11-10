@@ -6,7 +6,7 @@ module jm.moment {
         id: string;
         alias: string;
         journey: string;
-        created: string;
+        date: string|Date;
         isPublic: boolean;
 
         isAlias: boolean;
@@ -17,18 +17,26 @@ module jm.moment {
         id: string;
         alias: string;
         journey: string;
-        created: string;
-        isPublic: boolean = true;
+        date: string|Date;
+        isPublic: boolean;
 
         isAlias: boolean;
 
         constructor(data ?: IMomentBaseVO) {
+            this.setDefault();
             this.parseJson(data);
+        }
+
+        setDefault() {
+            this.isPublic = true;
+            this.date = new Date();
+            this.isAlias = false;
         }
 
         parseJson(data: IMomentBaseVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
+                this.date = new Date(<string>data.date);
             }
         }
 
@@ -36,9 +44,7 @@ module jm.moment {
             this.id = undefined;
             this.alias = undefined;
             this.journey = undefined;
-            this.created = undefined;
-            this.isAlias = false;
-            this.isPublic = true;
+            this.setDefault();
         }
 
         updateAlias(alias: AliasBaseVO) {

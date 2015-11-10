@@ -5,7 +5,7 @@
         <jm-timeline-select data-ng-show="selectedIndex > -1"></jm-timeline-select>
         <jm-timeline-moment data-ng-repeat="moment in journey.moments" data-jm-moment="moment"></jm-timeline-moment>
         <!--<li data-ng-repeat="moment in journey.moments" class="jm-timeline-li">
-            <a data-ui-sref="MOMENT_DETAIL({momentId: moment.id})" data-ng-if="moment.isPublic || moment.isAlias" data-ng-click="setSelected(moment)" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.descript}} {{moment.created | date:'medium'}}">
+            <a data-ui-sref="MOMENT_DETAIL({momentId: moment.id})" data-ng-if="moment.isPublic || moment.isAlias" data-ng-click="setSelected(moment)" popover-placement="top" popover-trigger="mouseenter" popover="{{moment.descript}} {{moment.date | date:'medium'}}">
                 <img src="" class="img-rounded jm-moment-img" data-ng-class="getMomentClass(moment)" />
                 <span data-ng-if="!moment.isPublic" class="fa fa-lock jm-moment-img-lock"></span>
             </a>

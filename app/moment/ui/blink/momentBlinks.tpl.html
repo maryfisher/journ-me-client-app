@@ -5,11 +5,11 @@
         <!--<a data-ng-if="moment.isAlias" data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey.id, momentId:moment.id})">Change to make it publicly accessable.</a>-->
         <span data-ng-if="!moment.isAlias">Please think twice before sharing it.</span>
         </span>
-        <button data-ui-sref="MOMENT_EDIT({journeyId: moment.journey.id, momentId:moment.id})"
+        <button data-ui-sref="MOMENT_EDIT({journeyId: moment.journey, momentId:moment.id})"
                 data-ng-if="moment.isAlias" class="btn btn-default pull-right">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <span class="pull-right">{{moment.created | date:'medium'}}</span>
+        <span class="pull-right">{{moment.date | date:'mediumDate'}}</span>
         <jm-blink-carousel moment="moment" index="0" can-edit="true"></jm-blink-carousel>
     </div>
 </div>
