@@ -3,7 +3,7 @@ module jm.moment {
     import AliasBaseVO = jm.user.AliasBaseVO;
 
     export interface IFeedbackVO {
-        _id: string;
+        id: string;
         alias: jm.user.AliasBaseVO;
         moment: string;
         body: string;
@@ -13,7 +13,7 @@ module jm.moment {
 
     export class FeedbackVO implements IFeedbackVO {
 
-        _id: string;
+        id: string;
         alias: AliasBaseVO;
         moment: string;
         body: string;

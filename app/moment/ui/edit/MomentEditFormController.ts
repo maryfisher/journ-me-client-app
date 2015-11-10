@@ -85,12 +85,12 @@ module jm.moment.ctrl {
         };
 
         cancel = () => {
-            if (!this.$scope.hasMoment && !this.$scope.moment._id) {
+            if (!this.$scope.hasMoment && !this.$scope.moment.id) {
                 this.routeUtil.redirectTo(RouteConst.JOURNEY_DETAIL, {
                     journeyId: this.$stateParams['journeyId']
                 });
             } else {
-                var momentId = this.$scope.moment._id || this.$stateParams['momentId'];
+                var momentId = this.$scope.moment.id || this.$stateParams['momentId'];
                 this.routeUtil.redirectTo(RouteConst.MOMENT_BLINKS, {
                     journeyId: this.$stateParams['journeyId'],
                     momentId: momentId
@@ -186,7 +186,7 @@ module jm.moment.ctrl {
             for (var j: number = 0; j < this.$scope.allStates.length; j++) {
                 var add: boolean = true;
                 for (var i: number = 0; i < b.states.length; i++) {
-                    if (b.states[i]._id === this.$scope.allStates[j]._id) {
+                    if (b.states[i].id === this.$scope.allStates[j].id) {
                         add = false;
                         break;
                     }

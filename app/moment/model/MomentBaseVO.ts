@@ -3,22 +3,24 @@ module jm.moment {
     import AliasBaseVO = jm.user.AliasBaseVO;
 
     export interface IMomentBaseVO {
-        _id: string;
-        isAlias: boolean;
+        id: string;
         alias: string;
         journey: string;
         created: string;
         isPublic: boolean;
+
+        isAlias: boolean;
     }
 
     export class MomentBaseVO implements IMomentBaseVO {
 
-        _id: string;
-        isAlias: boolean;
+        id: string;
         alias: string;
         journey: string;
         created: string;
         isPublic: boolean = true;
+
+        isAlias: boolean;
 
         constructor(data ?: IMomentBaseVO) {
             this.parseJson(data);
@@ -31,7 +33,7 @@ module jm.moment {
         }
 
         invalidateData() {
-            this._id = undefined;
+            this.id = undefined;
             this.alias = undefined;
             this.journey = undefined;
             this.created = undefined;
@@ -40,7 +42,7 @@ module jm.moment {
         }
 
         updateAlias(alias: AliasBaseVO) {
-            this.isAlias = this.alias === alias._id;
+            this.isAlias = this.alias === alias.id;
         }
     }
 }

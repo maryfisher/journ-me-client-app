@@ -1,14 +1,15 @@
 /// <reference path="../../journey/model/JourneyModel.ts" />
 /// <reference path="../../moment/model/MomentModel.ts" />
+///<reference path="..\..\common\const\ServerConst.ts"/>
 module jm.user {
     'use strict';
 
     import JourneyModel = jm.journey.JourneyModel;
     import MomentModel = jm.moment.MomentModel;
     import NGConst = jm.common.NGConst;
-    import IUploadService = angular.angularFileUpload.IUploadService;
+    import ServerConst = jm.common.ServerConst;
     import IFileProgressEvent = angular.angularFileUpload.IFileProgressEvent;
-    import IFileUploadConfig = angular.angularFileUpload.IFileUploadConfig;
+    import IFileUploadConfigFile = angular.angularFileUpload.IFileUploadConfigFile;
 
     export class AliasModel {
 
@@ -18,13 +19,11 @@ module jm.user {
         private aliasService: AliasDAO;
         private journeyModel: JourneyModel;
         private momentModel: MomentModel;
-        private Upload: IUploadService;
 
         constructor($injector: ng.auto.IInjectorService) {
             this.aliasService = $injector.get < AliasDAO >(AliasDAO.NG_NAME);
             this.journeyModel = $injector.get < JourneyModel >(JourneyModel.NG_NAME);
             this.momentModel = $injector.get < MomentModel >(MomentModel.NG_NAME);
-            this.Upload = $injector.get < IUploadService >(NGConst.UPLOAD);
 
             this.currentAlias = new AliasDetailVO();
         }
@@ -33,7 +32,7 @@ module jm.user {
             this.currentAlias.parseJson(data);
             this.journeyModel.refreshJourney(this.currentAlias);
             this.momentModel.refreshMoment(this.currentAlias);
-        }
+        };
 
         invalidateAlias() {
             this.currentAlias.invalidateData();
@@ -41,14 +40,14 @@ module jm.user {
 
         getCurrentAlias(id ?: string): AliasDetailVO {
             if (id) {
-                this.currentAlias._id = id;
+                this.currentAlias.id = id;
                 this.aliasService.getAlias(id).then(this.setAlias);
             }
             return this.currentAlias;
         }
 
         getAlias(id: string): IAliasDetailVO {
-            if (id === this.currentAlias._id) {
+            if (id === this.currentAlias.id) {
                 return this.currentAlias;
             }
             var alias: AliasDetailVO = new AliasDetailVO();
@@ -56,7 +55,7 @@ module jm.user {
                 (data: IAliasDetailVO) => {
                     alias.parseJson(data);
                 }
-            )
+            );
             return alias;
         }
 
@@ -65,17 +64,7 @@ module jm.user {
             alias.image = undefined;
             alias.journeys = undefined;
             alias.followedJourneys = undefined;
-            this.Upload.upload({
-                url: 'api/user/profile/' + this.currentAlias._id,
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                fields: {
-                    alias: alias
-                },
-                file: file,
-                method: null
-            })
+            this.aliasService.updateAlias(file, alias)
                 .progress(this.updateAliasProgress)
                 .success(this.updateAliasSuccess)
                 .error(this.updateAliasError);
@@ -84,13 +73,14 @@ module jm.user {
         updateAliasProgress = (evt: IFileProgressEvent) => {
             var progressPercentage: number = 100.0 * evt.loaded / evt.total;
             //console.log('progress: ' + progressPercentage.toString() + '% ' + evt.config.file.name);
-        }
+        };
 
-        updateAliasSuccess = (data: any, status: number, headers: ng.IHttpHeadersGetter, config: IFileUploadConfig) => {
+        updateAliasSuccess = (data: any, status: number, headers: ng.IHttpHeadersGetter, config: IFileUploadConfigFile) => {
             this.currentAlias.image = data.image;
             this.currentAlias.name = data.name;
+            this.currentAlias.createUrls();
             //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-        }
+        };
 
         updateAliasError = (status: number) => {
             //console.log('error status: ' + status);

@@ -48,16 +48,16 @@ module jm.journey.ctrl {
             if (!this.$scope.hasEdit) {
                 return;
             }
-            this.joinedAliasIds.push(this.$scope.journey.alias._id);
+            this.joinedAliasIds.push(this.$scope.journey.alias.id);
             for (var i: number = 0; i < this.$scope.journey.joinedAliases.length; i++) {
-                this.joinedAliasIds.push(this.$scope.journey.joinedAliases[i]._id);
+                this.joinedAliasIds.push(this.$scope.journey.joinedAliases[i].id);
             }
 
             var len: number = this.$scope.journey.moments.length;
             var reroute: boolean = false;
             if (this.$stateParams['momentId']) {
                 for (i = 0; i < len; i++) {
-                    if (this.$scope.journey.moments[i]._id === this.$stateParams['momentId']) {
+                    if (this.$scope.journey.moments[i].id === this.$stateParams['momentId']) {
                         break;
                     }
                 }
@@ -75,7 +75,7 @@ module jm.journey.ctrl {
         }
 
         addMomentElm(moment: IMomentBaseVO, $element: IAugmentedJQuery) {
-            this.momentElms[moment._id] = $element;
+            this.momentElms[moment.id] = $element;
         }
 
         setSelected = (moment: MomentBaseVO) => {
@@ -92,7 +92,7 @@ module jm.journey.ctrl {
         setSelectedMoment = (moment: IMomentBaseVO) => {
             if (this.$scope.selectedMoment) {
                 //scale down
-                this.animateMoment(this.momentElms[this.$scope.selectedMoment._id], 1);
+                this.animateMoment(this.momentElms[this.$scope.selectedMoment.id], 1);
             }
             this.$scope.selectedMoment = moment;
 
@@ -100,7 +100,7 @@ module jm.journey.ctrl {
                 return;
             }
             //scale up
-            this.animateMoment(this.momentElms[moment._id], 1.2);
+            this.animateMoment(this.momentElms[moment.id], 1.2);
         }
 
         animateMoment(elm: IAugmentedJQuery, scale: number) {
@@ -141,12 +141,12 @@ module jm.journey.ctrl {
             this.scrollTimeline();
             if (this.$scope.selectedMoment) {
                 this.routeUtil.redirectTo(RouteConst.MOMENT_BLINKS, {
-                    journeyId: this.$scope.journey._id,
-                    momentId: this.$scope.selectedMoment._id
+                    journeyId: this.$scope.journey.id,
+                    momentId: this.$scope.selectedMoment.id
                 });
             } else {
                 this.routeUtil.redirectTo(RouteConst.JOURNEY_DETAIL, {
-                    journeyId: this.$scope.journey._id
+                    journeyId: this.$scope.journey.id
                 });
             }
         }

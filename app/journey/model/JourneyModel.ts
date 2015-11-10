@@ -38,7 +38,7 @@ module jm.journey {
 
         getCurrentJourney(id ?: string): JourneyDetailVO {
             if (id) {
-                if (this.currentJourney._id !== id) {
+                if (this.currentJourney.id !== id) {
                     this.currentJourney.invalidateData();
                 }
                 this.journeyService.getJourney(id).then(this.setCurrentJourney);
@@ -47,9 +47,15 @@ module jm.journey {
         }
 
         createJourney(journey): IPromise < void > {
-            journey.aliasId = this.currentAlias._id;
-            return this.journeyService.createJourney(journey).then(this.setCurrentJourneyBase);
+            return this.journeyService.createJourney(journey, this.currentAlias.id).then(this.createJourneySuccess);
         }
+
+        createJourneySuccess = (data: IJourneyDetailVO) => {
+            this.setCurrentJourneyBase(data);
+            if (this.currentAlias) {
+                this.currentAlias.journeys.push(this.currentJourney);
+            }
+        };
 
         updateJourney(journey): IPromise < void > {
             var updateJourney: JourneyBaseVO = new JourneyBaseVO(journey);
@@ -61,7 +67,7 @@ module jm.journey {
             if (!id) {
                 return new JourneyDetailVO();
             }
-            if (id === this.currentJourney._id) {
+            if (id === this.currentJourney.id) {
                 return this.currentJourney;
             }
             var journey: JourneyDetailVO = new JourneyDetailVO();
@@ -74,7 +80,7 @@ module jm.journey {
 
         refreshJourney(currentAlias: AliasDetailVO) {
             this.currentAlias = currentAlias;
-            if (!this.currentJourney._id) {
+            if (!this.currentJourney.id) {
                 return;
             }
             this.currentJourney.updateFromAlias(this.currentAlias);
@@ -85,13 +91,11 @@ module jm.journey {
                 journey = this.currentJourney;
             }
             var alias: AliasDetailVO = this.currentAlias;
-            return this.journeyActionService.followJourney(journey._id, this.currentAlias._id)
+            return this.journeyActionService.followJourney(journey.id, this.currentAlias.id)
                 .then(function () {
-                    if (!journey.followers) {
-                        journey.followers = [];
-                    }
                     journey.followers.push(alias);
                     journey.isFollowing = true;
+                    alias.followedJourneys.push(new JourneyBaseVO(journey));
                 });
         }
 
@@ -100,16 +104,23 @@ module jm.journey {
                 journey = this.currentJourney;
             }
             var alias: AliasDetailVO = this.currentAlias;
-            return this.journeyActionService.unfollowJourney(journey._id, this.currentAlias._id)
+            return this.journeyActionService.unfollowJourney(journey.id, this.currentAlias.id)
                 .then(function () {
                     var index, len;
                     for (index = 0, len = journey.followers.length; index < len; ++index) {
-                        if (journey.followers[index]._id === alias._id) {
+                        if (journey.followers[index].id === alias.id) {
                             break;
                         }
                     }
                     journey.followers.splice(index, 1);
                     journey.isFollowing = false;
+
+                    for (index = 0, len = alias.followedJourneys.length; index < len; ++index) {
+                        if (alias.followedJourneys[index].id === journey.id) {
+                            break;
+                        }
+                    }
+                    alias.followedJourneys.splice(index, 1);
                 });
         }
 
@@ -117,7 +128,7 @@ module jm.journey {
             if (!journey) {
                 journey = this.currentJourney;
             }
-            return this.journeyActionService.linkJourney(userLinkJourney._id, journey._id)
+            return this.journeyActionService.linkJourney(userLinkJourney.id, journey.id)
                 .then(function () {
                     journey.linkedFromJourneys.push(userLinkJourney);
                     if (!journey.joinedLinkedJourneys) {
@@ -129,10 +140,10 @@ module jm.journey {
         }
 
         linkBackJourney(userLinkJourney: JourneyDetailVO, journey: JourneyBaseVO) {
-            if (userLinkJourney._id === this.currentJourney._id) {
+            if (userLinkJourney.id === this.currentJourney.id) {
                 userLinkJourney = this.currentJourney;
             }
-            return this.journeyActionService.linkJourney(userLinkJourney._id, journey._id).then(
+            return this.journeyActionService.linkJourney(userLinkJourney.id, journey.id).then(
                 function () {
                     userLinkJourney.linkedToJourneys.push(journey);
                     userLinkJourney.updateLinks();
@@ -141,7 +152,7 @@ module jm.journey {
         }
 
         unlinkJourney(journey: JourneyDetailVO, userLinkJourney: IJourneyBaseVO) {
-            return this.journeyActionService.unlinkJourney(userLinkJourney._id, journey._id).then(
+            return this.journeyActionService.unlinkJourney(userLinkJourney.id, journey.id).then(
                 function (data: IJourneyDetailVO) {
                     journey.linkedToJourneys = data.linkedToJourneys;
                     journey.linkedFromJourneys = data.linkedFromJourneys;
@@ -154,7 +165,7 @@ module jm.journey {
 
         requestJoin(journey: JourneyDetailVO) {
             var alias: AliasDetailVO = this.currentAlias;
-            return this.journeyActionService.requestJoin(journey._id, this.currentAlias._id).then(
+            return this.journeyActionService.requestJoin(journey.id, this.currentAlias.id).then(
                 function () {
                     journey.joinRequests.push(alias);
                     journey.sendRequest = true;
@@ -165,11 +176,11 @@ module jm.journey {
         leaveJourney(journey: JourneyDetailVO) {
             var alias: AliasDetailVO = this.currentAlias;
             var updateLeaveJourney = this.updateLeaveJourney;
-            return this.journeyActionService.leaveJourney(journey._id, this.currentAlias._id).then(
+            return this.journeyActionService.leaveJourney(journey.id, this.currentAlias.id).then(
                 function () {
-                    updateLeaveJourney(journey, alias._id);
+                    updateLeaveJourney(journey, alias.id);
                     for (var i: number = 0; i < alias.joinedJourneys.length; i++) {
-                        if (alias.joinedJourneys[i]._id == journey._id) {
+                        if (alias.joinedJourneys[i].id == journey.id) {
                             break;
                         }
                     }
@@ -181,16 +192,16 @@ module jm.journey {
         removeJoinedAlias(alias: AliasBaseVO) {
             var journey: JourneyDetailVO = this.currentJourney;
             var updateLeaveJourney = this.updateLeaveJourney;
-            return this.journeyActionService.leaveJourney(this.currentJourney._id, alias._id).then(
+            return this.journeyActionService.leaveJourney(this.currentJourney.id, alias.id).then(
                 function () {
-                    updateLeaveJourney(journey, alias._id);
+                    updateLeaveJourney(journey, alias.id);
                 }
             );
         }
 
         updateLeaveJourney = (journey: JourneyDetailVO, aliasId: string) => {
             for (var i: number = 0; i < journey.joinedAliases.length; i++) {
-                if (journey.joinedAliases[i]._id == aliasId) {
+                if (journey.joinedAliases[i].id == aliasId) {
                     break;
                 }
             }
@@ -200,10 +211,10 @@ module jm.journey {
 
         acceptJoinRequest(requester: AliasBaseVO) {
             var journey: JourneyDetailVO = this.currentJourney;
-            return this.journeyActionService.acceptJoinRequest(journey._id, requester._id).then(
+            return this.journeyActionService.acceptJoinRequest(journey.id, requester.id).then(
                 function () {
                     for (var i: number = 0; i < journey.joinRequests.length; i++) {
-                        if (journey.joinRequests[i]._id == requester._id) {
+                        if (journey.joinRequests[i].id == requester.id) {
                             break;
                         }
                     }

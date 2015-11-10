@@ -38,8 +38,8 @@ module jm.moment {
             return this.makeCall(this.get, ServerConst.STATE_PATH, null, this.returnStates);
         }
 
-        createMoment(moment: MomentBaseVO): IPromise < IMomentBaseVO > {
-            return this.create(moment, this.returnBaseMoment);
+        createMoment(moment: MomentBaseVO, aliasId: string, journeyId: string): IPromise < IMomentBaseVO > {
+            return this.create(moment, this.returnBaseMoment, {'aliasId' : aliasId, 'journeyId': journeyId});
         }
 
         updateMoment(moment: MomentBaseVO): IPromise < IMomentBaseVO > {

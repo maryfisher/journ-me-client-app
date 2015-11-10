@@ -55,7 +55,9 @@ module jm.auth.ctrl {
         registerSuccess = () => {
             if (this.authModel.isLoggedIn()) {
                 this.$scope.registerForm['email'].$setValidity('emailTaken', true);
-                this.routeUtil.redirectTo(RouteConst.DASHBOARD);
+                this.routeUtil.redirectTo(RouteConst.DASHBOARD, {
+                    aliasId: this.authModel.currentUser.currentAlias
+                });
                 this.close();
             }
         };

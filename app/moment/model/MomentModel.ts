@@ -51,11 +51,11 @@ module jm.moment {
 
         getCurrentMoment(id ?: string): MomentDetailVO {
             if (id) {
-                if (this.currentMoment._id !== id) {
+                if (this.currentMoment.id !== id) {
                     this.currentMoment.invalidateData();
                 }
                 this.momentService.getMoment(id).then(this.setMoment);
-                this.currentMoment._id = id;
+                this.currentMoment.id = id;
             }
             return this.currentMoment;
         }
@@ -66,9 +66,7 @@ module jm.moment {
         }
 
         createMoment(moment: MomentBaseVO, journeyId: string): IPromise < void > {
-            moment.alias = this.currentAlias._id;
-            moment.journey = journeyId;
-            return this.momentService.createMoment(moment).then(this.setMoment);
+            return this.momentService.createMoment(moment, this.currentAlias.id, journeyId).then(this.setMoment);
             /*function (data) {
              this.setMoment(data);
              //TODO do we really need to do this?
@@ -84,24 +82,20 @@ module jm.moment {
         }
 
         createFeedback(f: FeedbackVO) {
-            f.moment = this.currentMoment._id;
-            f.alias = new AliasBaseVO();
-            f.alias._id = this.currentAlias._id;
-            return this.feedbackService.createFeedback(f).then(this.addFeedback);
+            return this.feedbackService.createFeedback(f, this.currentMoment.id, this.currentAlias.id).then(this.addFeedback);
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
-            this.blinkService.getBlinkByIndex(this.currentMoment._id, index).then(function (data: BlinkVO) {
+            this.blinkService.getBlink(this.currentMoment.blinks[index]).then(function (data: BlinkVO) {
                 blinkVO.parseJson(data);
-            })
+            });
         }
 
         createBlink(formBlink: BlinkFormVO) {
-            formBlink.blink.moment = this.currentMoment._id;
             var moment: MomentDetailVO = this.currentMoment;
-            return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink).then(function (response: any) {
+            return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink, this.currentMoment.id).then(function (response: any) {
                 formBlink.blink.parseJson(response.data);
-                moment.blinks.push(formBlink.blink._id);
+                moment.blinks.push(formBlink.blink.id);
             });
         }
 

@@ -43,7 +43,7 @@ module jm.journey.ctrl {
         }
 
         saveSuccess = () => {
-            this.routeUtil.redirectToJourney(this.journeyModel.getCurrentJourney()._id);
+            this.routeUtil.redirectToJourney(this.journeyModel.getCurrentJourney().id);
             this.close();
         }
     }

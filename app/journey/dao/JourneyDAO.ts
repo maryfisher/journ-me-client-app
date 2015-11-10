@@ -26,8 +26,8 @@ module jm.journey {
             return this.getOne(id, this.returnJourney);
         }
 
-        createJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {
-            return this.create(journey, this.returnBaseJourney);
+        createJourney(journey: JourneyBaseVO, aliasId: string): IPromise < IJourneyBaseVO > {
+            return this.create(journey, this.returnBaseJourney, {'aliasId': aliasId});
         }
 
         updateJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {

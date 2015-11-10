@@ -1,14 +1,14 @@
 module jm.moment {
 
     export interface IStateVO {
-        _id: string;
+        id: string;
         type: number;
         name: string;
     }
 
     export class StateVO implements IStateVO {
 
-        _id: string;
+        id: string;
         type: number;
         name: string;
 

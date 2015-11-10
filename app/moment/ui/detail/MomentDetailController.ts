@@ -48,7 +48,7 @@ module jm.moment.ctrl {
                 for (var j: number = 0; j < this.$scope.allStates.length; j++) {
                     var add: boolean = true;
                     for (var i: number = 0; i < this.$scope.moment.states.length; i++) {
-                        if (this.$scope.moment.states[i].state._id === this.$scope.allStates[j]._id) {
+                        if (this.$scope.moment.states[i].state.id === this.$scope.allStates[j].id) {
                             add = false;
                             break;
                         }

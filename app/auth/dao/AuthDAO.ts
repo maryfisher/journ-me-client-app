@@ -26,10 +26,8 @@ module jm.auth {
             }, this.returnData);
         }
 
-        tokenLogin(token: string): IPromise < any > {
-            return this.makeCall(this.post, ServerConst.LOGIN_TOKEN_PATH, {
-                authToken: token
-            }, this.returnData);
+        tokenLogin(): IPromise < any > {
+            return this.makeCall(this.post, ServerConst.LOGIN_TOKEN_PATH, {}, this.returnData);
         }
 
         register(email: string, password: string, name: string): IPromise < any > {
@@ -41,9 +39,7 @@ module jm.auth {
         }
 
         logout(id: string): IPromise < any > {
-            return this.makeCall(this.post, ServerConst.LOGOUT_PATH, {
-                userId: id
-            }, this.returnData);
+            return this.makeCall(this.post, ServerConst.LOGOUT_PATH, {}, this.returnData);
         }
     }
 }

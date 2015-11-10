@@ -1,15 +1,21 @@
 module jm.user {
 
+    import ServerConst = jm.common.ServerConst;
+
     export interface IAliasBaseVO {
-        _id: string;
+        id: string;
         name: string;
         image: string;
+        imageUrl: string;
+        thumbUrl: string;
     }
 
     export class AliasBaseVO implements IAliasBaseVO {
-        _id: string;
+        id: string;
         name: string;
         image: string;
+        imageUrl: string;
+        thumbUrl: string;
 
         constructor(data ?: IAliasBaseVO) {
             this.parseJson(data);
@@ -18,13 +24,21 @@ module jm.user {
         parseJson(data: IAliasBaseVO) {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
+                this.createUrls();
             }
         }
 
+        createUrls() {
+            this.imageUrl = this.image ? ServerConst.ALIAS_IMG_PATH + this.image : '';
+            this.thumbUrl = this.image ? this.imageUrl + ServerConst.THUMB : '';
+        }
+
         invalidateData() {
-            this._id = undefined;
+            this.id = undefined;
             this.name = undefined;
             this.image = undefined;
+            this.imageUrl = undefined;
+            this.thumbUrl = undefined;
         }
     }
 }

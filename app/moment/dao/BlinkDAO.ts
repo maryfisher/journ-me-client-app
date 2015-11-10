@@ -7,7 +7,7 @@ module jm.moment {
     import IUploadService = angular.angularFileUpload.IUploadService;
     import IUploadPromise = angular.angularFileUpload.IUploadPromise;
     import IFileProgressEvent = angular.angularFileUpload.IFileProgressEvent;
-    import IFileUploadConfig = angular.angularFileUpload.IFileUploadConfig;
+    import IFileUploadConfigFiles = angular.angularFileUpload.IFileUploadConfigFiles;
 
     export class BlinkDAO extends jm.common.BaseResourceDAO {
 
@@ -25,25 +25,21 @@ module jm.moment {
             return response.data;
         };
 
-        getBlinkByIndex(momentId: string, index: number): IPromise <IBlinkVO> {
-            return this.makeCall(this.get, this.path + '?momentId=' + momentId + '&index=' + index, null, this.returnBlink);
-        }
-
         getBlink(id: string): IPromise <IBlinkVO> {
             return this.getOne(id, this.returnBlink);
         }
 
-        createBlink(images: File[], blink: BlinkVO): IUploadPromise < any > {
-            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH);
+        createBlink(images: File[], blink: BlinkVO, momentId: string): IUploadPromise < any > {
+            return this.uploadBlink(images, blink, this.getQueryParams(ServerConst.BLINK_PATH, {'momentId': momentId}));
         }
 
         updateBlink(images: File[], blink: BlinkVO): IUploadPromise < any > {
-            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH + blink._id);
+            return this.uploadBlink(images, blink, ServerConst.BLINK_PATH + blink.id);
         }
 
         uploadBlink(imageFiles: File[], blink: BlinkVO, url: string): IUploadPromise < any > {
             //TODO several images
-            return this.Upload.upload(<IFileUploadConfig>{
+            return this.Upload.upload(<IFileUploadConfigFiles>{
                 url: url,
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -51,7 +47,7 @@ module jm.moment {
                 fields: {
                     blink: blink
                 },
-                file: imageFiles[0],
+                file: imageFiles,
                 method: null
             });
         }
