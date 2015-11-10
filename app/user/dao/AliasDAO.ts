@@ -6,6 +6,7 @@ module jm.user {
     import IPromise = ng.IPromise;
     import IUploadService = angular.angularFileUpload.IUploadService;
     import IUploadPromise = angular.angularFileUpload.IUploadPromise;
+    import IFileUploadConfigFile = angular.angularFileUpload.IFileUploadConfigFile;
 
     export class AliasDAO extends jm.common.BaseResourceDAO {
 
@@ -27,8 +28,8 @@ module jm.user {
             return this.getOne(aliasId, this.returnAlias);
         }
 
-        updateAlias(file: File, alias: AliasBaseVO): IUploadPromise < any > {
-            return this.Upload.upload({
+        updateAlias(imageFile: File, alias: AliasBaseVO): IUploadPromise < any > {
+            return this.Upload.upload(<IFileUploadConfigFile>{
                 url: ServerConst.ALIAS_PATH + alias.id,
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -36,7 +37,7 @@ module jm.user {
                 fields: {
                     alias: alias
                 },
-                file: file,
+                file: imageFile,
                 method: null
             })
         }

@@ -27,5 +27,4 @@ after_success:
    - git config user.name "JournMe Tech User"
    - git add .
    - git commit -a -m "New distribution commit"
-#   - if [ "$BRANCH" == "develop" ]; then git push origin origin--master:master; fi
-   - git push origin HEAD:master
+   - if [ "$BRANCH" == "develop" ]; then git push origin HEAD:master; fi

@@ -73,6 +73,9 @@ module.exports = function (grunt) {
             }
         },
         ts: {
+            options: {
+                sourceMap: true
+            },
             dev: {
                 src: [
                     '<%= app.temp %>/ts/common/**/*.ts',
@@ -85,8 +88,7 @@ module.exports = function (grunt) {
                     '<%= app.temp %>/ts/app.ts',
                     '<%= app.lib %>/typings/**/*.ts'],
                 reference: '<%= app.temp %>/ts/reference.ts',
-                out: '<%= app.temp %>/scripts/build.js',
-                sourceMap: true
+                out: '<%= app.temp %>/scripts/build.js'
             }
         },
         tslint: {
