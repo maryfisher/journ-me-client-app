@@ -17,7 +17,7 @@ module.exports = function (grunt) {
             lib: 'lib',
             test: 'test',
             temp: '.temp',
-            dist: 'dist',
+            dist: 'dist/journ-me-client-dist',
             server: 'server'
         },
         bower: {
@@ -32,8 +32,8 @@ module.exports = function (grunt) {
         },
         clean: {
             dev: [
-                '<%= app.temp %>',
-                '<%= app.dist %>'
+                '<%= app.temp %>'
+                //'<%= app.dist %>' dist folder is a git submodule, meant to be used by Shippable only
             ],
             bower: [
                 '<%= app.lib %>/bower_components'
@@ -73,6 +73,9 @@ module.exports = function (grunt) {
             }
         },
         ts: {
+            options: {
+                sourceMap: true
+            },
             dev: {
                 src: [
                     '<%= app.temp %>/ts/common/**/*.ts',
@@ -85,13 +88,12 @@ module.exports = function (grunt) {
                     '<%= app.temp %>/ts/app.ts',
                     '<%= app.lib %>/typings/**/*.ts'],
                 reference: '<%= app.temp %>/ts/reference.ts',
-                out: '.temp/scripts/build.js',
-                sourceMap: true
+                out: '<%= app.temp %>/scripts/build.js'
             }
         },
         tslint: {
             options: {
-                configuration: grunt.file.readJSON("tslint.json")
+                configuration: grunt.file.readJSON('tslint.json')
             },
             files: {
                 src: ['<%= app.app %>/**/*.ts']
@@ -100,7 +102,7 @@ module.exports = function (grunt) {
         less: {
             dev: {
                 files: {
-                    '.temp/style/main.css': '<%= app.app %>/compile.lesstpl'
+                    '<%= app.temp %>/style/main.css': '<%= app.app %>/compile.lesstpl'
                 },
                 options: {
                     plugins: [require('less-plugin-glob')]
@@ -108,17 +110,56 @@ module.exports = function (grunt) {
             }
         },
         copy: {
-            html: {
+            indexDev: {
                 expand: true,
                 cwd: '<%= app.app %>/',
-                src: ['index.html'],
-                dest: '<%= app.temp %>/'
+                src: ['indexDev.html'],
+                dest: '<%= app.temp %>/',
+                rename: function (dest, src) {
+                    return dest + src.replace(/indexDev/, 'index');
+                }
+            },
+            indexProd: {
+                expand: true,
+                cwd: '<%= app.app %>/',
+                src: ['indexProd.html'],
+                dest: '<%= app.dist %>/',
+                rename: function (dest, src) {
+                    return dest + src.replace(/indexProd/, 'index');
+                }
             },
             ts: {
                 expand: true,
                 cwd: '<%= app.app %>/',
                 src: ['**/*.ts'],
                 dest: '<%= app.temp %>/ts'
+            }
+        },
+        concat: {
+            options: {
+                separator: grunt.util.linefeed + grunt.util.linefeed
+            },
+            dist: {
+                files: {
+                    '<%= app.dist %>/style/app.min.css': [
+                        '<%= app.lib %>/bower_components/bootstrap/dist/css/bootstrap.css',
+                        '<%= app.lib %>/bower_components/fontawesome/css/font-awesome.css',
+                        '<%= app.temp %>/style/main.css'
+                    ],
+                    '<%= app.dist %>/scripts/app.min.js': [
+                        '<%= app.lib %>/bower_components/angular/angular.js',
+                        '<%= app.lib %>/bower_components/angular-animate/angular-animate.js',
+                        '<%= app.lib %>/bower_components/angular-ui-router/release/angular-ui-router.js',
+                        '<%= app.lib %>/bower_components/angular-cookies/angular-cookies.js',
+                        '<%= app.lib %>/bower_components/angular-resource/angular-resource.js',
+                        '<%= app.lib %>/bower_components/angular-bootstrap/ui-bootstrap.js',
+                        '<%= app.lib %>/bower_components/angular-messages/angular-messages.js',
+                        '<%= app.lib %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+                        '<%= app.lib %>/bower_components/ng-file-upload/ng-file-upload.js',
+                        '<%= app.temp %>/scripts/build.js',
+                        '<%= app.temp %>/scripts/templates.js'
+                    ]
+                }
             }
         },
         express: {
@@ -138,7 +179,7 @@ module.exports = function (grunt) {
         watch: {
             ngTemplates: {
                 files: ['<%= app.app %>/**/*.html'],
-                tasks: ['ngtemplates', 'copy:html']
+                tasks: ['ngtemplates', 'copy:indexDev']
             },
             devSource: {
                 files: ['<%= app.app %>/**/*.ts', '<%= app.lib %>/typings/**/*.ts'],
@@ -165,7 +206,7 @@ module.exports = function (grunt) {
         'copy:ts',
         'ts',
         'less',
-        'copy:html'
+        'copy:indexDev'
     ]);
 
     grunt.registerTask('run', [
@@ -173,6 +214,11 @@ module.exports = function (grunt) {
         'express',
         // Express usually stops after Grunt task execution completes. Keep execution alive via subsequent task 'express-keepalive' or another alive task such as 'watch'
         'watch'
+    ]);
+
+    grunt.registerTask('package', [
+        'concat:dist',
+        'copy:indexProd'
     ]);
 
     grunt.registerTask('default', [

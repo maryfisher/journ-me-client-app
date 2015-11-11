@@ -1,0 +1,3 @@
+[submodule "dist/journ-me-client-dist"]
+	path = dist/journ-me-client-dist
+	url = https://JournMeTechUser:Pandemie2015@bitbucket.org/journ-me/journ-me-client-dist.git

@@ -1,3 +1,8 @@
+| Branch        | Build Status  |
+| ------------- | ------------- |
+| *develop*     | ![Build Status](https://img.shields.io/shippable/563a7c681895ca4474229808/develop.svg) |
+| *production*  | ![Build Status](https://img.shields.io/shippable/563a7c681895ca4474229808/production.svg) |
+
 # How to run the client app #
 
 1. Install NodeJS on your computer
