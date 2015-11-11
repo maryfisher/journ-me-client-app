@@ -2,6 +2,7 @@ module jm.auth.ctrl {
     'use strict';
 
     import RouteUtil = jm.common.RouteUtil;
+    import RouteConst = jm.common.RouteConst;
     import NGConst = jm.common.NGConst;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
@@ -43,7 +44,13 @@ module jm.auth.ctrl {
         private loginSuccess = () => {
             if (this.authModel.isLoggedIn()) {
                 this.$scope.loginForm.$setValidity('pw', true, null);
-                this.routeUtil.reload();
+                if (this.routeUtil.isCurrent(RouteConst.HOME)) {
+                    this.routeUtil.redirectTo(RouteConst.DASHBOARD, {
+                        aliasId: this.authModel.currentUser.currentAlias
+                    });
+                } else {
+                    this.routeUtil.reload();
+                }
                 this.close();
             }
         };

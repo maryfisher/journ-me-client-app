@@ -54,8 +54,8 @@ module jm {
             this.$stateProvider.state(RouteConst.HOME, {
                 url: RouteConst.HOME_PATH,
                 templateUrl: 'main/ui/home/home.tpl.html',
-                controller: jm.main.ctrl.HomeController.NG_NAME,
-                data: redirectAuth
+                controller: jm.main.ctrl.HomeController.NG_NAME/*,
+                 data: redirectAuth*/
             });
             this.$stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
