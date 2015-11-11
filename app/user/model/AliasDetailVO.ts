@@ -49,5 +49,13 @@ module jm.user {
             this.followedJourneys.length = 0;
             this.joinedJourneys.length = 0;
         }
+
+        updateJourneys(journey: JourneyBaseVO) {
+            for (var i: number = 0; i < this.journeys.length; i++) {
+                if (this.journeys[i].id === journey.id) {
+                    this.journeys[i] = new JourneyBaseVO(journey);
+                }
+            }
+        }
     }
 }
