@@ -10,6 +10,7 @@ module jm.user.ctrl {
     }
 
     export class DashboardController extends jm.common.BaseController {
+        static NG_NAME: string = 'DashboardController';
         static $inject = [NGConst.$SCOPE, AliasModel.NG_NAME];
 
         constructor(private $scope: IDashboardScope, private aliasModel: AliasModel) {

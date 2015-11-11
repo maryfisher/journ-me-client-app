@@ -4,6 +4,7 @@ module jm.common {
     import IPromise = ng.IPromise;
     import IQService = ng.IQService;
     import IHttpService = ng.IHttpService;
+    import IHttpPromise = ng.IHttpPromise;
 
     export class BaseHttpDAO {
 
@@ -20,23 +21,23 @@ module jm.common {
             this.$q = $injector.get < IQService >('$q');
         }
 
-        post = (url: string, params: Object) => {
+        post = <T>(url: string, params: Object): IHttpPromise<T> => {
             return this.execute(this.POST, url, params);
-        }
+        };
 
-        get = (url: string, params: Object) => {
+        get = <T>(url: string, params: Object): IHttpPromise<T> => {
             return this.execute(this.GET, url, null, params);
-        }
+        };
 
-        put = (url: string, data: Object) => {
+        put = <T>(url: string, data: Object): IHttpPromise<T> => {
             return this.execute(this.PUT, url, data);
-        }
+        };
 
-        del = (url: string) => {
+        del = <T>(url: string): IHttpPromise<T> => {
             return this.execute(this.DELETE, url);
-        }
+        };
 
-        execute(method, url, data?, params?) {
+        execute <T>(method, url, data?, params?): IHttpPromise<T> {
             var config: ng.IRequestConfig = {
                 method: method,
                 url: url,
@@ -54,6 +55,7 @@ module jm.common {
             method(url, params)
                 .then(
                 (response: any) => {
+                    console.log(response);
                     if (successCallback) {
                         deferred.resolve(successCallback(response));
                     } else {

@@ -11,6 +11,7 @@ module jm.user.ctrl {
 
     export class EditAliasController extends jm.common.BaseController {
 
+        static NG_NAME: string = 'EditAliasController';
         static $inject = [NGConst.$SCOPE, AliasModel.NG_NAME];
 
         constructor(private $scope: IEditAliasScope, private aliasModel: AliasModel) {

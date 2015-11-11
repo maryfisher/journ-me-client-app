@@ -36,6 +36,7 @@ module jm.moment.ctrl {
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
+        static NG_NAME: string = 'MomentEditFormController';
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
 
         private unregisterWatchStates: Function;

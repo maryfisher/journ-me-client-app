@@ -1,0 +1,33 @@
+<div class="row panel">
+    <div class="jm-home-header">
+        <h1 class="text-center">Welcome to JournMe</h1>
+        <h5 class="text-center">Join Us On a Journey</h5>
+    </div>
+    <h2 class="text-center text-success"><span>{{stats.allJourneys}} Journeys Created</span></h2>
+
+    <h2 class="text-center text-danger">{{stats.allMoments}} Moments Shared</h2>
+
+    <h2 class="text-center text-muted">{{stats.allFeedbacks}} Empathy Shown</h2>
+
+    <h2 class="text-center text-info">{{stats.allLinks}} Experiences Linked</h2>
+
+    <h2 class="text-center text-danger">{{stats.allJoined}} Goals Joined</h2>
+
+    <h2 class="text-center text-muted">{{stats.allFollowers}} Progress Watched</h2>
+</div>
+
+<div class="row panel">
+    <div class="jm-home-new-header">
+        <div class="col-sm-6">
+            <h3 class="text-center">New Journeys</h3>
+        </div>
+        <div class="col-sm-6">
+            <h3 class="text-center">New Moments</h3>
+        </div>
+        <div class="row"></div>
+    </div>
+    <div class="col-sm-6">{{recentJourneys}}</div>
+    <div data-ng-repeat="moment in recentMoments" class="col-sm-6">
+
+    </div>
+</div>

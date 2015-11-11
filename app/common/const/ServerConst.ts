@@ -5,6 +5,8 @@ module jm.common {
         static IMG: string = 'image/';
         static THUMB: string = '/thumbnail';
 
+        static STATS_PATH: string = ServerConst.API + 'stats/';
+
         static USER: string = ServerConst.API + 'user/';
 
         static AUTH_PATH: string = ServerConst.USER + 'authentication/';

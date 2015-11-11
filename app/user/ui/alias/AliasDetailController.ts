@@ -9,6 +9,8 @@ module jm.user.ctrl {
     }
 
     export class AliasDetailController extends jm.common.BaseController {
+
+        static NG_NAME: string = 'AliasDetailController';
         static $inject = [NGConst.$SCOPE, AliasModel.NG_NAME, NGConst.$STATE_PARAMS];
 
         constructor(private $scope: IAliasDetailScope, private aliasModel: AliasModel, private $stateParams: angular.ui.IStateParamsService) {

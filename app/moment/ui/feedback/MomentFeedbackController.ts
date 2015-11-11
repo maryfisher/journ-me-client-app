@@ -14,6 +14,7 @@ module jm.moment.ctrl {
     }
 
     export class MomentFeedbackController extends jm.common.BaseController {
+        static NG_NAME: string = 'MomentFeedbackController';
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, AliasModel.NG_NAME];
 
         constructor(private $scope: IMomentFeedbackScope, private momentModel: MomentModel, private aliasModel: AliasModel) {
