@@ -26,5 +26,5 @@ after_success:
    - git config user.email "journmetechuser@gmail.com"
    - git config user.name "JournMe Tech User"
    - git add .
-   - git commit -a -m "New distribution commit"
+   - if [ "$BRANCH" == "develop" ]; then git commit -a -m "New distribution commit"; fi
    - if [ "$BRANCH" == "develop" ]; then git push origin HEAD:master; fi
