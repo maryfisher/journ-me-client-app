@@ -1,3 +1,4 @@
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
 module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
@@ -8,6 +9,7 @@ module jm.moment {
         journey: string;
         date: string|Date;
         isPublic: boolean;
+        title: string;
 
         isAlias: boolean;
     }
@@ -19,6 +21,7 @@ module jm.moment {
         journey: string;
         date: string|Date;
         isPublic: boolean;
+        title: string;
 
         isAlias: boolean;
 
@@ -44,6 +47,7 @@ module jm.moment {
             this.id = undefined;
             this.alias = undefined;
             this.journey = undefined;
+            this.title = undefined;
             this.setDefault();
         }
 

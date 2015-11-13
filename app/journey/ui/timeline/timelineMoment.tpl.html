@@ -1,5 +1,6 @@
 <li class="jm-timeline-li">
-    <a data-ui-sref="MOMENT_BLINKS({momentId: moment.id})" data-ng-if="moment.isPublic || moment.isAlias"
+    <a data-ui-sref="MOMENT_BLINKS({momentId: moment.id, journeyId: moment.journey})"
+       data-ng-if="moment.isPublic || moment.isAlias"
        data-ng-click="setSelected(moment)" popover-placement="top" popover-trigger="mouseenter"
        popover="{{moment.descript}} {{moment.date | date:'medium'}}">
         <img src="" class="img-rounded jm-moment-img" data-ng-class="getMomentClass(moment)"/>

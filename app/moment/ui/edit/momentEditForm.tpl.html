@@ -13,23 +13,32 @@
                 <label>Description</label>
                 <textarea name="descript" data-ng-model="moment.descript" class="form-control" placeholder="Tell us how your moment was!"></textarea>
             </div>-->
+            <div class="form-group row">
+                <label class="col-sm-2">Title</label>
 
-            <div class="form-group btn-group col-sm-4">
-                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="true"
-                       uncheckable>Public</label>
-                <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="false"
-                       uncheckable>Private</label>
+                <div class="col-sm-10">
+                    <input type="text" name="title" data-ng-model="moment.title" required
+                           placeholder="E.G 'Greatness Achieved'" class="form-control"/>
+                </div>
             </div>
-            <div class="form-group col-sm-4">
-                <p class="input-group">
-                    <input type="date" data-datepicker-popup data-ng-model="moment.date"
-                           is-open="isDateOpen" ng-required="true"
-                           class="form-control" close-text="Close"/>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i
-                        class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-                </p>
+            <div class="row">
+                <div class="form-group btn-group col-sm-4">
+                    <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="true"
+                           uncheckable>Public</label>
+                    <label class="btn btn-default" data-ng-model="moment.isPublic" btn-radio="false"
+                           uncheckable>Private</label>
+                </div>
+                <div class="form-group col-sm-4">
+                    <p class="input-group">
+                        <input type="date" data-datepicker-popup data-ng-model="moment.date"
+                               is-open="isDateOpen" ng-required="true"
+                               class="form-control" close-text="Close"/>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="openDatePicker($event)"><i
+                            class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                    </p>
+                </div>
             </div>
             <div class="form-group">
                 <button data-ng-if="hasMoment"

@@ -79,10 +79,10 @@ module.exports = function (grunt) {
             dev: {
                 src: [
                     '<%= app.temp %>/ts/common/**/*.ts',
-                    '<%= app.temp %>/ts/main/**/*.ts',
                     '<%= app.temp %>/ts/user/**/*.ts',
                     '<%= app.temp %>/ts/journey/**/*.ts',
                     '<%= app.temp %>/ts/moment/**/*.ts',
+                    '<%= app.temp %>/ts/main/**/*.ts',
                     '<%= app.temp %>/ts/auth/**/*.ts',
                     '<%= app.temp %>/ts/config/**/*.ts',
                     '<%= app.temp %>/ts/Main.ts',

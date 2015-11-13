@@ -55,7 +55,6 @@ module jm.common {
             method(url, params)
                 .then(
                 (response: any) => {
-                    console.log(response);
                     if (successCallback) {
                         deferred.resolve(successCallback(response));
                     } else {

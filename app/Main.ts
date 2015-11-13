@@ -97,6 +97,7 @@ module jm {
             this.addDirective(jm.moment.BlinkCarouselElementDirect);
             this.addDirective(jm.moment.StateListDirect);
             this.addDirective(jm.moment.StateSelectDirect);
+            this.addDirective(jm.moment.MomentListItemDirect);
         }
 
         initFilter() {
