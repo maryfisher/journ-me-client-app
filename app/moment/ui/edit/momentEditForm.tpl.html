@@ -64,10 +64,15 @@
             <jm-state-list can-edit="true"
                            states="formBlink.blink.states"
                            on-state-selected="removeState(state)"></jm-state-list>
-            <jm-state-select states="missingStates"
-                             types="0,1,2"
-                             on-state-selected="selectState(state)"
-                             class="jm-state-input"></jm-state-select>
+            <div>
+                <jm-state-select states="missingStates"
+                                 types="0,1"
+                                 on-state-selected="selectState(state)"
+                                 class="jm-need-input"></jm-state-select>
+                <jm-state-select states="missingStates"
+                                 types="2"
+                                 on-state-selected="selectState(state)"></jm-state-select>
+            </div>
             <div data-ng-if="formBlink.blink.states.length > 0">
                 <jm-state-select states="missingStates"
                                  types="3"

@@ -1,7 +1,9 @@
 ///<reference path="..\..\user\model\AliasBaseVO.ts"/>
+///<reference path="..\..\common\const\ServerConst.ts"/>
 module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
+    import ServerConst = jm.common.ServerConst;
 
     export interface IMomentBaseVO {
         id: string;
@@ -10,6 +12,7 @@ module jm.moment {
         date: string|Date;
         isPublic: boolean;
         title: string;
+        thumb: string;
 
         isAlias: boolean;
     }
@@ -22,6 +25,8 @@ module jm.moment {
         date: string|Date;
         isPublic: boolean;
         title: string;
+        thumb: string;
+        thumbUrl: string;
 
         isAlias: boolean;
 
@@ -40,6 +45,7 @@ module jm.moment {
             if (data) {
                 jm.common.VOUtil.parseJson(data, this);
                 this.date = new Date(<string>data.date);
+                this.thumbUrl = this.thumb ? ServerConst.MOMENT_IMG_PATH + this.thumb + ServerConst.THUMB : '';
             }
         }
 
@@ -48,6 +54,7 @@ module jm.moment {
             this.alias = undefined;
             this.journey = undefined;
             this.title = undefined;
+            this.thumb = undefined;
             this.setDefault();
         }
 

@@ -23,6 +23,7 @@ module jm.common {
         static JOURNEY_PATH: string = ServerConst.API + 'journey/';
 
         static MOMENT_PATH: string = ServerConst.API + 'moment/';
+        static MOMENT_IMG_PATH: string = ServerConst.MOMENT_PATH + ServerConst.IMG;
 
         static FEEDBACK_PATH: string = ServerConst.API + 'feedback/';
 

@@ -44,6 +44,7 @@ module jm.moment {
             if (!data) {
                 return;
             }
+            this.feedback = [];
             for (var i: number = 0; i < data.length; i++) {
                 this.addFeedback(data[i]);
             }
