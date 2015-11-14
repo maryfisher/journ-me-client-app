@@ -163,20 +163,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        express: {
-            dev: {
-                options: {
-                    port: 9000,
-                    hostname: '0.0.0.0',
-                    bases: [
-                        '<%= app.temp %>',
-                        '<%= app.lib %>'
-                    ],
-                    server: '<%= app.server %>/server.js', // -- don't forget to restart Express via Grunt when changing this file
-                    livereload: true //watches the bases folders for any changes
-                }
-            }
-        },
         watch: {
             ngTemplates: {
                 files: ['<%= app.app %>/**/*.html'],
@@ -212,8 +198,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('run', [
         'build',
-        'express',
-        // Express usually stops after Grunt task execution completes. Keep execution alive via subsequent task 'express-keepalive' or another alive task such as 'watch'
         'watch'
     ]);
 
@@ -223,7 +207,6 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'build',
-        'watch'
+        'build'
     ]);
 };

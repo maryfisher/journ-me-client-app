@@ -16,7 +16,7 @@ install:
    - grunt tsd
 
 script:
-   - grunt
+   - grunt build
 
 after_success:
    - git submodule init
