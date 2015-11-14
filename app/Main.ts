@@ -38,7 +38,9 @@ module jm {
                 'ngResource',
                 'ui.router',
                 'ngAnimate',
-                'ngFileUpload']);
+                'ngFileUpload',
+                'angular-loading-bar'
+            ]);
             this.auth = angular.module('auth', []);
             this.journey = angular.module('journey', []);
             this.moment = angular.module('moment', []);

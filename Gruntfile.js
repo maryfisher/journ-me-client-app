@@ -134,6 +134,13 @@ module.exports = function (grunt) {
                 cwd: '<%= app.app %>/',
                 src: ['**/*.ts'],
                 dest: '<%= app.temp %>/ts'
+            },
+            fonts: {
+                expand: true,
+                flatten: true,
+                cwd: '<%= app.lib %>/bower_components/',
+                src: ['fontawesome/fonts/*', 'bootstrap/fonts/*'],
+                dest: '<%= app.dist %>/fonts/'
             }
         },
         concat: {
@@ -145,6 +152,7 @@ module.exports = function (grunt) {
                     '<%= app.dist %>/style/app.min.css': [
                         '<%= app.lib %>/bower_components/bootstrap/dist/css/bootstrap.css',
                         '<%= app.lib %>/bower_components/fontawesome/css/font-awesome.css',
+                        '<%= app.lib %>/bower_components/angular-loading-bar/build/loading-bar.css',
                         '<%= app.temp %>/style/main.css'
                     ],
                     '<%= app.dist %>/scripts/app.min.js': [
@@ -157,6 +165,7 @@ module.exports = function (grunt) {
                         '<%= app.lib %>/bower_components/angular-messages/angular-messages.js',
                         '<%= app.lib %>/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
                         '<%= app.lib %>/bower_components/ng-file-upload/ng-file-upload.js',
+                        '<%= app.lib %>/bower_components/angular-loading-bar/build/loading-bar.js',
                         '<%= app.temp %>/scripts/build.js',
                         '<%= app.temp %>/scripts/templates.js'
                     ]
@@ -203,7 +212,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('package', [
         'concat:dist',
-        'copy:indexProd'
+        'copy:indexProd',
+        'copy:fonts'
     ]);
 
     grunt.registerTask('default', [
