@@ -98,6 +98,7 @@ module jm {
             this.addDirective(jm.moment.StateListDirect);
             this.addDirective(jm.moment.StateSelectDirect);
             this.addDirective(jm.moment.MomentListItemDirect);
+            this.addDirective(jm.moment.FeedbackListItemDirect);
         }
 
         initFilter() {

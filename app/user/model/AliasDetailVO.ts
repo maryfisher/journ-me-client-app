@@ -5,15 +5,15 @@ module jm.user {
     import JourneyBaseVO = jm.journey.JourneyBaseVO;
 
     export interface IAliasDetailVO extends IAliasBaseVO {
-        journeys: IJourneyBaseVO[];
-        followedJourneys: IJourneyBaseVO[];
-        joinedJourneys: IJourneyBaseVO[];
+        journeys: JourneyBaseVO[];
+        followedJourneys: JourneyBaseVO[];
+        joinedJourneys: JourneyBaseVO[];
     }
 
     export class AliasDetailVO extends AliasBaseVO implements IAliasDetailVO {
-        journeys: IJourneyBaseVO[] = [];
-        followedJourneys: IJourneyBaseVO[] = [];
-        joinedJourneys: IJourneyBaseVO[] = [];
+        journeys: JourneyBaseVO[] = [];
+        followedJourneys: JourneyBaseVO[] = [];
+        joinedJourneys: JourneyBaseVO[] = [];
 
         constructor(data ?: IAliasDetailVO) {
             super(data);

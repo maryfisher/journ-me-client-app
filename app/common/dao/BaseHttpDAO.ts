@@ -21,6 +21,10 @@ module jm.common {
             this.$q = $injector.get < IQService >('$q');
         }
 
+        returnData<T>(response): T {
+            return response.data;
+        }
+
         post = <T>(url: string, params: Object): IHttpPromise<T> => {
             return this.execute(this.POST, url, params);
         };

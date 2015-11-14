@@ -18,6 +18,7 @@ module jm.common {
 
         static ALIAS_PATH: string = ServerConst.API + 'alias/';
         static ALIAS_IMG_PATH: string = ServerConst.ALIAS_PATH + ServerConst.IMG;
+        static DASHBOARD_PATH: string = ServerConst.ALIAS_PATH + 'dashboard/';
 
         static JOURNEY_PATH: string = ServerConst.API + 'journey/';
 

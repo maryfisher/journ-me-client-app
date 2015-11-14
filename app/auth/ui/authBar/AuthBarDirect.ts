@@ -26,7 +26,7 @@ module jm {
             scope: any = {};
 
             link = (scope: IAuthBarScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
-
+                //TODO: check if this makes sense
                 scope.alias = this.aliasModel.getCurrentAlias();
                 scope.logout = this.logout;
             };
@@ -39,7 +39,7 @@ module jm {
 
             logout = () => {
                 this.authModel.logout().then(this.logoutSuccess);
-            }
+            };
 
             private logoutSuccess = () => {
                 if (!this.authModel.isLoggedIn()) {

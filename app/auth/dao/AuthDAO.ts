@@ -15,9 +15,9 @@ module jm.auth {
 
         //TODO
         //specify this more/split into different methods so that we know what is returned
-        returnData = (response) => {
-            return response.data;
-        };
+        /*returnData = (response) => {
+         return response.data;
+         };*/
 
         login(email: string, password: string): IPromise < any > {
             return this.makeCall(this.post, ServerConst.LOGIN_PATH, {

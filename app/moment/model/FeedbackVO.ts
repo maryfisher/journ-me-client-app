@@ -6,6 +6,7 @@ module jm.moment {
         id: string;
         alias: jm.user.AliasBaseVO;
         moment: string;
+        journey: string;
         body: string;
         created: Date;
         states: IStateVO[];
@@ -16,6 +17,7 @@ module jm.moment {
         id: string;
         alias: AliasBaseVO;
         moment: string;
+        journey: string;
         body: string;
         created: Date;
         states: IStateVO[] = [];
