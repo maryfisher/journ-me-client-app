@@ -134,6 +134,13 @@ module.exports = function (grunt) {
                 cwd: '<%= app.app %>/',
                 src: ['**/*.ts'],
                 dest: '<%= app.temp %>/ts'
+            },
+            fonts: {
+                expand: true,
+                flatten: true,
+                cwd: '<%= app.lib %>/bower_components/',
+                src: ['fontawesome/fonts/*', 'bootstrap/fonts/*'],
+                dest: '<%= app.dist %>/fonts/'
             }
         },
         concat: {
@@ -205,7 +212,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('package', [
         'concat:dist',
-        'copy:indexProd'
+        'copy:indexProd',
+        'copy:fonts'
     ]);
 
     grunt.registerTask('default', [
