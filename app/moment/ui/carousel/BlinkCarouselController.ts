@@ -10,11 +10,8 @@ module jm.moment.ctrl {
         constructor(private $scope: IBlinkCarouselScope, private momentModel: MomentModel) {
             super($scope);
             this.addScopeMethods('nextBlink', 'hasNextBlink', 'prevBlink', 'hasPrevBlink');
-            if (this.$scope.moment.blinks.length > 0) {
-                this.getBlink();
-            } else {
-                this.unregisterWatchBlinks = this.$scope.$watch('moment.blinks', this.getBlink);
-            }
+            this.unregisterWatchBlinks = this.$scope.$watch('moment.blinks', this.getBlink);
+            this.getBlink();
         }
 
         nextBlink = () => {
@@ -40,7 +37,11 @@ module jm.moment.ctrl {
         };
 
         getBlink = () => {
-            if (this.$scope.moment.blinks.length > 0 && this.unregisterWatchBlinks) {
+            if (this.$scope.moment.blinks.length === 0) {
+                return;
+            }
+
+            if (this.unregisterWatchBlinks) {
                 this.unregisterWatchBlinks();
                 this.unregisterWatchBlinks = undefined;
             }

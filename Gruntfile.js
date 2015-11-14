@@ -82,6 +82,7 @@ module.exports = function (grunt) {
                     '<%= app.temp %>/ts/user/**/*.ts',
                     '<%= app.temp %>/ts/journey/**/*.ts',
                     '<%= app.temp %>/ts/moment/**/*.ts',
+                    '<%= app.temp %>/ts/main/**/*.ts',
                     '<%= app.temp %>/ts/auth/**/*.ts',
                     '<%= app.temp %>/ts/config/**/*.ts',
                     '<%= app.temp %>/ts/Main.ts',
@@ -222,6 +223,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'build'
+        'build',
+        'watch'
     ]);
 };

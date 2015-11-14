@@ -36,7 +36,13 @@ module jm.moment {
                 scope.onStateSelected({'state': s});
             };
             if (scope.filter.indexOf(0) !== -1) {
-                scope.placeholder = 'Tell us what you were feeling!';
+                if (scope.filter.indexOf(2) !== -1) {
+                    scope.placeholder = 'Tell us what you are feeling!';
+                } else {
+                    scope.placeholder = 'Tell us your happy feelings!';
+                }
+            } else if (scope.filter.indexOf(2) !== -1) {
+                scope.placeholder = 'Tell us what bothered you!';
             } else if (scope.filter.indexOf(3) !== -1) {
                 scope.placeholder = 'What needs got met?';
             } else if (scope.filter.indexOf(4) !== -1) {

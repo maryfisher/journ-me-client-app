@@ -5,6 +5,8 @@ module jm.common {
         static IMG: string = 'image/';
         static THUMB: string = '/thumbnail';
 
+        static STATS_PATH: string = ServerConst.API + 'stats/';
+
         static USER: string = ServerConst.API + 'user/';
 
         static AUTH_PATH: string = ServerConst.USER + 'authentication/';
@@ -16,10 +18,12 @@ module jm.common {
 
         static ALIAS_PATH: string = ServerConst.API + 'alias/';
         static ALIAS_IMG_PATH: string = ServerConst.ALIAS_PATH + ServerConst.IMG;
+        static DASHBOARD_PATH: string = ServerConst.ALIAS_PATH + 'dashboard/';
 
         static JOURNEY_PATH: string = ServerConst.API + 'journey/';
 
         static MOMENT_PATH: string = ServerConst.API + 'moment/';
+        static MOMENT_IMG_PATH: string = ServerConst.MOMENT_PATH + ServerConst.IMG;
 
         static FEEDBACK_PATH: string = ServerConst.API + 'feedback/';
 

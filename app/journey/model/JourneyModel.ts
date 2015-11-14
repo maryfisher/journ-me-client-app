@@ -25,6 +25,9 @@ module jm.journey {
             this.currentJourney.parseBaseData(data);
             if (this.currentAlias) {
                 this.currentJourney.updateAlias(this.currentAlias);
+                if(this.currentJourney.isAlias){
+                    this.currentAlias.updateJourneys(this.currentJourney);
+                }
             }
         }
 

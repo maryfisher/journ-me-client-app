@@ -53,25 +53,26 @@ module jm {
             this.$urlRouterProvider.otherwise(RouteConst.HOME_PATH);
             this.$stateProvider.state(RouteConst.HOME, {
                 url: RouteConst.HOME_PATH,
-                templateUrl: 'public/ui/home/home.tpl.html',
-                data: redirectAuth
+                templateUrl: 'main/ui/home/home.tpl.html',
+                controller: jm.main.ctrl.HomeController.NG_NAME/*,
+                 data: redirectAuth*/
             });
             this.$stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
-                templateUrl: 'public/ui/browse/browse.tpl.html'
+                templateUrl: 'main/ui/browse/browse.tpl.html'
             });
 
             this.$stateProvider.state(RouteConst.ALIAS_DETAIL, {
                 url: RouteConst.ALIAS_DETAIL_PATH,
                 templateUrl: 'user/ui/alias/aliasDetail.tpl.html',
-                controller: 'AliasDetailController',
+                controller: jm.user.ctrl.AliasDetailController.NG_NAME,
                 data: redirectAuth
             })
 
             this.$stateProvider.state(RouteConst.DASHBOARD, {
                 url: RouteConst.DASHBOARD_PATH,
                 templateUrl: 'user/ui/dashboard/dashboard.tpl.html',
-                controller: 'DashboardController',
+                controller: jm.user.ctrl.DashboardController.NG_NAME,
                 data: redirectAlias
             });
 
@@ -79,45 +80,45 @@ module jm {
                 .state(RouteConst.JOURNEY_DETAIL, {
                     url: RouteConst.JOURNEY_DETAIL_PATH,
                     templateUrl: 'journey/ui/detail/journeyDetail.tpl.html',
-                    controller: 'JourneyDetailController'
+                    controller: jm.journey.ctrl.JourneyDetailController.NG_NAME
                 })
                 .state(RouteConst.MOMENT_DETAIL, {
                     abstract: true,
                     parent: RouteConst.JOURNEY_DETAIL,
                     url: RouteConst.MOMENT_DETAIL_PATH,
                     templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
-                    controller: 'MomentDetailController'
+                    controller: jm.moment.ctrl.MomentDetailController.NG_NAME
                 })
                 .state(RouteConst.MOMENT_BLINKS, {
                     parent: RouteConst.MOMENT_DETAIL,
                     url: RouteConst.MOMENT_BLINKS_PATH,
                     templateUrl: 'moment/ui/blink/momentBlinks.tpl.html',
-                    controller: 'MomentBlinksController'
+                    controller: jm.moment.ctrl.MomentBlinksController.NG_NAME
                 })
                 .state(RouteConst.MOMENT_FEEDBACK, {
                     parent: RouteConst.MOMENT_DETAIL,
                     url: RouteConst.MOMENT_FEEDBACK_PATH,
                     templateUrl: 'moment/ui/feedback/momentFeedback.tpl.html',
-                    controller: 'MomentFeedbackController'
+                    controller: jm.moment.ctrl.MomentFeedbackController.NG_NAME
                 });
             this.$stateProvider.state(RouteConst.MOMENT_EDIT, {
                 url: RouteConst.MOMENT_EDIT_PATH,
                 templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
-                controller: 'MomentEditFormController',
+                controller: jm.moment.ctrl.MomentEditFormController.NG_NAME,
                 data: redirectUnauth
             });
             this.$stateProvider
                 .state(RouteConst.PROFILE, {
                     url: RouteConst.PROFILE_PATH,
                     templateUrl: 'user/ui/profile/profile.tpl.html',
-                    controller: 'ProfileController',
+                    controller: jm.user.ctrl.ProfileController.NG_NAME,
                     data: redirectUnauth
                 })
                 .state(RouteConst.ALIAS_UPDATE, {
                     parent: RouteConst.PROFILE,
                     url: RouteConst.ALIAS_UPDATE_PATH,
                     templateUrl: 'user/ui/profile/editAlias.tpl.html',
-                    controller: 'EditAliasController',
+                    controller: jm.user.ctrl.EditAliasController.NG_NAME,
                     data: redirectUnauth
                 });
         }

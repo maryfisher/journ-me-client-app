@@ -20,12 +20,13 @@ module jm.user {
             this.path = ServerConst.ALIAS_PATH;
         }
 
-        returnAlias = (response): IAliasDetailVO => {
-            return response.data;
+        getAlias(aliasId: string): IPromise<IAliasDetailVO> {
+            //return this.getOne(aliasId, this.returnAlias);
+            return this.getOne(aliasId, this.returnData);
         }
 
-        getAlias(aliasId: string): IPromise<IAliasDetailVO> {
-            return this.getOne(aliasId, this.returnAlias);
+        getDashboard(aliasId: string): IPromise<IDashboardVO> {
+            return this.makeCall(this.post, ServerConst.DASHBOARD_PATH, {aliasId: aliasId}, this.returnData);
         }
 
         updateAlias(imageFile: File, alias: AliasBaseVO): IUploadPromise < any > {

@@ -1,0 +1,52 @@
+<div class="row panel">
+    <div class="jm-header">
+        <h1 class="text-center">Welcome to JournMe</h1>
+        <h5 class="text-center">Join Us On a Journey</h5>
+    </div>
+    <h2 class="text-center text-success"><span>{{stats.allJourneys}} Journeys Created</span></h2>
+
+    <h2 class="text-center text-danger">{{stats.allMoments}} Moments Shared</h2>
+
+    <h2 class="text-center text-muted">{{stats.allFeedbacks}} Empathy Shown</h2>
+
+    <h2 class="text-center text-info">{{stats.allLinks}} Experiences Linked</h2>
+
+    <h2 class="text-center text-danger">{{stats.allJoined}} Goals Joined</h2>
+
+    <h2 class="text-center text-muted">{{stats.allFollowers}} Progress Watched</h2>
+</div>
+
+<div class="row panel">
+    <div class="jm-header col-sm-6">
+        <h3>New Journeys</h3>
+
+        <div class="clear"></div>
+    </div>
+    <div class="jm-header col-sm-6">
+        <h3>New Moments</h3>
+
+        <div class="clear"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <ul class="list-group jm-container">
+                <li data-ng-repeat="journey in stats.recentJourneys" class="list-group-item">
+                    <jm-journey-list-item jm-journey="journey"></jm-journey-list-item>
+                </li>
+            </ul>
+            <div data-ng-if="stats.recentJourneys.length === 0">
+                No journeys yet. ;_;
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <ul class="list-group jm-container">
+                <li data-ng-repeat="moment in stats.recentMoments" class="list-group-item">
+                    <jm-moment-list-item jm-moment="moment"></jm-moment-list-item>
+                </li>
+            </ul>
+            <div data-ng-if="stats.recentMoments.length === 0">
+                No moments yet. ;_;
+            </div>
+        </div>
+    </div>
+</div>

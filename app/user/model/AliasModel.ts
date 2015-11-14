@@ -16,6 +16,7 @@ module jm.user {
         static NG_NAME: string = 'aliasModel';
 
         private currentAlias: AliasDetailVO;
+        private dashboard: DashboardVO;
         private aliasService: AliasDAO;
         private journeyModel: JourneyModel;
         private momentModel: MomentModel;
@@ -28,14 +29,35 @@ module jm.user {
             this.currentAlias = new AliasDetailVO();
         }
 
+        private setDashboard = (data: IDashboardVO) => {
+            this.dashboard.parseData(data);
+            this.dashboard.parseJourneys(this.currentAlias.journeys);
+        };
+
         private setAlias = (data: IAliasDetailVO) => {
             this.currentAlias.parseJson(data);
             this.journeyModel.refreshJourney(this.currentAlias);
             this.momentModel.refreshMoment(this.currentAlias);
-        };
+            if (this.dashboard) {
+                this.dashboard.parseJourneys(this.currentAlias.journeys);
+            }
+        }
 
         invalidateAlias() {
             this.currentAlias.invalidateData();
+        }
+
+        getDashboard(): DashboardVO {
+            if (!this.currentAlias.id) {
+                //TODO: then what?
+                return null;
+            }
+            if (!this.dashboard) {
+                this.dashboard = new DashboardVO();
+                this.aliasService.getDashboard(this.currentAlias.id).then(this.setDashboard);
+            }
+
+            return this.dashboard;
         }
 
         getCurrentAlias(id ?: string): AliasDetailVO {
@@ -84,6 +106,6 @@ module jm.user {
 
         updateAliasError = (status: number) => {
             //console.log('error status: ' + status);
-        }
+        };
     }
 }

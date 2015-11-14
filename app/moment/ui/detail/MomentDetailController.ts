@@ -10,6 +10,7 @@ module jm.moment.ctrl {
         missingStates: IStateVO[];
     }
     export class MomentDetailController extends jm.common.BaseController {
+        static NG_NAME: string = 'MomentDetailController';
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, NGConst.$STATE];
 
         private unregisterWatchStates: Function;

@@ -5,15 +5,15 @@ module jm.user {
     import JourneyBaseVO = jm.journey.JourneyBaseVO;
 
     export interface IAliasDetailVO extends IAliasBaseVO {
-        journeys: IJourneyBaseVO[];
-        followedJourneys: IJourneyBaseVO[];
-        joinedJourneys: IJourneyBaseVO[];
+        journeys: JourneyBaseVO[];
+        followedJourneys: JourneyBaseVO[];
+        joinedJourneys: JourneyBaseVO[];
     }
 
     export class AliasDetailVO extends AliasBaseVO implements IAliasDetailVO {
-        journeys: IJourneyBaseVO[] = [];
-        followedJourneys: IJourneyBaseVO[] = [];
-        joinedJourneys: IJourneyBaseVO[] = [];
+        journeys: JourneyBaseVO[] = [];
+        followedJourneys: JourneyBaseVO[] = [];
+        joinedJourneys: JourneyBaseVO[] = [];
 
         constructor(data ?: IAliasDetailVO) {
             super(data);
@@ -48,6 +48,14 @@ module jm.user {
             this.journeys.length = 0;
             this.followedJourneys.length = 0;
             this.joinedJourneys.length = 0;
+        }
+
+        updateJourneys(journey: JourneyBaseVO) {
+            for (var i: number = 0; i < this.journeys.length; i++) {
+                if (this.journeys[i].id === journey.id) {
+                    this.journeys[i] = new JourneyBaseVO(journey);
+                }
+            }
         }
     }
 }

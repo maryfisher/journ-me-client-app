@@ -31,9 +31,12 @@ module jm.moment.ctrl {
         selectFeel(state: IStateVO);
         removeState(state: IStateVO);
         allStates: IStateVO[];
+        openDatePicker($event);
+        isDateOpen: boolean;
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
+        static NG_NAME: string = 'MomentEditFormController';
         static $inject = [NGConst.$SCOPE, MomentModel.NG_NAME, NGConst.$STATE_PARAMS, RouteUtil.NG_NAME, JourneyModel.NG_NAME];
 
         private unregisterWatchStates: Function;
@@ -41,7 +44,7 @@ module jm.moment.ctrl {
         constructor(private $scope: IMomentEditScope, private momentModel: MomentModel, private $stateParams: angular.ui.IStateParamsService, private routeUtil: RouteUtil, journeyModel: JourneyModel) {
             super($scope);
             this.addScopeMethods('cancel', 'cancelBlink', 'save', 'saveBlink', 'selectFormat', 'createNewBlink',
-                'editBlink', 'isBlinkValid', 'selectState', 'removeState');
+                'editBlink', 'isBlinkValid', 'selectState', 'removeState', 'openDatePicker');
 
             $scope.hasMoment = (!!$stateParams['momentId']);
 
@@ -75,7 +78,13 @@ module jm.moment.ctrl {
                     i++;
                 }
             }
+
+            this.$scope.isDateOpen = false;
         }
+
+        openDatePicker = ($event) => {
+            this.$scope.isDateOpen = true;
+        };
 
         updateMissingStates = () => {
             if (this.$scope.allStates.length > 0) {

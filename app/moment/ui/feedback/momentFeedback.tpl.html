@@ -4,7 +4,10 @@
                    states="feedback.states"
                    on-state-selected="removeState(state)"></jm-state-list>
     <jm-state-select states="allStates"
-                     types="0,1,2,3,4"
+                     types="0,1,2"
+                     on-state-selected="selectState(state)" class="pull-left"></jm-state-select>
+    <jm-state-select states="allStates"
+                     types="3"
                      on-state-selected="selectState(state)"></jm-state-select>
     <form name="feedbackForm" data-ng-submit="addFeedback()" novalidate class="row">
         <div class="col-sm-1">
@@ -34,7 +37,7 @@
                         <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias.id})">
                             {{feedback.alias.name}}
                         </a>
-                        <small>{{empathy.created | date:'medium'}}</small>
+                        <small>{{feedback.created | date:'mediumDate'}}</small>
                     </h5>
                     <p>{{feedback.body}}</p>
                 </div>

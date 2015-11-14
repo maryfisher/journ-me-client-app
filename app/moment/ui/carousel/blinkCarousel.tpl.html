@@ -2,7 +2,7 @@
     <!-- prev blink -->
     <button data-ng-click="prevBlink()" data-ng-disabled="!hasPrevBlink()"
             class="btn btn-default jm-blink-carousel-btn left">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="glyphicon glyphicon-chevron-left"></span>
     </button>
 
     <div class="jm-blink-carousel-ul" data-ng-switch="moment.currentBlink.format">
@@ -36,7 +36,7 @@
             <jm-blink-elm data-ng-if="moment.currentBlink.texts[0]"
                           text="{{moment.currentBlink.texts[0]}}"
                           ratio="{{100}}"></jm-blink-elm>
-            <jm-blink-elm image="{{moment.currentBlink.images[0]}}" ratio="{{100}}"></jm-blink-elm>
+            <jm-blink-elm image="{{moment.currentBlink.imageUrls[0]}}" ratio="{{100}}"></jm-blink-elm>
             <jm-blink-elm data-ng-if="moment.currentBlink.texts[1]"
                           text="{{moment.currentBlink.texts[1]}}"
                           ratio="{{100}}"></jm-blink-elm>
@@ -58,6 +58,6 @@
     <!-- next blink -->
     <button data-ng-click="nextBlink()" data-ng-disabled="!hasNextBlink()"
             class="btn btn-default jm-blink-carousel-btn right">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="glyphicon glyphicon-chevron-right"></span>
     </button>
 </div>

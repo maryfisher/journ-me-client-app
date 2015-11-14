@@ -21,12 +21,15 @@ module jm.journey {
         descript: string;
         alias: IAliasBaseVO;
         isAlias: boolean;
-        hasLocation: boolean = false;
+        hasLocation: boolean;
         location: string;
-        isPublic: boolean = true;
-        join: number = JourneyJoinEnum.selected;
+        isPublic: boolean;
+        join: number;
 
         constructor(data ?: IJourneyBaseVO) {
+            this.hasLocation = false;
+            this.join = JourneyJoinEnum.selected;
+            this.isPublic = true;
             this.parseJson(data);
         }
 

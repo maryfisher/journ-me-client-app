@@ -8,23 +8,23 @@
 <form name="journeyForm" data-ng-submit="save()" novalidate class="form-horizontal" role="form">
     <div class="modal-body">
         <div class="form-group">
-            <label class="control-label col-sm-2">Name</label>
+            <label class="col-sm-2">Name</label>
 
             <div class="col-sm-10">
                 <input type="text" name="name" data-ng-model="journey.name" required
                        placeholder="E.G 'Loose Weight' or 'Go Fishing'" class="form-control"/>
             </div>
         </div>
-        <hr></hr>
+        <hr/>
         <div class="form-group">
-            <label class="control-label col-sm-2">Description</label>
+            <label class="col-sm-2">Description</label>
 
             <div class="col-sm-10">
                 <textarea name="descript" data-ng-model="journey.descript" class="form-control"
                           placeholder="What is your journey about?"></textarea>
             </div>
         </div>
-        <hr></hr>
+        <!--<hr/>
         <div class="form-group">
             <label class="control-label col-sm-6">Is your journey bound to a specific location?</label>
 
@@ -44,22 +44,23 @@
                            placeholder="E.G 'Vienna' or 'Alaska'" class="form-control"/>
                 </div>
             </div>
-        </div>
-        <hr></hr>
+        </div>-->
+        <hr/>
         <div class="form-group">
-            <label class="control-label col-sm-6">Who can join your journey?</label>
+            <label class="col-sm-5">Who can join your journey?</label>
 
-            <div class="btn-group col-sm-6">
+            <div class="btn-group col-sm-7">
                 <label class="btn btn-default" data-ng-model="journey.join" btn-radio="0" uncheckable>Everyone</label>
                 <label class="btn btn-default" data-ng-model="journey.join" btn-radio="1" uncheckable>Only With
                     Invite</label>
+                <label class="btn btn-default" data-ng-model="journey.join" btn-radio="2" uncheckable>No-one</label>
             </div>
         </div>
-        <hr></hr>
+        <hr/>
         <div class="form-group">
-            <label class="control-label col-sm-6">Your journey is</label>
+            <label class="col-sm-5">Your journey is</label>
 
-            <div class="btn-group col-sm-6">
+            <div class="btn-group col-sm-7">
                 <label class="btn btn-default" data-ng-model="journey.isPublic" btn-radio="true"
                        uncheckable>Public</label>
                 <label class="btn btn-default" data-ng-model="journey.isPublic" btn-radio="false"

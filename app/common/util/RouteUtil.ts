@@ -11,14 +11,14 @@ module jm.common {
         private $state: IStateService;
 
         constructor($injector: IInjectorService) {
-            this.$state = $injector.get < IStateService > (NGConst.$STATE);
+            this.$state = $injector.get < IStateService >(NGConst.$STATE);
         }
 
-        redirectTo(state: string, params ? ) {
+        redirectTo(state: string, params ?) {
             this.$state.go(state, params);
         }
 
-        redirectToJourney(params ? ) {
+        redirectToJourney(params ?) {
             this.$state.go(RouteConst.JOURNEY_DETAIL, params);
         }
 
@@ -28,5 +28,8 @@ module jm.common {
             });
         }
 
+        isCurrent(state: string): boolean {
+            return this.$state.current.name === state;
+        }
     }
 }

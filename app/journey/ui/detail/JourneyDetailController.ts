@@ -11,6 +11,7 @@ module jm.journey.ctrl {
     }
 
     export class JourneyDetailController extends jm.common.BaseController {
+        static NG_NAME: string = 'JourneyDetailController';
         static $inject = [NGConst.$SCOPE, JourneyModel.NG_NAME, AuthModel.NG_NAME, NGConst.$STATE_PARAMS];
 
         constructor(private $scope: IJourneyDetailScope, private journeyModel: JourneyModel, private authModel: AuthModel, $stateParams: angular.ui.IStateParamsService) {

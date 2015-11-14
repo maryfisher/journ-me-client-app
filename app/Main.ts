@@ -12,6 +12,7 @@ module jm {
         private moment: ng.IModule;
         private user: ng.IModule;
         private common: ng.IModule;
+        private main: ng.IModule;
 
         constructor() {
             this.initModules();
@@ -31,6 +32,7 @@ module jm {
                 'user',
                 'moment',
                 'common',
+                'main',
                 'ui.bootstrap',
                 'ngCookies',
                 'ngResource',
@@ -42,6 +44,7 @@ module jm {
             this.moment = angular.module('moment', []);
             this.common = angular.module('common', []);
             this.user = angular.module('user', []);
+            this.main = angular.module('main', []);
 
             this.addFactory(jm.common.RouteUtil);
         }
@@ -52,6 +55,7 @@ module jm {
             this.journey.controller(jm.journey.ctrl);
             this.moment.controller(jm.moment.ctrl);
             this.common.controller(jm.common.ctrl);
+            this.main.controller(jm.main.ctrl);
         }
 
         initDAOs() {
@@ -62,6 +66,7 @@ module jm {
             this.addFactory(jm.moment.MomentDAO);
             this.addFactory(jm.moment.FeedbackDAO);
             this.addFactory(jm.moment.BlinkDAO);
+            this.addFactory(jm.main.HomeDAO);
         }
 
         initModels() {
@@ -92,6 +97,8 @@ module jm {
             this.addDirective(jm.moment.BlinkCarouselElementDirect);
             this.addDirective(jm.moment.StateListDirect);
             this.addDirective(jm.moment.StateSelectDirect);
+            this.addDirective(jm.moment.MomentListItemDirect);
+            this.addDirective(jm.moment.FeedbackListItemDirect);
         }
 
         initFilter() {
