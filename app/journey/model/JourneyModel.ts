@@ -29,7 +29,7 @@ module jm.journey {
                     this.currentAlias.updateJourneys(this.currentJourney);
                 }
             }
-        }
+        };
 
         private setCurrentJourney = (data: IJourneyDetailVO) => {
             this.currentJourney.parseJson(data);
@@ -37,7 +37,7 @@ module jm.journey {
             if (this.currentAlias) {
                 this.currentJourney.updateFromAlias(this.currentAlias);
             }
-        }
+        };
 
         getCurrentJourney(id ?: string): JourneyDetailVO {
             if (id) {

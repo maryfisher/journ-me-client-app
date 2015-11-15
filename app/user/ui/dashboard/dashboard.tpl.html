@@ -14,6 +14,14 @@
                         <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
                     </li>
                 </ul>
+                <div data-ng-if="alias.joinedJourneys.length > 0">
+                    <h5 class="text-center">Joined Journeys</h5>
+                    <ul class="list-group">
+                        <li data-ng-repeat="journey in alias.joinedJourneys" class="list-group-item">
+                            <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

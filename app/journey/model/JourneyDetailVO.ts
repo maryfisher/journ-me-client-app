@@ -32,13 +32,23 @@ module jm.journey {
         joinRequests: IAliasBaseVO[];
         joinedAliases: IAliasBaseVO[];
 
-        joinedLinkedJourneys: IJourneyBaseVO[] = [];
+        joinedLinkedJourneys: IJourneyBaseVO[];
         aliasJourneyLink: IJourneyBaseVO;
-        isFollowing: boolean = false;
-        isJoined: boolean = false;
-        sendRequest: boolean = false;
+        isFollowing: boolean;
+        isJoined: boolean;
+        sendRequest: boolean;
 
         constructor(data ?: IJourneyDetailVO) {
+            this.moments = [];
+            this.followers = [];
+            this.linkedToJourneys = [];
+            this.linkedFromJourneys = [];
+            this.joinRequests = [];
+            this.joinedAliases = [];
+            this.joinedLinkedJourneys = [];
+            this.isFollowing = false;
+            this.isJoined = false;
+            this.sendRequest = false;
             super(data);
         }
 

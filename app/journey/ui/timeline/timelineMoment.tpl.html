@@ -2,7 +2,7 @@
     <a data-ui-sref="MOMENT_BLINKS({momentId: moment.id, journeyId: moment.journey})"
        data-ng-if="moment.isPublic || moment.isAlias"
        data-ng-click="setSelected(moment)" popover-placement="top" popover-trigger="mouseenter"
-       popover="{{moment.descript}} {{moment.date | date:'medium'}}">
+       popover="{{moment.title}} - {{moment.date | date:'mediumDate'}}">
         <img data-ng-src="{{moment.thumbUrl}}" class="img-rounded jm-moment-img"
              data-ng-class="getMomentClass(moment)"/>
         <span data-ng-if="!moment.isPublic" class="fa fa-lock jm-moment-img-lock"></span>

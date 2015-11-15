@@ -1,15 +1,18 @@
 <div class="jm-moment-slides">
     <div class="col-sm-12">
         <span data-ng-if="!moment.isPublic" class="pull-left text-danger">
-       <span class="fa fa-lock"></span> Psst - this moment is private.
+        <span class="fa fa-lock"></span> Psst - this moment is private.
         <!--<a data-ng-if="moment.isAlias" data-ui-sref="MOMENT_UPDATE({journeyId: moment.journey.id, momentId:moment.id})">Change to make it publicly accessable.</a>-->
         <span data-ng-if="!moment.isAlias">Please think twice before sharing it.</span>
         </span>
+
         <button data-ui-sref="MOMENT_EDIT({journeyId: moment.journey, momentId:moment.id})"
                 data-ng-if="moment.isAlias" class="btn btn-default pull-right">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         <span class="pull-right">{{moment.date | date:'mediumDate'}}</span>
+
+        <h3 class="text-center"> {{moment.title}} </h3>
         <jm-blink-carousel moment="moment" index="0" can-edit="true"></jm-blink-carousel>
     </div>
 </div>
