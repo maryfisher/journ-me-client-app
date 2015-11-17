@@ -4,6 +4,7 @@ module jm.journey {
     import ServerConst = jm.common.ServerConst;
     import NGConst = jm.common.NGConst;
     import IPromise = angular.IPromise;
+    import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
 
     export class JourneyDAO extends jm.common.BaseResourceDAO {
 
@@ -14,11 +15,11 @@ module jm.journey {
             this.path = ServerConst.JOURNEY_PATH;
         }
 
-        returnJourney = (response): IJourneyDetailVO => {
+        returnJourney = (response: IHttpPromiseCallbackArg<IJourneyDetailVO>): IJourneyDetailVO => {
             return response.data;
         };
 
-        returnBaseJourney = (response): IJourneyBaseVO => {
+        returnBaseJourney = (response: IHttpPromiseCallbackArg<IJourneyBaseVO>): IJourneyBaseVO => {
             return response.data;
         };
 

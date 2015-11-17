@@ -3,6 +3,7 @@ module jm.auth.ctrl {
 
     import RouteUtil = jm.common.RouteUtil;
     import RouteConst = jm.common.RouteConst;
+    import ErrorConst = jm.common.ErrorConst;
     import NGConst = jm.common.NGConst;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
@@ -14,6 +15,7 @@ module jm.auth.ctrl {
         loginForm: ng.IFormController;
         email: string;
         password: string;
+        errors: string [];
     }
 
     export class LoginFormController extends jm.common.ctrl.BaseModalInstanceController {
@@ -27,6 +29,7 @@ module jm.auth.ctrl {
             super($scope, $modalInstance);
 
             $scope.rememberMe = true;
+            $scope.errors = [ErrorConst.AUTHENTICATION_FAILED];
             this.addScopeMethods('login', 'hasInvalidEmail');
         }
 
@@ -37,7 +40,7 @@ module jm.auth.ctrl {
 
         login = () => {
             this.authModel.login(this.$scope.email, this.$scope.password, this.$scope.rememberMe).then(
-                this.loginSuccess, this.loginFailure);
+                this.loginSuccess);
 
         };
 
@@ -54,10 +57,6 @@ module jm.auth.ctrl {
                 this.close();
             }
         };
-
-        private loginFailure = () => {
-            this.$scope.loginForm.$setValidity('pw', false, null);
-        }
 
         forgotPW = () => {
 

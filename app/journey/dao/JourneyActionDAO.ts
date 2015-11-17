@@ -1,7 +1,10 @@
+///<reference path="..\..\common\const\ServerConst.ts"/>
 module jm.journey {
+    'use strict';
 
-    import IPromise = ng.IPromise;
     import ServerConst = jm.common.ServerConst;
+    import IPromise = ng.IPromise;
+    import IHttpPromiseCallbackArg = ng.IHttpPromiseCallbackArg;
 
     export class JourneyActionDAO extends jm.common.BaseResourceDAO {
 
@@ -13,7 +16,7 @@ module jm.journey {
             this.path = ServerConst.JOURNEY_PATH;
         }
 
-        returnJourney = (response): IJourneyDetailVO => {
+        returnJourney = (response: IHttpPromiseCallbackArg<IJourneyDetailVO>): IJourneyDetailVO => {
             return response.data;
         };
 

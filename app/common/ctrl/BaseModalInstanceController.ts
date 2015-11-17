@@ -18,10 +18,10 @@ module jm.common.ctrl {
 
         cancel = () => {
             this.$modalInstance.dismiss('dismiss');
-        }
+        };
 
         close = () => {
             this.$modalInstance.close();
-        }
+        };
     }
 }

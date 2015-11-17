@@ -7,6 +7,7 @@ module jm.common.ctrl {
 
     export class BaseModalController {
         static $inject = [NGConst.$SCOPE, NGConst.$ELEMENT, NGConst.$MODAL];
+        static NG_NAME = 'BaseModalController';
 
         private modalScope: IBaseModalScope;
 
@@ -20,7 +21,7 @@ module jm.common.ctrl {
                 templateUrl: this.modalScope.modalTemplateUrl,
                 scope: this.modalScope,
                 animation: true
-            }
+            };
             modalObj.controller = this.modalScope.modalController ? this.modalScope.modalController : 'BaseModalInstanceController';
 
             this.$element[0].blur();
