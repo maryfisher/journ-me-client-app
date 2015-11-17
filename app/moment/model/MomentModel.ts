@@ -35,20 +35,6 @@ module jm.moment {
             data.alias = this.currentAlias;
         };
 
-        getStates(): StateVO[] {
-            if (!this.allStates) {
-                this.allStates = [];
-                this.momentService.getStates().then(
-                    (data: StateVO[]) => {
-                        for (var i: number = 0; i < data.length; i++) {
-                            this.allStates.push(data[i]);
-                        }
-                    }
-                );
-            }
-            return this.allStates;
-        }
-
         getCurrentMoment(id ?: string): MomentDetailVO {
             if (id) {
                 if (this.currentMoment.id !== id) {

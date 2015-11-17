@@ -35,6 +35,7 @@ module jm {
                 'common',
                 'main',
                 'error',
+                'jm-config',
                 'ui.bootstrap',
                 'ngCookies',
                 'ngResource',
