@@ -143,9 +143,14 @@ module.exports = function (grunt) {
                 dest: '<%= app.dist %>/fonts/'
             }
         },
-        concat: {
+        cssmin: {
             options: {
-                separator: grunt.util.linefeed + grunt.util.linefeed
+                banner: '/* //// JournMe //// Copyright (C) \\\\ JournMe \\\\ */'
+            },
+            dev: {
+                files: {
+                    '<%= app.temp %>/style/main.min.css': ['<%= app.temp %>/style/main.css']
+                }
             },
             dist: {
                 files: {
@@ -154,7 +159,24 @@ module.exports = function (grunt) {
                         '<%= app.lib %>/bower_components/fontawesome/css/font-awesome.css',
                         '<%= app.lib %>/bower_components/angular-loading-bar/build/loading-bar.css',
                         '<%= app.temp %>/style/main.css'
-                    ],
+                    ]
+                }
+            }
+        },
+        uglify: {
+            options: {
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */'
+            },
+            dev: {
+                options: {
+                    sourceMap: true
+                },
+                files: {
+                    '<%= app.temp %>/scripts/build.min.js': ['<%= app.temp %>/scripts/build.js']
+                }
+            },
+            dist: {
+                files: {
                     '<%= app.dist %>/scripts/app.min.js': [
                         '<%= app.lib %>/bower_components/angular/angular.js',
                         '<%= app.lib %>/bower_components/angular-animate/angular-animate.js',
@@ -202,7 +224,9 @@ module.exports = function (grunt) {
         'copy:ts',
         'ts',
         'less',
-        'copy:indexDev'
+        'copy:indexDev',
+        'uglify:dev',
+        'cssmin:dev'
     ]);
 
     grunt.registerTask('run', [
@@ -211,7 +235,8 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('package', [
-        'concat:dist',
+        'uglify:dist',
+        'cssmin:dist',
         'copy:indexProd',
         'copy:fonts'
     ]);
