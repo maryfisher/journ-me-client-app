@@ -56,12 +56,20 @@ module jm.common {
             text: 'There already exists an account with this email. :('
         };
 
+        static FILE_TYPE_CORRUPTED_INVALID: string = '330';
+        private static CODE_330: INotificationCode = {
+            recoverable: true,
+            level: ErrorConst.ERROR,
+            text: 'There was something wrong with the file you tried to upload. :('
+        };
+
         static getCode(code: string): INotificationCode {
             switch (code) {
                 case '110':
                 case '120':
                 case '130':
                 case '140':
+                case undefined:
                     return ErrorConst.CODE_100;
                 default:
                     return ErrorConst['CODE_' + code];

@@ -142,6 +142,7 @@
                     <jm-blink-format blink="formBlink" ng-switch-when="6"></jm-blink-format>
                     <jm-blink-format blink="formBlink" ng-switch-default></jm-blink-format>
                 </div>
+                <jm-local-error errors="errors"></jm-local-error>
                 <button data-ng-if="hasMoment" data-ng-disabled="!isBlinkValid()" type="submit" class="btn btn-primary">
                     Save Blink
                 </button>

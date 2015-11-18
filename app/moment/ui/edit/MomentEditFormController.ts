@@ -1,8 +1,10 @@
 /// <reference path="../../../journey/model/JourneyModel.ts" />
+///<reference path="..\..\..\common\const\ErrorConst.ts"/>
 module jm.moment.ctrl {
 
     import NGConst = jm.common.NGConst;
     import RouteConst = jm.common.RouteConst;
+    import ErrorConst = jm.common.ErrorConst;
     import RouteUtil = jm.common.RouteUtil;
     import JourneyModel = jm.journey.JourneyModel;
     import IJourneyDetailVO = jm.journey.IJourneyDetailVO;
@@ -33,6 +35,7 @@ module jm.moment.ctrl {
         allStates: IStateVO[];
         openDatePicker($event);
         isDateOpen: boolean;
+        errors: string[];
     }
 
     export class MomentEditFormController extends jm.common.BaseController {
@@ -79,7 +82,9 @@ module jm.moment.ctrl {
                 }
             }
 
-            this.$scope.isDateOpen = false;
+            $scope.isDateOpen = false;
+
+            $scope.errors = [ErrorConst.FILE_TYPE_CORRUPTED_INVALID];
         }
 
         openDatePicker = ($event) => {
@@ -105,11 +110,11 @@ module jm.moment.ctrl {
                     momentId: momentId
                 });
             }
-        }
+        };
 
         save = () => {
             this.momentModel.updateMoment(this.$scope.moment).then(this.cancel);
-        }
+        };
 
         isBlinkValid = (): boolean => {
             if (this.$scope.formBlink.blink.states.length === 0) {
@@ -135,7 +140,7 @@ module jm.moment.ctrl {
                 }
             }
             return true;
-        }
+        };
 
         saveBlink = () => {
             if (!this.$scope.hasMoment) {
@@ -172,11 +177,11 @@ module jm.moment.ctrl {
             if (this.$scope.moment.blinks.length > 0) {
                 this.$scope.canEditBlink = this.$scope.isNewBlink = false;
             }
-        }
+        };
 
         selectFormat = (format: number) => {
             this.$scope.formBlink.blink.format = format;
-        }
+        };
 
         createNewBlink = () => {
             this.$scope.formBlink.blink = new BlinkVO();
@@ -215,11 +220,11 @@ module jm.moment.ctrl {
             this.$scope.formBlink.blink.states.push(state);
             this.$scope.missingStates.splice(this.$scope.missingStates.indexOf(state), 1);
             this.$scope.selectedFeel = undefined;
-        }
+        };
 
         removeState = (state: IStateVO) => {
             this.$scope.missingStates.push(state);
             this.$scope.formBlink.blink.states.splice(this.$scope.formBlink.blink.states.indexOf(state), 1);
-        }
+        };
     }
 }

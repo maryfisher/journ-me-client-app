@@ -48,7 +48,6 @@ module jm.error {
         };
 
         handleError = (res: IHttpPromiseCallbackArg<any>): any => {
-            console.log('response ' + res.status + ' ' + res.data.code);
             if (res.status >= 400) {
                 var listener: IErrorListener[] = this.errorListeners[res.data.code];
                 if (!listener) {
