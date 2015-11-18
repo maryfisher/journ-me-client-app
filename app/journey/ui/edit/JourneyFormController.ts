@@ -3,6 +3,8 @@ module jm.journey.ctrl {
 
     import RouteUtil = jm.common.RouteUtil;
     import NGConst = jm.common.NGConst;
+    import JMConfigConst = jm.common.JMConfigConst;
+    import ICategoryVO = jm.main.ICategoryVO;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
     export interface IJourneyFormScope extends jm.common.ctrl.IBaseModalInstanceScope, IBaseJourneyScope {
@@ -14,12 +16,14 @@ module jm.journey.ctrl {
 
     export class JourneyFormController extends jm.common.ctrl.BaseModalInstanceController {
 
-        static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME];
+        static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME,
+            JMConfigConst.CATEGORIES];
 
         constructor(private $scope: IJourneyFormScope,
                     $modalInstance: IModalServiceInstance,
                     private journeyModel: JourneyModel,
-                    private routeUtil: RouteUtil) {
+                    private routeUtil: RouteUtil,
+                    private categories: ICategoryVO[]) {
             super($scope, $modalInstance);
             $scope.hasJourney = (!!$scope.journeyStr);
 
