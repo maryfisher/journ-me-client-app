@@ -44,11 +44,11 @@ module jm.moment.ctrl {
         };
 
         selectState = (state: IStateVO) => {
-            this.$scope.feedback.states.push(state);
+            this.$scope.feedback.addState(state);
         };
 
         removeState = (state: IStateVO) => {
-            this.$scope.feedback.states.splice(this.$scope.feedback.states.indexOf(state), 1);
+            this.$scope.feedback.removeState(state);
         };
     }
 }

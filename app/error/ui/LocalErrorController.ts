@@ -1,5 +1,6 @@
 ///<reference path="..\..\common\const\NGConst.ts"/>
 ///<reference path="..\..\common\const\ErrorConst.ts"/>
+///<reference path="..\..\common\ctrl\BaseController.ts"/>
 module jm.error.ctrl {
     'use strict';
 

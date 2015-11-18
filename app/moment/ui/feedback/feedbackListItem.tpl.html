@@ -6,7 +6,7 @@
         <small class="pull-right">{{feedback.created | date:'mediumDate'}}</small>
     </h5>
     <p>{{feedback.body}}</p>
-    <jm-state-list states="feedback.states"></jm-state-list>
+    <jm-state-list states="feedback.stateRefs"></jm-state-list>
     <a data-ui-sref="MOMENT_FEEDBACK({momentId: feedback.moment, journeyId: feedback.journey})"
        class="pull-right">&rarr; View Moment</a>
 

@@ -209,7 +209,7 @@ module jm.moment.ctrl {
             for (var j: number = 0; j < this.states.length; j++) {
                 var add: boolean = true;
                 for (var i: number = 0; i < b.states.length; i++) {
-                    if (b.states[i].id === this.states[j].id) {
+                    if (b.states[i] === this.states[j].id) {
                         add = false;
                         break;
                     }
@@ -226,14 +226,14 @@ module jm.moment.ctrl {
         }
 
         selectState = (state: IStateVO) => {
-            this.$scope.formBlink.blink.states.push(state);
+            this.$scope.formBlink.blink.addState(state);
             this.$scope.missingStates.splice(this.$scope.missingStates.indexOf(state), 1);
             this.$scope.selectedFeel = undefined;
         };
 
         removeState = (state: IStateVO) => {
             this.$scope.missingStates.push(state);
-            this.$scope.formBlink.blink.states.splice(this.$scope.formBlink.blink.states.indexOf(state), 1);
+            this.$scope.formBlink.blink.removeState(state);
         };
     }
 }

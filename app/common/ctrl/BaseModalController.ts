@@ -1,9 +1,16 @@
+///<reference path="..\const\NGConst.ts"/>
 module jm.common.ctrl {
     'use strict';
 
     import IModalService = angular.ui.bootstrap.IModalService;
     import IModalSettings = angular.ui.bootstrap.IModalSettings;
     import NGConst = jm.common.NGConst;
+
+    export interface IBaseModalScope extends ng.IScope {
+        cancel();
+        modalController: string;
+        modalTemplateUrl: string;
+    }
 
     export class BaseModalController {
         static $inject = [NGConst.$SCOPE, NGConst.$ELEMENT, NGConst.$MODAL];

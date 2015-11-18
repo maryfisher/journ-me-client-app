@@ -7,7 +7,7 @@
 
     <div class="jm-blink-carousel-ul" data-ng-switch="moment.currentBlink.format">
         <ul class="list-inline jm-moment-mood jm-states">
-            <li data-ng-repeat="state in moment.currentBlink.states"
+            <li data-ng-repeat="state in moment.currentBlink.stateRefs"
                 class="jm-state-item state{{state.type}}"
                     ><a href="">#{{state.name}}</a>
             </li>

@@ -1,7 +1,7 @@
 <div class="col-sm-12">
     <h5>Feedback ({{filteredFeedback.length}})</h5>
     <jm-state-list can-edit="true"
-                   states="feedback.states"
+                   states="feedback.stateRefs"
                    on-state-selected="removeState(state)"></jm-state-list>
     <jm-state-select states="allStates"
                      types="0,1,2"
@@ -25,7 +25,7 @@
     <ul class="list-group">
         <li data-ng-repeat="feedback in filteredFeedback = (moment.feedback | filter: {body: ''})"
             class="list-group-item">
-            <jm-state-list states="feedback.states"></jm-state-list>
+            <jm-state-list states="feedback.stateRefs"></jm-state-list>
             <div class="row">
                 <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias.id})" class="col-sm-1">
                     <img data-ng-src="{{feedback.alias.thumbUrl}}" width="40" height="40"

@@ -1,13 +1,9 @@
+///<reference path="..\ctrl\BaseModalController.ts"/>
 module jm.common {
     'use strict';
 
     import BaseModalController = jm.common.ctrl.BaseModalController;
-
-    export interface IBaseModalScope extends ng.IScope {
-        cancel();
-        modalController: string;
-        modalTemplateUrl: string;
-    }
+    import IBaseModalScope = jm.common.ctrl.IBaseModalScope;
 
     export class BaseModalDirect implements ng.IDirective {
 
