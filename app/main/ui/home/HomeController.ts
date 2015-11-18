@@ -1,3 +1,5 @@
+///<reference path="..\..\..\common\const\NGConst.ts"/>
+///<reference path="..\..\dao\HomeDAO.ts"/>
 module jm.main.ctrl {
     'use strict';
 

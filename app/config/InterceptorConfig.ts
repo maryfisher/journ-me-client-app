@@ -1,7 +1,12 @@
+///<reference path="..\error\dao\ErrorIntercept.ts"/>
+///<reference path="..\auth\dao\AuthTokenIntercept.ts"/>
+///<reference path="..\common\const\NGConst.ts"/>
 module jm {
     'use strict';
 
     import NGConst = jm.common.NGConst;
+    import ErrorIntercept = jm.error.ErrorIntercept;
+    import AuthTokenIntercept = jm.auth.AuthTokenIntercept;
 
     export class InterceptorConfig {
 
@@ -13,7 +18,8 @@ module jm {
         }
 
         execute() {
-            this.$httpProvider.interceptors.push('authTokenIntercept');
+            this.$httpProvider.interceptors.push(AuthTokenIntercept.NG_NAME);
+            this.$httpProvider.interceptors.push(ErrorIntercept.NG_NAME);
         }
     }
 }

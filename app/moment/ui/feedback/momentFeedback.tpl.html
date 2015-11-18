@@ -21,7 +21,7 @@
             <button data-ng-disabled="!canSendFeedback()" type="submit" class="btn btn-primary">Post</button>
         </div>
     </form>
-    <hr></hr>
+    <hr/>
     <ul class="list-group">
         <li data-ng-repeat="feedback in filteredFeedback = (moment.feedback | filter: {body: ''})"
             class="list-group-item">

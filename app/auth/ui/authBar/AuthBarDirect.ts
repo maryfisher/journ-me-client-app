@@ -1,11 +1,11 @@
 /// <reference path="../../../user/model/AliasModel.ts" />
 /// <reference path="../../../common/util/RouteUtil.ts" />
-module jm {
-    export module auth {
+module jm.auth {
 
         import AliasModel = jm.user.AliasModel;
         import AliasDetailVO = jm.user.AliasDetailVO;
         import RouteUtil = jm.common.RouteUtil;
+        import AuthBarController = jm.auth.ctrl.AuthBarController;
 
         export interface IAuthBarScope extends ng.IScope {
             alias: AliasDetailVO;
@@ -24,6 +24,7 @@ module jm {
             restrict: string = 'E';
             replace: boolean = true;
             scope: any = {};
+            controller: string = AuthBarController.NG_NAME;
 
             link = (scope: IAuthBarScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
                 //TODO: check if this makes sense
@@ -47,5 +48,4 @@ module jm {
                 }
             }
         }
-    }
 }

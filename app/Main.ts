@@ -13,6 +13,7 @@ module jm {
         private user: ng.IModule;
         private common: ng.IModule;
         private main: ng.IModule;
+        private error: ng.IModule;
 
         constructor() {
             this.initModules();
@@ -33,6 +34,7 @@ module jm {
                 'moment',
                 'common',
                 'main',
+                'error',
                 'ui.bootstrap',
                 'ngCookies',
                 'ngResource',
@@ -47,6 +49,7 @@ module jm {
             this.common = angular.module('common', []);
             this.user = angular.module('user', []);
             this.main = angular.module('main', []);
+            this.error = angular.module('error', []);
 
             this.addFactory(jm.common.RouteUtil);
         }
@@ -58,6 +61,7 @@ module jm {
             this.moment.controller(jm.moment.ctrl);
             this.common.controller(jm.common.ctrl);
             this.main.controller(jm.main.ctrl);
+            this.error.controller(jm.error.ctrl);
         }
 
         initDAOs() {
@@ -101,6 +105,8 @@ module jm {
             this.addDirective(jm.moment.StateSelectDirect);
             this.addDirective(jm.moment.MomentListItemDirect);
             this.addDirective(jm.moment.FeedbackListItemDirect);
+            this.addDirective(jm.error.LocalErrorDirect);
+            this.addDirective(jm.error.GlobalErrorDirect);
         }
 
         initFilter() {
@@ -109,6 +115,7 @@ module jm {
 
         initInterceptor() {
             this.addFactory(jm.auth.AuthTokenIntercept);
+            this.addFactory(jm.error.ErrorIntercept);
         }
 
         initConfig() {

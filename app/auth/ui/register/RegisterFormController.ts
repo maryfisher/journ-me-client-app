@@ -5,6 +5,7 @@ module jm.auth.ctrl {
     import RouteUtil = jm.common.RouteUtil;
     import NGConst = jm.common.NGConst;
     import RouteConst = jm.common.RouteConst;
+    import ErrorConst = jm.common.ErrorConst;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
     import INgModelController = ng.INgModelController;
 
@@ -14,6 +15,7 @@ module jm.auth.ctrl {
         password2: string;
         email: string;
         name: string;
+        errors: string [];
     }
 
     export class RegisterFormController extends jm.common.ctrl.BaseModalInstanceController {
@@ -26,6 +28,7 @@ module jm.auth.ctrl {
                     private routeUtil: RouteUtil) {
             super($scope, $modalInstance);
 
+            $scope.errors = [ErrorConst.EMAIL_TAKEN];
             this.addScopeMethods('hasValidName', 'hasValidEmail', 'hasDiffPasswords', 'register');
         }
 
@@ -48,7 +51,7 @@ module jm.auth.ctrl {
 
         register = () => {
             this.authModel.register(this.$scope.email, this.$scope.password, this.$scope.name)
-                .then(this.registerSuccess, this.registerFailure);
+                .then(this.registerSuccess);
 
         };
 
@@ -60,10 +63,6 @@ module jm.auth.ctrl {
                 });
                 this.close();
             }
-        };
-
-        registerFailure = () => {
-            this.$scope.registerForm['email'].$setValidity('emailTaken', false);
         };
     }
 }

@@ -6,13 +6,15 @@
 
         <div class="form-group" data-ng-class="{'has-error': hasInvalidEmail()}">
             <label>Email</label>
-            <input data-ng-model="email" required name="email" type="email" class="form-control" placeholder="Email" />
+            <input data-ng-model="email" required name="email" type="email" class="form-control" placeholder="Email"/>
+
             <p data-ng-show="hasInvalidEmail()" class="alert alert-danger">Please provide a valid email adress.</p>
         </div>
 
         <div class="form-group">
             <label>Password</label>
-            <input data-ng-model="password" required type="password" name="password" class="form-control" placeholder="Password"/>
+            <input data-ng-model="password" required type="password" name="password" class="form-control"
+                   placeholder="Password"/>
         </div>
 
         <div class="checkbox pull-right">
@@ -25,12 +27,13 @@
         <div class="form-group">
             <a data-ng-click="forgotPW()">Forgot Password?</a>
         </div>
-
-        <span data-ng-show="loginForm.$error['pw']" class="alert alert-danger">Wrong email or password!</span>
+        <jm-local-error errors="errors"></jm-local-error>
     </div>
 
     <div class="modal-footer">
-        <button class="btn btn-primary" data-ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid" type="submit">Login</button>
+        <button class="btn btn-primary" data-ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid"
+                type="submit">Login
+        </button>
         <button class="btn btn-warning" type="button" data-ng-click="cancel()">Cancel</button>
     </div>
 </form>

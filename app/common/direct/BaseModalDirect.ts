@@ -1,4 +1,7 @@
 module jm.common {
+    'use strict';
+
+    import BaseModalController = jm.common.ctrl.BaseModalController;
 
     export interface IBaseModalScope extends ng.IScope {
         cancel();
@@ -9,11 +12,10 @@ module jm.common {
     export class BaseModalDirect implements ng.IDirective {
 
         //IMPORTANT
-        //the reason we use a controller here is that we want to isolate the scope
-        //every directive is only instantiated once and its scope is shared between all directive elements
-        //however controller are instantiated for each directive element
-        //that means, using one is the only way to get a unique (not shared) scope
-        controller: string = 'BaseModalController';
+        //every directive "class" is only instantiated once
+        //it uses link/compile function to create the 'real-world directive', its scope and controller ->
+        //scope is not unique in the directive "class", only in the link function and controller
+        controller: string = BaseModalController.NG_NAME;
 
         link: ng.IDirectiveLinkFn = (scope: IBaseModalScope, element: ng.IAugmentedJQuery, attrs: ng.IAttributes) => {
             scope.modalController = this.modalController;
