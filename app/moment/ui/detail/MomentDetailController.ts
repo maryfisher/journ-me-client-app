@@ -51,15 +51,15 @@ module jm.moment.ctrl {
 
         updateMoment = () => {
             if (this.states.length > 0) {
-                if (this.$scope.moment.states.length === 0) {
+                if (this.$scope.moment.stateCounts.length === 0) {
                     this.$scope.missingStates = this.states.slice();
                     return;
                 }
                 this.$scope.missingStates.length = 0;
                 for (var j: number = 0; j < this.states.length; j++) {
                     var add: boolean = true;
-                    for (var i: number = 0; i < this.$scope.moment.states.length; i++) {
-                        if (this.$scope.moment.states[i].state.id === this.states[j].id) {
+                    for (var i: number = 0; i < this.$scope.moment.stateCounts.length; i++) {
+                        if (this.$scope.moment.stateCounts[i].state.id === this.states[j].id) {
                             add = false;
                             break;
                         }
@@ -77,8 +77,7 @@ module jm.moment.ctrl {
 
         addFeedback = (state: IStateVO) => {
             var f: FeedbackVO = new FeedbackVO();
-            f.states.push(state);
-            console.log(state);
+            f.addState(state);
             this.momentModel.createFeedback(f);
         };
     }

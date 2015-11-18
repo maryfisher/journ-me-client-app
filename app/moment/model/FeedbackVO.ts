@@ -1,3 +1,5 @@
+///<reference path="StateRefVO.ts"/>
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
 module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
@@ -9,10 +11,10 @@ module jm.moment {
         journey: string;
         body: string;
         created: Date;
-        states: IStateVO[];
+        states: string[];
     }
 
-    export class FeedbackVO implements IFeedbackVO {
+    export class FeedbackVO extends StateRefVO implements IFeedbackVO {
 
         id: string;
         alias: AliasBaseVO;
@@ -20,20 +22,21 @@ module jm.moment {
         journey: string;
         body: string;
         created: Date;
-        states: IStateVO[] = [];
 
         constructor(data ?: IFeedbackVO) {
-            this.parseJson(data);
+            super();
+            this.parseData(data);
         }
 
-        parseJson(data: IFeedbackVO) {
+        parseData(data: IFeedbackVO) {
             if (data) {
-                jm.common.VOUtil.parseJson(data, this);
+                super.parseData(data);
+                this.id = data.id;
+                this.moment = data.moment;
+                this.journey = data.journey;
+                this.body = data.body;
+                this.created = data.created;
                 this.alias = new AliasBaseVO(data.alias);
-                this.states = [];
-                for (var i: number = 0; i < data.states.length; i++) {
-                    this.states.push(new StateVO(data.states[i]));
-                }
             }
         }
     }

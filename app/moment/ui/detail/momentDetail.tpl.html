@@ -21,7 +21,7 @@
             <li>
                 <span class="jm-feedback-note pull-left">People reacted ...</span>
             </li>
-            <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: 3">
+            <li data-ng-repeat="count in moment.stateCounts | orderBy: '-count' | limitTo: 3">
                 <button data-ng-click="addFeedback(count.state)" data-ng-disabled="count.isAlias"
                         class="state{{count.state.type}}">
                     {{count.count}}x {{count.state.name}} <span class="jm-state-caret state{{count.state.type}}"></span>
@@ -32,7 +32,7 @@
                     <span class="caret-right"></span>
                 </a>
                 <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu jm-state-dropdown">
-                    <li data-ng-repeat="count in moment.states | orderBy: '-count' | limitTo: moment.states.length - 3 : -1">
+                    <li data-ng-repeat="count in moment.stateCounts | orderBy: '-count' | limitTo: moment.stateCounts.length - 3 : -1">
                         <button data-ng-click="addFeedback(count.state)" data-ng-disabled="count.isAlias"
                                 class="state{{count.state.type}}">
                             {{count.count}}x {{count.state.name}}

@@ -1,64 +1,66 @@
 ///<reference path="..\..\user\model\AliasBaseVO.ts"/>
+///<reference path="FeedbackVO.ts"/>
+///<reference path="BlinkVO.ts"/>
+///<reference path="StateCountVO.ts"/>
 module jm.moment {
 
     import AliasBaseVO = jm.user.AliasBaseVO;
 
     export interface IMomentDetailVO extends IMomentBaseVO {
-        feedback: IFeedbackVO[];
+        feedback: FeedbackVO[];
         blinks: string[];
-
-        statesCount: Object;
-        states: StateCountVO[];
     }
 
     export class MomentDetailVO extends MomentBaseVO implements IMomentDetailVO {
 
-        feedback: IFeedbackVO[];
+        feedback: FeedbackVO[];
         blinks: string[];
 
         currentBlink: BlinkVO;
-        statesCount: Object; //StateVO.id => StateCountVO
-        states: StateCountVO[];
+        stateCounts: StateCountVO[];
+
+        private stateCountRefs: Object; //StateVO.id => StateCountVO
 
         constructor(data ?: IMomentDetailVO) {
             this.feedback = [];
             this.blinks = [];
-            this.statesCount = {};
-            this.states = [];
+            this.stateCountRefs = {};
+            this.stateCounts = [];
             super(data);
         }
 
-        parseJson(data: IMomentDetailVO) {
+        parseJson(data: IMomentDetailVO, refs ?: Object) {
             super.parseJson(data);
-            this.parseDetailData(data);
+            this.parseDetailData(data, refs);
         }
 
-        private parseDetailData(data: IMomentDetailVO) {
+        private parseDetailData(data: IMomentDetailVO, refs ?: Object) {
             if (!data) {
                 return;
             }
-            this.parseFeedback(data.feedback);
+            this.parseFeedback(data.feedback, refs);
         }
 
-        parseFeedback(data: IFeedbackVO[]) {
-            if (!data) {
-                return;
-            }
+        parseFeedback(data: IFeedbackVO[], refs ?: Object) {
             this.feedback = [];
+            if (!data || !refs) {
+                return;
+            }
             for (var i: number = 0; i < data.length; i++) {
-                this.addFeedback(data[i]);
+                this.addFeedback(data[i], refs);
             }
         }
 
-        addFeedback(data: IFeedbackVO) {
+        addFeedback(data: IFeedbackVO, refs: Object) {
             var f: FeedbackVO = new FeedbackVO(data);
             this.feedback.push(f);
             for (var j: number = 0; j < f.states.length; j++) {
-                var s: IStateVO = f.states[j];
-                var c: StateCountVO = this.statesCount[s.id];
+                var s: IStateVO = refs[f.states[j]];
+                f.stateRefs.push(s);
+                var c: StateCountVO = this.stateCountRefs[s.id];
                 if (!c) {
-                    c = this.statesCount[s.id] = new StateCountVO(s);
-                    this.states.push(c);
+                    c = this.stateCountRefs[s.id] = new StateCountVO(s);
+                    this.stateCounts.push(c);
                     if (this.isAlias) {
                         c.isAlias = true;
                     }
@@ -73,13 +75,13 @@ module jm.moment {
                 return;
             }
             for (var j: number = 0; j < this.feedback.length; j++) {
-                var f: IFeedbackVO = this.feedback[j];
+                var f: FeedbackVO = this.feedback[j];
                 if (f.body) {
                     continue;
                 }
                 if (f.alias.id === alias.id) {
                     for (var i: number = 0; i < f.states.length; i++) {
-                        var c: StateCountVO = this.statesCount[f.states[i].id];
+                        var c: StateCountVO = this.stateCountRefs[f.states[i]];
                         c.isAlias = true;
                     }
                 }
@@ -89,7 +91,8 @@ module jm.moment {
         invalidateData() {
             super.invalidateData();
             this.feedback.length = 0;
-            this.statesCount = {};
+            this.stateCountRefs = {};
+            this.stateCounts.length = 0;
             this.blinks.length = 0;
             this.currentBlink = undefined;
         }

@@ -1,6 +1,6 @@
 module jm.user {
 
-    export interface IAliasListModalScope extends jm.common.IBaseModalScope {
+    export interface IAliasListModalScope extends jm.common.ctrl.IBaseModalScope {
         aliasList: AliasBaseVO[];
         listHeader: string;
         removeJoin: boolean;

@@ -1,5 +1,15 @@
+///<reference path="..\..\common\const\JMConfigConst.ts"/>
+///<reference path="..\..\user\model\AliasDetailVO.ts"/>
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
+///<reference path="..\dao\MomentDAO.ts"/>
+///<reference path="..\dao\FeedbackDAO.ts"/>
+///<reference path="..\dao\BlinkDAO.ts"/>
+///<reference path="FeedbackVO.ts"/>
+///<reference path="StateVO.ts"/>
+//FIXME: for some reason we cannot reference ///<reference path="MomentDetailVO.ts"/>
 module jm.moment {
 
+    import JMConfigConst = jm.common.JMConfigConst;
     import AliasDetailVO = jm.user.AliasDetailVO;
     import AliasBaseVO = jm.user.AliasBaseVO;
     import IPromise = ng.IPromise;
@@ -14,24 +24,30 @@ module jm.moment {
         private feedbackService: FeedbackDAO;
         private blinkService: BlinkDAO;
         private currentAlias: AliasDetailVO;
-        private allStates: StateVO[];
+        private stateRefs: Object; // IStateVO.id => IStateVO
 
         constructor($injector: ng.auto.IInjectorService) {
             this.momentService = $injector.get < MomentDAO >(MomentDAO.NG_NAME);
             this.feedbackService = $injector.get < FeedbackDAO >(FeedbackDAO.NG_NAME);
             this.blinkService = $injector.get < BlinkDAO >(BlinkDAO.NG_NAME);
+            var states: IStateVO[] = $injector.get < IStateVO[] >(JMConfigConst.STATES);
+            this.stateRefs = {};
+            for (var i: number = 0; i < states.length; i++) {
+                var state: IStateVO = states[i];
+                this.stateRefs[state.id] = state;
+            }
             this.currentMoment = new MomentDetailVO();
         }
 
         private setMoment = (data: IMomentDetailVO) => {
-            this.currentMoment.parseJson(data);
+            this.currentMoment.parseJson(data, this.stateRefs);
             if (this.currentAlias) {
                 this.currentMoment.updateAlias(this.currentAlias);
             }
         };
 
         private addFeedback = (data: IFeedbackVO) => {
-            this.currentMoment.addFeedback(data);
+            this.currentMoment.addFeedback(data, this.stateRefs);
             data.alias = this.currentAlias;
         };
 
@@ -72,15 +88,17 @@ module jm.moment {
         }
 
         getBlinkByIndex(index: number, blinkVO ?: BlinkVO) {
+            var stateRefs: Object = this.stateRefs;
             this.blinkService.getBlink(this.currentMoment.blinks[index]).then(function (data: BlinkVO) {
-                blinkVO.parseJson(data);
+                blinkVO.parseData(data, stateRefs);
             });
         }
 
         createBlink(formBlink: BlinkFormVO) {
             var moment: MomentDetailVO = this.currentMoment;
+            var stateRefs: Object = this.stateRefs;
             return this.blinkService.createBlink(formBlink.imageFiles, formBlink.blink, this.currentMoment.id).then(function (response: any) {
-                formBlink.blink.parseJson(response.data);
+                formBlink.blink.parseData(response.data, stateRefs);
                 moment.blinks.push(formBlink.blink.id);
             });
         }
@@ -88,8 +106,9 @@ module jm.moment {
         editBlink(formBlink: BlinkFormVO) {
             var saveBlink: BlinkVO = new BlinkVO(formBlink.blink);
             saveBlink.images.length = 0;
+            var stateRefs: Object = this.stateRefs;
             return this.blinkService.updateBlink(formBlink.imageFiles, saveBlink).then(function (response: any) {
-                formBlink.blink.parseJson(response.data);
+                formBlink.blink.parseData(response.data, stateRefs);
             });
         }
     }

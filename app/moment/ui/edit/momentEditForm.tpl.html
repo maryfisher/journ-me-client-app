@@ -62,7 +62,7 @@
 
             <h3 data-ng-if="!isNewBlink">Edit Your Blink</h3>
             <jm-state-list can-edit="true"
-                           states="formBlink.blink.states"
+                           states="formBlink.blink.stateRefs"
                            on-state-selected="removeState(state)"></jm-state-list>
             <div>
                 <jm-state-select states="missingStates"
@@ -73,7 +73,7 @@
                                  types="2"
                                  on-state-selected="selectState(state)"></jm-state-select>
             </div>
-            <div data-ng-if="formBlink.blink.states.length > 0">
+            <div data-ng-if="formBlink.blink.stateRefs.length > 0">
                 <jm-state-select states="missingStates"
                                  types="3"
                                  on-state-selected="selectState(state)"
