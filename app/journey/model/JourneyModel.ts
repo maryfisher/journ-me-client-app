@@ -1,8 +1,18 @@
+///<reference path="..\..\main\model\CategoryVO.ts"/>
+///<reference path="..\..\user\model\AliasDetailVO.ts"/>
+///<reference path="..\..\user\model\AliasBaseVO.ts"/>
+///<reference path="..\dao\JourneyDAO.ts"/>
+///<reference path="..\dao\JourneyActionDAO.ts"/>
+///<reference path="JourneyDetailVO.ts"/>
+///<reference path="JourneyBaseVO.ts"/>
+///<reference path="..\..\common\const\JMConfigConst.ts"/>
 module jm.journey {
     'use strict';
 
+    import JMConfigConst = jm.common.JMConfigConst;
     import AliasDetailVO = jm.user.AliasDetailVO;
     import AliasBaseVO = jm.user.AliasBaseVO;
+    import ICategoryVO = jm.main.ICategoryVO;
     import IPromise = angular.IPromise;
 
     export class JourneyModel {
@@ -13,26 +23,33 @@ module jm.journey {
         private journeyActionService: JourneyActionDAO;
         private currentJourney: JourneyDetailVO;
         private currentAlias: AliasDetailVO;
+        private categories: Object; //ICategoryVO.id => ICategoryVO
 
         constructor($injector: ng.auto.IInjectorService) {
             this.journeyService = $injector.get < JourneyDAO >(JourneyDAO.NG_NAME);
             this.journeyActionService = $injector.get < JourneyActionDAO >(JourneyActionDAO.NG_NAME);
+            var categories: ICategoryVO[] = $injector.get < ICategoryVO[] >(JMConfigConst.CATEGORIES);
+            this.categories = {};
+            for (var i = 0; i < categories.length; i++) {
+                var obj = categories[i];
+                this.categories[obj.id] = obj;
+            }
 
             this.currentJourney = new JourneyDetailVO();
         }
 
         private setCurrentJourneyBase = (data: IJourneyDetailVO) => {
-            this.currentJourney.parseBaseData(data);
+            this.currentJourney.parseBaseData(data, this.categories);
             if (this.currentAlias) {
                 this.currentJourney.updateAlias(this.currentAlias);
-                if(this.currentJourney.isAlias){
+                if (this.currentJourney.isAlias) {
                     this.currentAlias.updateJourneys(this.currentJourney);
                 }
             }
         };
 
         private setCurrentJourney = (data: IJourneyDetailVO) => {
-            this.currentJourney.parseJson(data);
+            this.currentJourney.parseJson(data, this.categories);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
                 this.currentJourney.updateFromAlias(this.currentAlias);
@@ -76,7 +93,7 @@ module jm.journey {
             var journey: JourneyDetailVO = new JourneyDetailVO();
             this.journeyService.getJourney(id).then(
                 (data: IJourneyDetailVO) => {
-                    journey.parseJson(data);
+                    journey.parseJson(data, this.categories);
                 });
             return journey;
         }
@@ -89,7 +106,7 @@ module jm.journey {
             this.currentJourney.updateFromAlias(this.currentAlias);
         }
 
-        followJourney(journey ?: IJourneyDetailVO): IPromise < any > {
+        followJourney(journey ?: JourneyDetailVO): IPromise < any > {
             if (!journey) {
                 journey = this.currentJourney;
             }
@@ -102,7 +119,7 @@ module jm.journey {
                 });
         }
 
-        unfollowJourney(journey ?: IJourneyDetailVO) {
+        unfollowJourney(journey ?: JourneyDetailVO) {
             if (!journey) {
                 journey = this.currentJourney;
             }

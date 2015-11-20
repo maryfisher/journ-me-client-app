@@ -15,12 +15,6 @@ module jm.journey {
         linkedFromJourneys: IJourneyBaseVO[];
         joinRequests: IAliasBaseVO[];
         joinedAliases: IAliasBaseVO[];
-
-        joinedLinkedJourneys: IJourneyBaseVO[];
-        aliasJourneyLink: IJourneyBaseVO;
-        isFollowing: boolean;
-        isAlias: boolean;
-
     }
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
@@ -52,19 +46,12 @@ module jm.journey {
             super(data);
         }
 
-        parseBaseData(data: IJourneyDetailVO) {
-            this.id = data.id;
-            this.name = data.name;
-            this.descript = data.descript;
-            this.alias = this.alias ? this.alias : new AliasBaseVO(data.alias);
-            this.hasLocation = data.hasLocation;
-            this.location = data.location;
-            this.isPublic = data.isPublic;
-            this.join = data.join;
+        parseBaseData(data: IJourneyDetailVO, refs: Object) {
+            super.parseJson(data, refs);
         }
 
-        parseJson(data: IJourneyDetailVO) {
-            super.parseJson(data);
+        parseJson(data: IJourneyDetailVO, refs: Object) {
+            super.parseJson(data, refs);
             this.parseDetailData(data);
         }
 
