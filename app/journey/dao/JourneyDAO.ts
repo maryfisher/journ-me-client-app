@@ -5,6 +5,7 @@ module jm.journey {
     import NGConst = jm.common.NGConst;
     import IPromise = angular.IPromise;
     import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
+    import IJourneySearchFilter = jm.journey.IJourneySearchFilter;
 
     export class JourneyDAO extends jm.common.BaseResourceDAO {
 
@@ -33,6 +34,14 @@ module jm.journey {
 
         updateJourney(journey: JourneyBaseVO): IPromise < IJourneyBaseVO > {
             return this.update(journey, this.returnBaseJourney);
+        }
+
+        searchJourneys(searchFilter: IJourneySearchFilter, queryParams: Object): IPromise < any > {
+            return this.execute(this.POST, this.path + 'search', searchFilter, queryParams);
+        }
+
+        retrieveRelevantTopics(queryParams: Object): IPromise < any > {
+            return this.get(this.path + 'topic/tag', queryParams);
         }
     }
 }

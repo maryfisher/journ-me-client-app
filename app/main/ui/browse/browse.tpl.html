@@ -1,1 +1,111 @@
-<h1>BROWSE</h1>
+<form data-ng-submit="searchJourneys()" novalidate role="form" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-1">Text</label>
+
+        <div class="col-sm-2">
+            <select data-ng-model="searchFilter.textMatcher" class="form-control">
+                <option value="0">Any word</option>
+                <option value="1">All words</option>
+                <option value="2">Contains phrase</option>
+                <option value="3">Exact phrase</option>
+            </select>
+        </div>
+
+        <div class="col-sm-5">
+            <input type="text" data-ng-model="searchFilter.text"
+                   placeholder="Searches journey names & descriptions" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-1">Join type</label>
+
+        <div class="col-sm-2">
+            <select data-ng-model="searchFilter.joinMatcher" class="form-control">
+                <option value="0">Equals</option>
+                <option value="1">Doesn't equal</option>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <select data-ng-model="searchFilter.join" class="form-control">
+                <option value=""></option>
+                <option value="0">Everyone</option>
+                <option value="1">Only With Invite</option>
+                <option value="2">No-one</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-1">Categories</label>
+
+        <div class="col-sm-2">
+            <select data-ng-model="searchFilter.categoriesMatcher" class="form-control">
+                <option value="0">Any</option>
+                <option value="1">All</option>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <select multiple data-ng-options="category.code as category.name for category in categories"
+                    data-ng-model="searchFilter.categories" class="form-control"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-1">Topics</label>
+
+        <div class="col-sm-2">
+            <select data-ng-model="searchFilter.topicsMatcher" class="form-control">
+                <option value="0">Any</option>
+                <option value="1">All</option>
+            </select>
+        </div>
+        <div class="col-sm-5">
+            <ul class="list-inline">
+                <li data-ng-repeat="topic in searchFilter.topics">
+                    <span>{{topic}}</span>
+                    <a href="" data-ng-click="removeTopic(topic)">x</a>
+                </li>
+            </ul>
+            <input type="text" data-ng-model="searchFilter.selectedTopic"
+                   data-typeahead="topic.tag as topic.tag for topic in retrieveRelevantTopics($viewValue)"
+                   data-typeahead-min-length="3"
+                   data-typeahead-wait-ms="400"
+                   data-typeahead-select-on-exact="true"
+                   data-typeahead-on-select="selectTopic($item, $model, $label)"
+                   placeholder="Autocomplete..." class="form-control"/>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search journeys</button>
+
+    <hr>
+
+    <div data-ng-if="searchResult">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Journey name</th>
+                <th>Description</th>
+                <th>Owner</th>
+                <th>Location</th>
+                <th>Categories</th>
+                <th>Topics</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="journey in searchResult">
+                <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
+                <td>{{ journey.descript }}</td>
+                <td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>
+                <td>{{ journey.location }}</td>
+                <td>{{ joinCategoryWeights(journey.categoryWeights) }}</td>
+                <td>{{ journey.topics.join(', ') }}</td>
+                <td>{{ journey.created | date:'mediumDate' }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="selectedPage"
+                    ng-change="searchJourneys()"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                    boundary-links="true" class="pagination-sm"></pagination>
+    </div>
+</form>

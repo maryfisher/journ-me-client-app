@@ -16,6 +16,7 @@ module jm.journey {
         isPublic: boolean;
         join: number;
         categoryWeights: CategoryWeightVO[];
+        topics: string[];
     }
 
     export class JourneyBaseVO implements IJourneyBaseVO {
@@ -28,12 +29,14 @@ module jm.journey {
         isPublic: boolean;
         join: number;
         categoryWeights: CategoryWeightVO[];
+        topics: string[];
 
         isAlias: boolean;
 
         constructor(data ?: IJourneyBaseVO, refs ?: Object) {
             this.setDefault();
             this.categoryWeights = [];
+            this.topics = [];
             this.parseJson(data, refs);
         }
 
@@ -58,6 +61,7 @@ module jm.journey {
                         this.categoryWeights.push(new CategoryWeightVO(data.categoryWeights[i], refs));
                     }
                 }
+                this.topics = data.topics;
             }
         }
 
@@ -69,6 +73,7 @@ module jm.journey {
             this.alias = undefined;
             this.location = undefined;
             this.categoryWeights.length = 0;
+            this.topics.length = 0;
         }
 
         updateAlias(alias: IAliasBaseVO) {

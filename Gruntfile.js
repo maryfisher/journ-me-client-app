@@ -225,9 +225,9 @@ module.exports = function (grunt) {
         'copy:ts',
         'ts',
         'less',
-        'copy:indexDev',
-        'uglify:dev',
-        'cssmin:dev'
+        'copy:indexDev'
+//        'uglify:dev',
+//        'cssmin:dev'
     ]);
 
     grunt.registerTask('run', [
