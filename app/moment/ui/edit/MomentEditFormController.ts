@@ -43,8 +43,7 @@ module jm.moment.ctrl {
         blinkForm: IFormController;
         missingStates: IStateVO[];
         isNewBlink: boolean;
-        selectedFeel: IStateVO;
-        selectFeel(state: IStateVO);
+        selectState(state: IStateVO);
         removeState(state: IStateVO);
         allStates: IStateVO[];
         openDatePicker($event);
@@ -228,7 +227,6 @@ module jm.moment.ctrl {
         selectState = (state: IStateVO) => {
             this.$scope.formBlink.blink.addState(state);
             this.$scope.missingStates.splice(this.$scope.missingStates.indexOf(state), 1);
-            this.$scope.selectedFeel = undefined;
         };
 
         removeState = (state: IStateVO) => {

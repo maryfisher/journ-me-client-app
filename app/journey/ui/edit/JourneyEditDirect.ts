@@ -1,4 +1,7 @@
+///<reference path="JourneyEditFormController.ts"/>
 module jm.journey {
+
+    import JourneyEditFormController = jm.journey.ctrl.JourneyEditFormController;
 
     export class JourneyEditDirect extends jm.common.BaseModalDirect {
 
@@ -10,7 +13,7 @@ module jm.journey {
         };
 
         constructor($injector: ng.auto.IInjectorService) {
-            super($injector, 'JourneyFormController', 'journey/ui/edit/journeyForm.tpl.html');
+            super($injector, JourneyEditFormController.NG_NAME, 'journey/ui/edit/journeyEditForm.tpl.html');
         }
     }
 }

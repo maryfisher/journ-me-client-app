@@ -1,16 +1,16 @@
-///<reference path="..\..\..\main\model\CategoryWeightVO.ts"/>
-///<reference path="..\..\..\main\model\CategoryVO.ts"/>
 ///<reference path="..\..\..\common\const\JMConfigConst.ts"/>
 ///<reference path="..\..\..\common\const\NGConst.ts"/>
 ///<reference path="..\..\..\common\util\RouteUtil.ts"/>
+///<reference path="..\..\model\CategoryVO.ts"/>
+///<reference path="..\..\model\CategoryWeightVO.ts"/>
 module jm.journey.ctrl {
     'use strict';
 
     import RouteUtil = jm.common.RouteUtil;
     import NGConst = jm.common.NGConst;
     import JMConfigConst = jm.common.JMConfigConst;
-    import ICategoryVO = jm.main.ICategoryVO;
-    import CategoryWeightVO = jm.main.CategoryWeightVO;
+    import ICategoryVO = jm.journey.ICategoryVO;
+    import CategoryWeightVO = jm.journey.CategoryWeightVO;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
     export interface IJourneyFormScope extends jm.common.ctrl.IBaseModalInstanceScope {
@@ -19,12 +19,14 @@ module jm.journey.ctrl {
         journeyForm: ng.IFormController;
         save();
         missingCategories: ICategoryVO[];
+        selectedCategory: string;
     }
 
-    export class JourneyFormController extends jm.common.ctrl.BaseModalInstanceController {
+    export class JourneyEditFormController extends jm.common.ctrl.BaseModalInstanceController {
 
-        static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME,
+        static $inject: string[] = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME, RouteUtil.NG_NAME,
             JMConfigConst.CATEGORIES];
+        static NG_NAME: string = 'JourneyEditFormController';
 
         constructor(private $scope: IJourneyFormScope,
                     $modalInstance: IModalServiceInstance,
@@ -39,8 +41,8 @@ module jm.journey.ctrl {
                 $scope.journey = new JourneyBaseVO($scope.journey);
                 $scope.missingCategories = [];
                 for (var i = 0; i < this.categories.length; i++) {
+                    var add: boolean = true;
                     for (var j = 0; j < $scope.journey.categoryWeights.length; j++) {
-                        var add: boolean = true;
                         if ($scope.journey.categoryWeights[j].category === this.categories[i].id) {
                             add = false;
                             break;
@@ -55,8 +57,28 @@ module jm.journey.ctrl {
                 $scope.missingCategories = this.categories.slice();
             }
 
-            this.addScopeMethods('save');
+            this.addScopeMethods('save', 'selectCategory', 'deleteCategory');
         }
+
+        selectCategory = (cat: ICategoryVO) => {
+            //TODO: determine weight based on existing categories, adjust other weights
+            var weight: CategoryWeightVO = new CategoryWeightVO();
+            weight.category = cat.id;
+            weight.categoryRef = cat;
+            weight.weight = 100 / (this.$scope.journey.categoryWeights.length + 1);
+            for (var i = 0; i < this.$scope.journey.categoryWeights.length; i++) {
+                this.$scope.journey.categoryWeights[i].weight = weight.weight;
+            }
+            this.$scope.journey.categoryWeights.push(weight);
+            this.$scope.missingCategories.splice(this.$scope.missingCategories.indexOf(cat), 1);
+            this.$scope.selectedCategory = '';
+        };
+
+        deleteCategory = (categoryWeight: CategoryWeightVO) => {
+            //TODO readjust weights
+            this.$scope.journey.categoryWeights.splice(this.$scope.journey.categoryWeights.indexOf(categoryWeight), 1);
+            this.$scope.missingCategories.push(categoryWeight.categoryRef);
+        };
 
         save = () => {
             if (this.$scope.journeyForm.$valid) {

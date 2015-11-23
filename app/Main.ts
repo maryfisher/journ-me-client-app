@@ -97,6 +97,7 @@ module jm {
             this.addDirective(jm.journey.TimelineSelectDirect);
             this.addDirective(jm.journey.LinkJourneyDirect);
             this.addDirective(jm.journey.JourneyRequestsDirect);
+            this.addDirective(jm.journey.CategoryRatioDirect);
             this.addDirective(jm.moment.BlinkFormatDirect);
             this.addDirective(jm.moment.BlinkImgDirect);
             this.addDirective(jm.moment.BlinkTextDirect);

@@ -1,4 +1,3 @@
-///<reference path="..\..\main\model\CategoryVO.ts"/>
 ///<reference path="..\..\user\model\AliasDetailVO.ts"/>
 ///<reference path="..\..\user\model\AliasBaseVO.ts"/>
 ///<reference path="..\dao\JourneyDAO.ts"/>
@@ -12,7 +11,6 @@ module jm.journey {
     import JMConfigConst = jm.common.JMConfigConst;
     import AliasDetailVO = jm.user.AliasDetailVO;
     import AliasBaseVO = jm.user.AliasBaseVO;
-    import ICategoryVO = jm.main.ICategoryVO;
     import IPromise = angular.IPromise;
 
     export class JourneyModel {
