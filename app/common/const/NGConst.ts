@@ -24,5 +24,6 @@ module jm.common {
         static UPLOAD: string = 'Upload';
 
         static $URL_ROUTER_PROVIDER: string = '$urlRouterProvider';
+        static $LOCATION_SERVICE: string = '$location';
     }
 }

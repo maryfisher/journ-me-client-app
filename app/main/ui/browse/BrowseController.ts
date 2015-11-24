@@ -26,9 +26,9 @@ module jm.main.ctrl {
 
         static NG_NAME: string = 'BrowseController';
 
-        static $inject = [NGConst.$SCOPE, JMConfigConst.CATEGORIES, JourneyDAO.NG_NAME];
+        static $inject = [NGConst.$SCOPE, JMConfigConst.CATEGORIES, JourneyDAO.NG_NAME, NGConst.$LOCATION_SERVICE];
 
-        constructor(private $scope: IBrowseScope, private categoriesConst: ICategoryVO[], private journeyService: JourneyDAO) {
+        constructor(private $scope: IBrowseScope, private categoriesConst: ICategoryVO[], private journeyService: JourneyDAO, private locationService: ng.ILocationService) {
             super($scope);
 
             $scope.searchFilter = new JourneySearchFilterVO();
@@ -74,8 +74,13 @@ module jm.main.ctrl {
             $scope.switchToggleSort = function (sortField: string): void {
                 $scope.searchPage.switchToggleSort(sortField);
                 $scope.searchJourneys();
-            }
+            };
 
+            var queryParams = locationService.search();
+            if (queryParams && queryParams["search"]) {
+                $scope.searchFilter.text = queryParams["search"];
+                $scope.searchJourneys();
+            }
         };
     }
 }
