@@ -22,9 +22,12 @@ module jm.main {
         totalElements: number;
         totalPages: number;
 
-        sort: {sortProperty: string, sortDirection: string}    // sort instructions
+        sortProperty: string;
+        sortDirection: string;
 
         constructor() {
+            this.sortProperty = PageVO.CREATED_FIELD_NAME;
+            this.sortDirection = PageVO.DESC;
         }
 
         parseData(data: IPage < T > ) {
@@ -40,9 +43,14 @@ module jm.main {
             return {
                 pageNumber: this.number ? this.number - 1 : 0, // Spring pagination uses 0 index, Angular Boostrap pagination uses 1 index
                 pageSize: this.size || 10,
-                sortDirection: this.sort ? this.sort.sortDirection : PageVO.DESC,
-                sortProperty: this.sort ? this.sort.sortProperty : PageVO.CREATED_FIELD_NAME,
+                sortDirection: this.sortDirection || PageVO.DESC,
+                sortProperty: this.sortProperty || PageVO.CREATED_FIELD_NAME,
             }
+        }
+
+        switchToggleSort(sortField: string): void {
+            this.sortProperty = sortField;
+            this.sortDirection = this.sortDirection === PageVO.DESC ? PageVO.ASC : PageVO.DESC;
         }
     }
 }
