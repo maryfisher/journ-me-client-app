@@ -18,7 +18,8 @@ module jm.main.ctrl {
         joinCategoryWeights(categoryWeights: CategoryWeightVO[]): string,
         selectTopic(topic: any): void,
         selectedTopic: string,  // dummy model object for typeahead selection
-        removeTopic(topic: string): void
+        removeTopic(topic: string): void,
+        switchToggleSort(sortField: string): void
     }
 
     export class BrowseController extends jm.common.BaseController {
@@ -31,7 +32,7 @@ module jm.main.ctrl {
             super($scope);
 
             $scope.searchFilter = new JourneySearchFilterVO();
-            $scope.searchPage = new PageVO < IJourneyBaseVO > ();
+            $scope.searchPage = new PageVO < IJourneyBaseVO >();
             $scope.categories = categoriesConst;
 
             $scope.joinCategoryWeights = function (categoryWeights: CategoryWeightVO[]): string {
@@ -65,10 +66,15 @@ module jm.main.ctrl {
             $scope.searchJourneys = function (): ng.IPromise < IPage < IJourneyBaseVO > > {
                 return journeyService.searchJourneys($scope.searchFilter, $scope.searchPage.toPageRequest())
                     .then(function (response) {
-                        $scope.searchPage.parseData(response.data)
+                        $scope.searchPage.parseData(response.data);
                         return response.data;
                     });
             };
+
+            $scope.switchToggleSort = function (sortField: string): void {
+                $scope.searchPage.switchToggleSort(sortField);
+                $scope.searchJourneys();
+            }
 
         };
     }
