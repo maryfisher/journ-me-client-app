@@ -3,7 +3,7 @@
         <label class="col-sm-1">Text</label>
 
         <div class="col-sm-2">
-            <select data-ng-model="searchFilter.textMatcher" class="form-control">
+            <select data-ng-model="searchFilter.textMatcher" data-jm-convert-to-number class="form-control">
                 <option value="0">Any word</option>
                 <option value="1">All words</option>
                 <option value="2">Contains phrase</option>
@@ -20,13 +20,13 @@
         <label class="col-sm-1">Join type</label>
 
         <div class="col-sm-2">
-            <select data-ng-model="searchFilter.joinMatcher" class="form-control">
+            <select data-ng-model="searchFilter.joinMatcher" data-jm-convert-to-number class="form-control">
                 <option value="0">Equals</option>
                 <option value="1">Doesn't equal</option>
             </select>
         </div>
         <div class="col-sm-5">
-            <select data-ng-model="searchFilter.join" class="form-control">
+            <select data-ng-model="searchFilter.join" data-jm-convert-to-number class="form-control">
                 <option value=""></option>
                 <option value="0">Everyone</option>
                 <option value="1">Only With Invite</option>
@@ -38,7 +38,7 @@
         <label class="col-sm-1">Categories</label>
 
         <div class="col-sm-2">
-            <select data-ng-model="searchFilter.categoriesMatcher" class="form-control">
+            <select data-ng-model="searchFilter.categoriesMatcher" data-jm-convert-to-number class="form-control">
                 <option value="0">Any</option>
                 <option value="1">All</option>
             </select>
@@ -52,7 +52,7 @@
         <label class="col-sm-1">Topics</label>
 
         <div class="col-sm-2">
-            <select data-ng-model="searchFilter.topicsMatcher" class="form-control">
+            <select data-ng-model="searchFilter.topicsMatcher" data-jm-convert-to-number class="form-control">
                 <option value="0">Any</option>
                 <option value="1">All</option>
             </select>
@@ -64,7 +64,7 @@
                     <a href="" data-ng-click="removeTopic(topic)">x</a>
                 </li>
             </ul>
-            <input type="text" data-ng-model="searchFilter.selectedTopic"
+            <input type="text" data-ng-model="selectedTopic"
                    data-typeahead="topic.tag as topic.tag for topic in retrieveRelevantTopics($viewValue)"
                    data-typeahead-min-length="3"
                    data-typeahead-wait-ms="400"
@@ -78,7 +78,7 @@
 
     <hr>
 
-    <div data-ng-if="searchResult">
+    <div data-ng-if="searchPage.content">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -92,7 +92,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr data-ng-repeat="journey in searchResult">
+            <tr data-ng-repeat="journey in searchPage.content">
                 <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
                 <td>{{ journey.descript }}</td>
                 <td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>
@@ -103,8 +103,8 @@
             </tr>
             </tbody>
         </table>
-        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="selectedPage"
-                    ng-change="searchJourneys()"
+        <pagination ng-model="searchPage.number" ng-change="searchJourneys()"
+                    total-items="searchPage.totalElements" items-per-page="searchPage.size"
                     previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
                     boundary-links="true" class="pagination-sm"></pagination>
     </div>

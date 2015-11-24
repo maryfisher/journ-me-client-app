@@ -6,21 +6,19 @@ module jm.main.ctrl {
     import JourneyDAO = jm.journey.JourneyDAO;
     import IJourneyBaseVO = jm.journey.IJourneyBaseVO;
     import CategoryWeightVO = jm.main.CategoryWeightVO;
-    import IJourneySearchFilter = jm.journey.IJourneySearchFilter;
+    import PageVO = jm.main.PageVO;
+    import JourneySearchFilterVO = jm.journey.JourneySearchFilterVO;
 
     export interface IBrowseScope extends ng.IScope {
-        searchFilter: IJourneySearchFilter,
+        searchFilter: JourneySearchFilterVO,
         categories: ICategoryVO[],
-        retrieveRelevantTopics(string),
-        searchJourneys(),
-        searchResult: IJourneyBaseVO[],
-        totalItems: number,
-        itemsPerPage: number,
-        currentPage: number,
+        retrieveRelevantTopics(val: string): ng.IPromise < string[] >,
+        searchJourneys(): ng.IPromise < IPage < IJourneyBaseVO > >,
+        searchPage: PageVO < IJourneyBaseVO >,
         joinCategoryWeights(categoryWeights: CategoryWeightVO[]): string,
-        selectTopic(topic: any),
-        selectedTopic: string,
-        removeTopic(topic: string)
+        selectTopic(topic: any): void,
+        selectedTopic: string,  // dummy model object for typeahead selection
+        removeTopic(topic: string): void
     }
 
     export class BrowseController extends jm.common.BaseController {
@@ -32,18 +30,8 @@ module jm.main.ctrl {
         constructor(private $scope: IBrowseScope, private categoriesConst: ICategoryVO[], private journeyService: JourneyDAO) {
             super($scope);
 
-            // default values when search filter is loaded initially
-            $scope.searchFilter = {
-                text: undefined,
-                textMatcher: "0",
-                join: undefined,
-                joinMatcher: "0",
-                categories: [],
-                categoriesMatcher: "0",
-                topics: [],
-                topicsMatcher: "0",
-                selectedTopic: undefined
-            };
+            $scope.searchFilter = new JourneySearchFilterVO();
+            $scope.searchPage = new PageVO < IJourneyBaseVO > ();
             $scope.categories = categoriesConst;
 
             $scope.joinCategoryWeights = function (categoryWeights: CategoryWeightVO[]): string {
@@ -56,7 +44,7 @@ module jm.main.ctrl {
                 }
             };
 
-            $scope.retrieveRelevantTopics = function (val: string) {
+            $scope.retrieveRelevantTopics = function (val: string): ng.IPromise < string[] > {
                 return journeyService.retrieveRelevantTopics({
                     tagFragment: val
                 }).then(function (response) {
@@ -64,29 +52,22 @@ module jm.main.ctrl {
                 });
             };
 
-            $scope.selectTopic = function (topic: any) {
+            $scope.selectTopic = function (topic: any): void {
                 $scope.searchFilter.topics.push(topic.tag);
-                $scope.searchFilter.selectedTopic = undefined;
+                $scope.selectedTopic = undefined;
             };
 
-            $scope.removeTopic = function (string: string) {
+            $scope.removeTopic = function (string: string): void {
                 var topics = $scope.searchFilter.topics;
                 topics.splice(topics.indexOf(string), 1);
             };
 
-            $scope.searchJourneys = function () {
-                return journeyService.searchJourneys($scope.searchFilter, {
-                    pageNumber: $scope.currentPage ? $scope.currentPage - 1 : 0,
-                    pageSize: $scope.itemsPerPage || 10,
-                    sortDirection: 'DESC',
-                    sortProperty: 'created'
-                }).then(function (response) {
-                    $scope.searchResult = response.data["content"];
-                    $scope.totalItems = response.data["totalElements"];
-                    $scope.itemsPerPage = response.data["size"];
-                    $scope.currentPage = response.data["number"] + 1; //Spring pagination uses 0 index, Angular Boostrap pagination uses 1 index
-                    return response.data;
-                });
+            $scope.searchJourneys = function (): ng.IPromise < IPage < IJourneyBaseVO > > {
+                return journeyService.searchJourneys($scope.searchFilter, $scope.searchPage.toPageRequest())
+                    .then(function (response) {
+                        $scope.searchPage.parseData(response.data)
+                        return response.data;
+                    });
             };
 
         };

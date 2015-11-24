@@ -108,6 +108,7 @@ module jm {
             this.addDirective(jm.moment.FeedbackListItemDirect);
             this.addDirective(jm.error.LocalErrorDirect);
             this.addDirective(jm.error.GlobalErrorDirect);
+            this.addDirective(jm.common.ConvertToNumberDirect);
         }
 
         initFilter() {
