@@ -3,6 +3,7 @@ module jm.moment {
     export interface IStateSelectScope extends ng.IScope {
         filter: number[];
         states: IStateVO[];
+        selectedState: string;
         selectState(s: IStateVO);
         onStateSelected(param: ISelectStateParams);
         types: string;
@@ -34,6 +35,7 @@ module jm.moment {
             }
             scope.selectState = (s: IStateVO) => {
                 scope.onStateSelected({'state': s});
+                scope.selectedState = '';
             };
             if (scope.filter.indexOf(0) !== -1) {
                 if (scope.filter.indexOf(2) !== -1) {

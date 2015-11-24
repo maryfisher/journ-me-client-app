@@ -1,7 +1,7 @@
 <div data-ng-show="filteredStates.length > 0" class="dropdown input-group jm-state-input" dropdown>
     <input type="text"
-           ng-model="selectedFeel"
-           typeahead="state as state.name for state in states | stateSelectFilter: filter"
+           ng-model="selectedState"
+           typeahead="state as state.name for state in filteredStates | filter:{name:$viewValue}"
            typeahead-editable="false"
            typeahead-on-select="selectState($item)"
            placeholder="{{placeholder}}"
