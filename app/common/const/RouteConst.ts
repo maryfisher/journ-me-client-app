@@ -12,7 +12,7 @@ module jm.common {
         static HOME: string = 'HOME';
         static HOME_PATH: string = '/home';
         static BROWSE: string = 'BROWSE';
-        static BROWSE_PATH: string = '/browse';
+        static BROWSE_PATH: string = '/browse?search';
 
         static JOURNEY_PATH: string = RouteConst.journeyPath;
         static JOURNEY_DETAIL: string = 'JOURNEY_DETAIL';

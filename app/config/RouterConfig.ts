@@ -55,11 +55,12 @@ module jm {
                 url: RouteConst.HOME_PATH,
                 templateUrl: 'main/ui/home/home.tpl.html',
                 controller: jm.main.ctrl.HomeController.NG_NAME/*,
-                 data: redirectAuth*/
+                data: redirectAuth*/
             });
             this.$stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
-                templateUrl: 'main/ui/browse/browse.tpl.html'
+                templateUrl: 'main/ui/browse/browse.tpl.html',
+                controller: jm.main.ctrl.BrowseController.NG_NAME
             });
 
             this.$stateProvider.state(RouteConst.ALIAS_DETAIL, {

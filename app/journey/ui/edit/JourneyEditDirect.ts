@@ -6,7 +6,7 @@ module jm.journey {
 
         restrict: string = 'A';
         scope: any = {
-            journeyStr: '@?jmJourneyEdit'
+            journey: '=?jmJourneyEdit'
         };
 
         constructor($injector: ng.auto.IInjectorService) {

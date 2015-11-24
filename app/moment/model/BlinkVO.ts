@@ -4,7 +4,7 @@ module jm.moment {
 
     import ServerConst = jm.common.ServerConst;
 
-    export interface IBlinkVO {
+    export interface IBlinkVO extends IStateRefVO {
         id: string;
         format: number;
         images: string[];
@@ -13,7 +13,6 @@ module jm.moment {
         index: number;
         moment: string;
         ratio: number;
-        states: string[];
     }
 
     export class BlinkVO extends StateRefVO implements IBlinkVO {
