@@ -33,19 +33,5 @@ module jm.common {
         update(data: IIdObject, successCallback) {
             return this.makeCall(this.post, this.getId(data.id), data, successCallback);
         }
-
-        getQueryParams(path: string, queryParams ?: Object): string {
-            var url: string = path;
-            if (queryParams) {
-                url += "?";
-                for (var key in queryParams) {
-                    url += key + '=' + queryParams[key] + '&';
-                }
-                //chop of the last '&'
-                url = url.substr(0, url.length - 1);
-            }
-
-            return url;
-        }
     }
 }

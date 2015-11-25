@@ -54,7 +54,8 @@
                        ng-model="selectedCategory"
                        typeahead="category as category.name for category in missingCategories | filter:{name:$viewValue}"
                        typeahead-on-select="selectCategory($item)"
-                       placeholder="Choose a Category"
+                       data-typeahead-editable="false"
+                       placeholder="E.G. 'Music' or 'Travel'"
                        class="form-control"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
@@ -71,6 +72,31 @@
         <div class="form-group">
             <jm-category-ratio can-edit="true" category-weights="journey.categoryWeights"
                                on-delete-category="deleteCategory(categoryWeight)"></jm-category-ratio>
+        </div>
+        <div data-ng-if="journey.categoryWeights.length > 0" class="form-group">
+            <label class="col-sm-2">Tags</label>
+
+            <div class="input-group col-sm-10">
+                <input type="text" data-ng-model="selectedTopic"
+                       data-typeahead="topic.tag as topic.tag for topic in topics | filter: {tag: $viewValue}"
+                       data-typeahead-select-on-exact="true"
+                       data-typeahead-on-select="selectTopic($item)"
+                       placeholder="E.G. " class="form-control"/>
+                <span class="input-group-btn">
+                    <button data-ng-disabled="!selectedTopic" data-ng-click="createTopic(selectedTopic)" type="button"
+                            class="btn btn-primary">
+                        +
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <ul class="list-inline jm-topic-list col-sm-10 col-sm-offset-1">
+                <li data-ng-repeat="topic in journey.topics">
+                    <span>{{topic}}</span>
+                    <a href="" data-ng-click="removeTopic(topic)">X</a>
+                </li>
+            </ul>
         </div>
         <hr/>
         <div class="form-group">

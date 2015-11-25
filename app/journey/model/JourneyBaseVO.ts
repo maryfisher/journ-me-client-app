@@ -54,7 +54,7 @@ module jm.journey {
                 this.location = data.location;
                 this.isPublic = data.isPublic;
                 this.join = data.join;
-                //TODO remove this check once BE is adjusted
+                this.categoryWeights.length = 0;
                 if (data.categoryWeights) {
                     for (var i: number = 0; i < data.categoryWeights.length; i++) {
                         this.categoryWeights.push(new CategoryWeightVO(data.categoryWeights[i], refs));
