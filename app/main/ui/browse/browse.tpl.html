@@ -63,7 +63,7 @@
                     </select>
                 </div>
                 <div class="col-sm-7">
-                    <select multiple data-ng-options="category.code as category.name for category in categories"
+                    <select multiple data-ng-options="category.id as category.name for category in categories"
                             data-ng-model="searchFilter.categories" class="form-control"></select>
                 </div>
             </div>
@@ -97,7 +97,7 @@
     </form>
 </div>
 
-<div data-ng-show="searchPage.content" class="panel row">
+<div data-ng-if="searchPage.content" class="panel row">
     <h2 class="jm-header">Search Results</h2>
 
     <div class="jm-container">

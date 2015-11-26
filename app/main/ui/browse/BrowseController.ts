@@ -23,15 +23,15 @@ module jm.main.ctrl {
     export interface IBrowseScope extends ng.IScope {
         searchFilter: JourneySearchFilterVO,
         categories: ICategoryVO[],
+        selectedTopic: string,  // dummy model object for typeahead selection
         retrieveTopics(val: string): ng.IPromise < ITopicVO[] >,
-        searchJourneys(),
+        searchJourneys(): void,
         searchPage: PageVO < IJourneyBaseVO >,
         joinCategoryWeights(categoryWeights: CategoryWeightVO[]): string,
-        selectTopic(topic: any): void,
-        selectedTopic: string,  // dummy model object for typeahead selection
+        selectTopic(topic: ITopicVO): void,
         removeTopic(topic: string): void,
         switchToggleSort(sortField: string): void,
-        selectCategory(category: ICategoryVO)
+        selectCategory(category: ICategoryVO): void
     }
 
     export class BrowseController extends jm.common.BaseController {
@@ -66,7 +66,8 @@ module jm.main.ctrl {
         }
 
         selectCategory = (category: ICategoryVO) => {
-            this.$scope.searchFilter.categories = [category.id];
+            this.$scope.searchFilter = new JourneySearchFilterVO();
+            this.$scope.searchFilter.categories.push(category.id);
             this.searchJourneys();
         };
 

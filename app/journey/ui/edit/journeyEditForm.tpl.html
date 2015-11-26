@@ -73,7 +73,7 @@
             <jm-category-ratio can-edit="true" category-weights="journey.categoryWeights"
                                on-delete-category="deleteCategory(categoryWeight)"></jm-category-ratio>
         </div>
-        <div data-ng-if="journey.categoryWeights.length > 0" class="form-group">
+        <div data-ng-show="journey.categoryWeights.length > 0" class="form-group">
             <label class="col-sm-2">Tags</label>
 
             <div class="input-group col-sm-10">

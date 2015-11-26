@@ -22,8 +22,8 @@ module jm.common {
 
         static JOURNEY_PATH: string = ServerConst.API + 'journey/';
         static JOURNEY_SEARCH_PATH: string = ServerConst.JOURNEY_PATH + 'search';
-        static JOURNEY_TOPIC_PATH: string = ServerConst.JOURNEY_PATH + 'topic/';
-        static JOURNEY_TOPIC_TAG_PATH: string = ServerConst.JOURNEY_TOPIC_PATH + 'tag';
+        static JOURNEY_TOPIC_PATH: string = ServerConst.JOURNEY_PATH + 'topic';
+        static JOURNEY_TOPIC_TAG_PATH: string = ServerConst.JOURNEY_TOPIC_PATH + '/tag';
 
         static MOMENT_PATH: string = ServerConst.API + 'moment/';
         static MOMENT_IMG_PATH: string = ServerConst.MOMENT_PATH + ServerConst.IMG;
