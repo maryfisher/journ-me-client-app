@@ -1,35 +1,35 @@
 <div class="modal-header">
-    <h2 class="text-center">Open Requests for {{journeyDetail.name}}</h2>
+    <h2 class="text-center">Open Requests for {{journey.name}}</h2>
 </div>
 <div class="modal-body">
-    <div data-ng-if="journeyDetail.joinRequests.length > 0">
-        <h3>Requests to join {{journeyDetail.name}}</h3>
+    <div data-ng-if="journey.joinRequests.length > 0">
+        <h3>Requests to join {{journey.name}}</h3>
         <ul class="list-group">
-            <li data-ng-repeat="alias in journeyDetail.joinRequests" class="list-group-item clearfix">
+            <li data-ng-repeat="alias in journey.joinRequests" class="list-group-item clearfix">
                 <data-jm-alias-list-item data-jm-alias="alias"></data-jm-alias-list-item>
-                <button data-ng-click="acceptJoinRequest(alias)" data-ng-show="journeyDetail.isAlias"
+                <button data-ng-click="acceptJoinRequest(alias)" data-ng-show="journey.isAlias"
                         class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-link"></span> Accept Request
                 </button>
             </li>
         </ul>
     </div>
-    <div data-ng-if="isFrom && journeyDetail.linkedFromJourneys.length > 0">
-        <h3>Link requests to {{journeyDetail.name}}</h3>
+    <div data-ng-if="isFrom && journey.linkedFromJourneys.length > 0">
+        <h3>Link requests to {{journey.name}}</h3>
         <ul class="list-group">
-            <li data-ng-repeat="lJourney in journeyDetail.linkedFromJourneys" class="list-group-item clearfix">
+            <li data-ng-repeat="lJourney in journey.linkedFromJourneys" class="list-group-item clearfix">
                 <data-jm-journey-list-item data-jm-journey="lJourney"></data-jm-journey-list-item>
-                <button data-ng-click="linkJourney(lJourney)" data-ng-show="journeyDetail.isAlias"
+                <button data-ng-click="linkJourney(lJourney)" data-ng-show="journey.isAlias"
                         class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-link"></span> Link back
                 </button>
             </li>
         </ul>
     </div>
-    <div data-ng-if="isTo && journeyDetail.linkedToJourneys.length > 0">
+    <div data-ng-if="isTo && journey.linkedToJourneys.length > 0">
         <h3>This journey wants to link to</h3>
         <ul class="list-group">
-            <li data-ng-repeat="journeyTo in journeyDetail.linkedToJourneys" class="list-group-item">
+            <li data-ng-repeat="journeyTo in journey.linkedToJourneys" class="list-group-item">
                 <data-jm-journey-list-item data-jm-journey="journeyTo"></data-jm-journey-list-item>
             </li>
         </ul>

@@ -42,6 +42,7 @@ module jm.journey {
             this.hasLocation = false;
             this.join = JourneyJoinEnum.selected;
             this.isPublic = true;
+            this.isAlias = false;
         }
 
         parseJson(data: IJourneyBaseVO, refs ?: Object) {

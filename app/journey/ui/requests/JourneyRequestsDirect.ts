@@ -8,7 +8,7 @@ module jm.journey {
 
         restrict: string = 'A';
         scope: any = {
-            journeyStr: '@jmJourneyRequests',
+            journey: '=jmJourneyRequests',
             isTo: '@',
             isFrom: '@'
         }

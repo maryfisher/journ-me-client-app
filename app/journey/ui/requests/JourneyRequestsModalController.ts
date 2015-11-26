@@ -4,9 +4,10 @@ module jm.journey.ctrl {
     import NGConst = jm.common.NGConst;
     import AliasBaseVO = jm.user.AliasBaseVO;
 
-    export interface IJourneyRequestsModalScope extends jm.common.ctrl.IBaseModalInstanceScope, IBaseJourneyScope {
+    export interface IJourneyRequestsModalScope extends jm.common.ctrl.IBaseModalInstanceScope {
         linkJourney(linkingFromJourney: JourneyBaseVO);
         acceptJoinRequest(alias: AliasBaseVO);
+        journey: JourneyDetailVO;
     }
 
     export class JourneyRequestsModalController extends jm.common.ctrl.BaseModalInstanceController {
@@ -15,12 +16,11 @@ module jm.journey.ctrl {
 
         constructor(private $scope: IJourneyRequestsModalScope, $modalInstance: IModalServiceInstance, private journeyModel: JourneyModel) {
             super($scope, $modalInstance);
-            $scope.journeyDetail = new JourneyDetailVO(angular.fromJson($scope.journeyStr));
             this.addScopeMethods('linkJourney', 'acceptJoinRequest');
         }
 
         linkJourney = (linkingFromJourney: JourneyBaseVO) => {
-            this.journeyModel.linkBackJourney(this.$scope.journeyDetail, linkingFromJourney);
+            this.journeyModel.linkBackJourney(this.$scope.journey, linkingFromJourney);
             this.close();
         }
 

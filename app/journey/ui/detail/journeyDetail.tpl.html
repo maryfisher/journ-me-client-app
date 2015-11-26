@@ -27,7 +27,7 @@
             </div>
             <!-- LINK REQUESTS -->
             <!--<div class="col-xs-2">
-                <a href="" data-jm-journey-requests="{{journey}}" data-is-from="true" data-is-to="true" class="jm-journey-a">
+                <a href="" data-jm-journey-requests="journey" data-is-from="true" data-is-to="true" class="jm-journey-a">
                     <div>
                         {{journey.linkedToJourneys.length + journey.linkedFromJourneys.length + journey.joinRequests.length}}
                     </div>
@@ -66,7 +66,7 @@
                     <div class="text-center">
                         <!-- LINK & JOIN REQUESTS -->
                         <div class="jm-journey-info">Open Requests</div>
-                        <button data-jm-journey-requests="{{journey}}" data-is-from="true" popover-placement="top"
+                        <button data-jm-journey-requests="journey" data-is-from="true" popover-placement="top"
                                 popover-trigger="mouseenter"
                                 popover="Others requesting to join in or link their journey." class="btn btn-danger">
                             {{journey.linkedFromJourneys.length + journey.joinRequests.length}}
