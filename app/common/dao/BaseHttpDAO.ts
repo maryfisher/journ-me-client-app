@@ -8,10 +8,10 @@ module jm.common {
 
     export class BaseHttpDAO {
 
-        GET = 'get';
-        POST = 'post';
-        PUT = 'put';
-        DELETE = 'delete';
+        private static GET: string = 'get';
+        private static POST: string = 'post';
+        private static PUT: string = 'put';
+        private static DELETE: string = 'delete';
 
         $http: IHttpService;
         $q: IQService;
@@ -25,23 +25,23 @@ module jm.common {
             return response.data;
         }
 
-        post = <T>(url: string, params: Object): IHttpPromise<T> => {
-            return this.execute(this.POST, url, params);
+        post = <T>(url: string, data: Object): IHttpPromise<T> => {
+            return this.execute(BaseHttpDAO.POST, url, data);
         };
 
         get = <T>(url: string, params: Object): IHttpPromise<T> => {
-            return this.execute(this.GET, url, null, params);
+            return this.execute(BaseHttpDAO.GET, url, null, params);
         };
 
         put = <T>(url: string, data: Object): IHttpPromise<T> => {
-            return this.execute(this.PUT, url, data);
+            return this.execute(BaseHttpDAO.PUT, url, data);
         };
 
         del = <T>(url: string): IHttpPromise<T> => {
-            return this.execute(this.DELETE, url);
+            return this.execute(BaseHttpDAO.DELETE, url);
         };
 
-        execute <T>(method, url, data?, params?): IHttpPromise<T> {
+        private execute <T>(method, url, data?, params?): IHttpPromise<T> {
             var config: ng.IRequestConfig = {
                 method: method,
                 url: url,
@@ -72,6 +72,20 @@ module jm.common {
                     deferred.reject();
                 });
             return deferred.promise;
+        };
+
+        getQueryParams(path: string, queryParams ?: Object): string {
+            var url: string = path;
+            if (queryParams) {
+                url += "?";
+                for (var key in queryParams) {
+                    url += key + '=' + queryParams[key] + '&';
+                }
+                //chop of the last '&'
+                url = url.substr(0, url.length - 1);
+            }
+
+            return url;
         }
     }
 }

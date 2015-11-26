@@ -2,8 +2,8 @@
     <input type="text"
            ng-model="selectedState"
            typeahead="state as state.name for state in filteredStates | filter:{name:$viewValue}"
-           typeahead-editable="false"
            typeahead-on-select="selectState($item)"
+           data-typeahead-editable="false"
            placeholder="{{placeholder}}"
            class="form-control"/>
     <span class="input-group-btn">

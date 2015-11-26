@@ -1,10 +1,8 @@
 ///<reference path="..\..\user\model\AliasBaseVO.ts"/>
-///<reference path="..\..\main\model\CategoryWeightVO.ts"/>
 module jm.journey {
 
     import IAliasBaseVO = jm.user.IAliasBaseVO;
     import AliasBaseVO = jm.user.AliasBaseVO;
-    import CategoryWeightVO = jm.main.CategoryWeightVO;
 
     export interface IJourneyBaseVO {
         id: string;
@@ -56,6 +54,7 @@ module jm.journey {
                 this.location = data.location;
                 this.isPublic = data.isPublic;
                 this.join = data.join;
+                this.categoryWeights.length = 0;
                 if (data.categoryWeights) {
                     for (var i: number = 0; i < data.categoryWeights.length; i++) {
                         this.categoryWeights.push(new CategoryWeightVO(data.categoryWeights[i], refs));

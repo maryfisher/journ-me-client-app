@@ -1,0 +1,19 @@
+<div class="jm-container">
+    <ul ng-if="categoryWeights.length > 0" class="jm-categories list-inline">
+        <li data-ng-repeat="categoryWeight in categoryWeights"
+            style="width: {{categoryWeight.weight}}%">
+            <span class="jm-category-{{categoryWeight.categoryRef.code}}">
+                <button data-ng-if="canEdit && hasLeft($index)" data-ng-click="changeRatio($index, categoryWeight, -1)"
+                        type="button" class="btn pull-left">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </button>
+                <span>{{categoryWeight.categoryRef.name}}</span>
+                <a data-ng-if="canEdit" href="" data-ng-click="deleteCategory(categoryWeight)">X</a>
+                <button data-ng-if="canEdit && hasRight($index)" data-ng-click="changeRatio($index, categoryWeight, +1)"
+                        type="button" class="btn pull-right">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </button>
+            </span>
+        </li>
+    </ul>
+</div>

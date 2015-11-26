@@ -1,0 +1,15 @@
+<div class="jm-container">
+    <ul ng-if="categoryWeights.length > 0" class="jm-categories list-inline">
+        <li data-ng-repeat="categoryWeight in categoryWeights" style="width: {{categoryWeight.weight}}%">
+            <!--<button data-ng-click="increaseRatio(categoryWeight)">
+                <span class="caret"></span>
+            </button>
+            <button data-ng-click="decreaseRatio(categoryWeight)" class="dropup">
+                <span class="caret"></span>
+            </button>-->
+            {{categoryWeight.categoryRef.name}}
+            <a href="" data-ng-click="deleteCategory(categoryWeight)">x</a>
+        </li>
+    </ul>
+    <jm-category-ratio category-weights="categoryWeights"></jm-category-ratio>
+</div>

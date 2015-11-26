@@ -1,4 +1,4 @@
-module jm.main {
+module jm.journey {
 
     export interface ICategoryWeightVO {
         category: string;

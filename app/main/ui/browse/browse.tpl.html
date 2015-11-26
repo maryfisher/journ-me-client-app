@@ -1,129 +1,157 @@
-<form data-ng-submit="searchJourneys()" data-ng-hide="searchPage.content" novalidate role="form"
-      class="form-horizontal">
-    <div class="form-group">
-        <label class="col-sm-1">Text</label>
+<div class="panel row">
 
-        <div class="col-sm-2">
-            <select data-ng-model="searchFilter.textMatcher" data-jm-convert-to-number class="form-control">
-                <option value="0">Any word</option>
-                <option value="1">All words</option>
-                <option value="2">Contains phrase</option>
-                <option value="3">Exact phrase</option>
-            </select>
-        </div>
+    <h2 class="jm-header">Browse Journeys</h2>
 
-        <div class="col-sm-4">
-            <input type="text" data-ng-model="searchFilter.text"
-                   placeholder="Searches journey names & descriptions" class="form-control"/>
-        </div>
+    <div class="jm-container">
+        <h4 class="text-center">Categories</h4>
+        <ul class="jm-category-table well">
+            <li data-ng-repeat="category in categories">
+                <a href="" data-ng-click="selectCategory(category)">{{category.name}}</a>
+            </li>
+            <div class="clear"></div>
+        </ul>
     </div>
-    <div class="form-group">
-        <label class="col-sm-1">Join type</label>
 
-        <div class="col-sm-2">
-            <select data-ng-model="searchFilter.joinMatcher" data-jm-convert-to-number class="form-control">
-                <option value="0">Equals</option>
-                <option value="1">Doesn't equal</option>
-            </select>
+    <form data-ng-hide="searchPage.content" data-ng-submit="searchJourneys()" novalidate role="form"
+          class="jm-container form-horizontal">
+        <h4 class="text-center">Search</h4>
+
+        <div class="well">
+            <div class="form-group">
+                <label class="col-sm-2">Text</label>
+
+                <div class="col-sm-3">
+                    <select data-ng-model="searchFilter.textMatcher" data-jm-convert-to-number class="form-control">
+                        <option value="0">Any word</option>
+                        <option value="1">All words</option>
+                        <option value="2">Contains phrase</option>
+                        <option value="3">Exact phrase</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-7">
+                    <input type="text" data-ng-model="searchFilter.text"
+                           placeholder="Searches journey names & descriptions" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2">Join type</label>
+
+                <div class="col-sm-3">
+                    <select data-ng-model="searchFilter.joinMatcher" data-jm-convert-to-number class="form-control">
+                        <option value="0">Equals</option>
+                        <option value="1">Doesn't equal</option>
+                    </select>
+                </div>
+                <div class="col-sm-7">
+                    <select data-ng-model="searchFilter.join" data-jm-convert-to-number class="form-control">
+                        <option value=""></option>
+                        <option value="0">Everyone</option>
+                        <option value="1">Only With Invite</option>
+                        <option value="2">No-one</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2">Categories</label>
+
+                <div class="col-sm-3">
+                    <select data-ng-model="searchFilter.categoriesMatcher" data-jm-convert-to-number
+                            class="form-control">
+                        <option value="0">Any</option>
+                        <option value="1">All</option>
+                    </select>
+                </div>
+                <div class="col-sm-7">
+                    <select multiple data-ng-options="category.id as category.name for category in categories"
+                            data-ng-model="searchFilter.categories" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2">Topics</label>
+
+                <div class="col-sm-3">
+                    <select data-ng-model="searchFilter.topicsMatcher" data-jm-convert-to-number class="form-control">
+                        <option value="0">Any</option>
+                        <option value="1">All</option>
+                    </select>
+                </div>
+                <div class="col-sm-7">
+                    <input type="text" data-ng-model="selectedTopic"
+                           data-typeahead="topic.tag as topic.tag for topic in retrieveTopics($viewValue)"
+                           data-typeahead-min-length="3"
+                           data-typeahead-wait-ms="400"
+                           data-typeahead-select-on-exact="true"
+                           data-typeahead-on-select="selectTopic($item)"
+                           placeholder="Autocomplete..." class="form-control"/>
+                    <ul class="list-inline">
+                        <li data-ng-repeat="topic in searchFilter.topics">
+                            <span>{{topic}}</span>
+                            <a href="" data-ng-click="removeTopic(topic)">x</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-2">
-            <select data-ng-model="searchFilter.join" data-jm-convert-to-number class="form-control">
-                <option value=""></option>
-                <option value="0">Everyone</option>
-                <option value="1">Only With Invite</option>
-                <option value="2">No-one</option>
-            </select>
+        <button type="submit" class="btn btn-primary">Search journeys</button>
+    </form>
+</div>
+
+<div data-ng-if="searchPage.content" class="panel row">
+    <h2 class="jm-header">Search Results</h2>
+
+    <div class="jm-container">
+        <div data-ng-if="searchPage.content.length === 0">No journeys yet for that search filter. ;_;</div>
+        <div data-ng-if="searchPage.content.length > 0">
+            <table class="table table-striped jm-search-table">
+                <colgroup>
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 20%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                    <col span="1" style="width: 15%;">
+                    <col span="1" style="width: 10%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>Journey name</th>
+                    <th>Description</th>
+                    <th>Owner</th>
+                    <th>
+                        <a data-ng-click="switchToggleSort('location')">Location</a>
+                        <i class="fa fa-sort"
+                           data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'ASC'}"></i>
+                    </th>
+                    <th>Categories</th>
+                    <th>Topics</th>
+                    <th>
+                        <a data-ng-click="switchToggleSort('created')">Created</a>
+                        <i class="fa fa-sort"
+                           data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'ASC'}"></i>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="journey in searchPage.content">
+                    <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
+                    <td>{{ journey.descript }}</td>
+                    <td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>
+                    <td>{{ journey.location }}</td>
+                    <td>{{ joinCategoryWeights(journey.categoryWeights) }}</td>
+                    <td>{{ journey.topics.join(', ') }}</td>
+                    <td>{{ journey.created | date:'yyyy-MM-dd' }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <pagination ng-model="searchPage.number" ng-change="searchJourneys()"
+                        total-items="searchPage.totalElements" items-per-page="searchPage.size"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                        boundary-links="true" class="pagination-sm"></pagination>
         </div>
+        <hr/>
+        <button type="button" data-ng-click="searchPage.content = undefined" class="btn btn-primary pull-right">
+            Change search
+        </button>
     </div>
-    <div class="form-group">
-        <label class="col-sm-1">Categories</label>
-
-        <div class="col-sm-2">
-            <select data-ng-model="searchFilter.categoriesMatcher" data-jm-convert-to-number class="form-control">
-                <option value="0">Any</option>
-                <option value="1">All</option>
-            </select>
-        </div>
-        <div class="col-sm-2">
-            <select multiple data-ng-options="category.code as category.name for category in categories"
-                    data-ng-model="searchFilter.categories" class="form-control"></select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-1">Topics</label>
-
-        <div class="col-sm-2">
-            <select data-ng-model="searchFilter.topicsMatcher" data-jm-convert-to-number class="form-control">
-                <option value="0">Any</option>
-                <option value="1">All</option>
-            </select>
-        </div>
-        <div class="col-sm-4">
-            <ul class="list-inline">
-                <li data-ng-repeat="topic in searchFilter.topics">
-                    <span>{{topic}}</span>
-                    <a href="" data-ng-click="removeTopic(topic)">x</a>
-                </li>
-            </ul>
-            <input type="text" data-ng-model="selectedTopic"
-                   data-typeahead="topic.tag as topic.tag for topic in retrieveRelevantTopics($viewValue)"
-                   data-typeahead-min-length="3"
-                   data-typeahead-wait-ms="400"
-                   data-typeahead-select-on-exact="true"
-                   data-typeahead-on-select="selectTopic($item)"
-                   placeholder="Autocomplete..." class="form-control"/>
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Search journeys</button>
-    <hr>
-</form>
-
-<div data-ng-show="searchPage.content">
-    <button type="button" data-ng-click="searchPage.content = undefined" class="btn btn-primary">Change search</button>
-    <hr>
-    <table class="table table-striped jm-search-table">
-        <colgroup>
-            <col span="1" style="width: 15%;">
-            <col span="1" style="width: 20%;">
-            <col span="1" style="width: 15%;">
-            <col span="1" style="width: 15%;">
-            <col span="1" style="width: 10%;">
-            <col span="1" style="width: 15%;">
-            <col span="1" style="width: 10%;">
-        </colgroup>
-        <thead>
-        <tr>
-            <th>Journey name</th>
-            <th>Description</th>
-            <th>Owner</th>
-            <th>
-                <a data-ng-click="switchToggleSort('location')">Location</a>
-                <i class="fa fa-sort"
-                   data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'ASC'}"></i>
-            </th>
-            <th>Categories</th>
-            <th>Topics</th>
-            <th>
-                <a data-ng-click="switchToggleSort('created')">Created</a>
-                <i class="fa fa-sort"
-                   data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'ASC'}"></i>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr data-ng-repeat="journey in searchPage.content">
-            <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
-            <td>{{ journey.descript }}</td>
-            <td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>
-            <td>{{ journey.location }}</td>
-            <td>{{ joinCategoryWeights(journey.categoryWeights) }}</td>
-            <td>{{ journey.topics.join(', ') }}</td>
-            <td>{{ journey.created | date:'yyyy-MM-dd' }}</td>
-        </tr>
-        </tbody>
-    </table>
-    <pagination ng-model="searchPage.number" ng-change="searchJourneys()"
-                total-items="searchPage.totalElements" items-per-page="searchPage.size"
-                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                boundary-links="true" class="pagination-sm"></pagination>
 </div>
