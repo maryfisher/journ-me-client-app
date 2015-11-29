@@ -2,11 +2,21 @@
 ///<reference path="StateRefVO.ts"/>
 module jm.moment {
 
-    import ServerConst = jm.common.ServerConst;
+    import ServerConst = jm.common.ServerConst
+
+    export const enum BlinkFormat {
+        RIGHT_IMAGE,
+        LEFT_IMAGE,
+        DOUBLE_TEXT,
+        SINGLE_TEXT,
+        VIDEO,
+        SINGLE_IMAGE,
+        DOUBLE_IMAGE
+    }
 
     export interface IBlinkVO extends IStateRefVO {
         id: string;
-        format: number;
+        format: BlinkFormat;
         images: string[];
         imageUrls: string[];
         texts: string[];
@@ -18,7 +28,7 @@ module jm.moment {
     export class BlinkVO extends StateRefVO implements IBlinkVO {
 
         id: string;
-        format: number;
+        format: BlinkFormat;
         images: string[];
         imageUrls: string[];
         texts: string[];
@@ -30,7 +40,7 @@ module jm.moment {
             super();
             this.texts = [];
             this.images = [];
-            this.format = 0;
+            this.format = BlinkFormat.RIGHT_IMAGE;
             this.index = 0;
             this.parseData(data, refs);
         }
