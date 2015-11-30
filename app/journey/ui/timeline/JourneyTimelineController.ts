@@ -72,7 +72,7 @@ module jm.journey.ctrl {
                 this.$timeout(this.setSelectedMoment, 0, true, this.$scope.journey.moments[this.$scope.selectedIndex]);
                 this.$timeout(this.scrollTimeline);
             }
-        }
+        };
 
         addMomentElm(moment: IMomentBaseVO, $element: IAugmentedJQuery) {
             this.momentElms[moment.id] = $element;
@@ -87,7 +87,7 @@ module jm.journey.ctrl {
                 this.$scope.selectedIndex = this.$scope.journey.moments.indexOf(moment);
                 this.scrollTimeline();
             }
-        }
+        };
 
         setSelectedMoment = (moment: IMomentBaseVO) => {
             if (this.$scope.selectedMoment) {
@@ -101,7 +101,7 @@ module jm.journey.ctrl {
             }
             //scale up
             this.animateMoment(this.momentElms[moment.id], 1.2);
-        }
+        };
 
         animateMoment(elm: IAugmentedJQuery, scale: number) {
             //BUG
@@ -125,7 +125,7 @@ module jm.journey.ctrl {
                 return;
             }
             this.selectIndex();
-        }
+        };
 
         prevMoment = () => {
             this.$scope.selectedIndex--;
@@ -134,7 +134,7 @@ module jm.journey.ctrl {
                 return;
             }
             this.selectIndex();
-        }
+        };
 
         selectIndex = () => {
             this.setSelectedMoment(this.$scope.journey.moments[this.$scope.selectedIndex]);
@@ -149,7 +149,7 @@ module jm.journey.ctrl {
                     journeyId: this.$scope.journey.id
                 });
             }
-        }
+        };
 
         scrollTimeline = () => {
 
@@ -178,7 +178,7 @@ module jm.journey.ctrl {
             //TODO
             //potentially use this for animated scrolling: https://github.com/oblador/angular-scroll
             this.timelineElm.scrollLeft = scroll;
-        }
+        };
 
         getMomentClass = (moment: MomentBaseVO): string => {
             if (!this.$scope.hasEdit) {

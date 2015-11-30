@@ -38,17 +38,17 @@ module jm {
             var redirectAuth: IRedirectAuthenticatedSettings = {
                 redirectIfAuthenticated: true,
                 redirectState: RouteConst.DASHBOARD
-            }
+            };
 
             var redirectUnauth: IRedirectUnauthenticatedSettings = {
                 redirectIfUnauthenticated: true,
                 redirectState: RouteConst.HOME
-            }
+            };
 
             var redirectAlias: IRedirectAllSettings = {
                 redirectAll: true,
                 redirectState: RouteConst.ALIAS_DETAIL
-            }
+            };
 
             this.$urlRouterProvider.otherwise(RouteConst.HOME_PATH);
             this.$stateProvider.state(RouteConst.HOME, {
@@ -68,7 +68,7 @@ module jm {
                 templateUrl: 'user/ui/alias/aliasDetail.tpl.html',
                 controller: jm.user.ctrl.AliasDetailController.NG_NAME,
                 data: redirectAuth
-            })
+            });
 
             this.$stateProvider.state(RouteConst.DASHBOARD, {
                 url: RouteConst.DASHBOARD_PATH,

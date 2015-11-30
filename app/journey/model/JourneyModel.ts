@@ -69,6 +69,7 @@ module jm.journey {
         }
 
         createJourneySuccess = (data: IJourneyDetailVO) => {
+            this.currentJourney.invalidateData();
             this.setCurrentJourneyBase(data);
             if (this.currentAlias) {
                 this.currentAlias.journeys.push(this.currentJourney);

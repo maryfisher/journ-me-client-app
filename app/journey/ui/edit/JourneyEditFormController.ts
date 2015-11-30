@@ -11,8 +11,6 @@ module jm.journey.ctrl {
     import RouteUtil = jm.common.RouteUtil;
     import NGConst = jm.common.NGConst;
     import JMConfigConst = jm.common.JMConfigConst;
-    import ICategoryVO = jm.journey.ICategoryVO;
-    import CategoryWeightVO = jm.journey.CategoryWeightVO;
     import IModalServiceInstance = angular.ui.bootstrap.IModalServiceInstance;
 
     export interface IJourneyFormScope extends jm.common.ctrl.IBaseModalInstanceScope {

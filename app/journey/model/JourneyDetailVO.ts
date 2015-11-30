@@ -88,13 +88,13 @@ module jm.journey {
 
         invalidateData() {
             super.invalidateData();
-            this.moments = [];
-            this.followers = [];
-            this.linkedToJourneys = [];
-            this.linkedFromJourneys = [];
-            this.joinedLinkedJourneys = [];
-            this.joinedAliases = [];
-            this.joinRequests = [];
+            this.moments.length = 0;
+            this.followers.length = 0;
+            this.linkedToJourneys.length = 0;
+            this.linkedFromJourneys.length = 0;
+            this.joinedLinkedJourneys.length = 0;
+            this.joinedAliases.length = 0;
+            this.joinRequests.length = 0;
             this.aliasJourneyLink = undefined;
             this.isFollowing = false;
             this.isJoined = false;

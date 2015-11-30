@@ -18,8 +18,8 @@ module jm.common {
             this.$state.go(state, params);
         }
 
-        redirectToJourney(params ?) {
-            this.$state.go(RouteConst.JOURNEY_DETAIL, params);
+        redirectToJourney(id: string) {
+            this.$state.go(RouteConst.JOURNEY_DETAIL, {journeyId: id});
         }
 
         reload() {
