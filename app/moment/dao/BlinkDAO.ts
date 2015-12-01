@@ -7,6 +7,7 @@ module jm.moment {
     import IUploadService = angular.angularFileUpload.IUploadService;
     import IUploadPromise = angular.angularFileUpload.IUploadPromise;
     import IFileProgressEvent = angular.angularFileUpload.IFileProgressEvent;
+	import BlinkFormatConst = jm.common.BlinkFormatConst;
 
     export class BlinkDAO extends jm.common.BaseResourceDAO {
 
@@ -33,7 +34,7 @@ module jm.moment {
         }
 
         updateBlink(images: File[], blink: BlinkVO): IUploadPromise < any > {
-            var mediaFileCount: number = mapFormatToFileCout(blink.format);
+            var mediaFileCount: number = BlinkFormatConst.getFormat(blink.format).imagesRequired;
 
             images = images || [];
             for (var k: number = 0; k < images.length; k++) {
@@ -67,25 +68,6 @@ module jm.moment {
                 arrayKey: '',
                 method: null
             });
-        }
-    }
-
-    function mapFormatToFileCout(format: BlinkFormat): number {
-        switch (format) {
-            case BlinkFormat.DOUBLE_IMAGE:
-                return 2;
-                break;
-            case BlinkFormat.RIGHT_IMAGE:
-            case BlinkFormat.LEFT_IMAGE:
-            case BlinkFormat.VIDEO:
-            case BlinkFormat.SINGLE_IMAGE:
-                return 1;
-                break;
-            case BlinkFormat.SINGLE_TEXT:
-            case BlinkFormat.DOUBLE_TEXT:
-            default:
-                return 0;
-                break;
         }
     }
 }

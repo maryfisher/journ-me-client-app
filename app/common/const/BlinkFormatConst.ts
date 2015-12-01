@@ -2,6 +2,7 @@
 module jm.common {
 
     import BlinkFormatVO = jm.moment.BlinkFormatVO;
+	import BlinkFormatEnum = jm.moment.BlinkFormatEnum;
 
     export class BlinkFormatConst {
         static FORMAT_0: BlinkFormatVO = new BlinkFormatVO(1, 1);
@@ -12,7 +13,7 @@ module jm.common {
         static FORMAT_5: BlinkFormatVO = new BlinkFormatVO(0, 1);
         static FORMAT_6: BlinkFormatVO = new BlinkFormatVO(0, 2);
 
-        static getFormat(f: number): BlinkFormatVO {
+        static getFormat(f: number | BlinkFormatEnum): BlinkFormatVO {
             return BlinkFormatConst['FORMAT_' + f];
         }
     }
