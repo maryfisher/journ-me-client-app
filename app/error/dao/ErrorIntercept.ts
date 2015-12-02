@@ -5,6 +5,7 @@ module jm.error {
     import IHttpPromiseCallbackArg = ng.IHttpPromiseCallbackArg;
     import IPromise = ng.IPromise;
     import IQService = ng.IQService;
+    import ErrorConst = jm.common.ErrorConst;
 
     export interface IErrorListener {
         onError(errorCode: string);
@@ -49,12 +50,13 @@ module jm.error {
 
         handleError = (res: IHttpPromiseCallbackArg<any>): any => {
             if (res.status >= 400) {
-                var listener: IErrorListener[] = this.errorListeners[res.data.code];
+                var jmErrorCode = (res.data && res.data.code) ? res.data.code : ErrorConst.CLIENT_SERVER_PROBLEM;
+                var listener: IErrorListener[] = this.errorListeners[jmErrorCode];
                 if (!listener) {
                     return this.$q.reject(res);
                 }
                 for (var i: number = 0; i < listener.length; i++) {
-                    listener[i].onError(res.data.code);
+                    listener[i].onError(jmErrorCode);
                 }
                 return this.$q.reject(res);
             }

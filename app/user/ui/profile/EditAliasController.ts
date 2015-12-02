@@ -31,9 +31,9 @@ module jm.user.ctrl {
 
         saveChanges = () => {
             //TODO
-            if (this.$scope.file) { // && !this.$scope.file.$error) {
-                this.upload(this.$scope.file);
-            }
+            //if (this.$scope.file && !this.$scope.file.$error) {
+            this.upload(this.$scope.file);
+            //}
         };
 
         upload = (file: File) => {
