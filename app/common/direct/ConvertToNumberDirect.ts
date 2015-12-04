@@ -1,7 +1,18 @@
 module jm.common {
     'use strict';
 
-    import NumberUtil = jm.common.NumberUtil;
+    //TODO: cannot extract into util file until compilation reference order is respected
+    class NumberUtil {
+
+        static numberToString(val: number): string {
+            return '' + val;
+        }
+
+        static stringToNumber(val: string): number {
+            return parseInt(val, 10);
+        }
+
+    }
 
     export class ConvertToNumberDirect implements ng.IDirective {
 
