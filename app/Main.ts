@@ -41,6 +41,7 @@ module jm {
                 'ngResource',
                 'ui.router',
                 'ngAnimate',
+                'ngMessages',
                 'ngFileUpload',
                 'angular-loading-bar'
             ]);

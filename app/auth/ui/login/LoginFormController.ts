@@ -10,7 +10,6 @@ module jm.auth.ctrl {
     export interface ILoginFormScope extends jm.common.ctrl.IBaseModalInstanceScope {
         rememberMe: boolean;
         login();
-        forgotPW();
         hasInvalidEmail(): boolean;
         loginForm: ng.IFormController;
         email: string;
@@ -57,9 +56,5 @@ module jm.auth.ctrl {
                 this.close();
             }
         };
-
-        forgotPW = () => {
-
-        }
     }
 }

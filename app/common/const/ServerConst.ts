@@ -15,6 +15,7 @@ module jm.common {
         static LOGOUT_PATH: string = ServerConst.AUTH_PATH + 'logout/';
         static REGISTER_PATH: string = ServerConst.AUTH_PATH + 'register/';
         static PROFILE_PATH: string = ServerConst.USER + 'profile/';
+        static FORGOT_PASSWORD_PATH: string = ServerConst.AUTH_PATH + 'forgot-password/';
 
         static ALIAS_PATH: string = ServerConst.API + 'alias/';
         static ALIAS_IMG_PATH: string = ServerConst.ALIAS_PATH + ServerConst.IMG;
