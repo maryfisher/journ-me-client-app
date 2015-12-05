@@ -111,6 +111,7 @@ module jm {
             this.addDirective(jm.error.LocalErrorDirect);
             this.addDirective(jm.error.GlobalErrorDirect);
             this.addDirective(jm.common.ConvertToNumberDirect);
+            this.addDirective(jm.common.EqualToDirect);
         }
 
         initFilter() {

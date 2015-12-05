@@ -68,6 +68,12 @@ module jm {
                 controller: jm.auth.ctrl.ForgotPasswordController.NG_NAME,
                 controllerAs: '$ctrl'
             });
+            this.$stateProvider.state(RouteConst.RESET_FORGOTTEN_PASSWORD, {
+                url: RouteConst.RESET_FORGOTTEN_PASSWORD_PATH,
+                templateUrl: 'auth/ui/forgotPassword/resetForgottenPassword.tpl.html',
+                controller: jm.auth.ctrl.ResetForgottenPasswordController.NG_NAME,
+                controllerAs: '$ctrl'
+            });
 
             this.$stateProvider.state(RouteConst.ALIAS_DETAIL, {
                 url: RouteConst.ALIAS_DETAIL_PATH,

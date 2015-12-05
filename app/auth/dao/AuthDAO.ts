@@ -45,5 +45,14 @@ module jm.auth {
         forgotPassword(email: string): IPromise< any > {
             return this.makeCall(this.post, ServerConst.FORGOT_PASSWORD_PATH, email, this.returnData);
         }
+
+        resetForgottenPassword(newPassword: string, authTokenParam: {}): IPromise< any > {
+            return this.makeCall(
+                this.post,
+                this.getQueryParams(ServerConst.RESET_FORGOTTEN_PASSWORD_PATH, authTokenParam),
+                newPassword,
+                this.returnData
+            );
+        }
     }
 }
