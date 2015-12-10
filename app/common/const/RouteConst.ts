@@ -1,3 +1,4 @@
+///<reference path="ServerConst.ts"/>
 module jm.common {
     export class RouteConst {
 
@@ -13,6 +14,10 @@ module jm.common {
         static HOME_PATH: string = '/home';
         static BROWSE: string = 'BROWSE';
         static BROWSE_PATH: string = '/browse?search';
+        static FORGOT_PASSWORD: string = 'FORGOT_PASSWORD';
+        static FORGOT_PASSWORD_PATH: string = '/forgot-password';
+        static RESET_FORGOTTEN_PASSWORD: string = 'RESET_FORGOTTEN_PASSWORD';
+        static RESET_FORGOTTEN_PASSWORD_PATH: string = '/reset-forgotten-password?' + ServerConst.SERVER_TOKEN_KEY;
 
         static JOURNEY_PATH: string = RouteConst.journeyPath;
         static JOURNEY_DETAIL: string = 'JOURNEY_DETAIL';

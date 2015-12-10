@@ -55,12 +55,24 @@ module jm {
                 url: RouteConst.HOME_PATH,
                 templateUrl: 'main/ui/home/home.tpl.html',
                 controller: jm.main.ctrl.HomeController.NG_NAME/*,
-                data: redirectAuth*/
+                 data: redirectAuth*/
             });
             this.$stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
                 templateUrl: 'main/ui/browse/browse.tpl.html',
                 controller: jm.main.ctrl.BrowseController.NG_NAME
+            });
+            this.$stateProvider.state(RouteConst.FORGOT_PASSWORD, {
+                url: RouteConst.FORGOT_PASSWORD_PATH,
+                templateUrl: 'auth/ui/forgotPassword/forgotPassword.tpl.html',
+                controller: jm.auth.ctrl.ForgotPasswordController.NG_NAME,
+                controllerAs: '$ctrl'
+            });
+            this.$stateProvider.state(RouteConst.RESET_FORGOTTEN_PASSWORD, {
+                url: RouteConst.RESET_FORGOTTEN_PASSWORD_PATH,
+                templateUrl: 'auth/ui/forgotPassword/resetForgottenPassword.tpl.html',
+                controller: jm.auth.ctrl.ResetForgottenPasswordController.NG_NAME,
+                controllerAs: '$ctrl'
             });
 
             this.$stateProvider.state(RouteConst.ALIAS_DETAIL, {
