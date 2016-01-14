@@ -39,6 +39,7 @@
         "load-grunt-tasks": "3.3.0",
         "grunt-ts": "5.1.0",
         "grunt-tsd": "0.1.0",
-        "grunt-tslint": "2.5.0"
+        "grunt-tslint": "2.5.0",
+        "grunt-bump": "0.7.0"
     }
 }

@@ -195,6 +195,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        bump: {
+            options: {
+                files: ['package.json'],
+                addFiles: ['package.json'],
+                commitFiles: ['package.json'],
+                updateConfigs: ['pkg'],
+                releaseBranch: ['develop', 'production'],
+                commitMessage: 'Release of version %VERSION% [skip ci]',
+                tagMessage: 'Release of version %VERSION%',
+                tagName: 'v%VERSION%',
+                pushTo: 'origin'
+            }
+        },
         watch: {
             ngTemplates: {
                 files: ['<%= app.app %>/**/*.html'],
