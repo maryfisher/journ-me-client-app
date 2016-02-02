@@ -25,7 +25,7 @@ after_success:
      fi;
    - >
      if [[ "$BRANCH" == "production" ]]; then
-        grunt bump:major;
+        grunt bump:patch;
      fi;
    - git submodule init
    - git submodule update --remote
