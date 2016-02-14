@@ -1,6 +1,6 @@
 {
     "name": "journ-me-client-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "AngularJS single-page application to allow members to connect with each other on the global JournMe community via a responsive, interactive UI.",
     "contributors": [
         {
