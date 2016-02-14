@@ -47,6 +47,6 @@ after_success:
         git reset --hard v0.0.1;
         cd ../..;
         git reset --hard origin/develop;
-        git merge origin/production --no-ff;
+        git merge origin/production --no-ff -m "Merging origin/production into origin/develop";
         git push origin HEAD:develop;
      fi;
