@@ -25,9 +25,9 @@ module jm.auth {
             this.ngIf.link.call(this.ngIf, scope, element, attrs, ctrl, $transclude);
         };
 
-        isLoggedIn = (): boolean => {
+        private isLoggedIn = (): boolean => {
             return this.authModel.isLoggedIn();
-        }
+        };
 
         constructor($injector: ng.auto.IInjectorService) {
             this.authModel = $injector.get < AuthModel > (AuthModel.NG_NAME);

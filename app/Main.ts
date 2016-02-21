@@ -89,6 +89,7 @@ module jm {
             this.addDirective(jm.auth.LoggedInDirect);
             this.addDirective(jm.auth.LoginDirect);
             this.addDirective(jm.auth.RegisterDirect);
+            this.addDirective(jm.auth.NotificationsDirect);
             this.addDirective(jm.user.AliasListItemDirect);
             this.addDirective(jm.user.AliasListImgDirect);
             this.addDirective(jm.user.AliasListDirect);
