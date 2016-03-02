@@ -1,59 +1,61 @@
-<div class="row panel">
+<div class="jm-banner-panel">
     <h1 class="text-center">Welcome {{alias.name}}</h1>
 </div>
-<div class="row">
-    <div class="col-sm-8 jm-dashboard-outer-cnt left">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 jm-dashboard-outer-cnt left">
 
-        <div class="jm-dashboard-cnt">
-            <h3 class="jm-header">Your Journeys</h3>
+            <div class="jm-dashboard-cnt">
+                <h3 class="jm-header">Your Journeys</h3>
 
-            <div class="jm-container">
-                <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
-                <ul class="list-group">
-                    <data-jm-journey-list-item data-ng-repeat="journey in alias.journeys"
-                                               data-jm-journey="journey"></data-jm-journey-list-item>
-                </ul>
-                <div data-ng-if="alias.joinedJourneys.length > 0">
-                    <h5 class="text-center">Joined Journeys</h5>
+                <div class="jm-container">
+                    <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
                     <ul class="list-group">
-                        <data-jm-journey-list-item data-ng-repeat="journey in alias.joinedJourneys"
+                        <data-jm-journey-list-item data-ng-repeat="journey in alias.journeys"
                                                    data-jm-journey="journey"></data-jm-journey-list-item>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-4 jm-dashboard-outer-cnt right">
-        <div class="jm-dashboard-cnt">
-            <h3 class="jm-header">Recent Feedback</h3>
-
-            <div class="jm-container">
-                <ul class="list-group">
-                    <div data-ng-repeat="feedback in dashboard.recentFeedback">
-                        <h4>{{dashboard.feedbackJourneys[feedback.id].name}}:</h4>
-                        <li class="list-group-item">
-                            <jm-feedback-list-item jm-feedback="feedback"></jm-feedback-list-item>
-                        </li>
+                    <div data-ng-if="alias.joinedJourneys.length > 0">
+                        <h5 class="text-center">Joined Journeys</h5>
+                        <ul class="list-group">
+                            <data-jm-journey-list-item data-ng-repeat="journey in alias.joinedJourneys"
+                                                       data-jm-journey="journey"></data-jm-journey-list-item>
+                        </ul>
                     </div>
-                </ul>
-                <div data-ng-if="dashboard.recentFeedback.length === 0" class="jm-container">
-                    No recent comments. ;_;
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 jm-dashboard-outer-cnt right">
+            <div class="jm-dashboard-cnt">
+                <h3 class="jm-header">Recent Feedback</h3>
+
+                <div class="jm-container">
+                    <ul class="list-group">
+                        <div data-ng-repeat="feedback in dashboard.recentFeedback">
+                            <h4>{{dashboard.feedbackJourneys[feedback.id].name}}:</h4>
+                            <li class="list-group-item">
+                                <jm-feedback-list-item jm-feedback="feedback"></jm-feedback-list-item>
+                            </li>
+                        </div>
+                    </ul>
+                    <div data-ng-if="dashboard.recentFeedback.length === 0" class="jm-container">
+                        No recent comments. ;_;
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="jm-dashboard-cnt">
-        <h3 class="jm-header">You're following</h3>
-        <ul data-ng-if="alias.followedJourneys.length > 0" class="list-group jm-container">
-            <li data-ng-repeat="journey in alias.followedJourneys" class="list-group-item">
-                <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
-            </li>
-        </ul>
-        <div data-ng-if="alias.followedJourneys.length === 0" class="jm-container">
-            <p>No-one. :( <a data-ui-sref="HOME">&rarr; Start following other people's journeys.</a></p>
+    <div class="row">
+        <div class="jm-dashboard-cnt">
+            <h3 class="jm-header">You're following</h3>
+            <ul data-ng-if="alias.followedJourneys.length > 0" class="list-group jm-container">
+                <li data-ng-repeat="journey in alias.followedJourneys" class="list-group-item">
+                    <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
+                </li>
+            </ul>
+            <div data-ng-if="alias.followedJourneys.length === 0" class="jm-container">
+                <p>No-one. :( <a data-ui-sref="HOME">&rarr; Start following other people's journeys.</a></p>
 
+            </div>
         </div>
     </div>
 </div>

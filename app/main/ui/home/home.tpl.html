@@ -1,4 +1,4 @@
-<div class="row panel">
+<div class="jm-banner-panel">
     <div class="jm-header">
         <h1 class="text-center">Welcome to JournMe</h1>
         <h5 class="text-center">Join Us On a Journey</h5>
@@ -15,20 +15,14 @@
 
     <!--<h2 class="text-center text-muted">{{stats.allFollowers}} Progress Watched</h2>-->
 </div>
+<div class="jm-container">
+    <div class="col-sm-6">
+        <div class="panel">
+            <div class="jm-header">
+                <h3>New Journeys</h3>
 
-<div class="row panel">
-    <div class="jm-header col-sm-6">
-        <h3>New Journeys</h3>
-
-        <div class="clear"></div>
-    </div>
-    <div class="jm-header col-sm-6">
-        <h3>New Moments</h3>
-
-        <div class="clear"></div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
+                <div class="clear"></div>
+            </div>
             <ul class="list-group jm-container">
                 <jm-journey-list-item data-ng-repeat="journey in stats.recentJourneys"
                                       jm-journey="journey"></jm-journey-list-item>
@@ -37,7 +31,14 @@
                 No journeys yet. ;_;
             </div>
         </div>
-        <div class="col-sm-6">
+    </div>
+    <div class="col-sm-6">
+        <div class="panel">
+            <div class="jm-header">
+                <h3>New Moments</h3>
+
+                <div class="clear"></div>
+            </div>
             <ul class="list-group jm-container">
                 <li data-ng-repeat="moment in stats.recentMoments" class="list-group-item">
                     <jm-moment-list-item jm-moment="moment"></jm-moment-list-item>

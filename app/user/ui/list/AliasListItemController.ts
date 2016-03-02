@@ -16,7 +16,7 @@ module jm.user.ctrl {
         constructor(private $scope: IAliasListItemScope, private aliasModel: AliasModel) {
             //TODO - implement a rest call for base alias
             if (!$scope.alias) {
-                $scope.alias = aliasModel.getAlias($scope.aliasId);
+                //$scope.alias = aliasModel.getAlias($scope.aliasId);
             }
         }
     }

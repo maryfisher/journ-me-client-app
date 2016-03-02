@@ -1,4 +1,4 @@
-<div class="panel row">
+<div class="jm-banner-panel">
 
     <h2 class="jm-header">Browse Journeys</h2>
 
@@ -11,9 +11,11 @@
             <div class="clear"></div>
         </ul>
     </div>
+</div>
 
+<div class="container">
     <form data-ng-hide="searchPage.content" data-ng-submit="searchJourneys()" novalidate role="form"
-          class="jm-container form-horizontal">
+          class="jm-container form-horizontal panel">
         <h4 class="text-center">Search</h4>
 
         <div class="well">
@@ -97,64 +99,66 @@
     </form>
 </div>
 
-<div data-ng-if="searchPage.content" class="panel row">
-    <h2 class="jm-header">Search Results</h2>
+<div class="container">
+    <div data-ng-if="searchPage.content" class="panel">
+        <h2 class="jm-header">Search Results</h2>
 
-    <div class="jm-container">
-        <div data-ng-if="searchPage.content.length === 0">No journeys yet for that search filter. ;_;</div>
-        <div data-ng-if="searchPage.content.length > 0">
-            <table class="table table-striped jm-search-table">
-                <colgroup>
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 10%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 10%;">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>Journey name</th>
-                    <th>Description</th>
-                    <th>Owner</th>
-                    <th>
-                        <a data-ng-click="switchToggleSort('location')">Location</a>
-                        <i class="fa fa-sort"
-                           data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'ASC'}"></i>
-                    </th>
-                    <th>Categories</th>
-                    <th>Topics</th>
-                    <th>
-                        <a data-ng-click="switchToggleSort('created')">Created</a>
-                        <i class="fa fa-sort"
-                           data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'ASC'}"></i>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr data-ng-repeat="journey in searchPage.content">
-                    <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
-                    <td>{{ journey.descript }}</td>
-                    <!--<td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>-->
-                    <td>
-                        <data-jm-alias-list-img alias="journey.alias"></data-jm-alias-list-img>
-                    </td>
-                    <td>{{ journey.location }}</td>
-                    <td>{{ joinCategoryWeights(journey.categoryWeights) }}</td>
-                    <td>{{ journey.topics.join(', ') }}</td>
-                    <td>{{ journey.created | date:'yyyy-MM-dd' }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <pagination ng-model="searchPage.number" ng-change="searchJourneys()"
-                        total-items="searchPage.totalElements" items-per-page="searchPage.size"
-                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                        boundary-links="true" class="pagination-sm"></pagination>
+        <div class="jm-container">
+            <div data-ng-if="searchPage.content.length === 0">No journeys yet for that search filter. ;_;</div>
+            <div data-ng-if="searchPage.content.length > 0">
+                <table class="table table-striped jm-search-table">
+                    <colgroup>
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 10%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Journey name</th>
+                        <th>Description</th>
+                        <th>Owner</th>
+                        <th>
+                            <a data-ng-click="switchToggleSort('location')">Location</a>
+                            <i class="fa fa-sort"
+                               data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'ASC'}"></i>
+                        </th>
+                        <th>Categories</th>
+                        <th>Topics</th>
+                        <th>
+                            <a data-ng-click="switchToggleSort('created')">Created</a>
+                            <i class="fa fa-sort"
+                               data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'ASC'}"></i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="journey in searchPage.content">
+                        <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
+                        <td>{{ journey.descript }}</td>
+                        <!--<td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>-->
+                        <td>
+                            <data-jm-alias-list-img alias="journey.alias"></data-jm-alias-list-img>
+                        </td>
+                        <td>{{ journey.location }}</td>
+                        <td>{{ joinCategoryWeights(journey.categoryWeights) }}</td>
+                        <td>{{ journey.topics.join(', ') }}</td>
+                        <td>{{ journey.created | date:'yyyy-MM-dd' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination ng-model="searchPage.number" ng-change="searchJourneys()"
+                            total-items="searchPage.totalElements" items-per-page="searchPage.size"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                            boundary-links="true" class="pagination-sm"></pagination>
+            </div>
+            <hr/>
+            <button type="button" data-ng-click="searchPage.content = undefined" class="btn btn-primary pull-right">
+                Change search
+            </button>
         </div>
-        <hr/>
-        <button type="button" data-ng-click="searchPage.content = undefined" class="btn btn-primary pull-right">
-            Change search
-        </button>
     </div>
 </div>
