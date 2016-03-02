@@ -19,39 +19,29 @@ module jm.journey {
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
-        moments: IMomentBaseVO[];
-        followers: IAliasBaseVO[];
-        linkedToJourneys: IJourneyBaseVO[];
-        linkedFromJourneys: IJourneyBaseVO[];
-        joinRequests: IAliasBaseVO[];
-        joinedAliases: IAliasBaseVO[];
+        moments: IMomentBaseVO[] = [];
+        followers: IAliasBaseVO[] = [];
+        linkedToJourneys: IJourneyBaseVO[] = [];
+        linkedFromJourneys: IJourneyBaseVO[] = [];
+        joinRequests: IAliasBaseVO[] = [];
+        joinedAliases: IAliasBaseVO[] = [];
 
-        joinedLinkedJourneys: IJourneyBaseVO[];
+        joinedLinkedJourneys: IJourneyBaseVO[] = [];
         aliasJourneyLink: IJourneyBaseVO;
-        isFollowing: boolean;
-        isJoined: boolean;
-        sendRequest: boolean;
+        isFollowing: boolean = false;
+        isJoined: boolean = false;
+        sendRequest: boolean = false;
 
         constructor(data ?: IJourneyDetailVO) {
-            this.moments = [];
-            this.followers = [];
-            this.linkedToJourneys = [];
-            this.linkedFromJourneys = [];
-            this.joinRequests = [];
-            this.joinedAliases = [];
-            this.joinedLinkedJourneys = [];
-            this.isFollowing = false;
-            this.isJoined = false;
-            this.sendRequest = false;
             super(data);
         }
 
-        parseBaseData(data: IJourneyDetailVO, refs: Object) {
-            super.parseJson(data, refs);
+        parseBaseData(data: IJourneyDetailVO) {
+            super.parseJson(data);
         }
 
-        parseJson(data: IJourneyDetailVO, refs: Object) {
-            super.parseJson(data, refs);
+        parseJson(data: IJourneyDetailVO) {
+            super.parseJson(data);
             this.parseDetailData(data);
         }
 

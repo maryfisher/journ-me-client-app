@@ -2,12 +2,16 @@
     <!-- JOURNEY DETAILS -->
     <div class="col-xs-12 jm-journey-header">
         <span data-ng-if="!journey.isPublic" class="pull-left text-danger">
-       <span class="fa fa-lock"></span> Psst - this journey is private.
+        <span class="fa fa-lock"></span> Psst - this journey is private.
         <span data-ng-if="!journey.isAlias">Please think twice before sharing it.</span>
         </span>
 
-        <h1 class="text-center">{{journey.name}} <span data-ng-if="!journey.isAlias">by <a
-                data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{journey.alias.name}}</a></span></h1>
+        <h1 class="text-center">{{journey.name}}
+            <span data-ng-if="!journey.isAlias">by
+                <data-jm-alias-list-img alias="journey.alias"></data-jm-alias-list-img>
+                <!--<a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{journey.alias.name}}</a>-->
+            </span>
+        </h1>
 
         <p class="text-center">{{journey.descript}}</p>
         <hr/>

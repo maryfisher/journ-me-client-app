@@ -90,6 +90,7 @@ module jm {
             this.addDirective(jm.auth.LoginDirect);
             this.addDirective(jm.auth.RegisterDirect);
             this.addDirective(jm.user.AliasListItemDirect);
+            this.addDirective(jm.user.AliasListImgDirect);
             this.addDirective(jm.user.AliasListDirect);
             this.addDirective(jm.journey.JourneyListItemDirect);
             this.addDirective(jm.journey.JourneyEditDirect);
@@ -99,6 +100,7 @@ module jm {
             this.addDirective(jm.journey.LinkJourneyDirect);
             this.addDirective(jm.journey.JourneyRequestsDirect);
             this.addDirective(jm.journey.CategoryRatioDirect);
+            this.addDirective(jm.journey.CategoryListItemDirect);
             this.addDirective(jm.moment.BlinkFormatDirect);
             this.addDirective(jm.moment.BlinkImgDirect);
             this.addDirective(jm.moment.BlinkTextDirect);

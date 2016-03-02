@@ -1,1 +1,14 @@
-<a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{journey.name}} - {{journey.descript}}</a>
+<li class="jm-journey-li list-group-item">
+    <a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">
+        <jm-alias-list-img alias="journey.alias" use-click class="alias"></jm-alias-list-img>
+        <div class="body">
+            <h4 class="header">{{journey.name}}</h4>
+
+            <div class="descript">{{journey.descript}}</div>
+        </div>
+        <ul class="categories">
+            <jm-category-list-item data-ng-repeat="categoryWeight in journey.categoryWeights | limitTo:2"
+                                   category-weight="categoryWeight"></jm-category-list-item>
+        </ul>
+    </a>
+</li>

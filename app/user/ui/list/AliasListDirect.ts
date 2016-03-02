@@ -1,4 +1,7 @@
+///<reference path="AliasListController.ts"/>
 module jm.user {
+
+    import AliasListController = jm.user.ctrl.AliasListController;
 
     export interface IAliasListModalScope extends jm.common.ctrl.IBaseModalScope {
         aliasList: AliasBaseVO[];
@@ -18,7 +21,7 @@ module jm.user {
         };
 
         constructor($injector: ng.auto.IInjectorService) {
-            super($injector, 'AliasListController', 'user/ui/list/aliasListModal.tpl.html');
+            super($injector, AliasListController.NG_NAME, 'user/ui/list/aliasListModal.tpl.html');
         }
     }
 }

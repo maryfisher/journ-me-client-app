@@ -30,9 +30,8 @@
     <div class="row">
         <div class="col-sm-6">
             <ul class="list-group jm-container">
-                <li data-ng-repeat="journey in stats.recentJourneys" class="list-group-item">
-                    <jm-journey-list-item jm-journey="journey"></jm-journey-list-item>
-                </li>
+                <jm-journey-list-item data-ng-repeat="journey in stats.recentJourneys"
+                                      jm-journey="journey"></jm-journey-list-item>
             </ul>
             <div data-ng-if="stats.recentJourneys.length === 0">
                 No journeys yet. ;_;

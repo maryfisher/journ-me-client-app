@@ -1,16 +1,12 @@
+/// <reference path="AliasListItemDirectBase.ts" />
 module jm.user {
 
-    export class AliasListItemDirect implements ng.IDirective {
+    export class AliasListItemDirect extends AliasListItemDirectBase {
 
         static NG_NAME: string = 'jmAliasListItem';
 
-        restrict: string = 'E';
-        replace: boolean = true;
-        templateUrl: any = 'user/ui/list/aliasListItem.tpl.html';
-        scope: any = {
-            alias: '=jmAlias'
+        constructor($injector: ng.auto.IInjectorService) {
+            super($injector, 'user/ui/list/aliasListItem.tpl.html')
         }
-
-        constructor($injector: ng.auto.IInjectorService) {}
     }
 }

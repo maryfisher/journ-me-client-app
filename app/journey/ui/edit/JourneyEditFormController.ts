@@ -72,7 +72,6 @@ module jm.journey.ctrl {
         selectCategory = (cat: ICategoryVO) => {
             var weight: CategoryWeightVO = new CategoryWeightVO();
             weight.category = cat.id;
-            weight.categoryRef = cat;
             weight.weight = 100 / (this.$scope.journey.categoryWeights.length + 1);
             this.adjustWeights(weight.weight);
             this.$scope.journey.categoryWeights.push(weight);
@@ -89,7 +88,7 @@ module jm.journey.ctrl {
         deleteCategory = (categoryWeight: CategoryWeightVO) => {
             this.$scope.journey.categoryWeights.splice(this.$scope.journey.categoryWeights.indexOf(categoryWeight), 1);
             this.adjustWeights(100 / (this.$scope.journey.categoryWeights.length));
-            this.$scope.missingCategories.push(categoryWeight.categoryRef);
+            this.$scope.missingCategories.push(this.journeyModel.getCategory(categoryWeight));
             //TODO remove topics - but which ones?
         };
 

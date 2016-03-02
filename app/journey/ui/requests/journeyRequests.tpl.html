@@ -6,7 +6,7 @@
         <h3>Requests to join {{journey.name}}</h3>
         <ul class="list-group">
             <li data-ng-repeat="alias in journey.joinRequests" class="list-group-item clearfix">
-                <data-jm-alias-list-item data-jm-alias="alias"></data-jm-alias-list-item>
+                <data-jm-alias-list-item alias="alias"></data-jm-alias-list-item>
                 <button data-ng-click="acceptJoinRequest(alias)" data-ng-show="journey.isAlias"
                         class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-link"></span> Accept Request

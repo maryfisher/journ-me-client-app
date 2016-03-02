@@ -7,6 +7,7 @@ module jm.journey.ctrl {
     export interface ICategoryScope extends ng.IScope {
         categoryWeights: CategoryWeightVO[];
         deleteCategory(cat: CategoryWeightVO);
+        getCategory(cat: CategoryWeightVO);
         onDeleteCategory(param: ICategoryWeightParams);
         canEdit: boolean;
     }
@@ -17,13 +18,13 @@ module jm.journey.ctrl {
 
     export class CategoryRatioController extends jm.common.BaseController {
 
-        static $inject: string[] = [NGConst.$SCOPE];
+        static $inject: string[] = [NGConst.$SCOPE, JourneyModel.NG_NAME];
         static NG_NAME: string = 'CategoryRatioController';
 
-        constructor(private $scope: ICategoryScope) {
+        constructor(private $scope: ICategoryScope, private journeyModel: JourneyModel) {
             super($scope);
 
-            this.addScopeMethods('changeRatio', 'deleteCategory', 'hasLeft', 'hasRight');
+            this.addScopeMethods('changeRatio', 'deleteCategory', 'hasLeft', 'hasRight', 'getCategory');
         }
 
         deleteCategory = (cat: CategoryWeightVO) => {
@@ -45,6 +46,10 @@ module jm.journey.ctrl {
 
         hasRight = (index: number): boolean => {
             return index < this.$scope.categoryWeights.length - 1;
+        };
+
+        getCategory = (categoryWeight: CategoryWeightVO): ICategoryVO => {
+            return this.journeyModel.getCategory(categoryWeight);
         };
     }
 }
