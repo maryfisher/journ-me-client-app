@@ -1,18 +1,22 @@
-<div class="row panel">
+<div class="jm-banner-panel">
     <!-- JOURNEY DETAILS -->
     <div class="col-xs-12 jm-journey-header">
         <span data-ng-if="!journey.isPublic" class="pull-left text-danger">
-       <span class="fa fa-lock"></span> Psst - this journey is private.
+        <span class="fa fa-lock"></span> Psst - this journey is private.
         <span data-ng-if="!journey.isAlias">Please think twice before sharing it.</span>
         </span>
 
-        <h1 class="text-center">{{journey.name}} <span data-ng-if="!journey.isAlias">by <a
-                data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{journey.alias.name}}</a></span></h1>
+        <h1 class="text-center">{{journey.name}}
+            <span data-ng-if="!journey.isAlias">by
+                <data-jm-alias-list-img alias="journey.alias"></data-jm-alias-list-img>
+                <!--<a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{journey.alias.name}}</a>-->
+            </span>
+        </h1>
 
         <p class="text-center">{{journey.descript}}</p>
         <hr/>
         <!-- STATS & COMPS -->
-        <div class="row container text-center">
+        <div class="row text-center">
             <!-- JOINS -->
             <div class="col-xs-2"></div>
             <div class="col-xs-2">
@@ -116,48 +120,55 @@
             </div>
         </div>
     </div>
+    <div class="clear"></div>
     <!-- TIMELINE -->
+
+</div>
+<div class="jm-container">
     <data-jm-journey-timeline data-journey-id="journey.id" data-has-edit="true"></data-jm-journey-timeline>
+    <div ui-view class=""></div>
 </div>
 
 <!-- MOMENT DETAIL -->
-<div ui-view class="row"></div>
+
 <!-- LINKED JOURNEYS -->
-<div data-ng-if="journey.joinedLinkedJourneys.length > 0 || (journey.isAlias && journey.linkedToJourneys.length > 0)"
-     class="row panel">
-    <div class="col-sm-12">
-        <h2 class="text-center">Linked Journeys</h2>
-        <ul class="list-group">
-            <li data-ng-repeat="journey in journey.joinedLinkedJourneys" class="list-group-item clearfix">
-                <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
-                <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey.id)"
-                        class="btn btn-default pull-right">
-                    <span class="caret"></span>
-                </button>
-                <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey.id)"
-                        class="btn btn-default dropup pull-right">
-                    <span class="caret"></span>
-                </button>
-                <div data-collapse="isNotSelected(journey.id)">
-                    <data-jm-journey-timeline data-journey-id="journey.id"></data-jm-journey-timeline>
-                </div>
-            </li>
-        </ul>
-        <ul data-ng-if="journey.isAlias" class="list-group">
-            <li data-ng-repeat="journey in journey.linkedToJourneys" class="list-group-item clearfix">
-                <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
-                <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey.id)"
-                        class="btn btn-default pull-right">
-                    <span class="caret"></span>
-                </button>
-                <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey.id)"
-                        class="btn btn-default dropup pull-right">
-                    <span class="caret"></span>
-                </button>
-                <div data-collapse="isNotSelected(journey.id)">
-                    <data-jm-journey-timeline data-journey-id="journey.id"></data-jm-journey-timeline>
-                </div>
-            </li>
-        </ul>
+<div class="jm-container">
+    <div data-ng-if="journey.joinedLinkedJourneys.length > 0 || (journey.isAlias && journey.linkedToJourneys.length > 0)"
+         class="col-sm-6">
+        <div class="row panel">
+            <h2 class="text-center">Linked Journeys</h2>
+            <ul class="list-group">
+                <li data-ng-repeat="journey in journey.joinedLinkedJourneys" class="list-group-item clearfix">
+                    <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
+                    <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey.id)"
+                            class="btn btn-default pull-right">
+                        <span class="caret"></span>
+                    </button>
+                    <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey.id)"
+                            class="btn btn-default dropup pull-right">
+                        <span class="caret"></span>
+                    </button>
+                    <div data-collapse="isNotSelected(journey.id)">
+                        <data-jm-journey-timeline data-journey-id="journey.id"></data-jm-journey-timeline>
+                    </div>
+                </li>
+            </ul>
+            <ul data-ng-if="journey.isAlias" class="list-group">
+                <li data-ng-repeat="journey in journey.linkedToJourneys" class="list-group-item clearfix">
+                    <data-jm-journey-list-item data-jm-journey="journey"></data-jm-journey-list-item>
+                    <button data-ng-click="setSelected(journey)" data-ng-show="isNotSelected(journey.id)"
+                            class="btn btn-default pull-right">
+                        <span class="caret"></span>
+                    </button>
+                    <button data-ng-click="setSelected(journey)" data-ng-hide="isNotSelected(journey.id)"
+                            class="btn btn-default dropup pull-right">
+                        <span class="caret"></span>
+                    </button>
+                    <div data-collapse="isNotSelected(journey.id)">
+                        <data-jm-journey-timeline data-journey-id="journey.id"></data-jm-journey-timeline>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

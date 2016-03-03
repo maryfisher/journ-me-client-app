@@ -4,7 +4,7 @@
 ///<reference path="..\..\..\journey\model\JourneyBaseVO.ts"/>
 ///<reference path="..\..\..\journey\model\CategoryWeightVO.ts"/>
 ///<reference path="..\..\..\journey\model\CategoryVO.ts"/>
-///<reference path="..\..\model\PageVO.ts"/>
+///<reference path="..\..\..\common/model/PageVO.ts"/>
 ///<reference path="..\..\..\journey\model\JourneySearchFilterVO.ts"/>
 ///<reference path="..\..\..\journey\model\TopicVO.ts"/>
 module jm.main.ctrl {
@@ -14,24 +14,19 @@ module jm.main.ctrl {
     import JMConfigConst = jm.common.JMConfigConst;
     import JourneyDAO = jm.journey.JourneyDAO;
     import IJourneyBaseVO = jm.journey.IJourneyBaseVO;
+    import JourneyBaseVO = jm.journey.JourneyBaseVO;
     import CategoryWeightVO = jm.journey.CategoryWeightVO;
     import ICategoryVO = jm.journey.ICategoryVO;
     import ITopicVO = jm.journey.ITopicVO;
-    import PageVO = jm.main.PageVO;
+    import PageVO = jm.common.PageVO;
+    import IPage = jm.common.IPage;
     import JourneySearchFilterVO = jm.journey.JourneySearchFilterVO;
 
     export interface IBrowseScope extends ng.IScope {
         searchFilter: JourneySearchFilterVO,
         categories: ICategoryVO[],
         selectedTopic: string,  // dummy model object for typeahead selection
-        retrieveTopics(val: string): ng.IPromise < ITopicVO[] >,
-        searchJourneys(): void,
-        searchPage: PageVO < IJourneyBaseVO >,
-        joinCategoryWeights(categoryWeights: CategoryWeightVO[]): string,
-        selectTopic(topic: ITopicVO): void,
-        removeTopic(topic: string): void,
-        switchToggleSort(sortField: string): void,
-        selectCategory(category: ICategoryVO): void
+        searchPage: PageVO < IJourneyBaseVO >
     }
 
     export class BrowseController extends jm.common.BaseController {
@@ -50,18 +45,10 @@ module jm.main.ctrl {
             $scope.searchPage = new PageVO < IJourneyBaseVO >();
             $scope.categories = categoriesConst;
 
-            $scope.joinCategoryWeights = this.joinCategoryWeights;
-            $scope.retrieveTopics = this.retrieveTopics;
-            $scope.selectTopic = this.selectTopic;
-            $scope.removeTopic = this.removeTopic;
-            $scope.searchJourneys = this.searchJourneys;
-            $scope.switchToggleSort = this.switchToggleSort;
-            $scope.selectCategory = this.selectCategory;
-
             var queryParams = locationService.search();
             if (queryParams && queryParams["search"]) {
                 $scope.searchFilter.text = queryParams["search"];
-                $scope.searchJourneys();
+                this.searchJourneys();
             }
         }
 
@@ -96,17 +83,18 @@ module jm.main.ctrl {
         };
 
         searchJourneys = () => {
-            this.journeyService.searchJourneys(this.$scope.searchFilter, this.$scope.searchPage.toPageRequest())
+            this.journeyService.getJourneys(this.$scope.searchPage.toPageRequest(), this.$scope.searchFilter)
                 .then(this.searchJourneysSuccess);
         };
 
-        searchJourneysSuccess = (data: IPage < IJourneyBaseVO >) => {
-            this.$scope.searchPage.parseData(data);
+        searchJourneysSuccess = (data: PageVO < JourneyBaseVO >) => {
+            //this.$scope.searchPage.parseData(data);
+            this.$scope.searchPage = data;
         };
 
         switchToggleSort = (sortField: string): void => {
             this.$scope.searchPage.switchToggleSort(sortField);
-            this.$scope.searchJourneys();
+            this.searchJourneys();
         };
     }
 }

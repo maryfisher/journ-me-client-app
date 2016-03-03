@@ -6,6 +6,7 @@ module jm.user.ctrl {
 
     export class AliasListController extends jm.common.ctrl.BaseModalInstanceController {
 
+        static NG_NAME: string = 'AliasListController';
         static $inject = [NGConst.$SCOPE, NGConst.$MODAL_INSTANCE, JourneyModel.NG_NAME];
 
         constructor(private $scope: IAliasListModalScope, $modalInstance: IModalServiceInstance, private journeyModel: JourneyModel) {

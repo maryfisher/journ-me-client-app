@@ -31,11 +31,11 @@ module jm.journey {
 
         isAlias: boolean;
 
-        constructor(data ?: IJourneyBaseVO, refs ?: Object) {
+        constructor(data ?: IJourneyBaseVO) {
             this.setDefault();
             this.categoryWeights = [];
             this.topics = [];
-            this.parseJson(data, refs);
+            this.parseJson(data);
         }
 
         setDefault() {
@@ -45,7 +45,7 @@ module jm.journey {
             this.isAlias = false;
         }
 
-        parseJson(data: IJourneyBaseVO, refs ?: Object) {
+        parseJson(data: IJourneyBaseVO) {
             if (data) {
                 this.id = data.id;
                 this.name = data.name;
@@ -57,9 +57,9 @@ module jm.journey {
                 this.join = data.join;
                 this.categoryWeights.length = 0;
                 if (data.categoryWeights) {
-                    for (var i: number = 0; i < data.categoryWeights.length; i++) {
-                        this.categoryWeights.push(new CategoryWeightVO(data.categoryWeights[i], refs));
-                    }
+                    this.categoryWeights = data.categoryWeights.map(v => {
+                        return new CategoryWeightVO(v)
+                    });
                 }
                 this.topics = data.topics;
             }

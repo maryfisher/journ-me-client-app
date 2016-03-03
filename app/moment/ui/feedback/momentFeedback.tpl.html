@@ -27,10 +27,11 @@
             class="list-group-item">
             <jm-state-list states="feedback.stateRefs"></jm-state-list>
             <div class="row">
-                <a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias.id})" class="col-sm-1">
+                <!--<a data-ui-sref="ALIAS_DETAIL({aliasId: feedback.alias.id})" class="col-sm-1">
                     <img data-ng-src="{{feedback.alias.thumbUrl}}" width="40" height="40"
                          class="img-circle"/>
-                </a>
+                </a>-->
+                <data-jm-alias-list-img alias="feedback.alias" class="col-sm-1"></data-jm-alias-list-img>
 
                 <div class="col-sm-11">
                     <h5>

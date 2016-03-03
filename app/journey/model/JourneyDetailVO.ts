@@ -19,39 +19,29 @@ module jm.journey {
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
 
-        moments: IMomentBaseVO[];
-        followers: IAliasBaseVO[];
-        linkedToJourneys: IJourneyBaseVO[];
-        linkedFromJourneys: IJourneyBaseVO[];
-        joinRequests: IAliasBaseVO[];
-        joinedAliases: IAliasBaseVO[];
+        moments: IMomentBaseVO[] = [];
+        followers: IAliasBaseVO[] = [];
+        linkedToJourneys: IJourneyBaseVO[] = [];
+        linkedFromJourneys: IJourneyBaseVO[] = [];
+        joinRequests: IAliasBaseVO[] = [];
+        joinedAliases: IAliasBaseVO[] = [];
 
-        joinedLinkedJourneys: IJourneyBaseVO[];
+        joinedLinkedJourneys: IJourneyBaseVO[] = [];
         aliasJourneyLink: IJourneyBaseVO;
-        isFollowing: boolean;
-        isJoined: boolean;
-        sendRequest: boolean;
+        isFollowing: boolean = false;
+        isJoined: boolean = false;
+        sendRequest: boolean = false;
 
         constructor(data ?: IJourneyDetailVO) {
-            this.moments = [];
-            this.followers = [];
-            this.linkedToJourneys = [];
-            this.linkedFromJourneys = [];
-            this.joinRequests = [];
-            this.joinedAliases = [];
-            this.joinedLinkedJourneys = [];
-            this.isFollowing = false;
-            this.isJoined = false;
-            this.sendRequest = false;
             super(data);
         }
 
-        parseBaseData(data: IJourneyDetailVO, refs: Object) {
-            super.parseJson(data, refs);
+        parseBaseData(data: IJourneyDetailVO) {
+            super.parseJson(data);
         }
 
-        parseJson(data: IJourneyDetailVO, refs: Object) {
-            super.parseJson(data, refs);
+        parseJson(data: IJourneyDetailVO) {
+            super.parseJson(data);
             this.parseDetailData(data);
         }
 
@@ -60,30 +50,24 @@ module jm.journey {
                 return;
             }
             //TODO make sure to not overwrite if the properties are not set
-            this.moments = [];
-            for (var i: number = 0; i < data.moments.length; i++) {
-                this.moments.push(new MomentBaseVO(data.moments[i]));
-            }
-            this.followers = [];
-            for (var i: number = 0; i < data.followers.length; i++) {
-                this.followers.push(new AliasBaseVO(data.followers[i]));
-            }
-            this.joinedAliases = [];
-            for (var i: number = 0; i < data.joinedAliases.length; i++) {
-                this.joinedAliases.push(new AliasBaseVO(data.joinedAliases[i]));
-            }
-            this.joinRequests = [];
-            for (var i: number = 0; i < data.joinRequests.length; i++) {
-                this.joinRequests.push(new AliasBaseVO(data.joinRequests[i]));
-            }
-            this.linkedFromJourneys = [];
-            for (var i: number = 0; i < data.linkedFromJourneys.length; i++) {
-                this.linkedFromJourneys.push(new JourneyBaseVO(data.linkedFromJourneys[i]));
-            }
-            this.linkedToJourneys = [];
-            for (var i: number = 0; i < data.linkedToJourneys.length; i++) {
-                this.linkedToJourneys.push(new JourneyBaseVO(data.linkedToJourneys[i]));
-            }
+            this.moments = data.moments.map(v => {
+                return new MomentBaseVO(v);
+            });
+            this.followers = data.followers.map(v => {
+                return new AliasBaseVO(v);
+            });
+            this.joinedAliases = data.joinedAliases.map(v => {
+                return new AliasBaseVO(v);
+            });
+            this.joinRequests = data.joinRequests.map(v => {
+                return new AliasBaseVO(v);
+            });
+            this.linkedFromJourneys = data.linkedFromJourneys.map(v => {
+                return new JourneyBaseVO(v);
+            });
+            this.linkedToJourneys = data.linkedToJourneys.map(v => {
+                return new JourneyBaseVO(v);
+            });
         }
 
         invalidateData() {

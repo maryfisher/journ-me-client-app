@@ -5,6 +5,7 @@ module jm {
     import IUrlRouterProvider = angular.ui.IUrlRouterProvider;
     import RouteConst = jm.common.RouteConst;
     import NGConst = jm.common.NGConst;
+    import JMConfigConst = jm.common.JMConfigConst;
 
     export interface IRedirectSettings {
         redirectState: string;
@@ -54,25 +55,27 @@ module jm {
             this.$stateProvider.state(RouteConst.HOME, {
                 url: RouteConst.HOME_PATH,
                 templateUrl: 'main/ui/home/home.tpl.html',
-                controller: jm.main.ctrl.HomeController.NG_NAME/*,
+                controller: jm.main.ctrl.HomeController.NG_NAME,
+                controllerAs: JMConfigConst.CTRL/*,
                  data: redirectAuth*/
             });
             this.$stateProvider.state(RouteConst.BROWSE, {
                 url: RouteConst.BROWSE_PATH,
                 templateUrl: 'main/ui/browse/browse.tpl.html',
-                controller: jm.main.ctrl.BrowseController.NG_NAME
+                controller: jm.main.ctrl.BrowseController.NG_NAME,
+                controllerAs: JMConfigConst.CTRL
             });
             this.$stateProvider.state(RouteConst.FORGOT_PASSWORD, {
                 url: RouteConst.FORGOT_PASSWORD_PATH,
                 templateUrl: 'auth/ui/forgotPassword/forgotPassword.tpl.html',
                 controller: jm.auth.ctrl.ForgotPasswordController.NG_NAME,
-                controllerAs: '$ctrl'
+                controllerAs: JMConfigConst.CTRL
             });
             this.$stateProvider.state(RouteConst.RESET_FORGOTTEN_PASSWORD, {
                 url: RouteConst.RESET_FORGOTTEN_PASSWORD_PATH,
                 templateUrl: 'auth/ui/forgotPassword/resetForgottenPassword.tpl.html',
                 controller: jm.auth.ctrl.ResetForgottenPasswordController.NG_NAME,
-                controllerAs: '$ctrl'
+                controllerAs: JMConfigConst.CTRL
             });
 
             this.$stateProvider.state(RouteConst.ALIAS_DETAIL, {

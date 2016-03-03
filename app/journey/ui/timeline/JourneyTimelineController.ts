@@ -14,7 +14,9 @@ module jm.journey.ctrl {
         static $inject = [NGConst.$SCOPE, JourneyModel.NG_NAME, RouteUtil.NG_NAME, NGConst.$ELEMENT,
             NGConst.$STATE_PARAMS, '$timeout', '$animate', NGConst.$ANIMATE_CSS];
 
-        static ELM_W: number = 50;
+        //static ELM_W: number = 50;
+        static ELM_W: number = 90;
+        static SCALE: number = 1.1;
         private joinedAliasIds: string[];
         private momentElms: any = {};
         private timelineElm: HTMLElement;
@@ -100,7 +102,7 @@ module jm.journey.ctrl {
                 return;
             }
             //scale up
-            this.animateMoment(this.momentElms[moment.id], 1.2);
+            this.animateMoment(this.momentElms[moment.id], JourneyTimelineController.SCALE);
         };
 
         animateMoment(elm: IAugmentedJQuery, scale: number) {

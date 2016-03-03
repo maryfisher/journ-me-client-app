@@ -1,13 +1,15 @@
+@size: 80px;
+
 .jm-moment-img {
-    width: 40px;
-    height: 40px;
+    width: @size;
+    height: @size;
 }
 
 .jm-moment-lock {
     display: inline-block;
     padding: 8px 12px;
-    width: 40px;
-    height: 40px;
+    width: @size;
+    height: @size;
     vertical-align: middle;
     text-align: center;
     border: 2px solid darkgrey;
@@ -22,8 +24,8 @@
     position: relative;
     float: left;
     margin-right: -10px;
-    left: 30px;
-    top: 30px;
+    left: @size - 10px;
+    top: @size - 10px;
 }
 
 .jm-moment-alias {
@@ -43,20 +45,15 @@
 }
 
 .jm-moment-selected {
-    width: 44px;
-    height: 44px;
+    width: @size + 12px;
+    height: @size + 12px;
     border: 2px solid yellow;
     display: block;
-    margin-right: -50px;
+    margin-right: (@size + 8) * -1px;
     float: left;
     //pointer-events: none;
     position: relative;
-    margin-top: -2px;
-    -ms-transform: translateY(3px);
-    /* IE 9 */
-    -webkit-transform: translateY(3px);
-    /* Safari */
-    transform: translateX(3px);
+    margin-top: -1px;
 }
 
 .jm-timeline {
@@ -67,7 +64,7 @@
 
 .jm-timeline-btn {
     position: absolute;
-    top: 57px;
+    top: 40px;
     bottom: 38px;
     box-shadow: none;
     border: none;

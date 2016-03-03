@@ -37,7 +37,7 @@ module jm.journey {
         }
 
         private setCurrentJourneyBase = (data: IJourneyDetailVO) => {
-            this.currentJourney.parseBaseData(data, this.categories);
+            this.currentJourney.parseBaseData(data);
             if (this.currentAlias) {
                 this.currentJourney.updateAlias(this.currentAlias);
                 if (this.currentJourney.isAlias) {
@@ -47,7 +47,7 @@ module jm.journey {
         };
 
         private setCurrentJourney = (data: IJourneyDetailVO) => {
-            this.currentJourney.parseJson(data, this.categories);
+            this.currentJourney.parseJson(data);
             this.currentJourney.updateLinks();
             if (this.currentAlias) {
                 this.currentJourney.updateFromAlias(this.currentAlias);
@@ -92,7 +92,7 @@ module jm.journey {
             var journey: JourneyDetailVO = new JourneyDetailVO();
             this.journeyService.getJourney(id).then(
                 (data: IJourneyDetailVO) => {
-                    journey.parseJson(data, this.categories);
+                    journey.parseJson(data);
                 });
             return journey;
         }
@@ -226,7 +226,7 @@ module jm.journey {
             }
             journey.joinedAliases.splice(i, 1);
             journey.isJoined = false;
-        }
+        };
 
         acceptJoinRequest(requester: AliasBaseVO) {
             var journey: JourneyDetailVO = this.currentJourney;
@@ -241,6 +241,14 @@ module jm.journey {
                     journey.joinedAliases.push(requester);
                 }
             );
+        }
+
+        get categoryRefs(): Object {
+            return this.categories;
+        }
+
+        getCategory(categoryWeight: CategoryWeightVO): ICategoryVO {
+            return this.categories[categoryWeight.category];
         }
     }
 }

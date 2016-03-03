@@ -4,32 +4,25 @@ module jm.journey {
         category: string;
         weight: number; //0-100
         //NOTE just for cloning purposes
-        categoryRef: ICategoryVO;
+        //categoryRef: ICategoryVO;
     }
 
     export class CategoryWeightVO {
         category: string;
-        categoryRef: ICategoryVO;
+        //categoryRef: ICategoryVO;
         weight: number;
 
-        constructor(data ?: ICategoryWeightVO, refs ?: Object) {
-            this.parseData(data, refs);
+        constructor(data ?: ICategoryWeightVO) {
+            this.parseData(data);
         }
 
-        parseData(data: ICategoryWeightVO, refs: Object) {
+        parseData(data: ICategoryWeightVO) {
             if (data) {
                 this.category = data.category;
                 //NOTE: just in case it's there (cloning)
-                this.categoryRef = data.categoryRef;
+                //this.categoryRef = data.categoryRef;
                 this.weight = data.weight;
-                if (refs) {
-                    this.setCategoryRef(refs);
-                }
             }
-        }
-
-        setCategoryRef(refs: Object) {
-            this.categoryRef = refs[this.category];
         }
     }
 }

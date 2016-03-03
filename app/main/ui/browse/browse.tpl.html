@@ -1,4 +1,4 @@
-<div class="panel row">
+<div class="jm-banner-panel">
 
     <h2 class="jm-header">Browse Journeys</h2>
 
@@ -6,14 +6,16 @@
         <h4 class="text-center">Categories</h4>
         <ul class="jm-category-table well">
             <li data-ng-repeat="category in categories">
-                <a href="" data-ng-click="selectCategory(category)">{{category.name}}</a>
+                <a href="" data-ng-click="$ctrl.selectCategory(category)">{{category.name}}</a>
             </li>
             <div class="clear"></div>
         </ul>
     </div>
+</div>
 
-    <form data-ng-hide="searchPage.content" data-ng-submit="searchJourneys()" novalidate role="form"
-          class="jm-container form-horizontal">
+<div class="container">
+    <form data-ng-hide="searchPage.content" data-ng-submit="$ctrl.searchJourneys()" novalidate role="form"
+          class="jm-container form-horizontal panel">
         <h4 class="text-center">Search</h4>
 
         <div class="well">
@@ -22,6 +24,9 @@
 
                 <div class="col-sm-3">
                     <select data-ng-model="searchFilter.textMatcher" data-jm-convert-to-number class="form-control">
+                        <!-- TODO: replace with ng-repeat and searchFilter.getTextMatches
+                        <option ng-repeat="option in searchFilter.getTextMatches()" value="{{option.value}}">{{option.name}}</option>
+                        -->
                         <option value="0">Any word</option>
                         <option value="1">All words</option>
                         <option value="2">Contains phrase</option>
@@ -39,6 +44,7 @@
 
                 <div class="col-sm-3">
                     <select data-ng-model="searchFilter.joinMatcher" data-jm-convert-to-number class="form-control">
+                        <!-- TODO: replace with ng-repeat and searchFilter.getElementMatches -->
                         <option value="0">Equals</option>
                         <option value="1">Doesn't equal</option>
                     </select>
@@ -58,6 +64,7 @@
                 <div class="col-sm-3">
                     <select data-ng-model="searchFilter.categoriesMatcher" data-jm-convert-to-number
                             class="form-control">
+                        <!-- TODO: replace with ng-repeat and searchFilter.getCollectionMatches -->
                         <option value="0">Any</option>
                         <option value="1">All</option>
                     </select>
@@ -72,6 +79,7 @@
 
                 <div class="col-sm-3">
                     <select data-ng-model="searchFilter.topicsMatcher" data-jm-convert-to-number class="form-control">
+                        <!-- TODO: replace with ng-repeat and searchFilter.getCollectionMatches -->
                         <option value="0">Any</option>
                         <option value="1">All</option>
                     </select>
@@ -87,7 +95,7 @@
                     <ul class="list-inline">
                         <li data-ng-repeat="topic in searchFilter.topics">
                             <span>{{topic}}</span>
-                            <a href="" data-ng-click="removeTopic(topic)">x</a>
+                            <a href="" data-ng-click="$ctrl.removeTopic(topic)">x</a>
                         </li>
                     </ul>
                 </div>
@@ -97,61 +105,66 @@
     </form>
 </div>
 
-<div data-ng-if="searchPage.content" class="panel row">
-    <h2 class="jm-header">Search Results</h2>
+<div class="container">
+    <div data-ng-if="searchPage.content" class="panel">
+        <h2 class="jm-header">Search Results</h2>
 
-    <div class="jm-container">
-        <div data-ng-if="searchPage.content.length === 0">No journeys yet for that search filter. ;_;</div>
-        <div data-ng-if="searchPage.content.length > 0">
-            <table class="table table-striped jm-search-table">
-                <colgroup>
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 20%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 10%;">
-                    <col span="1" style="width: 15%;">
-                    <col span="1" style="width: 10%;">
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>Journey name</th>
-                    <th>Description</th>
-                    <th>Owner</th>
-                    <th>
-                        <a data-ng-click="switchToggleSort('location')">Location</a>
-                        <i class="fa fa-sort"
-                           data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'ASC'}"></i>
-                    </th>
-                    <th>Categories</th>
-                    <th>Topics</th>
-                    <th>
-                        <a data-ng-click="switchToggleSort('created')">Created</a>
-                        <i class="fa fa-sort"
-                           data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'ASC'}"></i>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr data-ng-repeat="journey in searchPage.content">
-                    <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
-                    <td>{{ journey.descript }}</td>
-                    <td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>
-                    <td>{{ journey.location }}</td>
-                    <td>{{ joinCategoryWeights(journey.categoryWeights) }}</td>
-                    <td>{{ journey.topics.join(', ') }}</td>
-                    <td>{{ journey.created | date:'yyyy-MM-dd' }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <pagination ng-model="searchPage.number" ng-change="searchJourneys()"
-                        total-items="searchPage.totalElements" items-per-page="searchPage.size"
-                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                        boundary-links="true" class="pagination-sm"></pagination>
+        <div class="jm-container">
+            <div data-ng-if="searchPage.content.length === 0">No journeys yet for that search filter. ;_;</div>
+            <div data-ng-if="searchPage.content.length > 0">
+                <table class="table table-striped jm-search-table">
+                    <colgroup>
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 20%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 10%;">
+                        <col span="1" style="width: 15%;">
+                        <col span="1" style="width: 10%;">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Journey name</th>
+                        <th>Description</th>
+                        <th>Owner</th>
+                        <th>
+                            <a data-ng-click="$ctrl.switchToggleSort('location')">Location</a>
+                            <i class="fa fa-sort"
+                               data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'location' && searchPage.sortDirection === 'ASC'}"></i>
+                        </th>
+                        <th>Categories</th>
+                        <th>Topics</th>
+                        <th>
+                            <a data-ng-click="$ctrl.switchToggleSort('created')">Created</a>
+                            <i class="fa fa-sort"
+                               data-ng-class="{'fa-sort-desc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'DESC', 'fa-sort-asc': searchPage.sortProperty === 'created' && searchPage.sortDirection === 'ASC'}"></i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="journey in searchPage.content">
+                        <td><a data-ui-sref="JOURNEY_DETAIL({journeyId: journey.id})">{{ journey.name }}</a></td>
+                        <td>{{ journey.descript }}</td>
+                        <!--<td><a data-ui-sref="ALIAS_DETAIL({aliasId: journey.alias.id})">{{ journey.alias.name }}</a></td>-->
+                        <td>
+                            <data-jm-alias-list-img alias="journey.alias"></data-jm-alias-list-img>
+                        </td>
+                        <td>{{ journey.location }}</td>
+                        <td>{{ $ctrl.joinCategoryWeights(journey.categoryWeights) }}</td>
+                        <td>{{ journey.topics.join(', ') }}</td>
+                        <td>{{ journey.created | date:'yyyy-MM-dd' }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination ng-model="searchPage.number" ng-change="$ctrl.searchJourneys()"
+                            total-items="searchPage.totalElements" items-per-page="searchPage.size"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                            boundary-links="true" class="pagination-sm"></pagination>
+            </div>
+            <button type="button" data-ng-click="searchPage.content = undefined" class="btn btn-primary pull-right">
+                Change search
+            </button>
+            <div class="clear"></div>
         </div>
-        <hr/>
-        <button type="button" data-ng-click="searchPage.content = undefined" class="btn btn-primary pull-right">
-            Change search
-        </button>
     </div>
 </div>

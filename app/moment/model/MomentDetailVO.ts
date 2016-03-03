@@ -22,14 +22,14 @@ module jm.moment {
         private stateCountRefs: Object; //StateVO.id => StateCountVO
 
         constructor(data ?: IMomentDetailVO) {
-            this.feedback = [];
-            this.blinks = [];
-            this.stateCountRefs = {};
-            this.stateCounts = [];
             super(data);
         }
 
         parseJson(data: IMomentDetailVO, refs ?: Object) {
+            this.feedback = [];
+            this.blinks = [];
+            this.stateCountRefs = {};
+            this.stateCounts = [];
             super.parseJson(data);
             this.parseDetailData(data, refs);
         }
