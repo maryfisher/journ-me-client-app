@@ -57,9 +57,9 @@ module jm.journey {
                 this.join = data.join;
                 this.categoryWeights.length = 0;
                 if (data.categoryWeights) {
-                    for (var i: number = 0; i < data.categoryWeights.length; i++) {
-                        this.categoryWeights.push(new CategoryWeightVO(data.categoryWeights[i]));
-                    }
+                    this.categoryWeights = data.categoryWeights.map(v => {
+                        return new CategoryWeightVO(v)
+                    });
                 }
                 this.topics = data.topics;
             }

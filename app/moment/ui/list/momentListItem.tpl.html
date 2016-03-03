@@ -1,4 +1,6 @@
-<a data-ui-sref="MOMENT_BLINKS({momentId: moment.id, journeyId: moment.journey})">
-    <img data-ng-src="{{moment.thumbUrl}}" class="img-rounded jm-moment-img"/> {{moment.title}}
+<a data-ui-sref="MOMENT_BLINKS({momentId: moment.id, journeyId: moment.journey})" popover-placement="top"
+   popover-trigger="mouseenter"
+   popover="{{moment.title}}">
+    <img data-ng-src="{{moment.thumbUrl}}" class="img-rounded jm-moment-img"/>
     <!--<jm-alias-list-item alias="moment.alias"></jm-alias-list-item>-->
 </a>

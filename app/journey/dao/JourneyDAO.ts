@@ -1,6 +1,7 @@
 ///<reference path="..\..\common\const\ServerConst.ts"/>
 ///<reference path="..\..\common\const\NGConst.ts"/>
-///<reference path="..\..\main\model\PageVO.ts"/>
+///<reference path="..\..\common/model/PageVO.ts"/>
+///<reference path="..\..\common/model/PageRequestVO.ts"/>
 ///<reference path="..\model\JourneySearchFilterVO.ts"/>
 ///<reference path="..\model\JourneyDetailVO.ts"/>
 ///<reference path="..\model\JourneyBaseVO.ts"/>
@@ -12,7 +13,9 @@ module jm.journey {
     import NGConst = jm.common.NGConst;
     import IPromise = angular.IPromise;
     import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
-    import IPage = jm.main.IPage;
+    import IPage = jm.common.IPage;
+    import PageVO = jm.common.PageVO;
+    import PageRequestVO = jm.common.PageRequestVO;
 
     export class JourneyDAO extends jm.common.BaseResourceDAO {
 
@@ -31,8 +34,12 @@ module jm.journey {
             return response.data;
         };
 
-        returnPage = (response: IHttpPromiseCallbackArg<IPage< IJourneyBaseVO >>): IPage < IJourneyBaseVO > => {
-            return response.data;
+        returnPage = (response: IHttpPromiseCallbackArg<IPage< IJourneyBaseVO >>): PageVO < IJourneyBaseVO > => {
+            var page: PageVO < IJourneyBaseVO > = new PageVO < IJourneyBaseVO >();
+            page.parseData(response.data, v => {
+                return new JourneyBaseVO(v);
+            });
+            return page;
         };
 
         returnTopics = (response: IHttpPromiseCallbackArg<ITopicVO[]>): ITopicVO[] => {
@@ -51,7 +58,7 @@ module jm.journey {
             return this.update(journey, this.returnBaseJourney);
         }
 
-        searchJourneys(searchFilter: JourneySearchFilterVO, queryParams: Object): IPromise < IPage < IJourneyBaseVO > > {
+        getJourneys(queryParams ?: PageRequestVO, searchFilter ?: JourneySearchFilterVO): IPromise < PageVO < IJourneyBaseVO > > {
             return this.makeCall(
                 this.post,
                 this.getQueryParams(ServerConst.JOURNEY_SEARCH_PATH, queryParams),

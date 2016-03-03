@@ -1,3 +1,4 @@
+///<reference path="..\..\common\model\SearchFilterVO.ts"/>
 module jm.journey {
     'use strict';
 
@@ -12,7 +13,7 @@ module jm.journey {
         topicsMatcher: number;
     }
 
-    export class JourneySearchFilterVO implements IJourneySearchFilter {
+    export class JourneySearchFilterVO extends jm.common.SearchFilterVO implements IJourneySearchFilter {
         text: string;
         textMatcher: number;
         join: number;
@@ -23,6 +24,7 @@ module jm.journey {
         topicsMatcher: number;
 
         constructor() {
+            super();
             // initial values when searchFilter is instantiated
             this.text = undefined;
             this.textMatcher = 0;
