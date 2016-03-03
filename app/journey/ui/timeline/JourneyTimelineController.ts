@@ -147,7 +147,7 @@ module jm.journey.ctrl {
                     momentId: this.$scope.selectedMoment.id
                 });
             } else {
-                this.routeUtil.redirectTo(RouteConst.JOURNEY_DETAIL, {
+                this.routeUtil.redirectTo(RouteConst.MOMENT_DETAIL, {
                     journeyId: this.$scope.journey.id
                 });
             }

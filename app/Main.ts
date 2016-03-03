@@ -14,6 +14,7 @@ module jm {
         private common: ng.IModule;
         private main: ng.IModule;
         private error: ng.IModule;
+        private note: ng.IModule;
 
         constructor() {
             this.initModules();
@@ -35,6 +36,7 @@ module jm {
                 'common',
                 'main',
                 'error',
+                'note',
                 'jm-config',
                 'ui.bootstrap',
                 'ngCookies',
@@ -52,6 +54,7 @@ module jm {
             this.user = angular.module('user', []);
             this.main = angular.module('main', []);
             this.error = angular.module('error', []);
+            this.note = angular.module('note', []);
 
             this.addFactory(jm.common.RouteUtil);
         }
@@ -64,6 +67,7 @@ module jm {
             this.common.controller(jm.common.ctrl);
             this.main.controller(jm.main.ctrl);
             this.error.controller(jm.error.ctrl);
+            this.note.controller(jm.note.ctrl);
         }
 
         initDAOs() {

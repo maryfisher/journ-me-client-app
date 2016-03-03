@@ -8,7 +8,7 @@ module jm.moment.ctrl {
 
         constructor(private $scope: IMomentDetailScope, private momentModel: MomentModel, $stateParams: angular.ui.IStateParamsService) {
             super($scope);
-            $scope.moment = this.momentModel.getCurrentMoment();
+            $scope.moment = this.momentModel.getCurrentMoment($stateParams['momentId']);
         }
     }
 }

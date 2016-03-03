@@ -8,7 +8,9 @@ module jm.common {
         private static journeyPath: string = '/journey';
         private static journeyId: string = RouteConst.journeyPath + '/:journeyId';
         private static momentPath: string = '/moment';
-        private static momentId: string = RouteConst.momentPath + '/:momentId';
+        private static momentId: string = '/:momentId';
+        private static notebookPath: string = '/notebook';
+        private static notebookId: string = '/:notebookId';
 
         static HOME: string = 'HOME';
         static HOME_PATH: string = '/home';
@@ -24,19 +26,24 @@ module jm.common {
         static JOURNEY_DETAIL_PATH: string = RouteConst.journeyId;
 
         static MOMENT_DETAIL: string = 'MOMENT_DETAIL';
-        static MOMENT_DETAIL_PATH: string = RouteConst.momentId;
+        static MOMENT_DETAIL_PATH: string = RouteConst.momentPath;
         static MOMENT_EDIT: string = 'MOMENT_EDIT';
-        static MOMENT_EDIT_PATH: string = RouteConst.journeyId + RouteConst.momentPath + '/edit/:momentId';
+        static MOMENT_EDIT_PATH: string = RouteConst.journeyId + RouteConst.momentPath + '/edit' + RouteConst.momentId;
 
         static MOMENT_BLINKS: string = 'MOMENT_BLINKS';
-        static MOMENT_BLINKS_PATH: string = '';
+        static MOMENT_BLINKS_PATH: string = RouteConst.momentId;
         static MOMENT_FEEDBACK: string = 'MOMENT_FEEDBACK';
-        static MOMENT_FEEDBACK_PATH: string = '/feedback';
+        static MOMENT_FEEDBACK_PATH: string = RouteConst.momentId + '/feedback';
         static MOMENT_STATS: string = 'MOMENT_STATS';
-        static MOMENT_STATS_PATH: string = '/stats';
+        static MOMENT_STATS_PATH: string = RouteConst.momentId + '/stats';
         static MOMENT_LINKS: string = 'MOMENT_LINKS';
-        static MOMENT_LINKS_PATH: string = '/links';
+        static MOMENT_LINKS_PATH: string = RouteConst.momentId + '/links';
 
+        static NOTEBOOKS: string = 'NOTEBOOKS';
+        static NOTEBOOKS_PATH: string = RouteConst.notebookPath;
+
+        static NOTEBOOK_DETAIL: string = 'NOTEBOOK_DETAIL';
+        static NOTEBOOK_DETAIL_PATH: string = RouteConst.notebookPath + RouteConst.notebookId;
 
         static USER_PATH: string = RouteConst.userPath;
         static PROFILE: string = 'PROFILE';

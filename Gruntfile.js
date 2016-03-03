@@ -82,6 +82,7 @@ module.exports = function (grunt) {
                     '<%= app.temp %>/ts/error/**/*.ts',
                     '<%= app.temp %>/ts/user/**/*.ts',
                     '<%= app.temp %>/ts/journey/**/*.ts',
+                    '<%= app.temp %>/ts/note/**/*.ts',
                     '<%= app.temp %>/ts/moment/**/*.ts',
                     '<%= app.temp %>/ts/main/**/*.ts',
                     '<%= app.temp %>/ts/auth/**/*.ts',

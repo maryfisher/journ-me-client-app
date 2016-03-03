@@ -38,6 +38,9 @@ module jm.common {
         static BLINK_PATH: string = ServerConst.API + 'blink/';
         static BLINK_IMG_PATH: string = ServerConst.BLINK_PATH + ServerConst.IMG;
 
+        static NOTE_PATH: string = ServerConst.API + 'note/';
+        static NOTE_IMG_PATH: string = ServerConst.NOTE_PATH + ServerConst.IMG;
+
         static HEADER_ITEMS: string = 'headerItems';
         static SERVER_TOKEN_KEY: string = 'x-jm-auth-token';
         static COOKIE_TOKEN_KEY: string = 'jmAuthToken';

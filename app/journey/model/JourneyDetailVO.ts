@@ -1,5 +1,6 @@
 ///<reference path="..\..\moment\model\MomentBaseVO.ts"/>
 ///<reference path="..\..\user\model\AliasBaseVO.ts"/>
+///<reference path="..\..\note\model\NotebookVO.ts"/>
 module jm.journey {
 
     import IAliasDetailVO = jm.user.IAliasDetailVO;
@@ -7,6 +8,8 @@ module jm.journey {
     import AliasBaseVO = jm.user.AliasBaseVO;
     import MomentBaseVO = jm.moment.MomentBaseVO;
     import IMomentBaseVO = jm.moment.IMomentBaseVO;
+    import INotebookVO = jm.note.INotebookVO;
+    import NotebookVO = jm.note.NotebookVO;
 
     export interface IJourneyDetailVO extends IJourneyBaseVO {
         moments: IMomentBaseVO[];
@@ -15,6 +18,7 @@ module jm.journey {
         linkedFromJourneys: IJourneyBaseVO[];
         joinRequests: IAliasBaseVO[];
         joinedAliases: IAliasBaseVO[];
+        notebooks: INotebookVO[];
     }
 
     export class JourneyDetailVO extends JourneyBaseVO implements IJourneyDetailVO {
@@ -25,6 +29,7 @@ module jm.journey {
         linkedFromJourneys: IJourneyBaseVO[] = [];
         joinRequests: IAliasBaseVO[] = [];
         joinedAliases: IAliasBaseVO[] = [];
+        notebooks: INotebookVO[] = [];
 
         joinedLinkedJourneys: IJourneyBaseVO[] = [];
         aliasJourneyLink: IJourneyBaseVO;
@@ -68,6 +73,10 @@ module jm.journey {
             this.linkedToJourneys = data.linkedToJourneys.map(v => {
                 return new JourneyBaseVO(v);
             });
+
+            data.notebooks && (this.notebooks = data.notebooks.map(v => {
+                return new NotebookVO(v);
+            }));
         }
 
         invalidateData() {
@@ -79,6 +88,7 @@ module jm.journey {
             this.joinedLinkedJourneys.length = 0;
             this.joinedAliases.length = 0;
             this.joinRequests.length = 0;
+            this.notebooks.length = 0;
             this.aliasJourneyLink = undefined;
             this.isFollowing = false;
             this.isJoined = false;

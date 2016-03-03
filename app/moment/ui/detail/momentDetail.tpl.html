@@ -1,13 +1,15 @@
 <div class="panel">
-    <ul class="nav nav-tabs">
+    <!-- TIMELINE -->
+    <data-jm-journey-timeline data-journey-id="journey.id" data-has-edit="true"></data-jm-journey-timeline>
+    <ul ng-if="journey.moments.length > 0" class="nav nav-tabs">
         <li data-ng-class="{ active: showsSlides() }">
-            <a data-ui-sref="MOMENT_BLINKS">
+            <a data-ui-sref="MOMENT_BLINKS({momentId: moment.id})">
                 <span class="glyphicon glyphicon-picture"></span>
                 <span class="glyphicon glyphicon-align-justify"></span>
             </a>
         </li>
         <li data-ui-sref-active="active">
-            <a data-ui-sref="MOMENT_FEEDBACK">
+            <a data-ui-sref="MOMENT_FEEDBACK({momentId: moment.id})">
                 <span class="fa fa-comment"></span>
             </a>
         </li>

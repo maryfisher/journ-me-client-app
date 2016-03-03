@@ -99,7 +99,7 @@ module jm {
                     controller: jm.journey.ctrl.JourneyDetailController.NG_NAME
                 })
                 .state(RouteConst.MOMENT_DETAIL, {
-                    abstract: true,
+                    //abstract: true,
                     parent: RouteConst.JOURNEY_DETAIL,
                     url: RouteConst.MOMENT_DETAIL_PATH,
                     templateUrl: 'moment/ui/detail/momentDetail.tpl.html',
@@ -117,6 +117,23 @@ module jm {
                     templateUrl: 'moment/ui/feedback/momentFeedback.tpl.html',
                     controller: jm.moment.ctrl.MomentFeedbackController.NG_NAME
                 });
+
+            this.$stateProvider
+                .state(RouteConst.NOTEBOOKS, {
+                    parent: RouteConst.JOURNEY_DETAIL,
+                    url: RouteConst.NOTEBOOKS_PATH,
+                    templateUrl: 'note/ui/notebooks.tpl.html',
+                    controller: jm.note.ctrl.NotebooksController.NG_NAME,
+                    controllerAs: JMConfigConst.CTRL
+                })
+                .state(RouteConst.NOTEBOOK_DETAIL, {
+                    parent: RouteConst.NOTEBOOKS,
+                    url: RouteConst.NOTEBOOK_DETAIL_PATH,
+                    templateUrl: 'note/ui/detail/notebookDetail.tpl.html',
+                    controller: jm.note.ctrl.NotebookDetailController.NG_NAME,
+                    controllerAs: JMConfigConst.CTRL
+                });
+
             this.$stateProvider.state(RouteConst.MOMENT_EDIT, {
                 url: RouteConst.MOMENT_EDIT_PATH,
                 templateUrl: 'moment/ui/edit/momentEditForm.tpl.html',
