@@ -1,27 +1,28 @@
 <nav class="navbar navbar-fixed-top jm-auth-bar">
     <div class="container-fluid" data-jm-global-error="errors">
-        <div class="navbar-header">
-            <!--<div data-jm-logged-in-show="true">
-                <a data-ui-sref="DASHBOARD({aliasId: alias.id})" class="navbar-brand">Dashboard</a>
-            </div>
-            <div data-jm-logged-in-show="false">-->
-            <a data-ui-sref="HOME" class="navbar-brand">Home</a>
-            <a data-ui-sref="BROWSE" class="navbar-brand">Browse</a>
-            <!--</div>-->
+        <ul class="nav navbar-nav pull-left">
+            <li><a data-ui-sref="HOME"><span class="glyphicon glyphicon-home"></span></a></li>
+            <li><a data-ui-sref="BROWSE"><span class="glyphicon glyphicon-search"></span></a></li>
+        </ul>
+        <div class="collapse navbar-collapse navbar-left">
+
+            <form role="search" class="nav navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="input-group ">
+                        <input data-ng-model="quickSearch" type="text" placeholder="Search" class="form-control">
+                        <a data-ui-sref="BROWSE({search: quickSearch})" class=" input-group-btn">
+                            <button type="button" class="btn btn-default">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
 
-        <form role="search" class="nav navbar-form navbar-left">
-            <div class="form-group">
-                <input data-ng-model="quickSearch" type="text" placeholder="Search" class="form-control">
-            </div>
-            <a data-ui-sref="BROWSE({search: quickSearch})">
-                <button type="button" class="btn btn-default">Search</button>
-            </a>
-        </form>
-
-        <div data-is-open="status.isopen" class="nav navbar-form navbar-right">
+        <div data-is-open="status.isopen" class="nav navbar-form navbar-right pull-right">
             <div data-jm-logged-in-show="true">
-                <span>
+                <span class="hidden-xs">
                     <button data-jm-journey-edit class="btn btn-primary"> + New Journey</button>
                 </span>
                 <a data-ui-sref="DASHBOARD({aliasId: alias.id})">
@@ -29,7 +30,7 @@
                 </a>
 
                 <div class="jm-auth-info" data-dropdown>
-                    <button type="button" data-dropdown-toggle class="btn btn-xs">
+                    <button type="button" data-dropdown-toggle class="btn btn-xs btn-default">
                         <span class="caret"></span>
                     </button>
                     <ul role="menu" data-aria-labelledby="split-button" class="dropdown-menu">
@@ -50,6 +51,7 @@
                 <button class="btn btn-primary" data-jm-login>LOGIN</button>
                 <button class="btn" data-jm-register>Register</button>
             </div>
+
         </div>
     </div>
 </nav>
